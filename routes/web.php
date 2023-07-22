@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::get('create', [CompanyController::class, 'create'])->name('company.create');
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
+        Route::get('edit/{company}', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::post('update/{company}', [CompanyController::class, 'update'])->name('company.update');
     });
 
 });
