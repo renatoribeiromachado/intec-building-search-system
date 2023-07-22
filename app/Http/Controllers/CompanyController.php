@@ -14,6 +14,7 @@ class CompanyController extends Controller
     ) {
         $this->company = $company;
     }
+    
     /**
      * Display a listing of the resource.
      *
