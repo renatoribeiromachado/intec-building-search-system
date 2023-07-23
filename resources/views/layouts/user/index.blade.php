@@ -3,17 +3,26 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>LISTA DE ESTÁGIOS</h1>
+        <h1>LISTA DE USUÁRIOS</h1>
 
         <div>
-            <form action="{{ route('stage.index') }}" method="get">
+            <form action="{{ route('user.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
-                        <label for="inputEmail4">Descrição</label>
+                        <label for="inputPassword4">Nome</label>
                         <input
-                            type="text" id="description" name="description"
-                            class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                            value="{{ old('description', request()->description) }}" placeholder="ex: Projeto"
+                            type="text" id="name" name="name"
+                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                            value="{{ old('name', request()->name) }}" placeholder="ex: Fabrício Oliveira"
+                            >
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="inputEmail4">E-mail</label>
+                        <input
+                            type="text" id="email" name="email"
+                            class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                            value="{{ old('email', request()->email) }}" placeholder="ex: fabricio.oliveira@outlook.com"
                             >
                     </div>
 
@@ -23,7 +32,7 @@
                         </button>
 
                         <a
-                            href="{{ route('stage.index') }}"
+                            href="{{ route('user.index') }}"
                             class="btn btn-warning btn mt-4"
                             title="Limpar a pesquisa"
                             >
@@ -36,7 +45,7 @@
 
         <div class="">
             <a class="btn btn-primary float-end"
-                href="{{ route('stage.create') }}"
+                href="{{ route('user.create') }}"
                 >
                 Novo Cadastro
             </a>
@@ -46,21 +55,23 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Fase</th>
-                    <th scope="col">Descrição</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Perfil</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($stages as $stage)
+                @forelse($users as $user)
                     <tr>
-                        <th scope="row" style="width:5%;">{{ $stage->id }}</th>
-                        <td>{{ $stage->phase->description }}</td>
-                        <td>{{ $stage->description }}</td>
+                        <th scope="row">{{ $user->id }}</th>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->role->name }}</td>
                         <td style="width:15%;">
                             <a
-                                href="{{ route('stage.edit', $stage->id) }}"
-                                class="btn btn-sm btn-outline-success me-1"
+                                href="{{ route('user.edit', $user->id) }}"
+                                class="btn btn-sm btn-outline-success me-2"
                                 >
                                 Editar
                             </a>
@@ -92,8 +103,8 @@
 
                                         <div class="modal-body">
                                             <div class="text-center">
-                                                Tem certeza que deseja excluir o registro da fase: <br>
-                                                <strong class="text-danger">{{ $stage->description }}</strong>?
+                                                Tem certeza que deseja excluir o registro do usuário: <br>
+                                                <strong class="text-danger">{{ $user->name }}</strong>?
                                             </div>
                                         </div>
 
@@ -105,7 +116,7 @@
                                                 Fechar
                                             </button>
 
-                                            <form action="{{ route('stage.destroy', $stage->id) }}" method="post">
+                                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
 
@@ -135,7 +146,7 @@
         </table>
 
         <div>
-            {{ $stages->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+            {{ $users->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @endsection

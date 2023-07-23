@@ -36,7 +36,7 @@ class Role extends Model
         }
 
         if ($paginate) {
-            self::where($where)->paginate();
+            self::where($where)->paginate(15);
         }
         
         return self::where($where)->get();

@@ -65,11 +65,11 @@
                                 PESQUISAS
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                @can('ver-empresas')
+                                {{-- @can('ver-empresas') --}}
                                     <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
-                                @endcan
+                                {{-- @endcan --}}
 
-                                <li><a class="dropdown-item" href="{{ route('company.create') }}">Monitoramento de Usuários</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.index') }}">Monitoramento de Usuários</a></li>
                                 <li><a class="dropdown-item" href="#">Obras</a></li>
                                 {{-- <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li> --}}
                                 <li><a class="dropdown-item" href="{{ route('phase.index') }}">Fases</a></li>

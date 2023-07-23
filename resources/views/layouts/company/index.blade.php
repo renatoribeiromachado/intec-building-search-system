@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="form-group col">
-                        <button type="submit" class="btn btn-success btn mt-4 mr-2">
+                        <button type="submit" class="btn btn-success btn mt-4 me-1">
                             <i class="fa fa-search"></i> Pesquisar
                         </button>
 
@@ -73,7 +73,7 @@
                         <td>
                             <a
                                 href="{{ route('company.edit', $company->id) }}"
-                                class="btn btn-sm btn-outline-success mr-2"
+                                class="btn btn-sm btn-outline-success me-1"
                                 >
                                 Editar
                             </a>

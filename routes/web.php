@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{role}', [RoleController::class, 'edit'])->name('role.edit');
         Route::post('update/{role}', [RoleController::class, 'update'])->name('role.update');
         Route::delete('{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+        // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
+        // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
+    });
+
+    Route::prefix('users')->group(function() {
+        Route::get('', [UserController::class, 'index'])->name('user.index');
+        Route::get('create', [UserController::class, 'create'])->name('user.create');
+        Route::post('store', [UserController::class, 'store'])->name('user.store');
+        Route::get('edit/{user}', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('update/{user}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
         // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');

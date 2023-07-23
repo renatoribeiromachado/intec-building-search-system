@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -41,6 +42,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // App methods
+    public function allUsers($where = [])
+    {
+        $user = self::select('users.*');
+
+        if (request()->name) {
+            $where[]  = ['users.name', 'like', '%'.request()->name.'%'];
+        }
+
+        if (request()->email) {
+            $where[]  = ['users.email', 'like', '%'.request()->email.'%'];
+        }
+
+        return $user
+            ->where($where)
+            ->orderBy('users.id', 'asc')
+            ->paginate(15);
+    }
 
     // Eloquent relationship methods
     public function role()
