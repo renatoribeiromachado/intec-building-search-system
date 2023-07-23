@@ -14,7 +14,7 @@ class CompanyController extends Controller
     ) {
         $this->company = $company;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -154,8 +154,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return redirect()->route('company.index');
     }
 }

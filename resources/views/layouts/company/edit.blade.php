@@ -24,30 +24,4 @@
             </div>
         </form>
     </div>
-
-    @push('scripts')
-
-        {{-- <script src="{{ asset('vendor/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script> --}}
-        <script>
-        $(document).ready(function () {
-            // jquery mask
-            $('.cep').mask('00000-000');
-            $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
-
-            var SPMaskBehavior = function (val) {
-            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-            },
-            spOptions = {
-            onKeyPress: function(val, e, field, options) {
-                field.mask(SPMaskBehavior.apply({}, arguments), options);
-                }
-            };
-        
-            $('.phone').mask(SPMaskBehavior, spOptions);
-            // end jquery mask
-        });
-        </script>
-
-    @endpush
-
 @endsection

@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
         Route::get('edit/{company}', [CompanyController::class, 'edit'])->name('company.edit');
         Route::post('update/{company}', [CompanyController::class, 'update'])->name('company.update');
+        Route::delete('{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
     });
 
 });
