@@ -66,12 +66,30 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 {{-- @can('ver-empresas') --}}
+                                    <li><a class="dropdown-item" href="#">Empresas</a></li>
+                                {{-- @endcan --}}
+
+                                <li><a class="dropdown-item" href="#">Obras</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="administrative"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                ADMINISTRATIVO
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="administrative">
+                                {{-- @can('ver-empresas') --}}
                                     <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
                                 {{-- @endcan --}}
 
-                                <li><a class="dropdown-item" href="{{ route('user.index') }}">Monitoramento de Usuários</a></li>
-                                <li><a class="dropdown-item" href="#">Obras</a></li>
-                                {{-- <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li> --}}
+                                <li><a class="dropdown-item" href="{{ route('user.index') }}">Usuários</a></li>
+                                <li><a class="dropdown-item" href="{{ route('work.index') }}">Obras</a></li>
                                 <li><a class="dropdown-item" href="{{ route('phase.index') }}">Fases</a></li>
                                 <li><a class="dropdown-item" href="{{ route('stage.index') }}">Estágios</a></li>
                                 <li><a class="dropdown-item" href="{{ route('role.index') }}">Perfis de Usuários</a></li>
@@ -133,6 +151,8 @@
                 // jquery mask
                 $('.cep').mask('00000-000');
                 $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
+                $('.date').mask('00/00/0000');
+                // $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
                 var SPMaskBehavior = function (val) {
                 return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';

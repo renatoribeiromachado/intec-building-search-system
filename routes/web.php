@@ -5,6 +5,7 @@ use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,6 +80,15 @@ Route::middleware(['auth'])->group(function () {
 
         // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
+    });
+
+    Route::prefix('works')->group(function() {
+        Route::get('', [WorkController::class, 'index'])->name('work.index');
+        Route::get('create', [WorkController::class, 'create'])->name('work.create');
+        Route::post('store', [WorkController::class, 'store'])->name('work.store');
+        Route::get('edit/{work}', [WorkController::class, 'edit'])->name('work.edit');
+        Route::put('update/{work}', [WorkController::class, 'update'])->name('work.update');
+        Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
     });
 });
 
