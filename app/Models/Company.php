@@ -68,7 +68,7 @@ class Company extends Model
         return $company
             ->where($where)
             ->orderBy('companies.id', 'asc')
-            ->get();
+            ->paginate(15);
     }
 
     // Scopes

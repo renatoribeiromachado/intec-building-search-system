@@ -146,5 +146,9 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div>
+            {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+        </div>
     </div>
 @endsection
