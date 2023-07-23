@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>EDIÇÃO DE FASE</h1>
+        <h1>EDIÇÃO DE ESTÁGIO</h1>
 
         <form action="{{ route('stage.update', $stage->id) }}" method="POST" role="form">
             @csrf

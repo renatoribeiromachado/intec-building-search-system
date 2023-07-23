@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStageRequest;
 use App\Http\Requests\UpdateStageRequest;
+use App\Models\Phase;
 use App\Models\Stage;
 
 class StageController extends Controller
 {
     protected $stage;
+    protected $phase;
 
     public function __construct(
-        Stage $stage
+        Stage $stage,
+        Phase $phase
     ) {
         $this->stage = $stage;
+        $this->phase = $phase;
     }
 
     /**
@@ -24,7 +28,6 @@ class StageController extends Controller
     public function index()
     {
         $stages = $this->stage->allStages();
-
         return view('layouts.stage.index', compact('stages'));
     }
 
@@ -36,7 +39,11 @@ class StageController extends Controller
     public function create()
     {
         $stage = $this->stage;
-        return view('layouts.stage.create', compact('stage'));
+        $phases = $this->phase->get();
+        return view('layouts.stage.create', compact(
+            'stage',
+            'phases',
+        ));
     }
 
     /**
@@ -49,8 +56,7 @@ class StageController extends Controller
     {
         $stage = $this->stage;
         $stage->description = $request->description;
-        $stage->created_by = auth()->user()->id;
-        $stage->updated_by = auth()->user()->id;
+        $stage->phase_id = $request->phase_id;
         $stage->save();
 
         return redirect()->route('stage.index');
@@ -64,7 +70,11 @@ class StageController extends Controller
      */
     public function edit(Stage $stage)
     {
-        return view('layouts.stage.edit', compact('stage'));
+        $phases = $this->phase->get();
+        return view('layouts.stage.edit', compact(
+            'stage',
+            'phases',
+        ));
     }
 
     /**
@@ -77,7 +87,6 @@ class StageController extends Controller
     public function update(UpdateStageRequest $request, Stage $stage)
     {
         $stage->description = $request->description;
-        $stage->updated_by = auth()->user()->id;
         $stage->save();
 
         return redirect()->route('stage.index');
@@ -92,7 +101,6 @@ class StageController extends Controller
     public function destroy(Stage $stage)
     {
         $stage->delete();
-
         return redirect()->route('stage.index');
     }
 }

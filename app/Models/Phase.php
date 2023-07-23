@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Stage extends Model
+class Phase extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -15,23 +15,17 @@ class Stage extends Model
     ];
 
     // App methods
-    public function allStages($where = [])
+    public function allPhases($where = [])
     {
-        $stage = self::select('stages.*');
+        $phase = self::select('phases.*');
 
         if (request()->description) {
-            $where[]  = ['stages.description', 'like', '%'.request()->description.'%'];
+            $where[] = ['phases.description', 'like', '%'.request()->description.'%'];
         }
 
-        return $stage
+        return $phase
             ->where($where)
-            ->orderBy('stages.id', 'asc')
+            ->orderBy('phases.id', 'asc')
             ->paginate(15);
-    }
-
-    // Eloquent relationship methods
-    public function phase()
-    {
-        return $this->belongsTo(Phase::class);
     }
 }

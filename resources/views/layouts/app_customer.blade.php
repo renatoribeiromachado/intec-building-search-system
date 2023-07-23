@@ -65,11 +65,12 @@
                                 PESQUISAS
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li>
-                                <li><a class="dropdown-item" href="{{ route('company.create') }}">EMPRESAS (CADASTRO)</a></li>
-                                {{-- <li><a class="dropdown-item" href="#">OBRAS (LISTA)</a></li> --}}
-                                <li><a class="dropdown-item" href="{{ route('company.index') }}">EMPRESAS (LISTA)</a></li>
-                                <li><a class="dropdown-item" href="{{ route('stage.index') }}">FASES (LISTA)</a></li>
+                                <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('company.create') }}">Monitoramento de Usuários</a></li>
+                                <li><a class="dropdown-item" href="#">Obras</a></li>
+                                {{-- <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li> --}}
+                                <li><a class="dropdown-item" href="{{ route('phase.index') }}">Fases</a></li>
+                                <li><a class="dropdown-item" href="{{ route('stage.index') }}">Estágios</a></li>
                             </ul>
                         </li>
                     </ul>

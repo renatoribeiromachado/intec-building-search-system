@@ -57,8 +57,6 @@ class CreateCompaniesTable extends Migration
             $table->string('image_public_link')->nullable();
             // $table->boolean('is_legal_entity')->default(false)->comment('0 - Yes, it is | 1 - No, it\'s not ');
             // $table->boolean('is_cnae_regular')->default(true); // classificação nacional de atividades econômicas
-            $table->foreignId('created_by')->nullable();
-            $table->foreignId('updated_by')->nullable();
             $table->string('register_ip')->nullable();
             $table->softDeletes();
             $table->timestamp('created_at')->useCurrent();

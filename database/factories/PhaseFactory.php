@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StageFactory extends Factory
+class PhaseFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,6 @@ class StageFactory extends Factory
     public function definition()
     {
         return [
-            'phase_id' => rand(1, 3),
             'description' => $this->faker->name
         ];
     }

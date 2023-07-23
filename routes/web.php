@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\StageController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{stage}', [StageController::class, 'edit'])->name('stage.edit');
         Route::post('update/{stage}', [StageController::class, 'update'])->name('stage.update');
         Route::delete('{stage}', [StageController::class, 'destroy'])->name('stage.destroy');
+    });
+
+    Route::prefix('phase')->group(function () {
+        Route::get('/', [PhaseController::class, 'index'])->name('phase.index');
+        Route::get('create', [PhaseController::class, 'create'])->name('phase.create');
+        Route::post('store', [PhaseController::class, 'store'])->name('phase.store');
+        Route::get('edit/{phase}', [PhaseController::class, 'edit'])->name('phase.edit');
+        Route::post('update/{phase}', [PhaseController::class, 'update'])->name('phase.update');
+        Route::delete('{phase}', [PhaseController::class, 'destroy'])->name('phase.destroy');
     });
 
 });

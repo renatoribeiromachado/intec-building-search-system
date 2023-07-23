@@ -3,17 +3,17 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>LISTA DE ESTÁGIOS</h1>
+        <h1>LISTA DE FASES</h1>
 
         <div>
-            <form action="{{ route('stage.index') }}" method="get">
+            <form action="{{ route('phase.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
                         <label for="inputEmail4">Descrição</label>
                         <input
                             type="text" id="description" name="description"
                             class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                            value="{{ old('description', request()->description) }}" placeholder="ex: Projeto"
+                            value="{{ old('description', request()->description) }}" placeholder="ex: Fase 1"
                             >
                     </div>
 
@@ -23,7 +23,7 @@
                         </button>
 
                         <a
-                            href="{{ route('stage.index') }}"
+                            href="{{ route('phase.index') }}"
                             class="btn btn-warning btn mt-4"
                             title="Limpar a pesquisa"
                             >
@@ -36,7 +36,7 @@
 
         <div class="">
             <a class="btn btn-primary float-end"
-                href="{{ route('stage.create') }}"
+                href="{{ route('phase.create') }}"
                 >
                 Novo Cadastro
             </a>
@@ -46,20 +46,18 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Fase</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($stages as $stage)
+                @forelse($phases as $phase)
                     <tr>
-                        <th scope="row" style="width:5%;">{{ $stage->id }}</th>
-                        <td>{{ $stage->phase->description }}</td>
-                        <td>{{ $stage->description }}</td>
+                        <th scope="row" style="width:5%;">{{ $phase->id }}</th>
+                        <td>{{ $phase->description }}</td>
                         <td style="width:15%;">
                             <a
-                                href="{{ route('stage.edit', $stage->id) }}"
+                                href="{{ route('phase.edit', $phase->id) }}"
                                 class="btn btn-sm btn-outline-success mr-2"
                                 >
                                 Editar
@@ -93,7 +91,7 @@
                                         <div class="modal-body">
                                             <div class="text-center">
                                                 Tem certeza que deseja excluir o registro da fase: <br>
-                                                <strong class="text-danger">{{ $stage->description }}</strong>?
+                                                <strong class="text-danger">{{ $phase->description }}</strong>?
                                             </div>
                                         </div>
 
@@ -105,7 +103,7 @@
                                                 Fechar
                                             </button>
 
-                                            <form action="{{ route('stage.destroy', $stage->id) }}" method="post">
+                                            <form action="{{ route('phase.destroy', $phase->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
 
@@ -135,7 +133,7 @@
         </table>
 
         <div>
-            {{ $stages->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+            {{ $phases->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @endsection
