@@ -53,29 +53,22 @@ class Company extends Model
     // App methods
     public function allCompanies($where = [])
     {
-
         $where[] = ['is_project_owner', false];
-        
-        if (request()->search_name) {
-            $where[]  = ['companies.company_name', 'like', '%' . request()->search_name . '%'];
-            $where2[] = ['companies.trading_name', 'like', '%' . request()->search_name . '%'];
-            $where3[] = ['companies.id', request()->search_name];
 
-            return self::select('companies.*')
-                ->where($where)
-                ->orWhere($where2)
-                ->orWhere($where3)
-                ->orderBy('companies.id', 'asc')
-                ->paginate(10);
+        $company = self::select('companies.*');
+
+        if (request()->cnpj) {
+            $where[]  = ['companies.cnpj', '=', request()->cnpj];
         }
-        
-        $where2 = ['company_name'];
 
-        return self::select('companies.*')
+        if (request()->trading_name) {
+            $where[]  = ['companies.trading_name', 'like', '%'.request()->trading_name.'%'];
+        }
+
+        return $company
             ->where($where)
-            ->whereNotNull($where2)
             ->orderBy('companies.id', 'asc')
-            ->paginate(10);
+            ->get();
     }
 
     // Scopes

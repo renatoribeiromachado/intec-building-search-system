@@ -20,9 +20,9 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = $this->company->all();
+        $companies = $this->company->allCompanies();
 
         return view('layouts.company.index', compact('companies'));
     }
