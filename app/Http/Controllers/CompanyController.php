@@ -83,17 +83,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -140,7 +129,6 @@ class CompanyController extends Controller
         $company->is_project_owner = false;
         $company->image_storage_link = $request->image_storage_link;
         $company->image_public_link = $request->image_public_link;
-        $company->created_by = auth()->user()->id;
         $company->updated_by = auth()->user()->id;
         $company->register_ip = $request->register_ip;
         $company->save();

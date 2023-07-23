@@ -69,6 +69,7 @@
                                 <li><a class="dropdown-item" href="{{ route('company.create') }}">EMPRESAS (CADASTRO)</a></li>
                                 {{-- <li><a class="dropdown-item" href="#">OBRAS (LISTA)</a></li> --}}
                                 <li><a class="dropdown-item" href="{{ route('company.index') }}">EMPRESAS (LISTA)</a></li>
+                                <li><a class="dropdown-item" href="{{ route('stage.index') }}">FASES (LISTA)</a></li>
                             </ul>
                         </li>
                     </ul>

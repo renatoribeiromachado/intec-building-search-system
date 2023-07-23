@@ -3,14 +3,14 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>EDIÇÃO DE EMPRESA</h1>
+        <h1>EDIÇÃO DE FASE</h1>
 
-        <form action="{{ route('company.update', $company->id) }}" method="POST" role="form">
+        <form action="{{ route('stage.update', $stage->id) }}" method="POST" role="form">
             @csrf
             @method('post')
-            <input type="hidden" name="company_id" value="{{ $company->id }}">
+            <input type="hidden" name="stage_id" value="{{ $stage->id }}">
 
-            @include('layouts.forms.add_edit_company')
+            @include('layouts.forms.add_edit_stage')
 
             <div class="form-row my-3">
                 <div class="form-group">

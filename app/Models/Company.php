@@ -78,8 +78,4 @@ class Company extends Model
     }
 
     // Eloquent relationship methods
-    public function unity()
-    {
-        return $this->hasOne(Unit::class);
-    }
 }

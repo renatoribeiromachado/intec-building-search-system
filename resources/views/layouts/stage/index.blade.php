@@ -3,26 +3,17 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>LISTA DE EMPRESAS</h1>
+        <h1>LISTA DE FASES</h1>
 
         <div>
-            <form action="{{ route('company.index') }}" method="get">
+            <form action="{{ route('stage.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
-                        <label for="inputPassword4">CNPJ</label>
+                        <label for="inputEmail4">Descrição</label>
                         <input
-                            type="text" id="cnpj" name="cnpj"
-                            class="form-control cnpj {{ $errors->has('cnpj') ? 'is-invalid' : '' }}"
-                            value="{{ old('cnpj', request()->cnpj) }}" placeholder="ex: 23.025.414/0001-23"
-                            >
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="inputEmail4">Nome Fantasia</label>
-                        <input
-                            type="text" id="trading_name" name="trading_name"
-                            class="form-control {{ $errors->has('trading_name') ? 'is-invalid' : '' }}"
-                            value="{{ old('trading_name', request()->trading_name) }}" placeholder="ex: Minha Empresa"
+                            type="text" id="description" name="description"
+                            class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                            value="{{ old('description', request()->description) }}" placeholder="ex: Fase 1"
                             >
                     </div>
 
@@ -32,7 +23,7 @@
                         </button>
 
                         <a
-                            href="{{ route('company.index') }}"
+                            href="{{ route('stage.index') }}"
                             class="btn btn-warning btn mt-4"
                             title="Limpar a pesquisa"
                             >
@@ -45,7 +36,7 @@
 
         <div class="">
             <a class="btn btn-primary float-end"
-                href="{{ route('company.create') }}"
+                href="{{ route('stage.create') }}"
                 >
                 Novo Cadastro
             </a>
@@ -55,24 +46,18 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">CNPJ</th>
-                    <th scope="col">Razão Social</th>
-                    <th scope="col">Nome Fantasia</th>
-                    <th scope="col">Cidade</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($companies as $company)
+                @forelse($stages as $stage)
                     <tr>
-                        <th scope="row">{{ $company->id }}</th>
-                        <td>{{ $company->cnpj }}</td>
-                        <td>{{ $company->company_name }}</td>
-                        <td>{{ $company->trading_name }}</td>
-                        <td>{{ $company->city }}</td>
-                        <td>
+                        <th scope="row" style="width:5%;">{{ $stage->id }}</th>
+                        <td>{{ $stage->description }}</td>
+                        <td style="width:15%;">
                             <a
-                                href="{{ route('company.edit', $company->id) }}"
+                                href="{{ route('stage.edit', $stage->id) }}"
                                 class="btn btn-sm btn-outline-success mr-2"
                                 >
                                 Editar
@@ -105,8 +90,8 @@
 
                                         <div class="modal-body">
                                             <div class="text-center">
-                                                Tem certeza que deseja excluir o registro da empresa: <br>
-                                                <strong class="text-danger">{{ $company->company_name }}</strong>?
+                                                Tem certeza que deseja excluir o registro da fase: <br>
+                                                <strong class="text-danger">{{ $stage->description }}</strong>?
                                             </div>
                                         </div>
 
@@ -118,7 +103,7 @@
                                                 Fechar
                                             </button>
 
-                                            <form action="{{ route('company.destroy', $company->id) }}" method="post">
+                                            <form action="{{ route('stage.destroy', $stage->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
 
@@ -148,7 +133,7 @@
         </table>
 
         <div>
-            {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+            {{ $stages->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @endsection
