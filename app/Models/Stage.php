@@ -28,6 +28,6 @@ class Stage extends Model
         return $stage
             ->where($where)
             ->orderBy('stages.id', 'asc')
-            ->paginate(1);
+            ->paginate(15);
     }
 }
