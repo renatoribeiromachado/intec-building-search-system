@@ -49,7 +49,15 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li> --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-bs-toggle="dropdown" aria-expanded="false">PESQUISAS</a>
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown07XL"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                PESQUISAS
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li>
                                 <li><a class="dropdown-item" href="{{ route('company.create') }}">EMPRESAS (CADASTRO)</a></li>
@@ -58,10 +66,42 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    {{-- <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    </form> --}}
+                    <ul class="navbar-nav me-0 mb-2 mb-md-0">
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown-logout"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                {{ auth()->user()->name }}
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-logout">
+                                <li>
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        @method('post')
+                                        <button
+                                            type="submit"
+                                            class="btn btn-link dropdown-item"
+                                            >
+                                            Sair
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {{-- 
+                    <form action="{{ route('logout') }}" class="d-flex">
+                        <button class="btn btn-link" type="submit">Sair</button>
+                    </form> --}}
                 </div>
             </div>
         </nav>
