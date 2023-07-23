@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StageController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,17 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{phase}', [PhaseController::class, 'destroy'])->name('phase.destroy');
     });
 
+    Route::prefix('roles')->group(function() {
+        Route::get('', [RoleController::class, 'index'])->name('role.index');
+        Route::get('create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('store', [RoleController::class, 'store'])->name('role.store');
+        Route::get('edit/{role}', [RoleController::class, 'edit'])->name('role.edit');
+        Route::post('update/{role}', [RoleController::class, 'update'])->name('role.update');
+        Route::delete('{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+        // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
+        // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
+    });
 });
 
 

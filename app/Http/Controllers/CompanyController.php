@@ -23,7 +23,6 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $companies = $this->company->allCompanies();
-
         return view('layouts.company.index', compact('companies'));
     }
 
@@ -145,7 +144,6 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-
         return redirect()->route('company.index');
     }
 }

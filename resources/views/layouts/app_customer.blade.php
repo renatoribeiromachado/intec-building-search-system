@@ -65,12 +65,16 @@
                                 PESQUISAS
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
+                                @can('ver-empresas')
+                                    <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
+                                @endcan
+
                                 <li><a class="dropdown-item" href="{{ route('company.create') }}">Monitoramento de Usuários</a></li>
                                 <li><a class="dropdown-item" href="#">Obras</a></li>
                                 {{-- <li><a class="dropdown-item" href="#">OBRAS (CADASTRO)</a></li> --}}
                                 <li><a class="dropdown-item" href="{{ route('phase.index') }}">Fases</a></li>
                                 <li><a class="dropdown-item" href="{{ route('stage.index') }}">Estágios</a></li>
+                                <li><a class="dropdown-item" href="{{ route('role.index') }}">Perfis de Usuários</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -87,7 +91,7 @@
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                                 >
-                                {{ auth()->user()->name }}
+                                {{ auth()->user()->name }} <small>({{ \Auth::guard('web')->user()->role->name; }})</small>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-logout">
