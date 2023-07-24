@@ -479,5 +479,20 @@
                 </div>
             </div>
         </div>
-    </div>  
+
+        <hr class="my-3">
+
+        <div class="row">
+            <div class="col">
+                <h3>Contatos</h3>
+                <ul>
+                    @foreach ($work->contacts()->get() as $contact)
+                    <li>{{ $contact->name }} - (<a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>)</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <hr class="my-3">
+    </div>
 </div>

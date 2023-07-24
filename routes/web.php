@@ -130,6 +130,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{work}', [WorkController::class, 'edit'])->name('work.edit');
         Route::put('update/{work}', [WorkController::class, 'update'])->name('work.update');
         Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
+        
+        Route::post('store/{work}', [WorkController::class, 'storeContact'])->name('work.contact.store');
     });
 
     Route::prefix('associates')->group(function() {

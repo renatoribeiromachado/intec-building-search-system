@@ -106,4 +106,9 @@ class Work extends Model
     {
         return $this->belongsTo(Segment::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

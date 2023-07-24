@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
+use App\Models\Contact;
 use App\Models\Phase;
+use App\Models\Position;
 use App\Models\Segment;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
@@ -12,6 +14,7 @@ use App\Models\User;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class WorkController extends Controller
 {
@@ -21,6 +24,7 @@ class WorkController extends Controller
     protected $segment;
     protected $segmentSubType;
     protected $researcher;
+    protected $position;
 
     public function __construct(
         Work $work,
@@ -28,7 +32,8 @@ class WorkController extends Controller
         Stage $stage,
         Segment $segment,
         SegmentSubType $segmentSubType,
-        User $researcher
+        User $researcher,
+        Position $position
     ) {
         $this->work = $work;
         $this->phase = $phase;
@@ -36,6 +41,7 @@ class WorkController extends Controller
         $this->segment = $segment;
         $this->segmentSubType = $segmentSubType;
         $this->researcher = $researcher;
+        $this->position = $position;
     }
 
     /**
@@ -46,7 +52,11 @@ class WorkController extends Controller
     public function index()
     {
         $works = $this->work->allWorks();
-        return view('layouts.work.index', compact('works'));
+        $positions = $this->position->get();
+        return view('layouts.work.index', compact(
+            'works',
+            'positions',
+        ));
     }
 
     /**
@@ -164,6 +174,10 @@ class WorkController extends Controller
         $stages = $this->stage
         ->where('phase_id', $work->phase_id)
         ->get();
+        $researchers = $this->researcher
+            ->whereHas('role', function (Builder $query) {
+                $query->where('name', '=', 'Pesquisador');
+            })->get();
             
         return view('layouts.work.edit', compact(
             'work',
@@ -171,6 +185,7 @@ class WorkController extends Controller
             'segmentSubTypes',
             'phases',
             'stages',
+            'researchers',
         ));
     }
 
@@ -254,5 +269,38 @@ class WorkController extends Controller
     {
         $work->delete();
         return redirect()->route('work.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreWorkRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeContact(Request $request, Work $work)
+    {
+        $contact = new Contact;
+        $contact->work_id = $work->id;
+        $contact->position_id = $request->position_id;
+        $contact->name = $request->name;
+        $contact->ddd = $request->ddd;
+        $contact->main_phone = $request->main_phone;
+        $contact->ddd_fax = $request->ddd_fax;
+        $contact->fax = $request->fax;
+        $contact->email = $request->email;
+        $contact->ddd_two = $request->ddd_two;
+        $contact->phone_two = $request->phone_two;
+        $contact->ddd_three = $request->ddd_three;
+        $contact->phone_three = $request->phone_three;
+        $contact->ddd_four = $request->ddd_four;
+        $contact->phone_four = $request->phone_four;
+        $contact->phone_type_one = $request->phone_type_one;
+        $contact->phone_type_two = $request->phone_type_two;
+        $contact->phone_type_three = $request->phone_type_three;
+        $contact->created_by = auth()->guard('web')->user()->id;
+        $contact->updated_by = auth()->guard('web')->user()->id;
+        $contact->save();
+
+        return redirect()->back();
     }
 }
