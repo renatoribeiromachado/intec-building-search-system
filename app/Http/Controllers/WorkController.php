@@ -145,7 +145,7 @@ class WorkController extends Controller
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 
-        // return redirect()->route('work.index');
+        return redirect()->route('work.index');
     }
 
     /**
