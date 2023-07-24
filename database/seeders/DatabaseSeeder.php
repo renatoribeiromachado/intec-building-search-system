@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PhaseSeeder::class,
             StageSeeder::class,
             SegmentSeeder::class,
+            SegmentSubTypeSeeder::class,
         ]);
     }
 }

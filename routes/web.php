@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
@@ -33,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
         return view('layouts.dashboard.index');
     })->name('dashboard');
 
-    Route::prefix('company')->group(function () {
+    Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::get('create', [CompanyController::class, 'create'])->name('company.create');
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
@@ -42,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
     });
 
-    Route::prefix('stage')->group(function () {
+    Route::prefix('stages')->group(function () {
         Route::get('/', [StageController::class, 'index'])->name('stage.index');
         Route::get('create', [StageController::class, 'create'])->name('stage.create');
         Route::post('store', [StageController::class, 'store'])->name('stage.store');
@@ -51,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{stage}', [StageController::class, 'destroy'])->name('stage.destroy');
     });
 
-    Route::prefix('phase')->group(function () {
+    Route::prefix('phases')->group(function () {
         Route::get('/', [PhaseController::class, 'index'])->name('phase.index');
         Route::get('create', [PhaseController::class, 'create'])->name('phase.create');
         Route::post('store', [PhaseController::class, 'store'])->name('phase.store');
@@ -60,13 +61,22 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{phase}', [PhaseController::class, 'destroy'])->name('phase.destroy');
     });
 
-    Route::prefix('segment')->group(function () {
+    Route::prefix('segments')->group(function () {
         Route::get('/', [SegmentController::class, 'index'])->name('segment.index');
         Route::get('create', [SegmentController::class, 'create'])->name('segment.create');
         Route::post('store', [SegmentController::class, 'store'])->name('segment.store');
         Route::get('edit/{segment}', [SegmentController::class, 'edit'])->name('segment.edit');
         Route::put('update/{segment}', [SegmentController::class, 'update'])->name('segment.update');
         Route::delete('{segment}', [SegmentController::class, 'destroy'])->name('segment.destroy');
+    });
+
+    Route::prefix('segment-sub-types')->group(function () {
+        Route::get('/', [SegmentSubTypeController::class, 'index'])->name('segment_sub_type.index');
+        Route::get('create', [SegmentSubTypeController::class, 'create'])->name('segment_sub_type.create');
+        Route::post('store', [SegmentSubTypeController::class, 'store'])->name('segment_sub_type.store');
+        Route::get('edit/{segment_sub_type}', [SegmentSubTypeController::class, 'edit'])->name('segment_sub_type.edit');
+        Route::put('update/{segment_sub_type}', [SegmentSubTypeController::class, 'update'])->name('segment_sub_type.update');
+        Route::delete('{segment_sub_type}', [SegmentSubTypeController::class, 'destroy'])->name('segment_sub_type.destroy');
     });
 
     Route::prefix('roles')->group(function() {

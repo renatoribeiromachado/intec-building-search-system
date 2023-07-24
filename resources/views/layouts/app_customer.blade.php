@@ -109,6 +109,11 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
+                                        Subtipos de Segmentos de Atuação
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('stage.index') }}">
                                         Estágios
                                     </a>
