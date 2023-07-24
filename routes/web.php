@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\RoleController;
@@ -89,6 +90,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{work}', [WorkController::class, 'edit'])->name('work.edit');
         Route::put('update/{work}', [WorkController::class, 'update'])->name('work.update');
         Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
+    });
+
+    Route::prefix('associates')->group(function() {
+        Route::prefix('searches')->group(function() {
+            Route::get('', AssociateWorkController::class)->name('search.work.index');
+        });
     });
 });
 

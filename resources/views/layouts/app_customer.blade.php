@@ -69,7 +69,7 @@
                                     <li><a class="dropdown-item" href="#">Empresas</a></li>
                                 {{-- @endcan --}}
 
-                                <li><a class="dropdown-item" href="#">Obras</a></li>
+                                <li><a class="dropdown-item" href="{{ route('search.work.index') }}">Obras</a></li>
                             </ul>
                         </li>
 
