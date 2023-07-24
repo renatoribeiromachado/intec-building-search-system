@@ -19,13 +19,15 @@ class WorkController extends Controller
     protected $segment;
     protected $segmentSubType;
 
+    /*RFenato*/
     public function __construct(
         Work $work,
         Phase $phase,
         Stage $stage,
         Segment $segment,
         SegmentSubType $segmentSubType
-    ) {
+    ) 
+    {
         $this->work = $work;
         $this->phase = $phase;
         $this->stage = $stage;
