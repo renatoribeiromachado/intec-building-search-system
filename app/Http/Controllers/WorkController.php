@@ -24,7 +24,7 @@ class WorkController extends Controller
         Phase $phase,
         Stage $stage,
         Segment $segment,
-        SegmentSubType $segmentSubType,
+        SegmentSubType $segmentSubType
     ) {
         $this->work = $work;
         $this->phase = $phase;
