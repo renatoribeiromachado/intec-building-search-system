@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PhaseSeeder::class,
             StageSeeder::class,
+            SegmentSeeder::class,
         ]);
     }
 }

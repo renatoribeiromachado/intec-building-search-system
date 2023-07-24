@@ -4,6 +4,7 @@ use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
@@ -57,6 +58,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{phase}', [PhaseController::class, 'edit'])->name('phase.edit');
         Route::post('update/{phase}', [PhaseController::class, 'update'])->name('phase.update');
         Route::delete('{phase}', [PhaseController::class, 'destroy'])->name('phase.destroy');
+    });
+
+    Route::prefix('segment')->group(function () {
+        Route::get('/', [SegmentController::class, 'index'])->name('segment.index');
+        Route::get('create', [SegmentController::class, 'create'])->name('segment.create');
+        Route::post('store', [SegmentController::class, 'store'])->name('segment.store');
+        Route::get('edit/{segment}', [SegmentController::class, 'edit'])->name('segment.edit');
+        Route::put('update/{segment}', [SegmentController::class, 'update'])->name('segment.update');
+        Route::delete('{segment}', [SegmentController::class, 'destroy'])->name('segment.destroy');
     });
 
     Route::prefix('roles')->group(function() {

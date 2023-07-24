@@ -88,11 +88,36 @@
                                     <li><a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a></li>
                                 {{-- @endcan --}}
 
-                                <li><a class="dropdown-item" href="{{ route('user.index') }}">Usuários</a></li>
-                                <li><a class="dropdown-item" href="{{ route('work.index') }}">Obras</a></li>
-                                <li><a class="dropdown-item" href="{{ route('phase.index') }}">Fases</a></li>
-                                <li><a class="dropdown-item" href="{{ route('stage.index') }}">Estágios</a></li>
-                                <li><a class="dropdown-item" href="{{ route('role.index') }}">Perfis de Usuários</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                                        Usuários
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('work.index') }}">
+                                        Obras
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('phase.index') }}">
+                                        Fases
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('segment.index') }}">
+                                        Segmentos de Atuação
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('stage.index') }}">
+                                        Estágios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('role.index') }}">
+                                        Perfis de Usuários
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
