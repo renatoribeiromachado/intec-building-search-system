@@ -12,7 +12,9 @@ class Work extends Model
 
     protected $fillable = [
         'phase_id',
+        'stage_id',
         'segment_id',
+        'segment_sub_type_id',
         'old_code',
         'last_review',
         'name',
@@ -24,12 +26,17 @@ class Work extends Model
         'state',
         'state_acronym',
         'zip_code',
+        'started_at',
+        'ends_at',
+        'notes',
         'created_by',
         'updated_by',
     ];
 
     protected $dates = [
-        'last_review'
+        'last_review',
+        'started_at',
+        'ends_at',
     ];
 
     // App methods
@@ -41,9 +48,9 @@ class Work extends Model
         //     $where[]  = ['companies.cnpj', '=', request()->cnpj];
         // }
 
-        // if (request()->trading_name) {
-        //     $where[]  = ['companies.trading_name', 'like', '%'.request()->trading_name.'%'];
-        // }
+        if (request()->name) {
+            $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
+        }
 
         return $work
             ->where($where)

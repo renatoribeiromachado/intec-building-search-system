@@ -16,7 +16,9 @@ class CreateWorksTable extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->foreignId('phase_id')->nullable();
+            $table->foreignId('stage_id')->nullable();
             $table->foreignId('segment_id')->nullable();
+            $table->foreignId('segment_sub_type_id')->nullable();
             $table->string('old_code')->nullable();
             $table->date('last_review')->nullable();
             $table->string('name')->nullable(); // projeto
@@ -30,6 +32,10 @@ class CreateWorksTable extends Migration
             $table->char('state_acronym', 2)->nullable();
             $table->string('zip_code')->nullable();
 
+            $table->date('started_at')->nullable();
+            $table->date('ends_at')->nullable();
+            $table->text('notes')->nullable();
+
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->softDeletes();
@@ -37,7 +43,9 @@ class CreateWorksTable extends Migration
             $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('phase_id')->references('id')->on('phases');
+            $table->foreign('stage_id')->references('id')->on('stages');
             $table->foreign('segment_id')->references('id')->on('segments');
+            $table->foreign('segment_sub_type_id')->references('id')->on('segment_sub_types');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });

@@ -24,7 +24,7 @@ class UpdateWorkRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_review' => ['nullable', 'date_format:m/d/Y']
+            'last_review' => ['nullable', 'date_format:d/m/Y']
         ];
     }
 

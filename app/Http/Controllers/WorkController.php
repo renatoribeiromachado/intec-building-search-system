@@ -6,6 +6,8 @@ use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Phase;
 use App\Models\Segment;
+use App\Models\SegmentSubType;
+use App\Models\Stage;
 use App\Models\Work;
 use Carbon\Carbon;
 
@@ -13,16 +15,22 @@ class WorkController extends Controller
 {
     protected $work;
     protected $phase;
+    protected $stage;
     protected $segment;
+    protected $segmentSubType;
 
     public function __construct(
         Work $work,
         Phase $phase,
+        Stage $stage,
         Segment $segment,
+        SegmentSubType $segmentSubType,
     ) {
         $this->work = $work;
         $this->phase = $phase;
+        $this->stage = $stage;
         $this->segment = $segment;
+        $this->segmentSubType = $segmentSubType;
     }
 
     /**
@@ -44,12 +52,17 @@ class WorkController extends Controller
     public function create()
     {
         $work = $this->work;
-        $phases = $this->phase->allPhases();
-        $segments = $this->segment->allSegments();
+        $phases = $this->phase->get();
+        $segments = $this->segment->get();
+        $segmentSubTypes = [];
+        $stages = [];
+
         return view('layouts.work.create', compact(
             'work',
-            'phases',
             'segments',
+            'segmentSubTypes',
+            'phases',
+            'stages',
         ));
     }
 
@@ -74,7 +87,12 @@ class WorkController extends Controller
         $work->state_acronym = $request->state_acronym;
         $work->zip_code = $request->zip_code;
         $work->phase_id = $request->phase_id;
+        $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
+        $work->segment_sub_type_id = $request->segment_sub_type_id;
+        $work->started_at = convertPtBrDateToEnDate($request->started_at);
+        $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
+        $work->notes = $request->notes;
         $work->created_by = auth()->guard('web')->user()->id;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
@@ -91,11 +109,20 @@ class WorkController extends Controller
     public function edit(Work $work)
     {
         $phases = $this->phase->get();
-        $segments = $this->segment->allSegments();
+        $segments = $this->segment->get();
+        $segmentSubTypes = $this->segmentSubType
+            ->where('segment_id', $work->segment_id)
+            ->get();
+        $stages = $this->stage
+        ->where('phase_id', $work->phase_id)
+        ->get();
+            
         return view('layouts.work.edit', compact(
-            'phases',
             'work',
             'segments',
+            'segmentSubTypes',
+            'phases',
+            'stages',
         ));
     }
 
@@ -120,7 +147,12 @@ class WorkController extends Controller
         $work->state_acronym = $request->state_acronym;
         $work->zip_code = $request->zip_code;
         $work->phase_id = $request->phase_id;
+        $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
+        $work->segment_sub_type_id = $request->segment_sub_type_id;
+        $work->started_at = convertPtBrDateToEnDate($request->started_at);
+        $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
+        $work->notes = $request->notes;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 

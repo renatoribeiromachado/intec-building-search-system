@@ -9,6 +9,7 @@ use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,6 +78,24 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{segment_sub_type}', [SegmentSubTypeController::class, 'edit'])->name('segment_sub_type.edit');
         Route::put('update/{segment_sub_type}', [SegmentSubTypeController::class, 'update'])->name('segment_sub_type.update');
         Route::delete('{segment_sub_type}', [SegmentSubTypeController::class, 'destroy'])->name('segment_sub_type.destroy');
+    });
+
+    Route::prefix('v1')->group(function () {
+
+        Route::get('segment-sub-types', function (Request $request) {
+            $segmentSubTypes = \App\Models\SegmentSubType::whereSegmentId($request->segment)->get();
+            return response()->json([
+                'segmentSubTypes' => $segmentSubTypes
+            ], 200);
+        });
+
+        Route::get('stages', function (Request $request) {
+            $stages = \App\Models\Stage::wherePhaseId($request->phase)->get();
+            return response()->json([
+                'stages' => $stages
+            ], 200);
+        });
+
     });
 
     Route::prefix('roles')->group(function() {

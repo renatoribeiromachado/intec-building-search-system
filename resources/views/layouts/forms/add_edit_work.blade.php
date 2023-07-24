@@ -1,3 +1,5 @@
+@include('layouts.alerts.all-errors')
+
 <div class="form-row">
     <div class="form-group col-md-4 mb-2">
         <label for="old_code">Código Antigo</label>
@@ -107,6 +109,30 @@
 
 <div class="form-row">
     <div class="form-group col-md-3 mb-2">
+        <label for="segment_sub_type">Subtipo</label>
+        <select id="segment_sub_type" name="segment_sub_type_id" class="form-control">
+            @forelse ($segmentSubTypes as $segmentSubType)
+                @if ($loop->index == 0)
+                    <option value="" selected>-- Selecione primeiro o segmento --</option>
+                @endif
+
+                <option
+                    value="{{ $segmentSubType->id }}"
+                    @if (old('segment_sub_type_id', $work->segment_sub_type_id) == $segmentSubType->id) selected @endif
+                    >
+                    {{ $segmentSubType->description }}
+                </option>
+                
+                @empty
+                <option value="" selected>-- Selecione primeiro o segmento --</option>
+
+            @endforelse
+        </select>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-3 mb-2">
         <label for="phase">Fase</label>
         <select id="phase" name="phase_id" class="form-control">
             @foreach ($phases as $phase)
@@ -122,5 +148,48 @@
                 </option>
             @endforeach
         </select>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-3 mb-2">
+        <label for="stage">Estágio</label>
+        <select id="stage" name="stage_id" class="form-control">
+            @forelse ($stages as $stage)
+                @if ($loop->index == 0)
+                    <option value="" selected>-- Selecione primeiro a fase --</option>
+                @endif
+
+                <option
+                    value="{{ $stage->id }}"
+                    @if (old('stage_id', $work->stage_id) == $stage->id) selected @endif
+                    >
+                    {{ $stage->description }}
+                </option>
+                
+                @empty
+                <option value="" selected>-- Selecione primeiro a fase --</option>
+
+            @endforelse
+        </select>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-4 mb-2">
+        <label for="started_at">Início da Obra</label>
+        <input type="text" id="started_at" name="started_at" class="form-control date {{ $errors->has('started_at') ? 'is-invalid' : '' }}" value="{{ old('started_at', optional($work->started_at)->format('d/m/Y')) }}" placeholder="ex: 03/02/2023">
+    </div>
+    
+    <div class="form-group col-md-4 mb-2">
+        <label for="ends_at">Término da Obra</label>
+        <input type="text" id="ends_at" name="ends_at" class="form-control date {{ $errors->has('ends_at') ? 'is-invalid' : '' }}" value="{{ old('ends_at', optional($work->ends_at)->format('d/m/Y')) }}" placeholder="ex: 03/04/2023">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12 mb-2">
+        <label for="notes">Descrições Complementares</label>
+        <textarea type="text" id="notes" name="notes" class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" rows="5" placeholder="ex: Esta obra foi tratada no particular com...">{{ old('notes', $work->notes) }}</textarea>
     </div>
 </div>

@@ -5,24 +5,15 @@
     <div class="bg-light p-5 rounded">
         <h1>LISTA DE OBRAS</h1>
 
-        {{-- <div>
+        <div>
             <form action="{{ route('work.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
-                        <label for="inputPassword4">CNPJ</label>
+                        <label for="inputEmail4">Projeto</label>
                         <input
-                            type="text" id="cnpj" name="cnpj"
-                            class="form-control cnpj {{ $errors->has('cnpj') ? 'is-invalid' : '' }}"
-                            value="{{ old('cnpj', request()->cnpj) }}" placeholder="ex: 23.025.414/0001-23"
-                            >
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="inputEmail4">Nome Fantasia</label>
-                        <input
-                            type="text" id="trading_name" name="trading_name"
-                            class="form-control {{ $errors->has('trading_name') ? 'is-invalid' : '' }}"
-                            value="{{ old('trading_name', request()->trading_name) }}" placeholder="ex: Minha Empresa"
+                            type="text" id="name" name="name"
+                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                            value="{{ old('name', request()->name) }}" placeholder="ex: PCH PALMAS"
                             >
                     </div>
 
@@ -41,7 +32,7 @@
                     </div>
                 </div>
             </form>
-        </div> --}}
+        </div>
 
         <div class="">
             <a class="btn btn-primary float-end"
@@ -71,7 +62,7 @@
                         <td>{{ $work->old_code }}</td>
                         <td>{{ $work->name }}</td>
                         <td>{{ optional($work->last_review)->format('d/m/Y') }}</td>
-                        <td>{{ $work->price }}</td>
+                        <td>R$ {{ $work->price }}</td>
                         <td>{{ optional($work->phase)->description }}</td>
                         <td>{{ optional($work->segment)->description }}</td>
                         <td>
@@ -141,7 +132,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6">
+                        <td colspan="8">
                             <p class="text-center mb-0 py-4">
                                 Nenhum registro encontrado.
                             </p>
