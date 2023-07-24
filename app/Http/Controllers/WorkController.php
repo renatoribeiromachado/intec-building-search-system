@@ -8,8 +8,10 @@ use App\Models\Phase;
 use App\Models\Segment;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
+use App\Models\User;
 use App\Models\Work;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class WorkController extends Controller
 {
@@ -18,19 +20,22 @@ class WorkController extends Controller
     protected $stage;
     protected $segment;
     protected $segmentSubType;
+    protected $researcher;
 
     public function __construct(
         Work $work,
         Phase $phase,
         Stage $stage,
         Segment $segment,
-        SegmentSubType $segmentSubType
+        SegmentSubType $segmentSubType,
+        User $researcher
     ) {
         $this->work = $work;
         $this->phase = $phase;
         $this->stage = $stage;
         $this->segment = $segment;
         $this->segmentSubType = $segmentSubType;
+        $this->researcher = $researcher;
     }
 
     /**
@@ -56,6 +61,10 @@ class WorkController extends Controller
         $segments = $this->segment->get();
         $segmentSubTypes = [];
         $stages = [];
+        $researchers = $this->researcher
+            ->whereHas('role', function (Builder $query) {
+                $query->where('name', '=', 'Pesquisador');
+            })->get();
 
         return view('layouts.work.create', compact(
             'work',
@@ -63,6 +72,7 @@ class WorkController extends Controller
             'segmentSubTypes',
             'phases',
             'stages',
+            'researchers',
         ));
     }
 
