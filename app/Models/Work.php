@@ -29,6 +29,43 @@ class Work extends Model
         'started_at',
         'ends_at',
         'notes',
+
+        'revision',
+        'start_and_end',
+        'total_project_area',
+        'cub',
+        'quotation_type',
+        'coin',
+        'investment_standard',
+
+        'tower', // obr_DescResidEdificio_chr
+        'house', // obr_DescResidResidenciais_chr
+        'condominium', // obr_DescResidCondominios_chr
+        'floor', // obr_DescResidPavimentos_chr
+        'apartment_per_floor', // obr_DescResidApartamentos_chr
+        'bedroom', // obr_DescResidDormitorios_chr
+        'suite', // obr_DescResidSuite_chr
+        'bathroom', // obr_DescResidBanheiro_chr
+        'washbasin', // obr_DescResidLavabo_chr
+        'living_room', // obr_DescResidSala_chr
+        'cup_and_kitchen', // obr_DescResidCopa_chr
+        'service_area_terrace_balcony', // obr_DescResidATV_chr
+        'maid_dependency', // obr_DescResidDepEmpreg_chr
+        'total_unities', // obr_DescInfoAdicTotalUnicades_chr
+        'useful_area', // obr_DescInfoAdicAreaUtil_chr
+        'total_area', // obr_DescInfoAdicAreaTerreno_chr
+        'elevator', // obr_DescInfoAdicElevador_chr
+        'garage', // obr_DescInfoAdicVagas_chr
+        'coverage', // obr_DescInfoAdicCobert_chr
+        'air_conditioner', // obr_DescInfoAdicArCondic_chr
+        'heating', // obr_DescInfoAdicAquecimento_chr
+        'foundry', // obr_DescInfoAdicFundacoes_chr
+        'frame', // obr_DescInfoAdicEstrutura_chr
+        'completion', // obr_DescInfoAdicAcabamento_chr
+        'facade', // obr_DescInfoAdicFachada_chr
+        'status',
+
+
         'created_by',
         'updated_by',
     ];
