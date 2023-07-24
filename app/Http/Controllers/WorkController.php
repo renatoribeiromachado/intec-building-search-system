@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Phase;
+use App\Models\Segment;
 use App\Models\Work;
 use Carbon\Carbon;
 
@@ -12,13 +13,16 @@ class WorkController extends Controller
 {
     protected $work;
     protected $phase;
+    protected $segment;
 
     public function __construct(
         Work $work,
         Phase $phase,
+        Segment $segment,
     ) {
         $this->work = $work;
         $this->phase = $phase;
+        $this->segment = $segment;
     }
 
     /**
@@ -40,10 +44,12 @@ class WorkController extends Controller
     public function create()
     {
         $work = $this->work;
-        $phases = $this->phase->get();
+        $phases = $this->phase->allPhases();
+        $segments = $this->segment->allSegments();
         return view('layouts.work.create', compact(
             'work',
             'phases',
+            'segments',
         ));
     }
 
@@ -60,7 +66,15 @@ class WorkController extends Controller
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
         $work->name = $request->name;
         $work->price = $request->price;
+        $work->address = $request->address;
+        $work->number = $request->number;
+        $work->district = $request->district;
+        $work->city = $request->city;
+        $work->state = $request->state;
+        $work->state_acronym = $request->state_acronym;
+        $work->zip_code = $request->zip_code;
         $work->phase_id = $request->phase_id;
+        $work->segment_id = $request->segment_id;
         $work->created_by = auth()->guard('web')->user()->id;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
@@ -77,9 +91,11 @@ class WorkController extends Controller
     public function edit(Work $work)
     {
         $phases = $this->phase->get();
+        $segments = $this->segment->allSegments();
         return view('layouts.work.edit', compact(
             'phases',
-            'work'
+            'work',
+            'segments',
         ));
     }
 
@@ -96,7 +112,15 @@ class WorkController extends Controller
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
         $work->name = $request->name;
         $work->price = $request->price;
+        $work->address = $request->address;
+        $work->number = $request->number;
+        $work->district = $request->district;
+        $work->city = $request->city;
+        $work->state = $request->state;
+        $work->state_acronym = $request->state_acronym;
+        $work->zip_code = $request->zip_code;
         $work->phase_id = $request->phase_id;
+        $work->segment_id = $request->segment_id;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 

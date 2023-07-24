@@ -16,10 +16,20 @@ class CreateWorksTable extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->foreignId('phase_id')->nullable();
+            $table->foreignId('segment_id')->nullable();
             $table->string('old_code')->nullable();
             $table->date('last_review')->nullable();
             $table->string('name')->nullable(); // projeto
             $table->decimal('price', 10, 2)->nullable();
+
+            $table->string('address', 100)->nullable();
+            $table->string('number')->nullable();
+            $table->string('district')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->char('state_acronym', 2)->nullable();
+            $table->string('zip_code')->nullable();
+
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->softDeletes();
@@ -27,6 +37,7 @@ class CreateWorksTable extends Migration
             $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('phase_id')->references('id')->on('phases');
+            $table->foreign('segment_id')->references('id')->on('segments');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });

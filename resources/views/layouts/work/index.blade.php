@@ -60,6 +60,7 @@
                     <th scope="col">Revisado em</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
+                    <th scope="col">Segmento</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -72,6 +73,7 @@
                         <td>{{ optional($work->last_review)->format('d/m/Y') }}</td>
                         <td>{{ $work->price }}</td>
                         <td>{{ optional($work->phase)->description }}</td>
+                        <td>{{ optional($work->segment)->description }}</td>
                         <td>
                             <a
                                 href="{{ route('work.edit', $work->id) }}"

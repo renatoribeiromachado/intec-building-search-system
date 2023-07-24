@@ -12,10 +12,18 @@ class Work extends Model
 
     protected $fillable = [
         'phase_id',
+        'segment_id',
         'old_code',
         'last_review',
         'name',
         'price',
+        'address',
+        'number',
+        'district',
+        'city',
+        'state',
+        'state_acronym',
+        'zip_code',
         'created_by',
         'updated_by',
     ];
@@ -47,5 +55,10 @@ class Work extends Model
     public function phase()
     {
         return $this->belongsTo(Phase::class);
+    }
+
+    public function segment()
+    {
+        return $this->belongsTo(Segment::class);
     }
 }
