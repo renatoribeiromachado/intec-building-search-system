@@ -36,6 +36,41 @@ class CreateWorksTable extends Migration
             $table->date('ends_at')->nullable();
             $table->text('notes')->nullable();
 
+            $table->integer('revision')->nullable();
+            $table->string('start_and_end')->nullable();
+            $table->string('total_project_area')->nullable();
+            $table->string('cub')->nullable();
+            $table->string('quotation_type')->nullable();
+            $table->string('coin')->nullable();
+            $table->string('investment_standard')->nullable();
+
+            $table->string('tower')->nullable();
+            $table->string('house')->nullable();
+            $table->string('condominium')->nullable();
+            $table->string('floor')->nullable();
+            $table->string('apartment_per_floor')->nullable();
+            $table->string('bedroom')->nullable();
+            $table->string('suite')->nullable();
+            $table->string('bathroom')->nullable();
+            $table->string('washbasin')->nullable();
+            $table->string('living_room')->nullable();
+            $table->string('cup_and_kitchen')->nullable();
+            $table->string('service_area_terrace_balcony')->nullable();
+            $table->string('maid_dependency')->nullable();
+            $table->string('total_unities')->nullable();
+            $table->string('useful_area')->nullable();
+            $table->string('total_area')->nullable();
+            $table->string('elevator')->nullable();
+            $table->string('garage')->nullable();
+            $table->string('coverage')->nullable();
+            $table->string('air_conditioner')->nullable();
+            $table->string('heating')->nullable();
+            $table->string('foundry')->nullable();
+            $table->string('frame')->nullable();
+            $table->string('completion')->nullable();
+            $table->string('facade')->nullable();
+            $table->string('status')->nullable();
+
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->softDeletes();

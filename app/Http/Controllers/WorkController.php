@@ -19,15 +19,13 @@ class WorkController extends Controller
     protected $segment;
     protected $segmentSubType;
 
-    /*RFenato*/
     public function __construct(
         Work $work,
         Phase $phase,
         Stage $stage,
         Segment $segment,
         SegmentSubType $segmentSubType
-    ) 
-    {
+    ) {
         $this->work = $work;
         $this->phase = $phase;
         $this->stage = $stage;
@@ -95,6 +93,42 @@ class WorkController extends Controller
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
         $work->notes = $request->notes;
+
+        $work->revision = $request->revision;
+        $work->start_and_end = $request->start_and_end;
+        $work->total_project_area = $request->total_project_area;
+        $work->cub = $request->cub;
+        $work->quotation_type = $request->quotation_type;
+        $work->coin = $request->coin;
+        $work->investment_standard = $request->investment_standard;
+
+        $work->tower = $request->tower;
+        $work->house = $request->house;
+        $work->condominium = $request->condominium;
+        $work->floor = $request->floor;
+        $work->apartment_per_floor = $request->apartment_per_floor;
+        $work->bedroom = $request->bedroom;
+        $work->suite = $request->suite;
+        $work->bathroom = $request->bathroom;
+        $work->washbasin = $request->washbasin;
+        $work->living_room = $request->living_room;
+        $work->cup_and_kitchen = $request->cup_and_kitchen;
+        $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
+        $work->maid_dependency = $request->maid_dependency;
+        $work->total_unities = $request->total_unities;
+        $work->useful_area = $request->useful_area;
+        $work->total_area = $request->total_area;
+        $work->elevator = $request->elevator;
+        $work->garage = $request->garage;
+        $work->coverage = $request->coverage;
+        $work->air_conditioner = $request->air_conditioner;
+        $work->heating = $request->heating;
+        $work->foundry = $request->foundry;
+        $work->frame = $request->frame;
+        $work->completion = $request->completion;
+        $work->facade = $request->facade;
+        $work->status = $request->status;
+
         $work->created_by = auth()->guard('web')->user()->id;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
@@ -155,6 +189,42 @@ class WorkController extends Controller
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
         $work->notes = $request->notes;
+
+        $work->revision = $request->revision;
+        $work->start_and_end = $request->start_and_end;
+        $work->total_project_area = $request->total_project_area;
+        $work->cub = $request->cub;
+        $work->quotation_type = $request->quotation_type;
+        $work->coin = $request->coin;
+        $work->investment_standard = $request->investment_standard;
+
+        $work->tower = $request->tower;
+        $work->house = $request->house;
+        $work->condominium = $request->condominium;
+        $work->floor = $request->floor;
+        $work->apartment_per_floor = $request->apartment_per_floor;
+        $work->bedroom = $request->bedroom;
+        $work->suite = $request->suite;
+        $work->bathroom = $request->bathroom;
+        $work->washbasin = $request->washbasin;
+        $work->living_room = $request->living_room;
+        $work->cup_and_kitchen = $request->cup_and_kitchen;
+        $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
+        $work->maid_dependency = $request->maid_dependency;
+        $work->total_unities = $request->total_unities;
+        $work->useful_area = $request->useful_area;
+        $work->total_area = $request->total_area;
+        $work->elevator = $request->elevator;
+        $work->garage = $request->garage;
+        $work->coverage = $request->coverage;
+        $work->air_conditioner = $request->air_conditioner;
+        $work->heating = $request->heating;
+        $work->foundry = $request->foundry;
+        $work->frame = $request->frame;
+        $work->completion = $request->completion;
+        $work->facade = $request->facade;
+        $work->status = $request->status;
+
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 
