@@ -123,6 +123,12 @@
                                         Perfis de Usuários
                                     </a>
                                 </li>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('position.index') }}">
+                                        Cargos
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

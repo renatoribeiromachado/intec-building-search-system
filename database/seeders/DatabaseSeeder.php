@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             StageSeeder::class,
             SegmentSeeder::class,
             SegmentSubTypeSeeder::class,
+            PositionSeeder::class,
         ]);
     }
 }

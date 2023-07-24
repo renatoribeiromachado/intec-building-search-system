@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\SegmentSubTypeController;
@@ -135,6 +136,15 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('searches')->group(function() {
             Route::get('', AssociateWorkController::class)->name('search.work.index');
         });
+    });
+
+    Route::prefix('positions')->group(function () {
+        Route::get('/', [PositionController::class, 'index'])->name('position.index');
+        Route::get('create', [PositionController::class, 'create'])->name('position.create');
+        Route::post('store', [PositionController::class, 'store'])->name('position.store');
+        Route::get('edit/{position}', [PositionController::class, 'edit'])->name('position.edit');
+        Route::post('update/{position}', [PositionController::class, 'update'])->name('position.update');
+        Route::delete('{position}', [PositionController::class, 'destroy'])->name('position.destroy');
     });
 });
 
