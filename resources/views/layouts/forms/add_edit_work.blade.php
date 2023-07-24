@@ -26,7 +26,7 @@
 
                         <option
                             value="{{ $researcher->id }}"
-                            @if (old('researcher_id', $work->research_id) == $researcher->id) selected @endif
+                            @if (old('researcher_id', $work->researcher_id) == $researcher->id) selected @endif
                             >
                             {{ $researcher->name }}
                         </option>
