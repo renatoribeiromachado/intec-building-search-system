@@ -17,14 +17,26 @@
 
             <div class="col-md-6 mb-2">
                 <label for="inputPassword4">Pesquisador</label>
-                <select id="researcher" name="researcher" class="form-control">
+                <select id="researcher" name="researcher_id" class="form-control">
                     <option selected>-- Selecione --</option>
+                    @foreach ($researchers as $researcher)
+                        @if ($loop->index == 0)
+                        <option selected>-- Selecione --</option>
+                        @endif
+
+                        <option
+                            value="{{ $researcher->id }}"
+                            @if (old('researcher_id', $work->research_id) == $researcher->id) selected @endif
+                            >
+                            {{ $researcher->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
             <div class="col-md-2 mb-2">
                 <label for="inputPassword4">Revisão</label>
-                <input type="text" id="revision" name="revision" class="form-control {{ $errors->has('revision') ? 'is-invalid' : '' }}" value="{{ old('revision', $work->revision) }}">
+                <input type="number" id="revision" name="revision" class="form-control {{ $errors->has('revision') ? 'is-invalid' : '' }}" value="{{ old('revision', $work->revision) }}">
             </div>
         </div>
 
@@ -199,7 +211,7 @@
 
             <div class="form-group col-md-2 mb-2">
                 <label for="start_and_end">Início / Término</label>
-                <input type="text" id="start_and_end" name="ends_at" class="form-control {{ $errors->has('start_and_end') ? 'is-invalid' : '' }}" value="{{ old('start_and_end', $work->start_and_end) }}" placeholder="">
+                <input type="text" id="start_and_end" name="start_and_end" class="form-control {{ $errors->has('start_and_end') ? 'is-invalid' : '' }}" value="{{ old('start_and_end', $work->start_and_end) }}" placeholder="">
             </div>
 
             <div class="form-group col-md-3 mb-2">
@@ -255,11 +267,11 @@
                         <th>Apartamento(s) por Andar</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="building" class="form-control {{ $errors->has('building') ? 'is-invalid' : '' }}" value="{{ old('building', $work->building) }}"/></td>
-                        <td><input type="text" name="home" class="form-control {{ $errors->has('home') ? 'is-invalid' : '' }}" value="{{ old('home', $work->home) }}" /></td>
+                        <td><input type="text" name="tower" class="form-control {{ $errors->has('tower') ? 'is-invalid' : '' }}" value="{{ old('tower', $work->tower) }}"/></td>
+                        <td><input type="text" name="house" class="form-control {{ $errors->has('house') ? 'is-invalid' : '' }}" value="{{ old('house', $work->house) }}" /></td>
                         <td><input type="text" name="condominium" class="form-control {{ $errors->has('condominium') ? 'is-invalid' : '' }}" value="{{ old('condominium', $work->condominium) }}"/></td>
                         <td><input type="text" name="floor" class="form-control {{ $errors->has('floor') ? 'is-invalid' : '' }}" value="{{ old('floor', $work->floor) }}"/></td> 
-                        <td><input type="text" name="apartment" class="form-control {{ $errors->has('apartment') ? 'is-invalid' : '' }}" value="{{ old('apartment', $work->apartment) }}"/></td>
+                        <td><input type="text" name="apartment_per_floor" class="form-control {{ $errors->has('apartment_per_floor') ? 'is-invalid' : '' }}" value="{{ old('apartment_per_floor', $work->apartment_per_floor) }}"/></td>
                     </tr>
                     <tr>
                         <th>Dormitório(s)</th>
@@ -268,10 +280,10 @@
                         <th colspan="2">Lavabo(s)</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="dorm" class="form-control {{ $errors->has('dorm') ? 'is-invalid' : '' }}" value="{{ old('dorm', $work->dorm) }}"/></td>
-                        <td><input type="text" name="suites" class="form-control {{ $errors->has('suites') ? 'is-invalid' : '' }}" value="{{ old('suites', $work->suites) }}"/></td>
+                        <td><input type="text" name="bedroom" class="form-control {{ $errors->has('bedroom') ? 'is-invalid' : '' }}" value="{{ old('bedroom', $work->bedroom) }}"/></td>
+                        <td><input type="text" name="suite" class="form-control {{ $errors->has('suite') ? 'is-invalid' : '' }}" value="{{ old('suite', $work->suite) }}"/></td>
                         <td><input type="text" name="bathroom" class="form-control {{ $errors->has('bathroom') ? 'is-invalid' : '' }}" value="{{ old('bathroom', $work->bathroom) }}"/></td>
-                        <td colspan="2"><input type="text" name="toilet" class="form-control {{ $errors->has('toilet') ? 'is-invalid' : '' }}" value="{{ old('toilet', $work->toilet) }}"/></td>
+                        <td colspan="2"><input type="text" name="washbasin" class="form-control {{ $errors->has('washbasin') ? 'is-invalid' : '' }}" value="{{ old('washbasin', $work->washbasin) }}"/></td>
                     </tr>
                     <tr>
                         <th>Sala(s) de estar / jantar</th>
@@ -288,7 +300,7 @@
                                 <option value="1/1">1/1</option>
                             </select>
                         </td>
-                        <td><select name="cup_Kitchen" class="form-control">
+                        <td><select name="cup_and_kitchen" class="form-control">
                                 <option value="0">-- Selecione --</option>
                                 <option value="0/0">0/0</option>
                                 <option value="0/1">0/1</option>
@@ -305,7 +317,9 @@
                                 <option value="1/0/0">1/0/0</option>
                             </select>
                         </td>
-                        <td colspan="2"><input type="text" name="dependence_maid" class="form-control {{ $errors->has('dependence_maid') ? 'is-invalid' : '' }}" value="{{ old('dependence_maid', $work->dependence_maid) }}"/></td>
+                        <td colspan="2">
+                            <input type="text" name="maid_dependency" class="form-control {{ $errors->has('maid_dependency') ? 'is-invalid' : '' }}" value="{{ old('maid_dependency', $work->maid_dependency) }}"/>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -378,12 +392,12 @@
                         <th>Cobertura(s)</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="unit_total" class="form-control {{ $errors->has('unit_total') ? 'is-invalid' : '' }}" value="{{ old('unit_total', $work->unit_total) }}"/></td>
+                        <td><input type="text" name="total_unities" class="form-control {{ $errors->has('total_unities') ? 'is-invalid' : '' }}" value="{{ old('total_unities', $work->total_unities) }}"/></td>
                         <td><input type="text" name="useful_area" class="form-control {{ $errors->has('useful_area') ? 'is-invalid' : '' }}" value="{{ old('useful_area', $work->useful_area) }}"/></td>
-                        <td><input type="text" name="land_area" class="form-control {{ $errors->has('land_area') ? 'is-invalid' : '' }}" value="{{ old('land_area', $work->land_area) }}"/></td>
+                        <td><input type="text" name="total_area" class="form-control {{ $errors->has('total_area') ? 'is-invalid' : '' }}" value="{{ old('total_area', $work->total_area) }}"/></td>
                         <td><input type="text" name="elevator" class="form-control {{ $errors->has('elevator') ? 'is-invalid' : '' }}" value="{{ old('elevator', $work->elevator) }}"/></td>
-                        <td><input type="text" name="vacancy" class="form-control {{ $errors->has('vacancy') ? 'is-invalid' : '' }}" value="{{ old('vacancy', $work->vacancy) }}"/></td>
-                        <td><input type="text" name="roof" class="form-control {{ $errors->has('roof') ? 'is-invalid' : '' }}" value="{{ old('roof', $work->roof) }}"/></td>
+                        <td><input type="text" name="garage" class="form-control {{ $errors->has('garage') ? 'is-invalid' : '' }}" value="{{ old('garage', $work->garage) }}"/></td>
+                        <td><input type="text" name="coverage" class="form-control {{ $errors->has('coverage') ? 'is-invalid' : '' }}" value="{{ old('coverage', $work->coverage) }}"/></td>
                     </tr>
                     <tr>
                         <th>Ar condiconado</th>
@@ -394,10 +408,10 @@
                         <th>Fachada</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="air_conditioning" class="form-control {{ $errors->has('air_conditioning') ? 'is-invalid' : '' }}" value="{{ old('air_conditioning', $work->air_conditioning) }}"/></td>
+                        <td><input type="text" name="air_conditioner" class="form-control {{ $errors->has('air_conditioner') ? 'is-invalid' : '' }}" value="{{ old('air_conditioner', $work->air_conditioner) }}"/></td>
                         <td><input type="text" name="heating" class="form-control {{ $errors->has('heating') ? 'is-invalid' : '' }}" value="{{ old('heating', $work->heating) }}"/></td>
                         <td>
-                            <select name="foundations" class="form-control">
+                            <select name="foundry" class="form-control">
                                 <option value="">-- Selecione --</option>
                                 <option value="CASAS">CASAS</option>
                                 <option value="Sapata Isolada">Sapata Isolada</option>
@@ -415,7 +429,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="structure" class="form-control">
+                            <select name="frame" class="form-control">
                                 <option value="">-- Selecione --</option>
                                 <option value="casas">Casas</option>
                                 <option value="Bloco Estrutural">Bloco Estrutural</option>
@@ -432,7 +446,7 @@
                                 <option value="Parede de Concreto">Parede de Concreto</option>
                             </select>
                         </td>
-                        <td><input type="text" name="finishing" class="form-control {{ $errors->has('finishing') ? 'is-invalid' : '' }}" value="{{ old('finishing', $work->finishing) }}"/></td>
+                        <td><input type="text" name="completion" class="form-control {{ $errors->has('completion') ? 'is-invalid' : '' }}" value="{{ old('completion', $work->completion) }}"/></td>
                         <td><input type="text" name="facade" class="form-control {{ $errors->has('facade') ? 'is-invalid' : '' }}" value="{{ old('facade', $work->facade) }}"/></td>
                     </tr>
                 </table>

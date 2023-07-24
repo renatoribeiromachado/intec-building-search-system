@@ -68,7 +68,12 @@
                 $('#phase').bind('change', function () {
                     var phase = $(this).val();
 
+                    console.log(phase)
+                    console.log(phase.length)
+
                     if (phase.length > 0) {
+
+                        console.log(base_url() + 'v1/stages')
 
                         $.ajax({
                             type: "GET",
@@ -92,7 +97,8 @@
                                     $('select[name="stage_id"]').html(options);
                                 }
                             },
-                            error: function () {
+                            error: function (event) {
+                                console.log(event)
                                 $('select[name="stage_id"]')
                                     .html('<option value=""  style="background:#fff;color:#454c54;"> Estágios não encontrados! </option>');
                             }

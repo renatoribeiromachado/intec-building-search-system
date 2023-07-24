@@ -24,14 +24,18 @@ class StoreWorkRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_review' => ['nullable', 'date_format:d/m/Y']
+            'last_review' => ['nullable', 'date_format:d/m/Y'],
+            'started_at' => ['nullable', 'date_format:d/m/Y'],
+            'ends_at' => ['nullable', 'date_format:d/m/Y']
         ];
     }
 
     public function messages()
     {
         return [
-            'last_review.date_format' => 'Data inválida'
+            'last_review.date_format' => 'Data de Publicação inválida',
+            'started_at.date_format' => 'Data de Início da Obra inválida',
+            'ends_at.date_format' => 'Data Término da Obra inválida'
         ];
     }
 }

@@ -84,6 +84,7 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
+        // dd($request->all());
         $work = $this->work;
         $work->old_code = $request->old_code;
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
@@ -99,6 +100,7 @@ class WorkController extends Controller
         $work->phase_id = $request->phase_id;
         $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
+        $work->researcher_id = $request->researcher_id;
         $work->segment_sub_type_id = $request->segment_sub_type_id;
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
@@ -143,7 +145,7 @@ class WorkController extends Controller
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 
-        return redirect()->route('work.index');
+        // return redirect()->route('work.index');
     }
 
     /**
@@ -195,6 +197,7 @@ class WorkController extends Controller
         $work->phase_id = $request->phase_id;
         $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
+        $work->researcher_id = $request->researcher_id;
         $work->segment_sub_type_id = $request->segment_sub_type_id;
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);

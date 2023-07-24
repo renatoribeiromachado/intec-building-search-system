@@ -15,6 +15,7 @@ class Work extends Model
         'stage_id',
         'segment_id',
         'segment_sub_type_id',
+        'researcher_id',
         'old_code',
         'last_review',
         'name',
