@@ -16,10 +16,9 @@
             </div>
 
             <div class="col-md-6 mb-2">
-                <label for="inputPassword4">Pesquisador</label>
+                <label for="researcher">Pesquisador</label>
                 <select id="researcher" name="researcher_id" class="form-control">
-                    <option selected>-- Selecione --</option>
-                    @foreach ($researchers as $researcher)
+                    @forelse ($researchers as $researcher)
                         @if ($loop->index == 0)
                         <option selected>-- Selecione --</option>
                         @endif
@@ -30,7 +29,9 @@
                             >
                             {{ $researcher->name }}
                         </option>
-                    @endforeach
+                        @empty
+                        <option selected>-- Selecione --</option>
+                    @endforelse
                 </select>
             </div>
 
@@ -465,7 +466,7 @@
             <div class="col-sm-3">
                 <label class="control-label"><strong>STATUS</strong></label>
                 <select name="status" class="form-control">
-                    <option value="0">-- Selecione --</option>  
+                    <option value="0">-- Selecione --</option>
                 </select>
             </div>
         </div>
