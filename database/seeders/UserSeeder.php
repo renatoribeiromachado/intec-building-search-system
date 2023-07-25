@@ -34,5 +34,12 @@ class UserSeeder extends Seeder
             'email' => 'renato@gmail.com',
             'password' => '$2y$10$up8dFLosbqaULAG.8B5kRO.avv21.HjbpFkiFURS7OPBGPZ9tRMWK'
         ]);
+
+        User::factory()->create([
+            'role_id' => $administratorRole->id,
+            'name' => 'Beatriz Sabo',
+            'email' => 'beatriz@intecbrasil.com.br',
+            'password' => '$2y$10$up8dFLosbqaULAG.8B5kRO.avv21.HjbpFkiFURS7OPBGPZ9tRMWK'
+        ]);
     }
 }
