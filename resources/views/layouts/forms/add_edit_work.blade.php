@@ -732,12 +732,12 @@
                     <option value="0">-- Selecione --</option>
                     <option
                         value="1"
-                        @if(old('is_active', $work->status) == 1) selected @endif>
+                        @if(old('status', $work->status) == 1) selected @endif>
                         Ativada
                     </option>
                     <option
                         value="0"
-                        @if(old('is_active', $work->status) == 0) selected @endif>
+                        @if(old('status', $work->status) == 0) selected @endif>
                         Desativada
                     </option>
                 </select>
