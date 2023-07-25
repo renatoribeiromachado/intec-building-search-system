@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pt-br">
     <head>
+        <title>Intec Obras</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Adicione o link do ícone do Bootstrap 5 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+        <link rel="icon" type="image/png" href="{{ url('favicon/favicon.png') }}">
+        <link rel="icon" type="image/png" href="{{ url('imgs/favicon.png') }}">
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <style>
+        /**teste */
+        .btn-primary{
+            background: #001043 !important; 
+        }
+        a{
+            color: #001043 !important;
+            text-decoration: none !important;
+        }
+    </style>
+    <body>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+        <main>
+            @yield('content')
+        </main>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <footer>
+        </footer>
+
+        <!-- include any additional scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+       
+        <script>
+            /*Alterar valor do botão ao cadastrar*/
+            let submitButton = document.getElementById('submitButton');
+            let myForm = document.getElementById('myForm');
+
+            myForm.addEventListener('submit', function (event) {
+                let emailField = document.getElementById('email');
+                let passwordField = document.getElementById('password');
+
+                if (!emailField.checkValidity() || !passwordField.checkValidity()) {
+                    event.preventDefault();
+                    return;
+                }
+
+                submitButton.innerText = 'Aguarde...';
+            });
+            
+            /*Ver password*/
+            let passwordField = document.getElementById('password');
+            let toggleIcon = document.getElementById('toggleIcon');
+            
+            function togglePasswordVisibility() {
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    toggleIcon.classList.remove('bi-eye');
+                    toggleIcon.classList.add('bi-eye-fill');
+                } else {
+                    passwordField.type = 'password';
+                    toggleIcon.classList.remove('bi-eye-fill');
+                    toggleIcon.classList.add('bi-eye');
+                }
+            }
+            
+        </script>
     </body>
 </html>
