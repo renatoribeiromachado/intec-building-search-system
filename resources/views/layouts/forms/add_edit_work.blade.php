@@ -317,7 +317,7 @@
 
             <div class="form-group col-md-3 mb-2">
                 <label for="inputPassword4">PADRÃO <code>investimento</code></label>
-                <select name="investment_standard" class="form-select @error('investment_standard') is-invalid @enderro">
+                <select name="investment_standard" class="form-select @error('investment_standard') is-invalid @enderror">
                     <option value="">-- Selecione --</option>
                     <option value="alto">Alto</option>
                     <option value="baixo">Baixo</option>
@@ -730,6 +730,16 @@
                 <label class="control-label"><strong>STATUS</strong></label>
                 <select name="status" class="form-select @error('status') is-invalid @enderror">
                     <option value="0">-- Selecione --</option>
+                    <option
+                        value="1"
+                        @if(old('is_active', $work->is_active) == 1) selected @endif>
+                        Ativada
+                    </option>
+                    <option
+                        value="0"
+                        @if(old('is_active', $work->is_active) == 0) selected @endif>
+                        Desativada
+                    </option>
                 </select>
                 @error('status')
                     <div class="invalid-feedback">
