@@ -25,8 +25,10 @@ class Company extends Model
         'state_registration', // inscr est
         'state_acronym',
         'zip_code',
+        'phone_one',
         'notes',
         'cnpj',
+        'activity_field_id',
         'primary_email',
         'secondary_email',
         'home_page',
@@ -41,6 +43,8 @@ class Company extends Model
         'created_by',
         'updated_by',
         'register_ip',
+        'last_review',
+        'revision',
         // 'qtde_funcionarios', // ??
         // 'id_atividade', // ??
         // 'id_subatividade', // ??
@@ -48,6 +52,10 @@ class Company extends Model
         // 'ind_demo', // ??
         // 'INDSTATUS', // ??
         // 'usuario', // ??
+    ];
+
+    protected $dates = [
+        'last_review'
     ];
 
     // App methods
@@ -78,4 +86,8 @@ class Company extends Model
     }
 
     // Eloquent relationship methods
+    public function activityField()
+    {
+        return $this->hasOne(ActivityField::class);
+    }
 }

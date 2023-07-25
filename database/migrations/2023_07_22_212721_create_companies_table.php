@@ -15,32 +15,35 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('company_segment_id')->nullable();
+            $table->foreignId('researcher_id')->nullable();
+            $table->foreignId('activity_field_id')->nullable();
             $table->string('company_name')->nullable(); // razao social
             $table->string('trading_name')->nullable();
             $table->string('minified_name')->nullable();
             $table->string('trading_name_slug')->nullable();
-            // $table->string('creci', 10)->nullable();
             $table->string('address', 100)->nullable();
             $table->string('number')->nullable();
             $table->string('complement')->nullable();
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('city_registration')->nullable();
-            // $table->string('ibge_city_code')->nullable();
             $table->string('state')->nullable();
             $table->string('state_registration')->nullable();
-            // $table->string('ibge_state_code')->nullable();
             $table->char('state_acronym', 2)->nullable();
             $table->string('zip_code')->nullable();
-            // $table->string('phone_one')->nullable();
+            $table->string('phone_one')->nullable();
             // $table->string('phone_two')->nullable();
             // $table->string('mobile')->nullable();
             $table->text('notes')->nullable();
+            $table->integer('revision')->nullable();
             $table->string('cnpj')->unique()->nullable();
+            $table->string('activity_field')->nullable();
             // $table->string('cnpj_validation')->nullable();
             $table->string('primary_email', 50)->nullable();
             $table->string('secondary_email', 50)->nullable();
             $table->string('home_page')->nullable();
+            $table->date('last_review')->nullable();
             $table->string('skype')->nullable();
             // $table->string('facebook_fan_page')->nullable();
             // $table->string('twitter_profile_url')->nullable();
@@ -50,7 +53,6 @@ class CreateCompaniesTable extends Migration
             // $table->string('spotify_profile_url')->nullable();
             $table->string('sponsor')->nullable(); // responsável
             $table->string('sponsor_slug')->nullable();
-            $table->foreignId('company_segment_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_project_owner')->default(false);
             $table->string('image_storage_link')->nullable();
@@ -67,6 +69,8 @@ class CreateCompaniesTable extends Migration
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
             $table->foreign('company_segment_id')->references('id')->on('company_segments');
+            $table->foreign('researcher_id')->references('id')->on('users');
+            $table->foreign('activity_field_id')->references('id')->on('activity_fields');
         });
     }
 

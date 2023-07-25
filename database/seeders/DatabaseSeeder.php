@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             SegmentSeeder::class,
             SegmentSubTypeSeeder::class,
             PositionSeeder::class,
+            ActivityFieldSeeder::class,
         ]);
     }
 }
