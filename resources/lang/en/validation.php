@@ -158,6 +158,31 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        // Company
+        'company_name' => 'Razão Social',
+        'trading_name' => 'Nome Fantasia',
+        'address' => 'Endereço',
+        'number' => 'Número',
+        'complement' => 'Complemento',
+        'district' => 'Bairro',
+        'city' => 'Cidade',
+        'city_registration' => 'Inscrição Municipal',
+        'state' => 'Estado',
+        'state_registration' => 'Inscrição Estadual',
+        'zip_code' => 'CEP',
+        'phone_one' => 'Telefone',
+        'notes' => 'Observações',
+        'cnpj' => 'CNPJ',
+        'activity_field_id' => 'Atividade',
+        'primary_email' => 'E-mail',
+        'secondary_email' => 'E-mail 2',
+        'home_page' => 'Website',
+        'skype' => 'Skype',
+        'company_segment_id' => 'Atividade',
+        'is_active' => 'Status',
+        'last_review' => 'Atualização',
+        'revision' => 'Revisão',
+    ],
 
 ];
