@@ -726,18 +726,19 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-3">
-                <label class="control-label"><strong>STATUS</strong></label>
-                <select name="status" class="form-select @error('status') is-invalid @enderror">
-                    <option value="0">-- Selecione --</option>
-                </select>
-                @error('status')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('status') }}
-                    </div>
-                @enderror
+    <div class="col-sm-3">
+        <label class="control-label"><strong>STATUS</strong></label>
+        <select name="status" class="form-select @error('status') is-invalid @enderror">
+            <option value="0" @if(old('status', $work->status) == 0) selected @endif>Desativada</option>
+            <option value="1" @if(old('status', $work->status) == 1) selected @endif>Ativada</option>
+        </select>
+        @error('status')
+            <div class="invalid-feedback">
+            {{ $errors->first('status') }}
             </div>
-        </div>
+        @enderror
+    </div>
+</div>
         
         <!--Botão-->
         <div class="row mt-2">
