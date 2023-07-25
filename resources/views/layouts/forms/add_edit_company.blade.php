@@ -7,17 +7,32 @@
             <div class="row mt-2">
                 <div class="form-group col-md-5 mb-2">
                     <label for="company_name">Razão Social</label>
-                    <input type="text" id="company_name" name="company_name" class="form-control {{ $errors->has('company_name') ? 'is-invalid' : '' }}" value="{{ old('company_name', $company->company_name) }}" placeholder="">
+                    <input type="text" id="company_name" name="company_name" class="form-control @error('company_name') is-invalid @enderror" value="{{ old('company_name', $company->company_name) }}" placeholder="">
+                    @error('company_name')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('company_name') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-5 mb-2">
                     <label for="inputEmail4">Nome Fantasia</label>
-                    <input type="text" id="trading_name" name="trading_name" class="form-control {{ $errors->has('trading_name') ? 'is-invalid' : '' }}" value="{{ old('trading_name', $company->trading_name) }}" placeholder="">
+                    <input type="text" id="trading_name" name="trading_name" class="form-control @error('trading_name') is-invalid @enderror" value="{{ old('trading_name', $company->trading_name) }}" placeholder="">
+                    @error('trading_name')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('trading_name') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-2 mb-2">
                     <label for="inputEmail4">Revisão</label>
-                    <input type="number" id="revision" name="revision" class="form-control {{ $errors->has('revision') ? 'is-invalid' : '' }}" value="{{ old('revision', $company->revision) }}" placeholder="" maxlength="3">
+                    <input type="number" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $company->revision) }}" placeholder="" maxlength="3">
+                    @error('revision')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('revision') }}
+                        </div>
+                    @enderror
                 </div>
                 
             </div>
@@ -26,51 +41,96 @@
 
                 <div class="form-group col-md-3 mb-2">
                     <label for="inputPassword4">CNPJ</label>
-                    <input type="text" id="cnpj" name="cnpj" class="form-control cnpj {{ $errors->has('cnpj') ? 'is-invalid' : '' }}" value="{{ old('cnpj', $company->cnpj) }}" placeholder="">
+                    <input type="text" id="cnpj" name="cnpj" class="form-control cnpj @error('cnpj') is-invalid @enderror" value="{{ old('cnpj', $company->cnpj) }}" placeholder="">
+                    @error('cnpj')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cnpj') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-6 mb-2">
                     <label for="exemploFormControlInput1">E-mail</label>
-                    <input type="email" id="primary_email" name="primary_email" class="form-control" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
+                    <input type="email" id="primary_email" name="primary_email" class="form-control @error('primary_email') is-invalid @enderror" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
+                    @error('primary_email')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('primary_email') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-3 mb-2">
                     <label for="phone_one">Telefone</label>
-                    <input type="text" id="phone_one" name="phone_one" class="form-control phone" value="{{ old('phone_one', $company->phone_one) }}" placeholder="">
+                    <input type="text" id="phone_one" name="phone_one" class="form-control phone @error('phone_one') is-invalid @enderror" value="{{ old('phone_one', $company->phone_one) }}" placeholder="">
+                    @error('phone_one')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('phone_one') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
 
             <div class="row mt-2">
                 <div class="form-group col-md-2">
                     <label for="inputZip">CEP</label>
-                    <input type="text" id="zip_code" name="zip_code" class="form-control cep" value="{{ old('zip_code', $company->zip_code) }}" placeholder="">
+                    <input type="text" id="zip_code" name="zip_code" class="form-control cep @error('zip_code') is-invalid @enderror" value="{{ old('zip_code', $company->zip_code) }}" placeholder="">
+                    @error('zip_code')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('zip_code') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-5 mb-2">
                     <label for="inputAddress">Endereço</label>
-                    <input type="text" id="address" name="address" class="form-control" value="{{ old('address', $company->address) }}" placeholder="">
+                    <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $company->address) }}" placeholder="">
+                    @error('address')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('address') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-2">
                     <label for="inputAddress2">Número</label>
-                    <input type="text" id="number" name="number" class="form-control" value="{{ old('number', $company->number) }}" placeholder="" maxlength="5">
+                    <input type="text" id="number" name="number" class="form-control @error('number') is-invalid @enderror" value="{{ old('number', $company->number) }}" placeholder="" maxlength="5">
+                    @error('number')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('number') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-3 mb-2">
                     <label for="complement">Complemento</label>
-                    <input type="text" id="complement" name="complement" class="form-control" value="{{ old('complement', $company->complement) }}" placeholder="">
+                    <input type="text" id="complement" name="complement" class="form-control @error('complement') is-invalid @enderror" value="{{ old('complement', $company->complement) }}" placeholder="">
+                    @error('complement')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('complement') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
 
             <div class="row mt-2">
                 <div class="form-group col-md-5 mb-2">
                     <label for="district">Bairro</label>
-                    <input type="text" id="district" name="district" class="form-control" value="{{ old('district', $company->district) }}" placeholder="">
+                    <input type="text" id="district" name="district" class="form-control @error('district') is-invalid @enderror" value="{{ old('district', $company->district) }}" placeholder="">
+                    @error('district')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('district') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-5 mb-2">
                     <label for="inputCity">Cidade</label>
-                    <input type="text" id="city" name="city" class="form-control" value="{{ old('city', $company->city) }}" placeholder="">
+                    <input type="text" id="city" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city', $company->city) }}" placeholder="">
+                    @error('city')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('city') }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-2 mb-2">
@@ -105,18 +165,33 @@
                         <option value="TO" {{ old('state', $company->state) == 'TO' ? 'selected="selected"' : '' }}>TO</option>
                         <option value="AL" {{ old('state', $company->state) == 'AL' ? 'selected="selected"' : '' }}>AL</option>
                     </select>
+                    @error('state')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('state') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             
             <div class="row mt-2">
                 <div class="form-group col-md-3 mb-2">
                     <label for="state_registration">Inscrição Estadual</label>
-                    <input type="text" id="state_registration" name="state_registration" class="form-control" value="{{ old('state_registration', $company->state_registration) }}" placeholder="">
+                    <input type="text" id="state_registration" name="state_registration" class="form-control @error('state_registration') is-invalid @enderror" value="{{ old('state_registration', $company->state_registration) }}" placeholder="">
+                    @error('state_registration')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('state_registration') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-3 mb-2">
                     <label for="city_registration">Inscrição Municipal</label>
-                    <input type="text" id="city_registration" name="city_registration" class="form-control" value="{{ old('city_registration', $company->city_registration) }}" placeholder="">
+                    <input type="text" id="city_registration" name="city_registration" class="form-control @error('city_registration') is-invalid @enderror" value="{{ old('city_registration', $company->city_registration) }}" placeholder="">
+                    @error('city_registration')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('city_registration') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-4 mb-2">
@@ -137,6 +212,11 @@
                             <option selected>-- Selecione --</option>
                         @endforelse
                     </select>
+                    @error('activity_field_id')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('activity_field_id') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-2 mb-2">
@@ -154,26 +234,46 @@
                             Desativada
                         </option>
                     </select>
+                    @error('is_active')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('is_active') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             
             <div class="row mt-2">
                 <div class="form-group col-md-3 mb-2">
                     <label for="home_page">Site</label>
-                    <input type="text" id="home_page" name="home_page" class="form-control" value="{{ old('home_page', $company->home_page) }}" placeholder="">
+                    <input type="text" id="home_page" name="home_page" class="form-control @error('home_page') is-invalid @enderror" value="{{ old('home_page', $company->home_page) }}" placeholder="">
+                    @error('home_page')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('home_page') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-5 mb-2">
                     <label for="primary_email">E-mail</label>
-                    <input type="email" id="primary_email" name="email" class="form-control" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
+                    <input type="email" id="primary_email" name="primary_email" class="form-control @error('primary_email') is-invalid @enderror" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
+                    @error('primary_email')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('primary_email') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-2 mb-2">
                     <label for="last_review">Atualização</label>
                     <input
-                        type="text" id="last_review" name="last_review" class="form-control date"
+                        type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror"
                         value="{{ old('last_review', optional($company->last_review)->format('d/m/Y')) }}"
                         placeholder="">
+                    @error('last_review')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('last_review') }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-group col-md-2 mb-2">
@@ -194,6 +294,11 @@
                             <option selected>-- Selecione --</option>
                         @endforelse
                     </select>
+                    @error('researcher_id')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('researcher_id') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             
@@ -202,9 +307,14 @@
                     <label for="notes">Observações</label>
                     <textarea
                         type="text" id="notes" name="notes"
-                        class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}"
+                        class="form-control @error('notes') is-invalid @enderror"
                         rows="5" placeholder=""
                         >{{ old('notes', $company->notes) }}</textarea>
+                    @error('notes')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('notes') }}
+                        </div>
+                    @enderror
                 </div>
             </div>
         </div>
