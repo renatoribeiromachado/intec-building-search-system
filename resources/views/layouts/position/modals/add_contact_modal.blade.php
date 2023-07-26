@@ -20,10 +20,10 @@
 
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="container">
+                            
                                 <div class="row mt-2">
-                                    <div class="col-md-6 mb-2">
+                                    <div class="col-md-7 mb-2">
                                         <label for="name">Nome</label>
                                         <input type="text" id="name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
@@ -32,7 +32,7 @@
                                             >
                                     </div>
 
-                                    <div class="col-md-6 mb-2">
+                                    <div class="col-md-5 mb-2">
                                         <label for="position">Cargo</label>
                                         <select id="position" name="position_id" class="form-control">
                                             <option selected>-- Selecione --</option>
@@ -50,9 +50,11 @@
                                             @endforeach
                                         </select>
                                     </div>
+
                                 </div>
 
                                 <div class="row mt-2">
+                                
                                     <div class="col-md-12 mb-2">
                                         <label for="email">E-mail</label>
                                         <input type="email" id="email" name="email"
@@ -62,26 +64,27 @@
                                             >
                                     </div>
                                 </div>
+                                    
 
                                 <div class="row mt-2">
-                                    <div class="col-md-4 mb-2">
-                                        <label for="ddd">DDD</label>
+                                    <div class="col-md-2 mb-2">
+                                        <label for="ddd">DDD 1</label>
                                         <input maxlength="3" type="text" id="ddd" name="ddd"
                                             class="form-control @error('ddd') is-invalid @enderror"
                                             value="{{ old('ddd') }}"
                                             placeholder=""
                                             >
                                     </div>
-                                    <div class="col-md-8 mb-2">
-                                        <label for="main_phone">Telefone Principal</label>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="main_phone">Telefone 1</label>
                                         <input type="text" id="main_phone" name="main_phone"
                                             class="form-control @error('main_phone') is-invalid @enderror"
                                             value="{{ old('main_phone') }}"
                                             placeholder=""
                                             >
                                     </div>
-                                </div>
-
+                               
+                                <!-- Não esta em uso
                                 <div class="row mt-2">
                                     <div class="col-md-4 mb-2">
                                         <label for="ddd_fax">DDD</label>
@@ -100,9 +103,10 @@
                                             >
                                     </div>
                                 </div>
+                                -->
 
-                                <div class="row mt-2">
-                                    <div class="col-md-4 mb-2">
+                               
+                                    <div class="col-md-2 mb-2">
                                         <label for="ddd_two">DDD 2</label>
                                         <input maxlength="3" type="text" id="ddd_two" name="ddd_two"
                                             class="form-control @error('ddd_two') is-invalid @enderror"
@@ -110,7 +114,7 @@
                                             placeholder=""
                                             >
                                     </div>
-                                    <div class="col-md-8 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <label for="phone_two">Telefone 2</label>
                                         <input type="text" id="phone_two" name="phone_two"
                                             class="form-control @error('phone_two') is-invalid @enderror"
@@ -119,11 +123,10 @@
                                             >
                                     </div>
                                 </div>
-                            </div>
+                           
                         
-                            <div class="col-md-6">
                                 <div class="row mt-2">
-                                    <div class="col-md-4 mb-2">
+                                    <div class="col-md-2 mb-2">
                                         <label for="ddd_three">DDD 3</label>
                                         <input maxlength="3" type="text" id="ddd_three" name="ddd_three"
                                             class="form-control @error('ddd_three') is-invalid @enderror"
@@ -131,7 +134,7 @@
                                             placeholder=""
                                             >
                                     </div>
-                                    <div class="col-md-8 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <label for="phone_three">Telefone 3</label>
                                         <input type="text" id="phone_three" name="phone_three"
                                             class="form-control @error('phone_three') is-invalid @enderror"
@@ -139,10 +142,8 @@
                                             placeholder=""
                                             >
                                     </div>
-                                </div>
-
-                                <div class="row mt-2">
-                                    <div class="col-md-4 mb-2">
+                             
+                                    <div class="col-md-2 mb-2">
                                         <label for="ddd_four">DDD 4</label>
                                         <input maxlength="3" type="text" id="ddd_four" name="ddd_four"
                                             class="form-control @error('ddd_four') is-invalid @enderror"
@@ -150,7 +151,7 @@
                                             placeholder=""
                                             >
                                     </div>
-                                    <div class="col-md-8 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <label for="phone_four">Telefone 4</label>
                                         <input type="text" id="phone_four" name="phone_four"
                                             class="form-control @error('phone_four') is-invalid @enderror"
@@ -159,7 +160,7 @@
                                             >
                                     </div>
                                 </div>
-
+                                <!-- Não sera usado
                                 <div class="row mt-2">
                                     <div class="col-md-12 mb-2">
                                         <label for="phone_type_one">Tipo de Telefone 1</label>
@@ -191,8 +192,9 @@
                                             placeholder=""
                                             >
                                     </div>
-                                </div>
-                            </div>
+                                </div>      
+                                -->
+                            
                         </div>
                     </div>
                 </div>
