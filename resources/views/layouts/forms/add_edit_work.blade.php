@@ -677,7 +677,7 @@
                                 <option value="Concreto armado" @if(old('frame', $work->frame) == 'Concreto armado') selected @endif>Concreto armado</option>
                                 <option value="Concreto protendido" @if(old('frame', $work->frame) == 'Concreto protendido') selected @endif>Concreto protendido</option>
                                 <option value="Steel frame" @if(old('frame', $work->frame) == 'Steel frame') selected @endif>Steel frame</option>
-                                <option value="Steel deck"> @if(old('frame', $work->frame) == 'Steel deck') selected @endifSteel deck</option>
+                                <option value="Steel deck" @if(old('frame', $work->frame) == 'Steel deck') selected @endif> Steel deck</option>
                                 <option value="Wood frame" @if(old('frame', $work->frame) == 'Wood frame') selected @endif>Wood frame</option>
                                 <option value="Alvenaria estrutural" @if(old('frame', $work->frame) == 'Alvenaria estrutural') selected @endif>Alvenaria estrutural</option>
                                 <option value="Baldrame" @if(old('frame', $work->frame) == 'Baldrame') selected @endif>Baldrame</option>
@@ -732,12 +732,12 @@
                     <option value="0">-- Selecione --</option>
                     <option
                         value="1"
-                        @if(old('is_active', $work->is_active) == 1) selected @endif>
+                        @if(old('status', $work->status) == 1) selected @endif>
                         Ativada
                     </option>
                     <option
                         value="0"
-                        @if(old('is_active', $work->is_active) == 0) selected @endif>
+                        @if(old('status', $work->status) == 0) selected @endif>
                         Desativada
                     </option>
                 </select>
