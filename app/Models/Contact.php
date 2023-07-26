@@ -28,7 +28,14 @@ class Contact extends Model
         'phone_type_one',
         'phone_type_two',
         'phone_type_three',
+        'is_active',
         'created_by',
         'updated_by',
     ];
+
+    // Eloquent relationshiop methods
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }

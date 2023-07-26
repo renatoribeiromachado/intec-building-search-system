@@ -33,6 +33,7 @@ class CreateContactsTable extends Migration
             $table->string('phone_type_one')->nullable();
             $table->string('phone_type_two')->nullable();
             $table->string('phone_type_three')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();
             $table->softDeletes();

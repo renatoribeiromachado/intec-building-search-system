@@ -90,4 +90,9 @@ class Company extends Model
     {
         return $this->hasOne(ActivityField::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

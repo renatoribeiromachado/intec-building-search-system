@@ -43,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{company}', [CompanyController::class, 'edit'])->name('company.edit');
         Route::post('update/{company}', [CompanyController::class, 'update'])->name('company.update');
         Route::delete('{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
+
+        Route::post('store/{company}', [CompanyController::class, 'storeContact'])->name('company.contact.store');
+        Route::put('update/{contact}', [CompanyController::class, 'updateContact'])->name('company.contact.update');
+        Route::delete('destroy/{contact}', [CompanyController::class, 'destroyContact'])->name('company.contact.destroy');
     });
 
     Route::prefix('stages')->group(function () {

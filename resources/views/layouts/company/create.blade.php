@@ -5,7 +5,7 @@
     <div class="bg-light p-5 rounded">
         <h1>CADASTRO DE EMPRESA</h1>
 
-        <form action="{{ route('company.store') }}" method="POST" role="form">
+        <form action="{{ route('company.store') }}" method="POST" role="form" class="needs-validation">
             @csrf
             @method('post')
 

@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->foreignId('company_segment_id')->nullable();
             $table->foreignId('researcher_id')->nullable();
             $table->foreignId('activity_field_id')->nullable();
-            $table->string('company_name')->nullable(); // razao social
+            $table->string('company_name')->unique(); // razao social
             $table->string('trading_name')->nullable();
             $table->string('minified_name')->nullable();
             $table->string('trading_name_slug')->nullable();
