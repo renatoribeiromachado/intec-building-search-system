@@ -29,7 +29,7 @@
                 <select id="researcher" name="researcher_id" class="form-select @error('researcher_id') is-invalid @enderror">
                     @forelse ($researchers as $researcher)
                         @if ($loop->index == 0)
-                        <option selected>-- Selecione --</option>
+                        <option value="">-- Selecione --</option>
                         @endif
 
                         <option
@@ -39,7 +39,7 @@
                             {{ $researcher->name }}
                         </option>
                         @empty
-                        <option selected>-- Selecione --</option>
+                        <option value="">-- Selecione --</option>
                     @endforelse
                 </select>
                 @error('researcher_id')
@@ -504,39 +504,29 @@
             <div class="col-md-12">
                 <p><strong>ÁREA DE LAZER</strong></p>
             </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="1" /> Salão de festas
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="2" /> Salão de jogos
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="4" /> Piscina
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="8" /> Sauna
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="16" /> Churrasqueira
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="32" /> Quadra
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="64" /> Fitness
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="128" /> Gourmet
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="256" /> Playground
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="512" /> Spa
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="1024" /> Brinquedoteca
-            </div>
+
+            @foreach($workFeatures as $workFeature)
+                <div class="col-md-3 mb-2">
+                    <input
+                        type="checkbox"
+                        name="work_features[]"
+                        value="{{ $workFeature->id }}"
+                        class="form-check-input me-1"
+                        id="check-feature-{{ $loop->index }}"
+
+                        @if (empty(old('work_features')) && $work->features->contains($workFeature))
+                        checked
+                        @endif
+
+                        @if (collect(old('work_features'))->contains($work))
+                        checked
+                        @endif
+                        />
+                    <label class="form-check-label" for="check-feature-{{ $loop->index }}">
+                        {{ $workFeature->description }}
+                    </label>
+                </div>
+            @endforeach
 
             <!--Soma dos checkbox-->
             <div class="col-md-3">
@@ -545,7 +535,11 @@
 
             <div class="col-md-12 mt-2">
                 <label class="control-label"> <strong>Outros</strong></label>
-                <input type="text" name="other_leisure" class="form-control @error('other_leisure') is-invalid @enderror" value="{{ old('other_leisure', $work->other_leisure) }}" />
+                <input
+                    type="text" name="other_leisure"
+                    class="form-control @error('other_leisure') is-invalid @enderror"
+                    value="{{ old('other_leisure', $work->other_leisure) }}"
+                    />
                 @error('other_leisure')
                     <div class="invalid-feedback">
                         {{ $errors->first('other_leisure') }}

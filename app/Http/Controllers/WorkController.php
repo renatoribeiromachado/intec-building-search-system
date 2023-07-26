@@ -12,6 +12,7 @@ use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\User;
 use App\Models\Work;
+use App\Models\WorkFeature;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class WorkController extends Controller
     protected $segmentSubType;
     protected $researcher;
     protected $position;
+    protected $workFeature;
 
     public function __construct(
         Work $work,
@@ -33,7 +35,8 @@ class WorkController extends Controller
         Segment $segment,
         SegmentSubType $segmentSubType,
         User $researcher,
-        Position $position
+        Position $position,
+        WorkFeature $workFeature
     ) {
         $this->work = $work;
         $this->phase = $phase;
@@ -42,6 +45,7 @@ class WorkController extends Controller
         $this->segmentSubType = $segmentSubType;
         $this->researcher = $researcher;
         $this->position = $position;
+        $this->workFeature = $workFeature;
     }
 
     /**
@@ -75,6 +79,9 @@ class WorkController extends Controller
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
+        $workFeatures = $this->workFeature
+            ->orderBy('description', 'asc')
+            ->get();
 
         return view('layouts.work.create', compact(
             'work',
@@ -83,6 +90,7 @@ class WorkController extends Controller
             'phases',
             'stages',
             'researchers',
+            'workFeatures'
         ));
     }
 
@@ -94,7 +102,6 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        // dd($request->all());
         $work = $this->work;
         $work->old_code = $request->old_code;
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
@@ -137,6 +144,7 @@ class WorkController extends Controller
         $work->cup_and_kitchen = $request->cup_and_kitchen;
         $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
         $work->maid_dependency = $request->maid_dependency;
+        $work->other_leisure = $request->other_leisure;
         $work->total_unities = $request->total_unities;
         $work->useful_area = $request->useful_area;
         $work->total_area = $request->total_area;
@@ -154,6 +162,8 @@ class WorkController extends Controller
         $work->created_by = auth()->guard('web')->user()->id;
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
+
+        $work->features()->sync($request->work_features);
 
         return redirect()->route('work.index');
     }
@@ -178,6 +188,9 @@ class WorkController extends Controller
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
+        $workFeatures = $this->workFeature
+            ->orderBy('description', 'asc')
+            ->get();
             
         return view('layouts.work.edit', compact(
             'work',
@@ -186,6 +199,7 @@ class WorkController extends Controller
             'phases',
             'stages',
             'researchers',
+            'workFeatures',
         ));
     }
 
@@ -239,6 +253,7 @@ class WorkController extends Controller
         $work->cup_and_kitchen = $request->cup_and_kitchen;
         $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
         $work->maid_dependency = $request->maid_dependency;
+        $work->other_leisure = $request->other_leisure;
         $work->total_unities = $request->total_unities;
         $work->useful_area = $request->useful_area;
         $work->total_area = $request->total_area;
@@ -255,6 +270,8 @@ class WorkController extends Controller
 
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
+
+        $work->features()->sync($request->work_features);
 
         return redirect()->route('work.index');
     }
