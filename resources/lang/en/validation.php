@@ -184,6 +184,26 @@ return [
         'is_active' => 'Status',
         'last_review' => 'Atualização',
         'revision' => 'Revisão',
+
+        // Work
+        'old_code' => 'Código Antigo',
+        'name' => 'Nome',
+        'segment_sub_type_id' => 'Subtipo',
+        'stage_id' => 'Estágio',
+        'start_and_end' => 'Início / Término',
+        'investment_standard' => 'Investimento Padrão',
+        'total_project_area' => 'Área total do Projeto',
+        'tower' => 'Edifício(s) residencial(s)',
+        'house' => 'Casa(s)',
+        'condominium' => 'Condomínio',
+        'floor' => 'Pavimento(s)',
+        'apartment_per_floor' => 'Apartamento(s) por Andar',
+        'bedroom' => 'Dormitório(s)',
+        'suite' => 'Suítes(s)',
+        'bathroom' => 'Banheiro(s)',
+        'washbasin' => 'Lavabo(s)',
+        'maid_dependency' => 'Dependência de empregada',
+        'other_leisure' => 'Outros Lazeres',
     ],
 
 ];

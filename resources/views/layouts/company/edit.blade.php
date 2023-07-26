@@ -55,26 +55,42 @@
                                             Atualizado {{ optional($contact->updated_at)->diffForHumans() }}
                                         </small>
                                     </p>
+                                    
+                                    @if (isset($contact->email))
                                     <a href="mailto:{{ $contact->email }}"
                                         class="card-link d-block mb-2"
                                         >{{ $contact->email }}
                                     </a>
+                                    @endif
+
+                                    @if (isset($contact->ddd) && isset($contact->main_phone))
                                     <a href="tel:+55{{ $contact->ddd }}{{ $contact->main_phone }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd }}) {{ $contact->main_phone }}
                                     </a>
+                                    @endif
+
+                                    @if (isset($contact->ddd_two) && isset($contact->phone_two))
                                     <a href="tel:+55{{ $contact->ddd_two }}{{ $contact->phone_two }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd_two }}) {{ $contact->phone_two }}
                                     </a>
+                                    @endif
+
+                                    @if (isset($contact->ddd_three) && isset($contact->phone_three))
                                     <a href="tel:+55{{ $contact->ddd_three }}{{ $contact->phone_three }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd_three }}) {{ $contact->phone_three }}
                                     </a>
+                                    @endif
+
+                                    @if (isset($contact->ddd_four) && isset($contact->phone_four))
                                     <a href="tel:+55{{ $contact->ddd_four }}{{ $contact->ddd_four }}"
                                         class="card-link d-block ms-0 mb-2"
-                                        >({{ $contact->ddd_four }}) {{ $contact->ddd_four }}
+                                        >({{ $contact->ddd_four }}) {{ $contact->phone_four }}
                                     </a>
+                                    @endif
+
                                     <div>
                                         <button
                                             data-bs-toggle="modal"

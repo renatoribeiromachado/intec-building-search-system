@@ -75,16 +75,18 @@ class StoreWorkRequest extends FormRequest
             //'completion' => 'required',
             //'facade' => 'required',
             'notes' => 'required',
-            'status' => 'required' 
+            'status' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'last_review.date_format' => 'Data de Publicação inválida',
-            'started_at.date_format' => 'Data de Início da Obra inválida',
-            'ends_at.date_format' => 'Data Término da Obra inválida'
+            'last_review.date_format' => 'Data de Publicação inválida.',
+            'started_at.date_format' => 'Data de Início da Obra inválida.',
+            'ends_at.date_format' => 'Data Término da Obra inválida.',
+            'notes.required' => 'O campo Descrições Complementares é obrigatório.',
+            'name.required' => 'O campo Obra é obrigatório.',
         ];
     }
 }
