@@ -1,4 +1,3 @@
-@include('layouts.alerts.all-errors')
 <div class="container-fluid">
     
     <div class="container">
@@ -6,7 +5,7 @@
         <div class="row mt-2">
             
             <div class="col-md-2 mb-2">
-                <label for="old_code">Código</label>
+                <label for="old_code">Código Antigo</label>
                 <input type="text" id="old_code" name="old_code" class="form-control @error('old_code') is-invalid @enderror" value="{{ old('old_code', $work->old_code) }}" placeholder="">
                 @error('old_code')
                     <div class="invalid-feedback">
@@ -755,19 +754,6 @@
                 <div class="col-sm-12">
                     <button type="submit" class="btn btn-success" title="Gravar Dados"> ADD Empresa(s) Participante(s)</button>
                 </div>
-            </div>
-        </div>
-
-        <hr class="my-3">
-
-        <div class="row">
-            <div class="col">
-                <h3>Contatos</h3>
-                <ul>
-                    @foreach ($work->contacts()->get() as $contact)
-                    <li>{{ $contact->name }} - (<a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>)</li>
-                    @endforeach
-                </ul>
             </div>
         </div>
 

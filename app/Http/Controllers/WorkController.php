@@ -270,37 +270,4 @@ class WorkController extends Controller
         $work->delete();
         return redirect()->route('work.index');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreWorkRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storeContact(Request $request, Work $work)
-    {
-        $contact = new Contact;
-        $contact->work_id = $work->id;
-        $contact->position_id = $request->position_id;
-        $contact->name = $request->name;
-        $contact->ddd = $request->ddd;
-        $contact->main_phone = $request->main_phone;
-        $contact->ddd_fax = $request->ddd_fax;
-        $contact->fax = $request->fax;
-        $contact->email = $request->email;
-        $contact->ddd_two = $request->ddd_two;
-        $contact->phone_two = $request->phone_two;
-        $contact->ddd_three = $request->ddd_three;
-        $contact->phone_three = $request->phone_three;
-        $contact->ddd_four = $request->ddd_four;
-        $contact->phone_four = $request->phone_four;
-        $contact->phone_type_one = $request->phone_type_one;
-        $contact->phone_type_two = $request->phone_type_two;
-        $contact->phone_type_three = $request->phone_type_three;
-        $contact->created_by = auth()->guard('web')->user()->id;
-        $contact->updated_by = auth()->guard('web')->user()->id;
-        $contact->save();
-
-        return redirect()->back();
-    }
 }
