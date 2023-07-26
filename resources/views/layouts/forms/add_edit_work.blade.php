@@ -319,9 +319,9 @@
                 <label for="inputPassword4">PADRÃO <code>investimento</code></label>
                 <select name="investment_standard" class="form-select @error('investment_standard') is-invalid @enderror">
                     <option value="">-- Selecione --</option>
-                    <option value="alto">Alto</option>
-                    <option value="baixo">Baixo</option>
-                    <option value="medio">Médio</option>
+                    <option value="Alto" @if(old('investment_standard', $work->investment_standard) == 'Alto') selected @endif>Alto</option>
+                    <option value="Baixo" @if(old('investment_standard', $work->investment_standard) == 'Baixo') selected @endif>Baixo</option>
+                    <option value="Médio" @if(old('investment_standard', $work->investment_standard) == 'Médio') selected @endif>Médio</option>
                 </select>
                 @error('investment_standard')
                     <div class="invalid-feedback">
@@ -461,10 +461,10 @@
                         </td>
                         <td><select name="cup_and_kitchen" class="form-select @error('cup_and_kitchen') is-invalid @enderror">
                                 <option value="0">-- Selecione --</option>
-                                <option value="0/0">0/0</option>
-                                <option value="0/1">0/1</option>
-                                <option value="1/0">1/0</option>
-                                <option value="1/1">1/1</option>
+                                <option value="0/0" @if(old('cup_and_kitchen', $work->cup_and_kitchen) == '0/0') selected @endif>0/0</option>
+                                <option value="0/1" @if(old('cup_and_kitchen', $work->cup_and_kitchen) == '0/1') selected @endif>0/1</option>
+                                <option value="1/0" @if(old('cup_and_kitchen', $work->cup_and_kitchen) == '1/0') selected @endif>1/0</option>
+                                <option value="1/1" @if(old('cup_and_kitchen', $work->cup_and_kitchen) == '1/1') selected @endif>1/1</option>
                             </select>
                             @error('cup_and_kitchen')
                                 <div class="invalid-feedback">
@@ -474,11 +474,11 @@
                         </td>
                         <td><select name="service_area_terrace_balcony" class="form-select @error('service_area_terrace_balcony') is-invalid @enderror">
                                 <option value="0"> -- Selecione --</option>
-                                <option value="0/0/0">0/0/0</option>
-                                <option value="1/0/1">1/0/1</option>
-                                <option value="1/1/1">1/1/1</option>
-                                <option value="1/1/0">1/1/0</option>
-                                <option value="1/0/0">1/0/0</option>
+                                <option value="0/0/0" @if(old('service_area_terrace_balcony', $work->service_area_terrace_balcony) == '0/0/0') selected @endif>0/0/0</option>
+                                <option value="1/0/1" @if(old('service_area_terrace_balcony', $work->service_area_terrace_balcony) == '1/0/1') selected @endif>1/0/1</option>
+                                <option value="1/1/1" @if(old('service_area_terrace_balcony', $work->service_area_terrace_balcony) == '1/1/1') selected @endif>1/1/1</option>
+                                <option value="1/1/0" @if(old('service_area_terrace_balcony', $work->service_area_terrace_balcony) == '1/1/0') selected @endif>1/1/0</option>
+                                <option value="1/0/0" @if(old('service_area_terrace_balcony', $work->service_area_terrace_balcony) == '1/0/0') selected @endif>1/0/0</option>
                             </select>
                             @error('service_area_terrace_balcony')
                                 <div class="invalid-feedback">
@@ -648,19 +648,19 @@
                         <td>
                             <select name="foundry" class="form-select @error('foundry') is-invalid @enderror">
                                 <option value="">-- Selecione --</option>
-                                <option value="CASAS">CASAS</option>
-                                <option value="Sapata Isolada">Sapata Isolada</option>
-                                <option value="Radier">Radier</option>
-                                <option value="Sapata Corrida">Sapata Corrida</option>
-                                <option value="Viga Baldrame">Viga Baldrame</option>
-                                <option value="Bate-Estacas">Bate-Estacas</option>
-                                <option value="Estacas">Estacas</option>
-                                <option value="Estaca hélice contínua">Estaca hélice contínua</option>
-                                <option value="Tubulão">Tubulão</option>
-                                <option value="Direta">Direta</option>
-                                <option value="Blocos de Fundação">Blocos de Fundação</option>
-                                <option value="Franki">Franki</option>
-                                <option value="Estaca Raiz">Estaca Raiz</option>
+                                <option value="CASAS" @if(old('foundry', $work->foundry) == 'CASAS') selected @endif>CASAS</option>
+                                <option value="Sapata Isolada" @if(old('foundry', $work->foundry) == 'Sapata Isolada') selected @endif>Sapata Isolada</option>
+                                <option value="Radier" @if(old('foundry', $work->foundry) == 'Radier') selected @endif>Radier</option>
+                                <option value="Sapata Corrida" @if(old('foundry', $work->foundry) == 'Sapata Corrida') selected @endif>Sapata Corrida</option>
+                                <option value="Viga Baldrame" @if(old('foundry', $work->foundry) == 'Viga Baldrame') selected @endif>Viga Baldrame</option>
+                                <option value="Bate-Estacas" @if(old('foundry', $work->foundry) == 'Bate-Estacas') selected @endif>Bate-Estacas</option>
+                                <option value="Estacas" @if(old('foundry', $work->foundry) == 'Estacas') selected @endif>Estacas</option>
+                                <option value="Estaca hélice contínua" @if(old('foundry', $work->foundry) == 'Estaca hélice contínua') selected @endif>Estaca hélice contínua</option>
+                                <option value="Tubulão" @if(old('foundry', $work->foundry) == 'Tubulão') selected @endif>Tubulão</option>
+                                <option value="Direta" @if(old('foundry', $work->foundry) == 'Direta') selected @endif>Direta</option>
+                                <option value="Blocos de Fundação" @if(old('foundry', $work->foundry) == 'Blocos de Fundação') selected @endif>Blocos de Fundação</option>
+                                <option value="Franki" @if(old('foundry', $work->foundry) == 'Franki') selected @endif>Franki</option>
+                                <option value="Estaca Raiz" @if(old('foundry', $work->foundry) == 'Estaca Raiz') selected @endif>Estaca Raiz</option>
                             </select>
                             @error('foundry')
                                 <div class="invalid-feedback">
@@ -671,19 +671,19 @@
                         <td>
                             <select name="frame" class="form-select @error('frame') is-invalid @enderror">
                                 <option value="">-- Selecione --</option>
-                                <option value="casas">Casas</option>
-                                <option value="Bloco Estrutural">Bloco Estrutural</option>
-                                <option value="Estruturas metálicas">Estruturas metálicas</option>
-                                <option value="Concreto armado">Concreto armado</option>
-                                <option value="Concreto protendido">Concreto protendido</option>
-                                <option value="Steel frame">Steel frame</option>
-                                <option value="Steel deck">Steel deck</option>
-                                <option value="Wood frame">Wood frame</option>
-                                <option value="Alvenaria estrutural">Alvenaria estrutural</option>
-                                <option value="Baldrame">Baldrame</option>
-                                <option value="Laje Nervurada">Laje Nervurada</option>
-                                <option value="Pré Moldado">Pré Moldado</option>
-                                <option value="Parede de Concreto">Parede de Concreto</option>
+                                <option value="casas" @if(old('frame', $work->frame) == 'casas') selected @endif>Casas</option>
+                                <option value="Bloco Estrutural" @if(old('frame', $work->frame) == 'Bloco Estrutural') selected @endif>Bloco Estrutural</option>
+                                <option value="Estruturas metálicas" @if(old('frame', $work->frame) == 'Estruturas metálicas') selected @endif>Estruturas metálicas</option>
+                                <option value="Concreto armado" @if(old('frame', $work->frame) == 'Concreto armado') selected @endif>Concreto armado</option>
+                                <option value="Concreto protendido" @if(old('frame', $work->frame) == 'Concreto protendido') selected @endif>Concreto protendido</option>
+                                <option value="Steel frame" @if(old('frame', $work->frame) == 'Steel frame') selected @endif>Steel frame</option>
+                                <option value="Steel deck"> @if(old('frame', $work->frame) == 'Steel deck') selected @endifSteel deck</option>
+                                <option value="Wood frame" @if(old('frame', $work->frame) == 'Wood frame') selected @endif>Wood frame</option>
+                                <option value="Alvenaria estrutural" @if(old('frame', $work->frame) == 'Alvenaria estrutural') selected @endif>Alvenaria estrutural</option>
+                                <option value="Baldrame" @if(old('frame', $work->frame) == 'Baldrame') selected @endif>Baldrame</option>
+                                <option value="Laje Nervurada" @if(old('frame', $work->frame) == 'Laje Nervurada') selected @endif>Laje Nervurada</option>
+                                <option value="Pré Moldado" @if(old('frame', $work->frame) == 'Pré Moldado') selected @endif>Pré Moldado</option>
+                                <option value="Parede de Concreto" @if(old('frame', $work->frame) == 'Parede de Concreto') selected @endif>Parede de Concreto</option>
                             </select>
                             @error('frame')
                                 <div class="invalid-feedback">
