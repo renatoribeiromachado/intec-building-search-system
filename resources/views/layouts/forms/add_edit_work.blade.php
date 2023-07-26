@@ -448,10 +448,10 @@
                     <tr>
                         <td><select name="living_room" class="form-select @error('living_room') is-invalid @enderror">
                                 <option value="0">-- Selecione --</option>
-                                <option value="0/0">0/0</option>
-                                <option value="0/1">0/1</option>
-                                <option value="1/0">1/0</option>
-                                <option value="1/1">1/1</option>
+                                <option value="0/0" @if(old('living_room', $work->living_room) == '0/0') selected @endif>0/0</option>
+                                <option value="0/1" @if(old('living_room', $work->living_room) == '0/1') selected @endif>0/1</option>
+                                <option value="1/0" @if(old('living_room', $work->living_room) == '1/0') selected @endif>1/0</option>
+                                <option value="1/1" @if(old('living_room', $work->living_room) == '1/1') selected @endif>1/1</option>
                             </select>
                             @error('living_room')
                                 <div class="invalid-feedback">
