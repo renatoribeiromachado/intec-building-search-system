@@ -173,7 +173,7 @@
 
                                 <div class="row mt-2">
                                     <div class="col-md-12 mb-2">
-                                        <label for="phone_type_two">Tipo de Telefone 1</label>
+                                        <label for="phone_type_two">Tipo de Telefone 2</label>
                                         <input type="text" id="phone_type_two" name="phone_type_two"
                                             class="form-control @error('phone_type_two') is-invalid @enderror"
                                             value="{{ old('phone_type_two') }}"
@@ -184,7 +184,7 @@
 
                                 <div class="row mt-2">
                                     <div class="col-md-12 mb-2">
-                                        <label for="phone_type_three">Tipo de Telefone 1</label>
+                                        <label for="phone_type_three">Tipo de Telefone 3</label>
                                         <input type="text" id="phone_type_three" name="phone_type_three"
                                             class="form-control @error('phone_type_three') is-invalid @enderror"
                                             value="{{ old('phone_type_three') }}"
