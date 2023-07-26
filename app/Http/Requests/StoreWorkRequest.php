@@ -30,7 +30,7 @@ class StoreWorkRequest extends FormRequest
             'researcher_id' => 'required',
             'revision' => 'required',
             'name' => "required|unique:works,name,{$id},id",
-            'image' => 'image|mimes:jpeg,png|max:2048',
+            //'image' => 'image|mimes:jpeg,png|max:2048',
             'zip_code' => 'required',
             'address' => 'required',
             'district' => 'required',
