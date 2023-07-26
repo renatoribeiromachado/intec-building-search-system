@@ -23,31 +23,29 @@ class StoreCompanyRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->segment(3);
         return [
-
-            'company_name' => "required|min:3|max:150|unique:companies,company_name,{$id},id",
-            'trading_name' => "required",
-            'revision' => "required",
-            'cnpj' => "required",
-            'primary_email' => "required",
-            'phone_one' => "required",
-            'zip_code' => "required",
-            'address' => "required",
-            'number' => "required",
-            'complement' => "required",
-            'district' => "required",
-            'city' => "required",
-            'state' => "required",
-            'state_registration' => "required",
-            'city_registration' => "required",
-            'activity_field_id' => "required",
-            'is_active' => "required",
-            'home_page' => "required",
-            'email' => "required",
-            'last_review' => "required",
-            'researcher_id' => "required",
-            'notes' => "required"
+            'company_name' => ['required', 'min:3', 'max:150', 'unique:companies,company_name'],
+            'trading_name' => ['required'],
+            'revision' => ['required'],
+            'cnpj' => ['required'],
+            'primary_email' => ['required'],
+            'secondary_email' => ['required'],
+            'phone_one' => ['required'],
+            'zip_code' => ['required'],
+            'address' => ['required'],
+            'number' => ['required'],
+            'complement' => ['required'],
+            'district' => ['required'],
+            'city' => ['required'],
+            'state' => ['required'],
+            'state_registration' => ['required'],
+            'city_registration' => ['required'],
+            'activity_field_id' => ['required'],
+            'is_active' => ['required'],
+            'home_page' => ['required'],
+            'last_review' => ['required'],
+            'researcher_id' => ['required'],
+            'notes' => ['required'],
         ];
     }
 }

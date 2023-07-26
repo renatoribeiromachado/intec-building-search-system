@@ -1,7 +1,7 @@
 <div class="container-fluid">
      
     <div class="container">
- 
+
         <div class="row mt-2">
  
             <div class="row mt-2">
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-2">
-                    <label for="exemploFormControlInput1">E-mail</label>
+                    <label for="exemploFormControlInput1">E-mail Principal</label>
                     <input type="email" id="primary_email" name="primary_email" class="form-control @error('primary_email') is-invalid @enderror" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
                     @error('primary_email')
                         <div class="invalid-feedback">
@@ -135,35 +135,35 @@
 
                 <div class="form-group col-md-2 mb-2">
                     <label for="state">Estado</label>
-                    <select id="state" name="state" class="form-control">
-                        <option selected>-- Selecione --</option>
-                        <option value="AC" {{ old('state', $company->state) == 'AC' ? 'selected="selected"' : '' }}>AC</option>
-                        <option value="AP" {{ old('state', $company->state) == 'AP' ? 'selected="selected"' : '' }}>AP</option>
-                        <option value="AM" {{ old('state', $company->state) == 'AM' ? 'selected="selected"' : '' }}>AM</option>
-                        <option value="BA" {{ old('state', $company->state) == 'BA' ? 'selected="selected"' : '' }}>BA</option>
-                        <option value="CE" {{ old('state', $company->state) == 'CE' ? 'selected="selected"' : '' }}>CE</option>
-                        <option value="DF" {{ old('state', $company->state) == 'DF' ? 'selected="selected"' : '' }}>DF</option>
-                        <option value="ES" {{ old('state', $company->state) == 'ES' ? 'selected="selected"' : '' }}>ES</option>
-                        <option value="GO" {{ old('state', $company->state) == 'GO' ? 'selected="selected"' : '' }}>GO</option>
-                        <option value="MA" {{ old('state', $company->state) == 'MA' ? 'selected="selected"' : '' }}>MA</option>
-                        <option value="MT" {{ old('state', $company->state) == 'MT' ? 'selected="selected"' : '' }}>MT</option>
-                        <option value="MS" {{ old('state', $company->state) == 'MS' ? 'selected="selected"' : '' }}>MS</option>
-                        <option value="MG" {{ old('state', $company->state) == 'MG' ? 'selected="selected"' : '' }}>MG</option>
-                        <option value="PA" {{ old('state', $company->state) == 'PA' ? 'selected="selected"' : '' }}>PA</option>
-                        <option value="PB" {{ old('state', $company->state) == 'PB' ? 'selected="selected"' : '' }}>PB</option>
-                        <option value="PR" {{ old('state', $company->state) == 'PR' ? 'selected="selected"' : '' }}>PR</option>
-                        <option value="PE" {{ old('state', $company->state) == 'PE' ? 'selected="selected"' : '' }}>PE</option>
-                        <option value="PI" {{ old('state', $company->state) == 'PI' ? 'selected="selected"' : '' }}>PI</option>
-                        <option value="RJ" {{ old('state', $company->state) == 'RJ' ? 'selected="selected"' : '' }}>RJ</option>
-                        <option value="RN" {{ old('state', $company->state) == 'RN' ? 'selected="selected"' : '' }}>RN</option>
-                        <option value="RS" {{ old('state', $company->state) == 'RS' ? 'selected="selected"' : '' }}>RS</option>
-                        <option value="RO" {{ old('state', $company->state) == 'RO' ? 'selected="selected"' : '' }}>RO</option>
-                        <option value="RR" {{ old('state', $company->state) == 'RR' ? 'selected="selected"' : '' }}>RR</option>
-                        <option value="SC" {{ old('state', $company->state) == 'SC' ? 'selected="selected"' : '' }}>SC</option>
-                        <option value="SE" {{ old('state', $company->state) == 'SE' ? 'selected="selected"' : '' }}>SE</option>
-                        <option value="SP" {{ old('state', $company->state) == 'SP' ? 'selected="selected"' : '' }}>SP</option>
-                        <option value="TO" {{ old('state', $company->state) == 'TO' ? 'selected="selected"' : '' }}>TO</option>
-                        <option value="AL" {{ old('state', $company->state) == 'AL' ? 'selected="selected"' : '' }}>AL</option>
+                    <select id="state" name="state" class="form-select @error('state') is-invalid @enderror">
+                        <option value="">-- Selecione --</option>
+                        <option value="AC" @if (old('state', $company->state) == 'AC') selected @endif>AC</option>
+                        <option value="AL" @if (old('state', $company->state) == 'AL') selected @endif>AL</option>
+                        <option value="AM" @if (old('state', $company->state) == 'AM') selected @endif>AM</option>
+                        <option value="AP" @if (old('state', $company->state) == 'AP') selected @endif>AP</option>
+                        <option value="BA" @if (old('state', $company->state) == 'BA') selected @endif>BA</option>
+                        <option value="CE" @if (old('state', $company->state) == 'CE') selected @endif>CE</option>
+                        <option value="DF" @if (old('state', $company->state) == 'DF') selected @endif>DF</option>
+                        <option value="ES" @if (old('state', $company->state) == 'ES') selected @endif>ES</option>
+                        <option value="GO" @if (old('state', $company->state) == 'GO') selected @endif>GO</option>
+                        <option value="MA" @if (old('state', $company->state) == 'MA') selected @endif>MA</option>
+                        <option value="MT" @if (old('state', $company->state) == 'MT') selected @endif>MT</option>
+                        <option value="MS" @if (old('state', $company->state) == 'MS') selected @endif>MS</option>
+                        <option value="MG" @if (old('state', $company->state) == 'MG') selected @endif>MG</option>
+                        <option value="PA" @if (old('state', $company->state) == 'PA') selected @endif>PA</option>
+                        <option value="PB" @if (old('state', $company->state) == 'PB') selected @endif>PB</option>
+                        <option value="PR" @if (old('state', $company->state) == 'PR') selected @endif>PR</option>
+                        <option value="PE" @if (old('state', $company->state) == 'PE') selected @endif>PE</option>
+                        <option value="PI" @if (old('state', $company->state) == 'PI') selected @endif>PI</option>
+                        <option value="RJ" @if (old('state', $company->state) == 'RJ') selected @endif>RJ</option>
+                        <option value="RN" @if (old('state', $company->state) == 'RN') selected @endif>RN</option>
+                        <option value="RS" @if (old('state', $company->state) == 'RS') selected @endif>RS</option>
+                        <option value="RO" @if (old('state', $company->state) == 'RO') selected @endif>RO</option>
+                        <option value="RR" @if (old('state', $company->state) == 'RR') selected @endif>RR</option>
+                        <option value="SC" @if (old('state', $company->state) == 'SC') selected @endif>SC</option>
+                        <option value="SE" @if (old('state', $company->state) == 'SE') selected @endif>SE</option>
+                        <option value="SP" @if (old('state', $company->state) == 'SP') selected @endif>SP</option>
+                        <option value="TO" @if (old('state', $company->state) == 'TO') selected @endif>TO</option>
                     </select>
                     @error('state')
                         <div class="invalid-feedback">
@@ -196,33 +196,35 @@
                 
                 <div class="form-group col-md-4 mb-2">
                     <label for="activity_field">Atividade</label>
-                    <select id="activity_field" name="activity_field_id" class="form-control">
+                    <select id="activity_field" name="activity_field_id" class="form-select @error('activity_field_id') is-invalid @enderror">
                         @forelse ($activityFields as $activityField)
                             @if ($loop->index == 0)
-                            <option selected>-- Selecione --</option>
+                            <option value="" selected>-- Selecione --</option>
                             @endif
     
                             <option
                                 value="{{ $activityField->id }}"
-                                @if (old('researcher_id', $company->activity_field_id) == $activityField->id) selected @endif
+                                @if (old('activity_field_id', $company->activity_field_id) == $activityField->id)
+                                selected
+                                @endif
                                 >
                                 {{ $activityField->description }}
                             </option>
                             @empty
-                            <option selected>-- Selecione --</option>
+                            <option value="" selected>-- Selecione --</option>
                         @endforelse
                     </select>
                     @error('activity_field_id')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('activity_field_id') }}
-                        </div>
+                    <div class="invalid-feedback">
+                        {{ $errors->first('activity_field_id') }}
+                    </div>
                     @enderror
                 </div>
                 
                 <div class="form-group col-md-2 mb-2">
                     <label for="is_active">Status</label>
-                    <select id="is_active" name="is_active" class="form-control">
-                        <option value="" selected>-- Selecione --</option>
+                    <select id="is_active" name="is_active" class="form-select @error('is_active') is-invalid @enderror">
+                        <option value="">-- Selecione --</option>
                         <option
                             value="1"
                             @if(old('is_active', $company->is_active) == 1) selected @endif>
@@ -254,11 +256,11 @@
                 </div>
                 
                 <div class="form-group col-md-5 mb-2">
-                    <label for="primary_email">E-mail</label>
-                    <input type="email" id="primary_email" name="primary_email" class="form-control @error('primary_email') is-invalid @enderror" value="{{ old('primary_email', $company->primary_email) }}" placeholder="">
-                    @error('primary_email')
+                    <label for="secondary_email">E-mail Secundário</label>
+                    <input type="email" id="secondary_email" name="secondary_email" class="form-control @error('secondary_email') is-invalid @enderror" value="{{ old('secondary_email', $company->secondary_email) }}" placeholder="">
+                    @error('secondary_email')
                         <div class="invalid-feedback">
-                            {{ $errors->first('primary_email') }}
+                            {{ $errors->first('secondary_email') }}
                         </div>
                     @enderror
                 </div>
@@ -278,10 +280,10 @@
                 
                 <div class="form-group col-md-2 mb-2">
                     <label for="researcher">Pesquisador</label>
-                    <select id="researcher" name="researcher_id" class="form-control">
+                    <select id="researcher" name="researcher_id" class="form-select @error('researcher_id') is-invalid @enderror">
                         @forelse ($researchers as $researcher)
                             @if ($loop->index == 0)
-                            <option selected>-- Selecione --</option>
+                            <option value="">-- Selecione --</option>
                             @endif
     
                             <option
@@ -291,7 +293,7 @@
                                 {{ $researcher->name }}
                             </option>
                             @empty
-                            <option selected>-- Selecione --</option>
+                            <option value="">-- Selecione --</option>
                         @endforelse
                     </select>
                     @error('researcher_id')
@@ -319,4 +321,4 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
