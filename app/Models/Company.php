@@ -88,11 +88,16 @@ class Company extends Model
     // Eloquent relationship methods
     public function activityField()
     {
-        return $this->hasOne(ActivityField::class);
+        return $this->belongsTo(ActivityField::class);
     }
 
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function works()
+    {
+        return $this->belongsToMany(Work::class);
     }
 }

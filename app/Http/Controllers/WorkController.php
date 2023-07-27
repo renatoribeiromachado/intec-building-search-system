@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
+use App\Models\ActivityField;
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Phase;
 use App\Models\Position;
@@ -27,6 +29,8 @@ class WorkController extends Controller
     protected $researcher;
     protected $position;
     protected $workFeature;
+    protected $activityField;
+    protected $company;
 
     public function __construct(
         Work $work,
@@ -36,7 +40,9 @@ class WorkController extends Controller
         SegmentSubType $segmentSubType,
         User $researcher,
         Position $position,
-        WorkFeature $workFeature
+        WorkFeature $workFeature,
+        ActivityField $activityField,
+        Company $company
     ) {
         $this->work = $work;
         $this->phase = $phase;
@@ -46,6 +52,8 @@ class WorkController extends Controller
         $this->researcher = $researcher;
         $this->position = $position;
         $this->workFeature = $workFeature;
+        $this->activityField = $activityField;
+        $this->company = $company;
     }
 
     /**
@@ -191,6 +199,9 @@ class WorkController extends Controller
         $workFeatures = $this->workFeature
             ->orderBy('description', 'asc')
             ->get();
+        $activityFieldsForSearch = $this->activityField
+            ->orderBy('description', 'asc')
+            ->get();
             
         return view('layouts.work.edit', compact(
             'work',
@@ -200,6 +211,7 @@ class WorkController extends Controller
             'stages',
             'researchers',
             'workFeatures',
+            'activityFieldsForSearch'
         ));
     }
 
@@ -286,5 +298,29 @@ class WorkController extends Controller
     {
         $work->delete();
         return redirect()->route('work.index');
+    }
+
+    public function getCompaniesByItsActivityField(Request $request, ActivityField $activityField)
+    {
+        $companies = $this->company
+            ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+            ->whereActivityFieldId($activityField->id)
+            ->get();
+
+        return response()->json([
+            'companies' => $companies
+        ], 200);
+    }
+
+    public function bindCompanies(Request $request, Work $work)
+    {
+        $work->companies()->attach($request->companies_list);
+        return redirect()->back();
+    }
+
+    public function unbindCompany(Request $request, Work $work, Company $company)
+    {
+        $work->companies()->detach([$company->id]);
+        return redirect()->back();
     }
 }

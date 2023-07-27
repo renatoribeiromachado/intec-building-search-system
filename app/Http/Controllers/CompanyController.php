@@ -55,7 +55,9 @@ class CompanyController extends Controller
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
-        $activityFields = $this->activityField->get();
+        $activityFields = $this->activityField
+            ->orderBy('description', 'asc')
+            ->get();
 
         return view('layouts.company.create', compact(
             'company',

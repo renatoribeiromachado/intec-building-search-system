@@ -113,4 +113,9 @@ class Work extends Model
     {
         return $this->belongsToMany(WorkFeature::class, 'work_feature_work');
     }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
+    }
 }

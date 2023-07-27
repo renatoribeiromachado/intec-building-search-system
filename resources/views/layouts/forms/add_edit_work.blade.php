@@ -744,16 +744,7 @@
                 @enderror
             </div>
         </div>
-        
-        <!--Botão-->
-        <div class="row mt-2">
-            <div class="modal-footer">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-success" title="Gravar Dados"> ADD Empresa(s) Participante(s)</button>
-                </div>
-            </div>
-        </div>
 
-        <hr class="my-3">
+        <hr class="my-4">
     </div>
 </div>

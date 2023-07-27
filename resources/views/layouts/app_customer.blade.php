@@ -22,6 +22,8 @@
                 padding-top: 4.5rem;
             }
         </style>
+
+        @stack('styles')
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

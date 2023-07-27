@@ -101,6 +101,11 @@ Route::middleware(['auth'])->group(function () {
             ], 200);
         });
 
+        Route::get(
+            'companies-by-activity-field/{activity_field}',
+            [WorkController::class, 'getCompaniesByItsActivityField']
+        )->name('company.by.activity.field');
+
     });
 
     Route::prefix('roles')->group(function() {
@@ -134,6 +139,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{work}', [WorkController::class, 'edit'])->name('work.edit');
         Route::put('update/{work}', [WorkController::class, 'update'])->name('work.update');
         Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
+
+        Route::put('bind-companies/{work}', [WorkController::class, 'bindCompanies'])->name('work.bind.companies');
+        Route::delete(
+            'unbind-companies/{work}/{company}',
+            [WorkController::class, 'unbindCompany']
+        )->name('work.unbind.company');
     });
 
     Route::prefix('associates')->group(function() {
