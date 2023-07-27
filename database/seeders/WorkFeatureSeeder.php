@@ -26,6 +26,14 @@ class WorkFeatureSeeder extends Seeder
             ['description' => 'Brinquedoteca'],
             ['description' => 'Sauna'],
             ['description' => 'Gourmet'],
+            ['description' => 'Pergolado'],
+            ['description' => 'Pet Place / Pet Care'],
+            ['description' => 'Bicicletário'],
+            ['description' => 'Lavanderia'],
+            ['description' => 'Coworking'],
+            ['description' => 'Solário'],
+            ['description' => 'Delivery'],
+            ['description' => 'Mini Market'],
         ];
 
         $featuresQuantity = count($features);
