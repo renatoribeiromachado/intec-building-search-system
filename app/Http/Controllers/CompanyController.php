@@ -110,7 +110,7 @@ class CompanyController extends Controller
         $company->register_ip = $request->register_ip;
         $company->save();
 
-        return redirect()->route('company.index');
+        return redirect()->route('company.edit', $company->id);
     }
 
     /**
