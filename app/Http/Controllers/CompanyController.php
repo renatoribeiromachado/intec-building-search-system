@@ -55,7 +55,9 @@ class CompanyController extends Controller
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
-        $activityFields = $this->activityField->get();
+        $activityFields = $this->activityField
+            ->orderBy('description', 'asc')
+            ->get();
 
         return view('layouts.company.create', compact(
             'company',
@@ -110,7 +112,7 @@ class CompanyController extends Controller
         $company->register_ip = $request->register_ip;
         $company->save();
 
-        return redirect()->route('company.index');
+        return redirect()->route('company.edit', $company->id);
     }
 
     /**

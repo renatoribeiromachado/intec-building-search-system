@@ -52,6 +52,7 @@ class Work extends Model
         'cup_and_kitchen', // obr_DescResidCopa_chr
         'service_area_terrace_balcony', // obr_DescResidATV_chr
         'maid_dependency', // obr_DescResidDepEmpreg_chr
+        'other_leisure',
         'total_unities', // obr_DescInfoAdicTotalUnicades_chr
         'useful_area', // obr_DescInfoAdicAreaUtil_chr
         'total_area', // obr_DescInfoAdicAreaTerreno_chr
@@ -82,10 +83,6 @@ class Work extends Model
     {
         $work = self::select('works.*');
 
-        // if (request()->cnpj) {
-        //     $where[]  = ['companies.cnpj', '=', request()->cnpj];
-        // }
-
         if (request()->name) {
             $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
         }
@@ -110,5 +107,15 @@ class Work extends Model
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function features()
+    {
+        return $this->belongsToMany(WorkFeature::class, 'work_feature_work');
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
     }
 }

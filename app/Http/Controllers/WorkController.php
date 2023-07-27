@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
+use App\Models\ActivityField;
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Phase;
 use App\Models\Position;
@@ -12,6 +14,7 @@ use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\User;
 use App\Models\Work;
+use App\Models\WorkFeature;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -25,6 +28,9 @@ class WorkController extends Controller
     protected $segmentSubType;
     protected $researcher;
     protected $position;
+    protected $workFeature;
+    protected $activityField;
+    protected $company;
 
     public function __construct(
         Work $work,
@@ -33,7 +39,10 @@ class WorkController extends Controller
         Segment $segment,
         SegmentSubType $segmentSubType,
         User $researcher,
-        Position $position
+        Position $position,
+        WorkFeature $workFeature,
+        ActivityField $activityField,
+        Company $company
     ) {
         $this->work = $work;
         $this->phase = $phase;
@@ -42,6 +51,9 @@ class WorkController extends Controller
         $this->segmentSubType = $segmentSubType;
         $this->researcher = $researcher;
         $this->position = $position;
+        $this->workFeature = $workFeature;
+        $this->activityField = $activityField;
+        $this->company = $company;
     }
 
     /**
@@ -69,12 +81,19 @@ class WorkController extends Controller
         $work = $this->work;
         $phases = $this->phase->get();
         $segments = $this->segment->get();
-        $segmentSubTypes = [];
-        $stages = [];
+        $segmentSubTypes = old('segment_sub_type_id')
+            ?  $this->segmentSubType->get()
+            : [];
+        $stages = old('stage_id')
+            ? $this->stage->get()
+            : [];
         $researchers = $this->researcher
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
+        $workFeatures = $this->workFeature
+            ->orderBy('description', 'asc')
+            ->get();
 
         return view('layouts.work.create', compact(
             'work',
@@ -83,6 +102,7 @@ class WorkController extends Controller
             'phases',
             'stages',
             'researchers',
+            'workFeatures'
         ));
     }
 
@@ -94,7 +114,6 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        // dd($request->all());
         $work = $this->work;
         $work->old_code = $request->old_code;
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
@@ -137,6 +156,7 @@ class WorkController extends Controller
         $work->cup_and_kitchen = $request->cup_and_kitchen;
         $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
         $work->maid_dependency = $request->maid_dependency;
+        $work->other_leisure = $request->other_leisure;
         $work->total_unities = $request->total_unities;
         $work->useful_area = $request->useful_area;
         $work->total_area = $request->total_area;
@@ -155,6 +175,8 @@ class WorkController extends Controller
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 
+        $work->features()->sync($request->work_features);
+
         return redirect()->route('work.index');
     }
 
@@ -168,16 +190,18 @@ class WorkController extends Controller
     {
         $phases = $this->phase->get();
         $segments = $this->segment->get();
-        $segmentSubTypes = $this->segmentSubType
-            ->where('segment_id', $work->segment_id)
-            ->get();
-        $stages = $this->stage
-        ->where('phase_id', $work->phase_id)
-        ->get();
+        $segmentSubTypes = $this->segmentSubType->get();
+        $stages = $this->stage->get();
         $researchers = $this->researcher
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
             })->get();
+        $workFeatures = $this->workFeature
+            ->orderBy('description', 'asc')
+            ->get();
+        $activityFieldsForSearch = $this->activityField
+            ->orderBy('description', 'asc')
+            ->get();
             
         return view('layouts.work.edit', compact(
             'work',
@@ -186,6 +210,8 @@ class WorkController extends Controller
             'phases',
             'stages',
             'researchers',
+            'workFeatures',
+            'activityFieldsForSearch'
         ));
     }
 
@@ -239,6 +265,7 @@ class WorkController extends Controller
         $work->cup_and_kitchen = $request->cup_and_kitchen;
         $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
         $work->maid_dependency = $request->maid_dependency;
+        $work->other_leisure = $request->other_leisure;
         $work->total_unities = $request->total_unities;
         $work->useful_area = $request->useful_area;
         $work->total_area = $request->total_area;
@@ -256,6 +283,8 @@ class WorkController extends Controller
         $work->updated_by = auth()->guard('web')->user()->id;
         $work->save();
 
+        $work->features()->sync($request->work_features);
+
         return redirect()->route('work.index');
     }
 
@@ -269,5 +298,29 @@ class WorkController extends Controller
     {
         $work->delete();
         return redirect()->route('work.index');
+    }
+
+    public function getCompaniesByItsActivityField(Request $request, ActivityField $activityField)
+    {
+        $companies = $this->company
+            ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+            ->whereActivityFieldId($activityField->id)
+            ->get();
+
+        return response()->json([
+            'companies' => $companies
+        ], 200);
+    }
+
+    public function bindCompanies(Request $request, Work $work)
+    {
+        $work->companies()->attach($request->companies_list);
+        return redirect()->back();
+    }
+
+    public function unbindCompany(Request $request, Work $work, Company $company)
+    {
+        $work->companies()->detach([$company->id]);
+        return redirect()->back();
     }
 }

@@ -58,6 +58,7 @@
                     <th scope="col">CNPJ</th>
                     <th scope="col">Razão Social</th>
                     <th scope="col">Nome Fantasia</th>
+                    <th scope="col">Atividade</th>
                     <th scope="col">Cidade</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -69,6 +70,7 @@
                         <td>{{ $company->cnpj }}</td>
                         <td>{{ $company->company_name }}</td>
                         <td>{{ $company->trading_name }}</td>
+                        <td>{{ optional($company->activityField)->description }}</td>
                         <td>{{ $company->city }}</td>
                         <td>
                             <a

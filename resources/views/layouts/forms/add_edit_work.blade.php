@@ -29,7 +29,7 @@
                 <select id="researcher" name="researcher_id" class="form-select @error('researcher_id') is-invalid @enderror">
                     @forelse ($researchers as $researcher)
                         @if ($loop->index == 0)
-                        <option selected>-- Selecione --</option>
+                        <option value="">-- Selecione --</option>
                         @endif
 
                         <option
@@ -39,7 +39,7 @@
                             {{ $researcher->name }}
                         </option>
                         @empty
-                        <option selected>-- Selecione --</option>
+                        <option value="">-- Selecione --</option>
                     @endforelse
                 </select>
                 @error('researcher_id')
@@ -134,7 +134,7 @@
             <div class="col-md-2 mb-2">
                 <label for="state">Estado</label>
                 <select id="state" name="state" class="form-select @error('state') is-invalid @enderror">
-                    <option selected>-- Selecione --</option>
+                    <option value="">-- Selecione --</option>
                     <option value="AC" {{ old('state', $work->state) == 'AC' ? 'selected="selected"' : '' }}>AC</option>
                     <option value="AP" {{ old('state', $work->state) == 'AP' ? 'selected="selected"' : '' }}>AP</option>
                     <option value="AM" {{ old('state', $work->state) == 'AM' ? 'selected="selected"' : '' }}>AM</option>
@@ -177,7 +177,7 @@
                 <select id="segment" name="segment_id" class="form-select @error('segment_id') is-invalid @enderror">
                     @foreach ($segments as $segment)
                     @if ($loop->index == 0)
-                    <option selected>-- Selecione --</option>
+                    <option value="">-- Selecione --</option>
                     @endif
 
                     <option
@@ -197,22 +197,25 @@
 
             <div class="col-md-3 mb-2">
                 <label for="segment_sub_type">Subtipo</label>
-                <select id="segment_sub_type" name="segment_sub_type_id" class="form-select @error('segment_sub_type_id') is-invalid @enderror">
+                <select
+                    id="segment_sub_type"
+                    name="segment_sub_type_id"
+                    class="form-select @error('segment_sub_type_id') is-invalid @enderror"
+                    >
                     @forelse ($segmentSubTypes as $segmentSubType)
-                    @if ($loop->index == 0)
-                    <option value="" selected>-- Selecione primeiro o segmento --</option>
-                    @endif
+                        @if ($loop->index == 0)
+                        <option value="">-- Selecione primeiro o segmento --</option>
+                        @endif
 
-                    <option
-                        value="{{ $segmentSubType->id }}"
-                        @if (old('segment_sub_type_id', $work->segment_sub_type_id) == $segmentSubType->id) selected @endif
-                        >
-                        {{ $segmentSubType->description }}
-                    </option>
+                        <option
+                            value="{{ $segmentSubType->id }}"
+                            @if (old('segment_sub_type_id', $work->segment_sub_type_id) == $segmentSubType->id) selected @endif
+                            >
+                            {{ $segmentSubType->description }}
+                        </option>
 
-                    @empty
-                    <option value="" selected>-- Selecione primeiro o segmento --</option>
-
+                        @empty
+                        <option value="">-- Selecione primeiro o segmento --</option>
                     @endforelse
                 </select>
                 @error('segment_sub_type_id')
@@ -227,7 +230,7 @@
                 <select id="phase" name="phase_id" class="form-select @error('phase_id') is-invalid @enderror">
                     @foreach ($phases as $phase)
                     @if ($loop->index == 0)
-                    <option selected>-- Selecione --</option>
+                    <option value="">-- Selecione --</option>
                     @endif
 
                     <option
@@ -250,7 +253,7 @@
                 <select id="stage" name="stage_id" class="form-select @error('stage_id') is-invalid @enderror">
                     @forelse ($stages as $stage)
                     @if ($loop->index == 0)
-                    <option value="" selected>-- Selecione primeiro a fase --</option>
+                    <option value="">-- Selecione primeiro a fase --</option>
                     @endif
 
                     <option
@@ -261,7 +264,7 @@
                     </option>
 
                     @empty
-                    <option value="" selected>-- Selecione primeiro a fase --</option>
+                    <option value="">-- Selecione primeiro a fase --</option>
 
                     @endforelse
                 </select>
@@ -504,39 +507,29 @@
             <div class="col-md-12">
                 <p><strong>ÁREA DE LAZER</strong></p>
             </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="1" /> Salão de festas
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="2" /> Salão de jogos
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="4" /> Piscina
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="8" /> Sauna
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="16" /> Churrasqueira
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="32" /> Quadra
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="64" /> Fitness
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="128" /> Gourmet
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="256" /> Playground
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="512" /> Spa
-            </div>
-            <div class="col-md-3">
-                <input type="checkbox" name="" value="1024" /> Brinquedoteca
-            </div>
+
+            @foreach($workFeatures as $workFeature)
+                <div class="col-md-3 mb-2">
+                    <input
+                        type="checkbox"
+                        name="work_features[]"
+                        value="{{ $workFeature->id }}"
+                        class="form-check-input me-1"
+                        id="check-feature-{{ $loop->index }}"
+
+                        @if (empty(old('work_features')) && $work->features->contains($workFeature))
+                        checked
+                        @endif
+
+                        @if (! empty(old('work_features')) && collect(old('work_features'))->contains($workFeature->id))
+                        checked
+                        @endif
+                        />
+                    <label class="form-check-label" for="check-feature-{{ $loop->index }}">
+                        {{ $workFeature->description }}
+                    </label>
+                </div>
+            @endforeach
 
             <!--Soma dos checkbox-->
             <div class="col-md-3">
@@ -545,7 +538,11 @@
 
             <div class="col-md-12 mt-2">
                 <label class="control-label"> <strong>Outros</strong></label>
-                <input type="text" name="other_leisure" class="form-control @error('other_leisure') is-invalid @enderror" value="{{ old('other_leisure', $work->other_leisure) }}" />
+                <input
+                    type="text" name="other_leisure"
+                    class="form-control @error('other_leisure') is-invalid @enderror"
+                    value="{{ old('other_leisure', $work->other_leisure) }}"
+                    />
                 @error('other_leisure')
                     <div class="invalid-feedback">
                         {{ $errors->first('other_leisure') }}
@@ -747,16 +744,7 @@
                 @enderror
             </div>
         </div>
-        
-        <!--Botão-->
-        <div class="row mt-2">
-            <div class="modal-footer">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-success" title="Gravar Dados"> ADD Empresa(s) Participante(s)</button>
-                </div>
-            </div>
-        </div>
 
-        <hr class="my-3">
+        <hr class="my-4">
     </div>
 </div>
