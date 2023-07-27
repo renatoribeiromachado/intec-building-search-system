@@ -204,6 +204,7 @@ return [
         'washbasin' => 'Lavabo(s)',
         'maid_dependency' => 'Dependência de empregada',
         'other_leisure' => 'Outros Lazeres',
+        'phase_id' => 'Fase',
     ],
 
 ];

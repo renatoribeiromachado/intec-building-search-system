@@ -73,8 +73,12 @@ class WorkController extends Controller
         $work = $this->work;
         $phases = $this->phase->get();
         $segments = $this->segment->get();
-        $segmentSubTypes = [];
-        $stages = [];
+        $segmentSubTypes = old('segment_sub_type_id')
+            ?  $this->segmentSubType->get()
+            : [];
+        $stages = old('stage_id')
+            ? $this->stage->get()
+            : [];
         $researchers = $this->researcher
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');
@@ -178,12 +182,8 @@ class WorkController extends Controller
     {
         $phases = $this->phase->get();
         $segments = $this->segment->get();
-        $segmentSubTypes = $this->segmentSubType
-            ->where('segment_id', $work->segment_id)
-            ->get();
-        $stages = $this->stage
-        ->where('phase_id', $work->phase_id)
-        ->get();
+        $segmentSubTypes = $this->segmentSubType->get();
+        $stages = $this->stage->get();
         $researchers = $this->researcher
             ->whereHas('role', function (Builder $query) {
                 $query->where('name', '=', 'Pesquisador');

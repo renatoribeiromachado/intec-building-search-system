@@ -34,7 +34,7 @@
 
                         $.ajax({
                             type: "GET",
-                            url: base_url() + '/v1/segment-sub-types',
+                            url: base_url() + 'v1/segment-sub-types',
                             data: {'_token': $('meta[name=csrf-token]').attr('content'), segment: segment},
                             success: function (return_data) {
                                 if (return_data.segmentSubTypes.length <= 0) {
@@ -72,7 +72,7 @@
 
                         $.ajax({
                             type: "GET",
-                            url: base_url() + '/v1/stages',
+                            url: base_url() + 'v1/stages',
                             data: {'_token': $('meta[name=csrf-token]').attr('content'), phase: phase},
                             success: function (return_data) {
                                 if (return_data.stages.length <= 0) {
