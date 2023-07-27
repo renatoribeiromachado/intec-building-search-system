@@ -34,7 +34,7 @@
 
         <div class="row mx-2">
             <div id="activity-field-wrapper">
-                <div class="col-md-3 mb-2">
+                <div class="col-md-4 mb-2">
                     <label for="activity_field_for_search">Atividade</label>
                     <select
                         id="activity_field_for_search" name="activity_field_for_search"
@@ -54,6 +54,22 @@
                     @error('activity_field_for_search')
                         <div class="invalid-feedback">
                             {{ $errors->first('activity_field_for_search') }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label for="trading_name">Nome Fantasia</label>
+                    <input
+                        type="text"
+                        id="trading_name"
+                        name="trading_name"
+                        class="form-control @error('trading_name') is-invalid @enderror"
+                        value="{{ old('trading_name', optional($work->trading_name)->format('d/m/Y')) }}"
+                        placeholder="">
+                    @error('trading_name')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('trading_name') }}
                         </div>
                     @enderror
                 </div>
@@ -84,7 +100,7 @@
                         <th scope="col">#</th>
                         <th scope="col">CNPJ</th>
                         <th scope="col">Razão Social</th>
-                        <th scope="col">Atividade</th>
+                        <th scope="col">Atividade(s)</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -94,18 +110,55 @@
                             <th scope="row" style="width:5%">{{ $company->id }}</th>
                             <td style="width:20%">{{ $company->cnpj }}</td>
                             <td>{{ $company->trading_name }}</td>
-                            <td>{{ optional($company->activityField)->description }}</td>
                             <td>
-                                <button
-                                    type="button"
-                                    class="btn btn-danger"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#removeCompanyFromWork{{$loop->index}}"
-                                    >
-                                    Remover Empresa Participante
-                                </button>
+                                @foreach (
+                                    $work->companyActivityFields()
+                                        ->where('activity_field_work.company_id', $company->id)
+                                        ->get() as $workCompanyActivity
+                                    )
+                                    {{ $workCompanyActivity->description }} <br>
+                                @endforeach
+                            </td>
+                            <td style="width:30%">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#removeCompanyFromWork{{$loop->index}}"
+                                            >
+                                            Remover Empresa Participante
+                                        </button>
+                                    </div>
+
+                                    <div class="col-12 mb-2">
+                                        <button
+                                            type="button"
+                                            class="btn btn-info"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addCompanyActivities{{$loop->index}}"
+                                            >
+                                            Incluir/Atualizar Atividades
+                                        </button>
+                                    </div>
+
+                                    {{-- <div class="col-12">
+                                        <button
+                                            type="button"
+                                            class="btn btn-success"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#removeCompanyFromWork{{$loop->index}}"
+                                            >
+                                            Incluir Contatos Responsáveis
+                                        </button>
+                                    </div> --}}
+                                </div>
 
                                 @include('layouts.work.modals.remove_company_modal')
+
+                                @include('layouts.work.modals.add_company_activities_modal')
+
                             </td>
                         </tr>
                         @empty
@@ -134,6 +187,7 @@
                 $('#showCompaniesListModal').on('click', function (event) {
 
                     var activityField = $('#activity_field_for_search').val();
+                    var tradingName = $('#trading_name').val();
 
                     if (activityField == "") {
                         alert('Atenção: Selecione uma Atividade para iniciar a pesquisa!');
@@ -145,7 +199,7 @@
                     $.ajax({
                         type: "GET",
                         url: base_url() + `v1/companies-by-activity-field/${activityField}`,
-                        data: {'_token': $('meta[name=csrf-token]').attr('content')},
+                        data: {'_token': $('meta[name=csrf-token]').attr('content'), 'trading_name': tradingName},
                         success: function (return_data) {
                             
                             var html = '';

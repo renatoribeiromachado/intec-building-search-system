@@ -35,4 +35,9 @@ class ActivityField extends Model
     {
         return $this->hasMany(Company::class);
     }
+
+    public function works()
+    {
+        return $this->belongsToMany(Work::class)->withPivot('company_id');
+    }
 }

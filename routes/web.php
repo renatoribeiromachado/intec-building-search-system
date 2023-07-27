@@ -158,6 +158,10 @@ Route::middleware(['auth'])->group(function () {
             'unbind-companies/{work}/{company}',
             [WorkController::class, 'unbindCompany']
         )->name('work.unbind.company');
+        Route::put(
+            'bind-activities/{work}/{company}',
+            [WorkController::class, 'addCompanyActivitiesIntoWork']
+        )->name('work.bind.company.activities');
     });
 
     Route::prefix('associates')->group(function() {

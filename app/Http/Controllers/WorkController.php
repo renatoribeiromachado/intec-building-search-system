@@ -18,6 +18,7 @@ use App\Models\WorkFeature;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WorkController extends Controller
 {
@@ -67,7 +68,7 @@ class WorkController extends Controller
         $positions = $this->position->get();
         return view('layouts.work.index', compact(
             'works',
-            'positions',
+            'positions'
         ));
     }
 
@@ -202,6 +203,9 @@ class WorkController extends Controller
         $activityFieldsForSearch = $this->activityField
             ->orderBy('description', 'asc')
             ->get();
+        $activityFields = $this->activityField
+            ->orderBy('description', 'asc')
+            ->get();
             
         return view('layouts.work.edit', compact(
             'work',
@@ -211,7 +215,8 @@ class WorkController extends Controller
             'stages',
             'researchers',
             'workFeatures',
-            'activityFieldsForSearch'
+            'activityFieldsForSearch',
+            'activityFields'
         ));
     }
 
@@ -305,6 +310,7 @@ class WorkController extends Controller
         $companies = $this->company
             ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
             ->whereActivityFieldId($activityField->id)
+            ->where('trading_name', 'like', '%'.$request->trading_name.'%')
             ->get();
 
         return response()->json([
@@ -314,13 +320,63 @@ class WorkController extends Controller
 
     public function bindCompanies(Request $request, Work $work)
     {
+        $companies = $this->company
+            ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+            ->whereIn('id', $request->companies_list)
+            ->get();
+
+        foreach ($companies as $company) {
+            $work->companyActivityFields()->attach(
+                $company->activity_field_id,
+                ['company_id' => $company->id]
+            );
+        }
+
         $work->companies()->attach($request->companies_list);
         return redirect()->back();
     }
 
     public function unbindCompany(Request $request, Work $work, Company $company)
     {
+        DB::table('activity_field_work')
+            ->where('company_id', $company->id)
+            ->where('work_id', $work->id)
+            ->delete();
         $work->companies()->detach([$company->id]);
+        return redirect()->back();
+    }
+
+    public function addCompanyActivitiesIntoWork(Request $request, Work $work, Company $company)
+    {
+        try {
+            DB::beginTransaction();
+
+                DB::table('activity_field_work')
+                    ->where('company_id', $company->id)
+                    ->where('work_id', $work->id)
+                    ->delete();
+
+                foreach (collect($request->activity_fields_list)->all() as $activityFieldsList) {
+                    DB::table('activity_field_work')
+                        ->insert([
+                            'activity_field_id' => $activityFieldsList,
+                            'work_id' => $work->id,
+                            'company_id' => $company->id,
+                        ]);
+                }
+
+            DB::commit();
+
+        } catch(\Exception $ex) {
+
+            DB::rollBack();
+
+            echo $ex->getMessage();
+            echo "<br>Houve um problema ao tentar atualizar as atividades da empresa com a obra<br>";
+            echo "<br>Entre em contato com os desenvolvedores do sistema.";
+            exit;
+        }
+
         return redirect()->back();
     }
 }

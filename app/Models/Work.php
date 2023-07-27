@@ -118,4 +118,9 @@ class Work extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function companyActivityFields()
+    {
+        return $this->belongsToMany(ActivityField::class)->withPivot('company_id');
+    }
 }
