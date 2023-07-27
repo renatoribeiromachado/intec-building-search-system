@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
@@ -83,6 +84,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{segment_sub_type}', [SegmentSubTypeController::class, 'edit'])->name('segment_sub_type.edit');
         Route::put('update/{segment_sub_type}', [SegmentSubTypeController::class, 'update'])->name('segment_sub_type.update');
         Route::delete('{segment_sub_type}', [SegmentSubTypeController::class, 'destroy'])->name('segment_sub_type.destroy');
+    });
+
+    Route::prefix('activity_fields')->group(function () {
+        Route::get('/', [ActivityFieldController::class, 'index'])->name('activity_field.index');
+        Route::get('create', [ActivityFieldController::class, 'create'])->name('activity_field.create');
+        Route::post('store', [ActivityFieldController::class, 'store'])->name('activity_field.store');
+        Route::get('edit/{activity_field}', [ActivityFieldController::class, 'edit'])->name('activity_field.edit');
+        Route::put(
+            'update/{activity_field}',
+            [ActivityFieldController::class, 'update']
+        )->name('activity_field.update');
+        Route::delete('{activity_field}', [ActivityFieldController::class, 'destroy'])->name('activity_field.destroy');
     });
 
     Route::prefix('v1')->group(function () {

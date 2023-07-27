@@ -91,6 +91,12 @@
                                 {{-- @endcan --}}
 
                                 <li>
+                                    <a class="dropdown-item" href="{{ route('activity_field.index') }}">
+                                        Atividades de Empresas
+                                    </a>
+                                </li>
+
+                                <li>
                                     <a class="dropdown-item" href="{{ route('user.index') }}">
                                         Usuários
                                     </a>

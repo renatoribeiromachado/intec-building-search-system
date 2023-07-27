@@ -24,7 +24,7 @@ class UpdateActivityFieldRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'description' => ['required']
         ];
     }
 }

@@ -24,6 +24,7 @@ class ActivityField extends Model
         }
 
         return $phase
+            ->withCount('companies')
             ->where($where)
             ->orderBy('activity_fields.id', 'asc')
             ->paginate(15);
@@ -32,6 +33,6 @@ class ActivityField extends Model
     // Eloquent relationship methods
     public function companies()
     {
-        return $this->belongsToMany(Company::class);
+        return $this->hasMany(Company::class);
     }
 }

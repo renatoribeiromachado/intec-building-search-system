@@ -205,6 +205,9 @@ return [
         'maid_dependency' => 'Dependência de empregada',
         'other_leisure' => 'Outros Lazeres',
         'phase_id' => 'Fase',
+
+        // Activity Field
+        'description' => 'Descrição'
     ],
 
 ];

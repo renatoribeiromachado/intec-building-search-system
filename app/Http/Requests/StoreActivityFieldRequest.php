@@ -24,7 +24,7 @@ class StoreActivityFieldRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'description' => ['required']
         ];
     }
 }

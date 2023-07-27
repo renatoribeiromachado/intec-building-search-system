@@ -8,6 +8,14 @@ use App\Models\ActivityField;
 
 class ActivityFieldController extends Controller
 {
+    protected $activityField;
+
+    public function __construct(
+        ActivityField $activityField
+    ) {
+        $this->activityField = $activityField;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,8 @@ class ActivityFieldController extends Controller
      */
     public function index()
     {
-        //
+        $activityFields = $this->activityField->allActivityFields();
+        return view('layouts.activity_field.index', compact('activityFields'));
     }
 
     /**
@@ -25,7 +34,10 @@ class ActivityFieldController extends Controller
      */
     public function create()
     {
-        //
+        $activityField = $this->activityField;
+        return view('layouts.activity_field.create', compact(
+            'activityField',
+        ));
     }
 
     /**
@@ -36,18 +48,11 @@ class ActivityFieldController extends Controller
      */
     public function store(StoreActivityFieldRequest $request)
     {
-        //
-    }
+        $activityField = $this->activityField;
+        $activityField->description = $request->description;
+        $activityField->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ActivityField  $activityField
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ActivityField $activityField)
-    {
-        //
+        return redirect()->route('activity_field.index');
     }
 
     /**
@@ -58,7 +63,9 @@ class ActivityFieldController extends Controller
      */
     public function edit(ActivityField $activityField)
     {
-        //
+        return view('layouts.activity_field.edit', compact(
+            'activityField',
+        ));
     }
 
     /**
@@ -70,7 +77,10 @@ class ActivityFieldController extends Controller
      */
     public function update(UpdateActivityFieldRequest $request, ActivityField $activityField)
     {
-        //
+        $activityField->description = $request->description;
+        $activityField->save();
+
+        return redirect()->route('activity_field.index');
     }
 
     /**
@@ -81,6 +91,7 @@ class ActivityFieldController extends Controller
      */
     public function destroy(ActivityField $activityField)
     {
-        //
+        $activityField->delete();
+        return redirect()->back();
     }
 }
