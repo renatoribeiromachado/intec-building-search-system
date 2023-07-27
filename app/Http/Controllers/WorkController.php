@@ -177,7 +177,7 @@ class WorkController extends Controller
 
         $work->features()->sync($request->work_features);
 
-        return redirect()->route('work.index');
+        return redirect()->route('work.edit', $work->id);
     }
 
     /**
