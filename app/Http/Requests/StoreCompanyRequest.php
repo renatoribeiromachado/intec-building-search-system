@@ -29,7 +29,7 @@ class StoreCompanyRequest extends FormRequest
             'revision' => ['required'],
             'cnpj' => ['required'],
             'primary_email' => ['required'],
-            'secondary_email' => ['required'],
+            'secondary_email' => ['nullable'],
             'phone_one' => ['required'],
             'zip_code' => ['required'],
             'address' => ['required'],
