@@ -132,7 +132,7 @@
                                         placeholder=""
                                         >
                                 </div>
-                                <div class="col-md-48 mb-2">
+                                <div class="col-md-4 mb-2">
                                     <label for="phone_three">Telefone 3</label>
                                     <input type="text" id="phone_three" name="phone_three"
                                         class="form-control @error('phone_three') is-invalid @enderror"
