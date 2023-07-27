@@ -502,6 +502,19 @@
 
         </div>
 
+        <div class="form-row mt-2">
+            <div class="form-group col-md-12 mb-2">
+                <label for="notes"><strong>DESCRIÇÕES COMPLEMENTARES</strong></label>
+                <textarea type="text" id="notes" name="notes" class="form-control @error('notes') is-invalid @enderror" rows="5" placeholder="">{{ old('notes', $work->notes) }}</textarea>
+                @error('notes')
+                    <div class="invalid-feedback">
+                        {{ $errors->first('notes') }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+
+
         <div class="row mt-2">
             <!--AREA DE LAZER-->
             <div class="col-md-12">
@@ -564,7 +577,7 @@
                         <th>Área do Terreno (m2)</th>
                         <th>Elevador(s)</th>
                         <th>Vaga(s)</th>
-                        <th>Cobertura(s)</th>
+                        <!--<th>Cobertura(s)</th>-->
                     </tr>
                     <tr>
                         <td>
@@ -607,6 +620,7 @@
                                 </div>
                             @enderror
                         </td>
+                        <!-- não usa mais
                         <td>
                             <input type="text" name="coverage" class="form-control @error('coverage') is-invalid @enderror" value="{{ old('coverage', $work->coverage) }}"/>
                             @error('coverage')
@@ -615,6 +629,7 @@
                                 </div>
                             @enderror
                         </td>
+                        -->
                     </tr>
                     <tr>
                         <th>Ar condiconado</th>
@@ -707,18 +722,6 @@
                 </table>
             </div>
 
-        </div>
-
-        <div class="form-row mt-2">
-            <div class="form-group col-md-12 mb-2">
-                <label for="notes"><strong>DESCRIÇÕES COMPLEMENTARES</strong></label>
-                <textarea type="text" id="notes" name="notes" class="form-control @error('notes') is-invalid @enderror" rows="5" placeholder="">{{ old('notes', $work->notes) }}</textarea>
-                @error('notes')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('notes') }}
-                    </div>
-                @enderror
-            </div>
         </div>
 
         <div class="row">
