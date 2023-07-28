@@ -123,4 +123,9 @@ class Work extends Model
     {
         return $this->belongsToMany(ActivityField::class)->withPivot('company_id');
     }
+
+    public function companyContacts()
+    {
+        return $this->belongsToMany(Contact::class)->withPivot('company_id');
+    }
 }

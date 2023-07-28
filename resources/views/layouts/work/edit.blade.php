@@ -101,6 +101,7 @@
                         <th scope="col">CNPJ</th>
                         <th scope="col">Razão Social</th>
                         <th scope="col">Atividade(s)</th>
+                        <th scope="col">Contato(s)</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -119,9 +120,22 @@
                                     {{ $workCompanyActivity->description }} <br>
                                 @endforeach
                             </td>
+                            <td>
+                                @foreach (
+                                    $work->companyContacts()
+                                        ->where('contact_work.company_id', $company->id)
+                                        ->get() as $workCompanyContact
+                                    )
+                                    {{ $workCompanyContact->name }} <br>
+                                    ({{ $workCompanyContact->ddd }}) {{ $workCompanyContact->main_phone }} <br>
+                                    <a href="mailto:{{ $workCompanyContact->email }}">
+                                        {{ $workCompanyContact->email }}
+                                    </a> <br>
+                                @endforeach
+                            </td>
                             <td style="width:30%">
                                 <div class="row">
-                                    <div class="col-12 mb-2">
+                                    <div class="col-12 mb-2 mt-1">
                                         <button
                                             type="button"
                                             class="btn btn-danger"
@@ -132,7 +146,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="col-12 mb-2">
+                                    <div class="col-12 mb-2 mt-1">
                                         <button
                                             type="button"
                                             class="btn btn-info"
@@ -143,28 +157,30 @@
                                         </button>
                                     </div>
 
-                                    {{-- <div class="col-12">
+                                    <div class="col-12 mb-2 mt-1">
                                         <button
                                             type="button"
                                             class="btn btn-success"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#removeCompanyFromWork{{$loop->index}}"
+                                            data-bs-target="#addCompanyContacts{{$loop->index}}"
                                             >
-                                            Incluir Contatos Responsáveis
+                                            Inclui/Atualizar Contatos Responsáveis
                                         </button>
-                                    </div> --}}
+                                    </div>
                                 </div>
 
                                 @include('layouts.work.modals.remove_company_modal')
 
                                 @include('layouts.work.modals.add_company_activities_modal')
 
+                                @include('layouts.work.modals.add_company_contacts_modal')
+
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="5" class="py-4 text-center">
-                                <p>Nenhuma empresa participante encontrada.</p>
+                                <p>Nenhum contato encontrado.</p>
                             </td>
                         </tr>
                     @endforelse

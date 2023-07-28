@@ -379,4 +379,38 @@ class WorkController extends Controller
 
         return redirect()->back();
     }
+
+    public function addCompanyContactsIntoWork(Request $request, Work $work, Company $company)
+    {
+        try {
+            DB::beginTransaction();
+
+                DB::table('contact_work')
+                    ->where('company_id', $company->id)
+                    ->where('work_id', $work->id)
+                    ->delete();
+
+                foreach (collect($request->contacts_list)->all() as $contactList) {
+                    DB::table('contact_work')
+                        ->insert([
+                            'contact_id' => $contactList,
+                            'work_id' => $work->id,
+                            'company_id' => $company->id,
+                        ]);
+                }
+
+            DB::commit();
+
+        } catch(\Exception $ex) {
+
+            DB::rollBack();
+
+            echo $ex->getMessage();
+            echo "<br>Houve um problema ao tentar atualizar os contatos da empresa com a obra<br>";
+            echo "<br>Entre em contato com os desenvolvedores do sistema.";
+            exit;
+        }
+
+        return redirect()->back();
+    }
 }
