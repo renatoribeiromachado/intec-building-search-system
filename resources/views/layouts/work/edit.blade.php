@@ -126,7 +126,8 @@
                                         ->where('contact_work.company_id', $company->id)
                                         ->get() as $workCompanyContact
                                     )
-                                    {{ $workCompanyContact->name }} <br>
+                                    {{ $workCompanyContact->name }}  <br>
+                                    ({{ optional($workCompanyContact->position)->description}}) <br>
                                     ({{ $workCompanyContact->ddd }}) {{ $workCompanyContact->main_phone }} <br>
                                     <a href="mailto:{{ $workCompanyContact->email }}">
                                         {{ $workCompanyContact->email }}
