@@ -5,7 +5,12 @@
     <div class="bg-light p-5 rounded" style="padding-bottom: 400px !important;">
         <h1>EDIÇÃO DE OBRA</h1>
 
-        <form action="{{ route('work.update', $work->id) }}" method="POST" role="form">
+        <form
+            action="{{ route('work.update', $work->id) }}"
+            method="POST"
+            role="form"
+            enctype="multipart/form-data"
+            >
             @csrf
             @method('put')
 

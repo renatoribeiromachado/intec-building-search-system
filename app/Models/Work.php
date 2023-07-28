@@ -10,6 +10,10 @@ class Work extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const LARGE_DIR_STORAGE_PATH = 'work';
+    const LARGE_PHOTO_IMAGE_WIDTH = 620;
+    const LARGE_PHOTO_IMAGE_HEIGHT = 372;
+
     protected $fillable = [
         'phase_id',
         'stage_id',
@@ -30,7 +34,6 @@ class Work extends Model
         'started_at',
         'ends_at',
         'notes',
-
         'revision',
         'start_and_end',
         'total_project_area',
@@ -38,7 +41,6 @@ class Work extends Model
         'quotation_type',
         'coin',
         'investment_standard',
-
         'tower', // obr_DescResidEdificio_chr
         'house', // obr_DescResidResidenciais_chr
         'condominium', // obr_DescResidCondominios_chr
@@ -66,8 +68,8 @@ class Work extends Model
         'completion', // obr_DescInfoAdicAcabamento_chr
         'facade', // obr_DescInfoAdicFachada_chr
         'status',
-
-
+        'storage_image_link',
+        'public_image_link',
         'created_by',
         'updated_by',
     ];

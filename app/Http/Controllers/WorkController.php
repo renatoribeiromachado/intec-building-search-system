@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class WorkController extends Controller
 {
@@ -80,6 +82,7 @@ class WorkController extends Controller
     public function create()
     {
         $work = $this->work;
+        $work->public_image_link = 'storage/intec_default_mini.png';
         $phases = $this->phase->get();
         $segments = $this->segment->get();
         $segmentSubTypes = old('segment_sub_type_id')
@@ -290,6 +293,8 @@ class WorkController extends Controller
 
         $work->features()->sync($request->work_features);
 
+        $this->applyWorkCoverImage($request, $work);
+
         return redirect()->route('work.index');
     }
 
@@ -412,5 +417,106 @@ class WorkController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    private function applyWorkCoverImage(Request $request, Work $work): void
+    {
+        // Cover upload
+        if ($request->hasFile('work_image')) {
+
+            $file = $request->file('work_image');
+
+            $uploadedLargePhoto = $this->uploadPhoto(
+                $file,
+                Work::LARGE_DIR_STORAGE_PATH,
+                Work::LARGE_PHOTO_IMAGE_WIDTH,
+                Work::LARGE_PHOTO_IMAGE_HEIGHT,
+                true,
+                $work->storage_image_link
+            );
+
+            $work->fill([
+                'storage_image_link' => $uploadedLargePhoto['full_storage_path'],
+                'public_image_link' => $uploadedLargePhoto['full_public_path'],
+            ]);
+            $work->save();
+        }
+    }
+
+    public function uploadPhoto(
+        $file,
+        $directoryName,
+        $newImageWidth = 0,
+        $newImageHeight = 0,
+        $isUpdate = false,
+        $imagePath = ''
+    ) {
+        if (! empty($file)) {
+
+            if ($isUpdate) {
+                $this->deleteFile($imagePath);
+            }
+
+            $fileName  = Str::random(30) . time();
+
+            // Check if directory exists
+            Storage::makeDirectory("public/{$directoryName}", 775, true);
+
+            // Create image
+            $image = \Image::make($file);
+
+            // Create thumbnail
+            // $image->fit($newImageWidth, $newImageHeight);
+
+            // Resize image to fixed size
+            $image->resize(
+                $newImageWidth,
+                $newImageHeight,
+                function ($c) {
+                    $c->aspectRatio();
+                    $c->upsize();
+                }
+            );
+
+            // Set a background-color for the emerging area
+            // $image->resizeCanvas($newImageWidth, $newImageHeight, 'center', false, '474745');
+            $image->resizeCanvas($newImageWidth, $newImageHeight, 'center', false, 'ffffff');
+
+            // Generate full paths
+            $fullStoragePath = "{$directoryName}/{$fileName}.".$file->getClientOriginalExtension();
+            $fullPublicPath = "storage/{$directoryName}/{$fileName}.".$file->getClientOriginalExtension();
+
+            // Put images into Storage and create thumbnail
+            if (Storage::put($fullStoragePath, $image->stream())) {
+                return [
+                    'full_storage_path' => $fullStoragePath,
+                    'full_public_path' => $fullPublicPath
+                ];
+            }
+
+        }
+
+        return [];
+    }
+
+    /**
+     * @param  string  $imagePath  Image Storage Link
+     *
+     * @return bool
+     */
+    public function deleteFile(string $imagePath = null, $disk = null)
+    {
+        if ((! empty($imagePath)) || (! is_null($imagePath))) {
+            
+            Storage::delete($imagePath);
+
+            if (! is_null($disk)) {
+                Storage::disk($disk)->delete($imagePath);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

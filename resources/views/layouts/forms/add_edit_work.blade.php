@@ -4,170 +4,195 @@
         
         <div class="row mt-2">
             
-            <div class="col-md-2 mb-2">
-                <label for="old_code">Código Antigo</label>
-                <input type="text" id="old_code" name="old_code" class="form-control @error('old_code') is-invalid @enderror" value="{{ old('old_code', $work->old_code) }}" placeholder="">
-                @error('old_code')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('old_code') }}
+            <div class="col-md-9 mt-2">
+                <div class="row">
+                    <div class="col-md-2 mb-2">
+                        <label for="old_code">Código Antigo</label>
+                        <input type="text" id="old_code" name="old_code" class="form-control @error('old_code') is-invalid @enderror" value="{{ old('old_code', $work->old_code) }}" placeholder="">
+                        @error('old_code')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('old_code') }}
+                            </div>
+                        @enderror
                     </div>
-                @enderror
-            </div>
 
-            <div class="col-md-2 mb-2">
-                <label for="inputPassword4">Data Publicação</label>
-                <input type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
-                @error('last_review')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('last_review') }}
+                    <div class="col-md-2 mb-2">
+                        <label for="inputPassword4">Data Publicação</label>
+                        <input type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
+                        @error('last_review')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('last_review') }}
+                            </div>
+                        @enderror
                     </div>
-                @enderror
-            </div>
 
-            <div class="col-md-6 mb-2">
-                <label for="researcher">Pesquisador</label>
-                <select id="researcher" name="researcher_id" class="form-select @error('researcher_id') is-invalid @enderror">
-                    @forelse ($researchers as $researcher)
-                        @if ($loop->index == 0)
-                        <option value="">-- Selecione --</option>
-                        @endif
-
-                        <option
-                            value="{{ $researcher->id }}"
-                            @if (old('researcher_id', $work->researcher_id) == $researcher->id) selected @endif
+                    <div class="col-md-8 mb-2">
+                        <label for="researcher">Pesquisador</label>
+                        <select
+                            id="researcher"
+                            name="researcher_id"
+                            class="form-select @error('researcher_id') is-invalid @enderror"
                             >
-                            {{ $researcher->name }}
-                        </option>
-                        @empty
-                        <option value="">-- Selecione --</option>
-                    @endforelse
-                </select>
-                @error('researcher_id')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('researcher_id') }}
+                            @forelse ($researchers as $researcher)
+                                @if ($loop->index == 0)
+                                <option value="">-- Selecione --</option>
+                                @endif
+
+                                <option
+                                    value="{{ $researcher->id }}"
+                                    @if (old('researcher_id', $work->researcher_id) == $researcher->id) selected @endif
+                                    >
+                                    {{ $researcher->name }}
+                                </option>
+                                @empty
+                                <option value="">-- Selecione --</option>
+                            @endforelse
+                        </select>
+                        @error('researcher_id')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('researcher_id') }}
+                            </div>
+                        @enderror
                     </div>
-                @enderror
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 mb-2">
+                        <label for="inputPassword4">Revisão</label>
+                        <input type="number" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $work->revision) }}">
+                        @error('revision')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('revision') }}
+                            </div>
+                        @enderror
+                    </div>
+        
+                    <div class="col-md-10 mb-2">
+                        <label for="inputPassword4">Obra</label>
+                        <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $work->name) }}" placeholder="">
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 mb-2">
+                        <label for="inputZip">CEP</label>
+                        <input type="text" id="zip_code" name="zip_code" class="form-control cep @error('zip_code') is-invalid @enderror" value="{{ old('zip_code', $work->zip_code) }}" placeholder="">
+                        @error('zip_code')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('zip_code') }}
+                            </div>
+                        @enderror
+                    </div>
+        
+                    <div class="col-md-8 mb-2">
+                        <label for="inputAddress">Endereço</label>
+                        <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $work->address) }}" placeholder="">
+                        @error('address')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('address') }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+                        <label for="inputAddress2">Número</label>
+                        <input type="text" id="number" name="number" class="form-control @error('number') is-invalid @enderror" value="{{ old('number', $work->number) }}" placeholder="">
+                        @error('number')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('number') }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label for="complement">Bairro</label>
+                        <input type="text" id="district" name="district" class="form-control @error('district') is-invalid @enderror" value="{{ old('district', $work->district) }}" placeholder="">
+                        @error('district')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('district') }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-5 mb-2">
+                        <label for="inputCity">Cidade</label>
+                        <input type="text" id="city" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city', $work->city) }}" placeholder="">
+                        @error('city')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('city') }}
+                            </div>
+                        @enderror
+                    </div>
+        
+                    <div class="col-md-3 mb-2">
+                        <label for="state">Estado</label>
+                        <select id="state" name="state" class="form-select @error('state') is-invalid @enderror">
+                            <option value="">-- Selecione --</option>
+                            <option value="AC" {{ old('state', $work->state) == 'AC' ? 'selected="selected"' : '' }}>AC</option>
+                            <option value="AP" {{ old('state', $work->state) == 'AP' ? 'selected="selected"' : '' }}>AP</option>
+                            <option value="AM" {{ old('state', $work->state) == 'AM' ? 'selected="selected"' : '' }}>AM</option>
+                            <option value="BA" {{ old('state', $work->state) == 'BA' ? 'selected="selected"' : '' }}>BA</option>
+                            <option value="CE" {{ old('state', $work->state) == 'CE' ? 'selected="selected"' : '' }}>CE</option>
+                            <option value="DF" {{ old('state', $work->state) == 'DF' ? 'selected="selected"' : '' }}>DF</option>
+                            <option value="ES" {{ old('state', $work->state) == 'ES' ? 'selected="selected"' : '' }}>ES</option>
+                            <option value="GO" {{ old('state', $work->state) == 'GO' ? 'selected="selected"' : '' }}>GO</option>
+                            <option value="MA" {{ old('state', $work->state) == 'MA' ? 'selected="selected"' : '' }}>MA</option>
+                            <option value="MT" {{ old('state', $work->state) == 'MT' ? 'selected="selected"' : '' }}>MT</option>
+                            <option value="MS" {{ old('state', $work->state) == 'MS' ? 'selected="selected"' : '' }}>MS</option>
+                            <option value="MG" {{ old('state', $work->state) == 'MG' ? 'selected="selected"' : '' }}>MG</option>
+                            <option value="PA" {{ old('state', $work->state) == 'PA' ? 'selected="selected"' : '' }}>PA</option>
+                            <option value="PB" {{ old('state', $work->state) == 'PB' ? 'selected="selected"' : '' }}>PB</option>
+                            <option value="PR" {{ old('state', $work->state) == 'PR' ? 'selected="selected"' : '' }}>PR</option>
+                            <option value="PE" {{ old('state', $work->state) == 'PE' ? 'selected="selected"' : '' }}>PE</option>
+                            <option value="PI" {{ old('state', $work->state) == 'PI' ? 'selected="selected"' : '' }}>PI</option>
+                            <option value="RJ" {{ old('state', $work->state) == 'RJ' ? 'selected="selected"' : '' }}>RJ</option>
+                            <option value="RN" {{ old('state', $work->state) == 'RN' ? 'selected="selected"' : '' }}>RN</option>
+                            <option value="RS" {{ old('state', $work->state) == 'RS' ? 'selected="selected"' : '' }}>RS</option>
+                            <option value="RO" {{ old('state', $work->state) == 'RO' ? 'selected="selected"' : '' }}>RO</option>
+                            <option value="RR" {{ old('state', $work->state) == 'RR' ? 'selected="selected"' : '' }}>RR</option>
+                            <option value="SC" {{ old('state', $work->state) == 'SC' ? 'selected="selected"' : '' }}>SC</option>
+                            <option value="SE" {{ old('state', $work->state) == 'SE' ? 'selected="selected"' : '' }}>SE</option>
+                            <option value="SP" {{ old('state', $work->state) == 'SP' ? 'selected="selected"' : '' }}>SP</option>
+                            <option value="TO" {{ old('state', $work->state) == 'TO' ? 'selected="selected"' : '' }}>TO</option>
+                            <option value="AL" {{ old('state', $work->state) == 'AL' ? 'selected="selected"' : '' }}>AL</option>
+                        </select>
+                        @error('state')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('state') }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-2 mb-2">
-                <label for="inputPassword4">Revisão</label>
-                <input type="number" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $work->revision) }}">
-                @error('revision')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('revision') }}
+            <div class="col-md-3 mt-2">
+                <div class="row mt-4">
+                    <div class="col-md-12 mb-2">
+                        @if (isset($work->public_image_link))
+                        <img src="{{ asset($work->public_image_link) }}" alt="Imagem da Obra" class="img-fluid">
+                        @else
+                        <img src="{{ asset('storage/intec_default_mini.png') }}" alt="Imagem da Obra" class="img-fluid">
+                        @endif
                     </div>
-                @enderror
-            </div>
-        </div>
 
-        <div class="row mt-2">
-            <div class="col-md-9 mb-2">
-                <label for="inputPassword4">Obra</label>
-                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $work->name) }}" placeholder="">
-                @error('name')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+                    <div class="col-md-12 mb-2">
+                        <label for="inputPassword4">Foto</label>
+                        <input
+                            type="file"
+                            id="image"
+                            name="work_image"
+                            class="form-control"
+                            value=""
+                            >
                     </div>
-                @enderror
-            </div>
-
-            <div class="col-md-3 mb-2">
-                <label for="inputPassword4">Foto</label>
-                <input type="file" id="image" name="image" class="form-control" value="{{ old('name', $work->image) }}">
-            </div>
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-md-2 mb-2">
-                <label for="inputZip">CEP</label>
-                <input type="text" id="zip_code" name="zip_code" class="form-control cep @error('zip_code') is-invalid @enderror" value="{{ old('zip_code', $work->zip_code) }}" placeholder="">
-                @error('zip_code')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('zip_code') }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="form-group col-md-5 mb-2">
-                <label for="inputAddress">Endereço</label>
-                <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $work->address) }}" placeholder="">
-                @error('address')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address') }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="col-md-3 mb-2">
-                <label for="complement">Bairro</label>
-                <input type="text" id="district" name="district" class="form-control @error('district') is-invalid @enderror" value="{{ old('district', $work->district) }}" placeholder="">
-                @error('district')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('district') }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="col-md-2 mb-2">
-                <label for="inputAddress2">Número</label>
-                <input type="text" id="number" name="number" class="form-control @error('number') is-invalid @enderror" value="{{ old('number', $work->number) }}" placeholder="">
-                @error('number')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('number') }}
-                    </div>
-                @enderror
-            </div>
-        </div>
-
-        <div class="row mt-2">
-
-            <div class="col-md-4 mb-2">
-                <label for="inputCity">Cidade</label>
-                <input type="text" id="city" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city', $work->city) }}" placeholder="">
-                @error('city')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('city') }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="col-md-2 mb-2">
-                <label for="state">Estado</label>
-                <select id="state" name="state" class="form-select @error('state') is-invalid @enderror">
-                    <option value="">-- Selecione --</option>
-                    <option value="AC" {{ old('state', $work->state) == 'AC' ? 'selected="selected"' : '' }}>AC</option>
-                    <option value="AP" {{ old('state', $work->state) == 'AP' ? 'selected="selected"' : '' }}>AP</option>
-                    <option value="AM" {{ old('state', $work->state) == 'AM' ? 'selected="selected"' : '' }}>AM</option>
-                    <option value="BA" {{ old('state', $work->state) == 'BA' ? 'selected="selected"' : '' }}>BA</option>
-                    <option value="CE" {{ old('state', $work->state) == 'CE' ? 'selected="selected"' : '' }}>CE</option>
-                    <option value="DF" {{ old('state', $work->state) == 'DF' ? 'selected="selected"' : '' }}>DF</option>
-                    <option value="ES" {{ old('state', $work->state) == 'ES' ? 'selected="selected"' : '' }}>ES</option>
-                    <option value="GO" {{ old('state', $work->state) == 'GO' ? 'selected="selected"' : '' }}>GO</option>
-                    <option value="MA" {{ old('state', $work->state) == 'MA' ? 'selected="selected"' : '' }}>MA</option>
-                    <option value="MT" {{ old('state', $work->state) == 'MT' ? 'selected="selected"' : '' }}>MT</option>
-                    <option value="MS" {{ old('state', $work->state) == 'MS' ? 'selected="selected"' : '' }}>MS</option>
-                    <option value="MG" {{ old('state', $work->state) == 'MG' ? 'selected="selected"' : '' }}>MG</option>
-                    <option value="PA" {{ old('state', $work->state) == 'PA' ? 'selected="selected"' : '' }}>PA</option>
-                    <option value="PB" {{ old('state', $work->state) == 'PB' ? 'selected="selected"' : '' }}>PB</option>
-                    <option value="PR" {{ old('state', $work->state) == 'PR' ? 'selected="selected"' : '' }}>PR</option>
-                    <option value="PE" {{ old('state', $work->state) == 'PE' ? 'selected="selected"' : '' }}>PE</option>
-                    <option value="PI" {{ old('state', $work->state) == 'PI' ? 'selected="selected"' : '' }}>PI</option>
-                    <option value="RJ" {{ old('state', $work->state) == 'RJ' ? 'selected="selected"' : '' }}>RJ</option>
-                    <option value="RN" {{ old('state', $work->state) == 'RN' ? 'selected="selected"' : '' }}>RN</option>
-                    <option value="RS" {{ old('state', $work->state) == 'RS' ? 'selected="selected"' : '' }}>RS</option>
-                    <option value="RO" {{ old('state', $work->state) == 'RO' ? 'selected="selected"' : '' }}>RO</option>
-                    <option value="RR" {{ old('state', $work->state) == 'RR' ? 'selected="selected"' : '' }}>RR</option>
-                    <option value="SC" {{ old('state', $work->state) == 'SC' ? 'selected="selected"' : '' }}>SC</option>
-                    <option value="SE" {{ old('state', $work->state) == 'SE' ? 'selected="selected"' : '' }}>SE</option>
-                    <option value="SP" {{ old('state', $work->state) == 'SP' ? 'selected="selected"' : '' }}>SP</option>
-                    <option value="TO" {{ old('state', $work->state) == 'TO' ? 'selected="selected"' : '' }}>TO</option>
-                    <option value="AL" {{ old('state', $work->state) == 'AL' ? 'selected="selected"' : '' }}>AL</option>
-                </select>
-                @error('state')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('state') }}
-                    </div>
-                @enderror
+                </div>
             </div>
         </div>
 
