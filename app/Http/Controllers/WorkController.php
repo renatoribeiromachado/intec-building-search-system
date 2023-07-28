@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Phase;
 use App\Models\Position;
+use App\Models\Researcher;
 use App\Models\Segment;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
@@ -41,11 +42,11 @@ class WorkController extends Controller
         Stage $stage,
         Segment $segment,
         SegmentSubType $segmentSubType,
-        User $researcher,
         Position $position,
         WorkFeature $workFeature,
         ActivityField $activityField,
-        Company $company
+        Company $company,
+        Researcher $researcher
     ) {
         $this->work = $work;
         $this->phase = $phase;
@@ -91,9 +92,8 @@ class WorkController extends Controller
             ? $this->stage->get()
             : [];
         $researchers = $this->researcher
-            ->whereHas('role', function (Builder $query) {
-                $query->where('name', '=', 'Pesquisador');
-            })->get();
+            ->orderBy('name', 'asc')
+            ->get();
         $workFeatures = $this->workFeature
             ->orderBy('description', 'asc')
             ->get();
@@ -132,7 +132,6 @@ class WorkController extends Controller
         $work->phase_id = $request->phase_id;
         $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
-        $work->researcher_id = $request->researcher_id;
         $work->segment_sub_type_id = $request->segment_sub_type_id;
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
@@ -180,6 +179,9 @@ class WorkController extends Controller
 
         $work->features()->sync($request->work_features);
 
+        $researcher = $this->researcher->findOrFail($request->researcher_id);
+        $work->researches()->sync($researcher);
+
         return redirect()->route('work.edit', $work->id);
     }
 
@@ -195,10 +197,7 @@ class WorkController extends Controller
         $segments = $this->segment->get();
         $segmentSubTypes = $this->segmentSubType->get();
         $stages = $this->stage->get();
-        $researchers = $this->researcher
-            ->whereHas('role', function (Builder $query) {
-                $query->where('name', '=', 'Pesquisador');
-            })->get();
+        $researchers = $this->researcher->get();
         $workFeatures = $this->workFeature
             ->orderBy('description', 'asc')
             ->get();
@@ -245,7 +244,6 @@ class WorkController extends Controller
         $work->phase_id = $request->phase_id;
         $work->stage_id = $request->stage_id;
         $work->segment_id = $request->segment_id;
-        $work->researcher_id = $request->researcher_id;
         $work->segment_sub_type_id = $request->segment_sub_type_id;
         $work->started_at = convertPtBrDateToEnDate($request->started_at);
         $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
@@ -293,6 +291,9 @@ class WorkController extends Controller
         $work->features()->sync($request->work_features);
 
         $this->applyWorkCoverImage($request, $work);
+
+        $researcher = $this->researcher->findOrFail($request->researcher_id);
+        $work->researches()->sync($researcher);
 
         return redirect()->route('work.index');
     }

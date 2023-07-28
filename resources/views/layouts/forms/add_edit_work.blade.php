@@ -40,7 +40,8 @@
 
                                 <option
                                     value="{{ $researcher->id }}"
-                                    @if (old('researcher_id', $work->researcher_id) == $researcher->id) selected @endif
+                                    @if (old('researcher_id') == $researcher->id ||
+                                        $work->researches->contains($researcher)) selected @endif
                                     >
                                     {{ $researcher->name }}
                                 </option>
@@ -201,16 +202,16 @@
                 <label for="segment">Segmento de Atuação</label>
                 <select id="segment" name="segment_id" class="form-select @error('segment_id') is-invalid @enderror">
                     @foreach ($segments as $segment)
-                    @if ($loop->index == 0)
-                    <option value="">-- Selecione --</option>
-                    @endif
+                        @if ($loop->index == 0)
+                        <option value="">-- Selecione --</option>
+                        @endif
 
-                    <option
-                        value="{{ $segment->id }}"
-                        @if (old('segment_id', $work->segment_id) == $segment->id) selected @endif
-                        >
-                        {{ $segment->description }}
-                    </option>
+                        <option
+                            value="{{ $segment->id }}"
+                            @if (old('segment_id', $work->segment_id) == $segment->id) selected @endif
+                            >
+                            {{ $segment->description }}
+                        </option>
                     @endforeach
                 </select>
                 @error('segment_id')

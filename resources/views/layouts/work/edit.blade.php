@@ -275,8 +275,13 @@
                             data: {'_token': $('meta[name=csrf-token]').attr('content'), segment: segment},
                             success: function (return_data) {
                                 if (return_data.segmentSubTypes.length <= 0) {
-                                    $('select[name="segment_sub_type_id"]')
-                                        .html('<option value="" style="background:#fff;color:#454c54;"> Sub-tipos não encontrados. </option>');
+                                    let segmentHtml = `<option
+                                                    value=""
+                                                    style="background:#fff;color:#454c54;"
+                                                    >
+                                                    Sub-tipos não encontrados.
+                                                </option>`;
+                                    $('select[name="segment_sub_type_id"]').html(segmentHtml);
                                 } else {
 
                                     var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
@@ -291,9 +296,15 @@
                                     $('select[name="segment_sub_type_id"]').html(options);
                                 }
                             },
-                            error: function () {
-                                $('select[name="segment_sub_type_id"]')
-                                    .html('<option value=""  style="background:#fff;color:#454c54;"> Sub-tipos não encontrados! </option>');
+                            error: function (event) {
+                                console.log(event)
+                                let segmentHtml = `<option
+                                                    value=""
+                                                    style="background:#fff;color:#454c54;"
+                                                    >
+                                                    Sub-tipos não encontrados.
+                                                </option>`;
+                                $('select[name="segment_sub_type_id"]').html(segmentHtml);
                             }
                         });
                         
@@ -329,9 +340,15 @@
                                     $('select[name="stage_id"]').html(options);
                                 }
                             },
-                            error: function () {
-                                $('select[name="stage_id"]')
-                                    .html('<option value=""  style="background:#fff;color:#454c54;"> Estágios não encontrados! </option>');
+                            error: function (event) {
+                                console.log(event)
+                                let phaseHtml = `<option
+                                                value=""
+                                                style="background:#fff;color:#454c54;"
+                                                >
+                                                Estágios não encontrados!
+                                            </option>`;
+                                $('select[name="stage_id"]').html(html);
                             }
                         });
                         

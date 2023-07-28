@@ -215,7 +215,7 @@
 
             base_url = function () {
                 if (document.location.hostname === "localhost") {
-                    var url = "{!! config('app.url') !!}:8000/";
+                    var url = "{!! config('app.url') !!}/";
                 } else {
                     var url = "{!! config('app.url') !!}";
                 }

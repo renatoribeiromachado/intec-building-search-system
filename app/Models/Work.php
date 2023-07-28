@@ -19,7 +19,6 @@ class Work extends Model
         'stage_id',
         'segment_id',
         'segment_sub_type_id',
-        'researcher_id',
         'old_code',
         'last_review',
         'name',
@@ -129,5 +128,10 @@ class Work extends Model
     public function companyContacts()
     {
         return $this->belongsToMany(Contact::class)->withPivot('company_id');
+    }
+
+    public function researches()
+    {
+        return $this->belongsToMany(Researcher::class);
     }
 }

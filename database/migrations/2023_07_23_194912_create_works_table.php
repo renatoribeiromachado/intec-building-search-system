@@ -19,7 +19,6 @@ class CreateWorksTable extends Migration
             $table->foreignId('stage_id')->nullable();
             $table->foreignId('segment_id')->nullable();
             $table->foreignId('segment_sub_type_id')->nullable();
-            $table->foreignId('researcher_id')->nullable();
             $table->string('old_code')->nullable();
             $table->date('last_review')->nullable();
             $table->string('name')->nullable(); // projeto
@@ -82,7 +81,6 @@ class CreateWorksTable extends Migration
             $table->foreign('stage_id')->references('id')->on('stages');
             $table->foreign('segment_id')->references('id')->on('segments');
             $table->foreign('segment_sub_type_id')->references('id')->on('segment_sub_types');
-            $table->foreign('researcher_id')->references('id')->on('users');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });
