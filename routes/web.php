@@ -48,7 +48,22 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('store/{company}', [CompanyController::class, 'storeContact'])->name('company.contact.store');
         Route::put('update/{contact}', [CompanyController::class, 'updateContact'])->name('company.contact.update');
-        Route::delete('destroy/{contact}', [CompanyController::class, 'destroyContact'])->name('company.contact.destroy');
+        Route::delete(
+            'destroy/{contact}',
+            [CompanyController::class, 'destroyContact']
+        )->name('company.contact.destroy');
+
+        Route::post('import-companies', [CompanyController::class, 'importCompanies'])->name('company.import');
+        // Route::post('import-companies', function () {
+
+        //     $activity = new \App\Models\ActivityField;
+        //     $activityFound = $activity->where('description', '=', 'CONSTRUÇÃO CIVIL')->first();
+
+        //     return $activityFound;
+
+
+
+        // })->name('company.import');
     });
 
     Route::prefix('stages')->group(function () {

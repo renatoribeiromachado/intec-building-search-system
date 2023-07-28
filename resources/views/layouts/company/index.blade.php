@@ -41,6 +41,45 @@
                     </div>
                 </div>
             </form>
+
+            {{-- @can('importar-empresas') --}}
+                <form action="{{ route('company.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    @method('post')
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-5 mb-2">
+                            <label for="company_name">Planilha de Empresas</label>
+
+                            <input
+                                type="file"
+                                name="file"
+                                class="form-control"
+                                style="min-width: 200px;margin-right:15px;"
+                                required
+                                >
+
+                            {{-- <input type="text"
+                                id="company_name"
+                                name="company_name"
+                                class="form-control @error('company_name') is-invalid @enderror"
+                                value="{{ old('company_name', $company->company_name) }}"
+                                placeholder=""
+                                >
+                            @error('company_name')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('company_name') }}
+                                </div>
+                            @enderror --}}
+                        </div>
+                        <div class="form-group col">
+                            <button type="submit" class="btn btn-success btn mt-4 me-1">
+                                <i class="fa fa-search"></i> Importar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            {{-- @endcan --}}
         </div>
 
         <div class="">
@@ -72,17 +111,17 @@
                         <td>{{ $company->trading_name }}</td>
                         <td>{{ optional($company->activityField)->description }}</td>
                         <td>{{ $company->city }}</td>
-                        <td>
+                        <td style="width: 15%;">
                             <a
                                 href="{{ route('company.edit', $company->id) }}"
-                                class="btn btn-sm btn-outline-success me-1"
+                                class="btn btn-sm btn-outline-success me-1 mb-2"
                                 >
                                 Editar
                             </a>
 
                             <a
                                 href="#"
-                                class="btn btn-sm btn-outline-danger"
+                                class="btn btn-sm btn-outline-danger mb-2"
                                 data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop{{$loop->index}}"
                                 >

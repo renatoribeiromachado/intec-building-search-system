@@ -267,4 +267,30 @@ class CompanyController extends Controller
         $contact->delete();
         return redirect()->back();
     }
+
+    public function importCompanies()
+    {
+        // $this->authorize('importar-empresas');
+
+        try {
+            // $filename = 'companies.xlsx';
+            $filename = request()->file('file');
+
+            // $contents = \Storage::disk('public')->get('import_companies/' . $filename);
+
+            \Maatwebsite\Excel\Facades\Excel::import(
+                // new \App\Imports\CompaniesImport, public_path('storage/import_companies/' . $filename)
+                new \App\Imports\CompaniesImport, $filename
+            );
+
+        } catch (\Exception $ex) {
+
+            $error = $ex->getMessage();
+            echo $error;
+            // return redirect()->back()->with('error', $error);
+
+        }
+
+        // return redirect()->back()->with('success', 'Empresas importadas!');
+    }
 }

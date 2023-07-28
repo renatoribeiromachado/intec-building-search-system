@@ -89,6 +89,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'Excluir Empresa'],
             ['name' => 'Pesquisar Empresa'],
             ['name' => 'Destacar Empresa'],
+            ['name' => 'Importar Empresas'],
 
             // // FOR LOCALES
             // ['name' => 'Ver Lista de Locais de Trabalho'],
@@ -112,18 +113,6 @@ class PermissionSeeder extends Seeder
             // ['name' => 'Pesquisar Equipe'],
             // ['name' => 'Destacar Equipe'],
 
-            // // FOR AGENTS
-            // ['name' => 'Ver Lista de Corretores'],
-            // ['name' => 'Criar Corretor'],
-            // ['name' => 'Ver Corretor'],
-            // ['name' => 'Editar Corretor'],
-            // ['name' => 'Habilitar Corretor'],
-            // ['name' => 'Desabilitar Corretor'],
-            // ['name' => 'Excluir Corretor'],
-            // ['name' => 'Pesquisar Corretor'],
-            // ['name' => 'Destacar Corretor'],
-            // ['name' => 'Importar Corretores'],
-            // ['name' => 'Exportar Corretores'],
 
         ];
 
