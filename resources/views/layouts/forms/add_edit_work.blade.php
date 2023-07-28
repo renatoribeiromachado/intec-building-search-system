@@ -178,7 +178,7 @@
                         @if (isset($work->public_image_link))
                         <img src="{{ asset($work->public_image_link) }}" alt="Imagem da Obra" class="img-fluid">
                         @else
-                        <img src="{{ asset('storage/intec_default_mini.png') }}" alt="Imagem da Obra" class="img-fluid">
+                        <img src="{{ asset('images/intec_default_mini.png') }}" alt="Imagem da Obra" class="img-fluid">
                         @endif
                     </div>
 

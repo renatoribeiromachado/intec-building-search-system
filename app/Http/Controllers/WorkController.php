@@ -82,7 +82,6 @@ class WorkController extends Controller
     public function create()
     {
         $work = $this->work;
-        $work->public_image_link = 'storage/intec_default_mini.png';
         $phases = $this->phase->get();
         $segments = $this->segment->get();
         $segmentSubTypes = old('segment_sub_type_id')
