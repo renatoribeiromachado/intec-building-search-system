@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->foreignId('company_segment_id')->nullable();
             $table->foreignId('researcher_id')->nullable();
             $table->foreignId('activity_field_id')->nullable();
-            $table->string('company_name')->unique(); // razao social
+            $table->string('company_name'); // razao social
             $table->string('trading_name')->nullable();
             $table->string('minified_name')->nullable();
             $table->string('trading_name_slug')->nullable();
@@ -37,7 +37,7 @@ class CreateCompaniesTable extends Migration
             // $table->string('mobile')->nullable();
             $table->text('notes')->nullable();
             $table->integer('revision')->nullable();
-            $table->string('cnpj')->unique()->nullable();
+            $table->string('cnpj')->nullable();
             $table->string('activity_field')->nullable();
             // $table->string('cnpj_validation')->nullable();
             $table->string('primary_email', 50)->nullable();
