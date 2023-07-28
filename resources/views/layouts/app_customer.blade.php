@@ -95,10 +95,14 @@
                                         Atividades de Empresas
                                     </a>
                                 </li>
-
                                 <li>
                                     <a class="dropdown-item" href="{{ route('user.index') }}">
                                         Usuários
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('researcher.index') }}">
+                                        Pesquisadores
                                     </a>
                                 </li>
                                 <li>

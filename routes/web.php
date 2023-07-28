@@ -5,6 +5,7 @@ use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ResearcherController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\SegmentSubTypeController;
@@ -66,6 +67,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{phase}', [PhaseController::class, 'edit'])->name('phase.edit');
         Route::post('update/{phase}', [PhaseController::class, 'update'])->name('phase.update');
         Route::delete('{phase}', [PhaseController::class, 'destroy'])->name('phase.destroy');
+    });
+
+    Route::prefix('researchers')->group(function () {
+        Route::get('/', [ResearcherController::class, 'index'])->name('researcher.index');
+        Route::get('create', [ResearcherController::class, 'create'])->name('researcher.create');
+        Route::post('store', [ResearcherController::class, 'store'])->name('researcher.store');
+        Route::get('edit/{researcher}', [ResearcherController::class, 'edit'])->name('researcher.edit');
+        Route::post('update/{researcher}', [ResearcherController::class, 'update'])->name('researcher.update');
+        Route::delete('{researcher}', [ResearcherController::class, 'destroy'])->name('researcher.destroy');
     });
 
     Route::prefix('segments')->group(function () {
