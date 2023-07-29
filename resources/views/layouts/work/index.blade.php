@@ -74,7 +74,7 @@
                         <td>{{ $work->old_code }}</td>
                         <td>{{ $work->name }}</td>
                         <td>{{ optional($work->last_review)->format('d/m/Y') }}</td>
-                        <td>R$ {{ $work->price }}</td>
+                        <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                         <td>{{ optional($work->phase)->description }}</td>
                         <td>{{ optional($work->segment)->description }}</td>
                         <td>

@@ -336,14 +336,21 @@
             </div>
 
             <div class="form-group col-md-3 mb-2">
-                <label for="inputPassword4">Investimento</label>
-                <input type="text" id="price" name="price" class="form-control money @error('price') is-invalid @enderror" value="{{ old('price', $work->price) }}" placeholder="">
+                <label for="price">Investimento</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">R$</span>
+                    <input
+                        type="text" id="price" name="price"
+                        class="form-control money @error('price') is-invalid @enderror"
+                        value="{{ old('price', $work->price) }}" placeholder=""
+                        >
+                </div>
                 @error('price')
                     <div class="invalid-feedback">
                         {{ $errors->first('price') }}
                     </div>
                 @enderror
-            </div> 
+            </div>
 
             <div class="form-group col-md-3 mb-2">
                 <label for="inputPassword4">PADRÃO <code>investimento</code></label>

@@ -56,7 +56,7 @@
                                         </small>
                                     </p>
                                     
-                                    @if (isset($contact->email))
+                                    @if ($contact->email)
                                     <a href="mailto:{{ $contact->email }}"
                                         class="card-link d-block mb-2 ms-0"
                                         >
@@ -64,7 +64,7 @@
                                     </a>
                                     @endif
                                     
-                                    @if (isset($contact->secondary_email))
+                                    @if ($contact->secondary_email)
                                     <a href="mailto:{{ $contact->secondary_email }}"
                                         class="card-link d-block mb-2 ms-0"
                                         >
@@ -72,7 +72,7 @@
                                     </a>
                                     @endif
                                     
-                                    @if (isset($contact->tertiary_email))
+                                    @if ($contact->tertiary_email)
                                     <a href="mailto:{{ $contact->tertiary_email }}"
                                         class="card-link d-block mb-2 ms-0"
                                         >
@@ -80,25 +80,33 @@
                                     </a>
                                     @endif
 
+                                    @if ($contact->ddd && $contact->main_phone)
                                     <a href="tel:+55{{ $contact->ddd }}{{ $contact->main_phone }}"
                                         class="card-link d-block ms-0 mb-2 ms-0"
                                         >({{ $contact->ddd }}) {{ $contact->main_phone }}
                                     </a>
+                                    @endif
 
+                                    @if ($contact->ddd_two && $contact->phone_two)
                                     <a href="tel:+55{{ $contact->ddd_two }}{{ $contact->phone_two }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd_two }}) {{ $contact->phone_two }}
                                     </a>
+                                    @endif
 
+                                    @if ($contact->ddd_three && $contact->phone_three)
                                     <a href="tel:+55{{ $contact->ddd_three }}{{ $contact->phone_three }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd_three }}) {{ $contact->phone_three }}
                                     </a>
+                                    @endif
 
+                                    @if ($contact->ddd_four && $contact->phone_four)
                                     <a href="tel:+55{{ $contact->ddd_four }}{{ $contact->ddd_four }}"
                                         class="card-link d-block ms-0 mb-2"
                                         >({{ $contact->ddd_four }}) {{ $contact->phone_four }}
                                     </a>
+                                    @endif
 
                                     <div class="mt-3">
                                         <button

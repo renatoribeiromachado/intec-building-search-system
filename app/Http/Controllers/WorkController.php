@@ -121,7 +121,7 @@ class WorkController extends Controller
             $work->old_code = $request->old_code;
             $work->last_review = convertPtBrDateToEnDate($request->last_review);
             $work->name = $request->name;
-            $work->price = $request->price;
+            $work->price = convertMaskToDecimal($request->price);
             $work->address = $request->address;
             $work->number = $request->number;
             $work->district = $request->district;
@@ -247,7 +247,7 @@ class WorkController extends Controller
             $work->old_code = $request->old_code;
             $work->last_review = convertPtBrDateToEnDate($request->last_review);
             $work->name = $request->name;
-            $work->price = $request->price;
+            $work->price = convertMaskToDecimal($request->price);
             $work->address = $request->address;
             $work->number = $request->number;
             $work->district = $request->district;
