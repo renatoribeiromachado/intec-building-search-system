@@ -288,7 +288,8 @@
     
                             <option
                                 value="{{ $researcher->id }}"
-                                @if (old('researcher_id', $company->researcher_id) == $researcher->id) selected @endif
+                                @if (old('researcher_id') == $researcher->id ||
+                                    $company->researches->contains($researcher)) selected @endif
                                 >
                                 {{ $researcher->name }}
                             </option>

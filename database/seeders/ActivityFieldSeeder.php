@@ -60,7 +60,6 @@ class ActivityFieldSeeder extends Seeder
             ['description' => 'ESCRITÓRIO DE ENGENHARIA'],
             ['description' => 'PRÉ-MOLDADO'],
             ['description' => 'IMOBILIÁRIA'],
-            ['description' => 'EMPREITEIRA'],
         ];
 
         $activityFieldsQuantity = count($activityFields);

@@ -131,9 +131,18 @@
                                         ->where('contact_work.company_id', $company->id)
                                         ->get() as $workCompanyContact
                                     )
+                                    <!-- Contact Name -->
                                     {{ $workCompanyContact->name }}  <br>
+                                    <!-- Contact Position -->
                                     ({{ optional($workCompanyContact->position)->description}}) <br>
+                                    <!-- Contact Phone 1 -->
                                     ({{ $workCompanyContact->ddd }}) {{ $workCompanyContact->main_phone }} <br>
+                                    <!-- Contact Phone 2 -->
+                                    ({{ $workCompanyContact->ddd_two }}) {{ $workCompanyContact->phone_two }} <br>
+                                    <!-- Contact Phone 3 -->
+                                    ({{ $workCompanyContact->ddd_three }}) {{ $workCompanyContact->phone_three }} <br>
+                                    <!-- Contact Phone 4 -->
+                                    ({{ $workCompanyContact->ddd_four }}) {{ $workCompanyContact->phone_four }} <br>
                                     <a href="mailto:{{ $workCompanyContact->email }}">
                                         {{ $workCompanyContact->email }}
                                     </a> <br>

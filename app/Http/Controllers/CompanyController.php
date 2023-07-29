@@ -11,6 +11,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Contact;
 use App\Models\Position;
+use App\Models\Researcher;
 
 class CompanyController extends Controller
 {
@@ -21,7 +22,7 @@ class CompanyController extends Controller
 
     public function __construct(
         Company $company,
-        User $researcher,
+        Researcher $researcher,
         ActivityField $activityField,
         Position $position
     ) {
@@ -52,9 +53,8 @@ class CompanyController extends Controller
         $company = $this->company;
         $company->is_active = false;
         $researchers = $this->researcher
-            ->whereHas('role', function (Builder $query) {
-                $query->where('name', '=', 'Pesquisador');
-            })->get();
+            ->orderBy('name', 'asc')
+            ->get();
         $activityFields = $this->activityField
             ->orderBy('description', 'asc')
             ->get();
@@ -75,7 +75,6 @@ class CompanyController extends Controller
     public function store(StoreCompanyRequest $request)
     {
         $company = $this->company;
-        $company->researcher_id = $request->researcher_id;
         $company->activity_field_id = $request->activity_field_id;
         $company->company_name = $request->company_name;
         $company->trading_name = $request->trading_name;
@@ -112,6 +111,9 @@ class CompanyController extends Controller
         $company->register_ip = $request->register_ip;
         $company->save();
 
+        $researcher = $this->researcher->findOrFail($request->researcher_id);
+        $company->researches()->sync($researcher);
+
         return redirect()->route('company.edit', $company->id);
     }
 
@@ -124,9 +126,8 @@ class CompanyController extends Controller
     public function edit(Company $company)
     {
         $researchers = $this->researcher
-            ->whereHas('role', function (Builder $query) {
-                $query->where('name', '=', 'Pesquisador');
-            })->get();
+            ->orderBy('name', 'asc')
+            ->get();
         $activityFields = $this->activityField->get();
         $positions = $this->position->get();
         return view('layouts.company.edit', compact(
@@ -146,7 +147,6 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $company->researcher_id = $request->researcher_id;
         $company->activity_field_id = $request->activity_field_id;
         $company->company_name = $request->company_name;
         $company->trading_name = $request->trading_name;
@@ -181,6 +181,9 @@ class CompanyController extends Controller
         $company->updated_by = auth()->user()->id;
         $company->register_ip = $request->register_ip;
         $company->save();
+
+        $researcher = $this->researcher->findOrFail($request->researcher_id);
+        $company->researches()->sync($researcher);
 
         return redirect()->route('company.index');
     }

@@ -100,4 +100,9 @@ class Company extends Model
     {
         return $this->belongsToMany(Work::class);
     }
+
+    public function researches()
+    {
+        return $this->belongsToMany(Researcher::class);
+    }
 }
