@@ -2,6 +2,8 @@
      
     <div class="container">
 
+        @include('layouts.alerts.all-errors')
+        
         <div class="row mt-2">
  
             <div class="row mt-2">

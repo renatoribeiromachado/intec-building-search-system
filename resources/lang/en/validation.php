@@ -184,6 +184,7 @@ return [
         'is_active' => 'Status',
         'last_review' => 'Atualização',
         'revision' => 'Revisão',
+        'researcher_id' => 'Pesquisador',
 
         // Work
         'old_code' => 'Código Antigo',
@@ -205,6 +206,7 @@ return [
         'maid_dependency' => 'Dependência de empregada',
         'other_leisure' => 'Outros Lazeres',
         'phase_id' => 'Fase',
+        'segment_id' => 'Segmento de Atuação',
 
         // Activity Field
         'description' => 'Descrição'

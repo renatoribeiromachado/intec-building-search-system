@@ -42,7 +42,7 @@ class UpdateCompanyRequest extends FormRequest
             'city_registration' => ['required'],
             'activity_field_id' => ['required'],
             'is_active' => ['required'],
-            'home_page' => ['required'],
+            'home_page' => ['nullable'],
             'last_review' => ['required'],
             'researcher_id' => ['required'],
             'notes' => ['required'],
