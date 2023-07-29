@@ -9,9 +9,19 @@
             <form action="{{ route('work.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
-                        <label for="inputEmail4">Projeto</label>
+                        <label for="old_code_search">Código Antigo</label>
                         <input
-                            type="text" id="name" name="name"
+                            id="old_code_search"
+                            type="text" name="old_code"
+                            class="form-control {{ $errors->has('old_code') ? 'is-invalid' : '' }}"
+                            value="{{ old('old_code', request()->old_code) }}" placeholder="ex: CO216250"
+                            >
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="name_search">Projeto</label>
+                        <input
+                            type="text" id="name_search" name="name"
                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                             value="{{ old('name', request()->name) }}" placeholder="ex: PCH PALMAS"
                             >
