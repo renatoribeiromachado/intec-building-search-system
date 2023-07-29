@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-light p-5 rounded" style="padding-bottom: 400px !important;">
+    <div class="bg-light p-5 rounded" style="padding-bottom: 100px !important;">
         <h1>EDIÇÃO DE OBRA</h1>
 
         <form
@@ -105,16 +105,17 @@
                         <th scope="col">#</th>
                         <th scope="col">CNPJ</th>
                         <th scope="col">Razão Social</th>
+                        <th scope="col">Nome Fantasia</th>
                         <th scope="col">Atividade(s)</th>
-                        <th scope="col">Contato(s)</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($work->companies as $company)
                         <tr>
-                            <th scope="row" style="width:5%">{{ $company->id }}</th>
-                            <td style="width:20%">{{ $company->cnpj }}</td>
+                            <th scope="row" style="width: 20px;">{{ $company->id }}</th>
+                            <td style="width: 190px;">{{ $company->cnpj }}</td>
+                            <td style="width: 260px;">{{ $company->company_name }}</td>
                             <td>{{ $company->trading_name }}</td>
                             <td>
                                 @foreach (
@@ -126,66 +127,6 @@
                                 @endforeach
                             </td>
                             <td>
-                                @foreach (
-                                    $work->companyContacts()
-                                        ->where('contact_work.company_id', $company->id)
-                                        ->get() as $workCompanyContact
-                                    )
-
-                                    @if ($workCompanyContact->name)
-                                        <!-- Contact Name -->
-                                        {{ $workCompanyContact->name }}  <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->position)
-                                        <!-- Contact Position -->
-                                        ({{ optional($workCompanyContact->position)->description }}) <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->ddd && $workCompanyContact->main_phone)
-                                        <!-- Contact Phone 1 -->
-                                        ({{ $workCompanyContact->ddd }}) {{ $workCompanyContact->main_phone }} <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->ddd_two && $workCompanyContact->phone_two)
-                                        <!-- Contact Phone 2 -->
-                                        ({{ $workCompanyContact->ddd_two }}) {{ $workCompanyContact->phone_two }} <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->ddd_three && $workCompanyContact->phone_three)
-                                        <!-- Contact Phone 3 -->
-                                        ({{ $workCompanyContact->ddd_three }})
-                                        {{ $workCompanyContact->phone_three }} <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->ddd_four && $workCompanyContact->phone_four)
-                                        <!-- Contact Phone 4 -->
-                                        ({{ $workCompanyContact->ddd_four }}) {{ $workCompanyContact->phone_four }} <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->email)
-                                        <!-- Contact E-mail 1 -->
-                                        <a href="mailto:{{ $workCompanyContact->email }}">
-                                            {{ $workCompanyContact->email }}
-                                        </a> <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->secondary_email)
-                                        <!-- Contact E-mail 2 -->
-                                        <a href="mailto:{{ $workCompanyContact->secondary_email }}">
-                                            {{ $workCompanyContact->secondary_email }}
-                                        </a> <br>
-                                    @endif
-
-                                    @if ($workCompanyContact->tertiary_email)
-                                        <!-- Contact E-mail 3 -->
-                                        <a href="mailto:{{ $workCompanyContact->tertiary_email }}">
-                                            {{ $workCompanyContact->tertiary_email }}
-                                        </a> <br>
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td style="width:30%">
                                 <div class="row">
                                     <div class="col-12 mb-2 mt-1">
                                         <button
@@ -205,7 +146,7 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#addCompanyActivities{{$loop->index}}"
                                             >
-                                            Incluir/Atualizar Atividades
+                                            Atualizar Atividades
                                         </button>
                                     </div>
 
@@ -216,7 +157,7 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#addCompanyContacts{{$loop->index}}"
                                             >
-                                            Inclui/Atualizar Contatos Responsáveis
+                                            Atualizar Contatos Responsáveis
                                         </button>
                                     </div>
                                 </div>
@@ -229,6 +170,88 @@
 
                             </td>
                         </tr>
+
+                        @if ($company->contacts()->exists())
+                            <tr>
+                                <td colspan="6">
+                                    <table class="table table-borderless">
+                                        <th>
+                                            <h3>Contatos</h3>
+                                        </th>
+                                        <tr>
+                                            <td>
+                                                <div class="row">
+                                                    @foreach (
+                                                        $work->companyContacts()
+                                                            ->where('contact_work.company_id', $company->id)
+                                                            ->get() as $workCompanyContact
+                                                        )
+
+                                                        <div class="col intec-contact-wrapper">
+                                                            @if ($workCompanyContact->name)
+                                                                <!-- Contact Name -->
+                                                                {{ $workCompanyContact->name }}  <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->position)
+                                                                <!-- Contact Position -->
+                                                                ({{ optional($workCompanyContact->position)->description }}) <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->ddd && $workCompanyContact->main_phone)
+                                                                <!-- Contact Phone 1 -->
+                                                                ({{ $workCompanyContact->ddd }})
+                                                                {{ $workCompanyContact->main_phone }} <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->ddd_two && $workCompanyContact->phone_two)
+                                                                <!-- Contact Phone 2 -->
+                                                                ({{ $workCompanyContact->ddd_two }})
+                                                                {{ $workCompanyContact->phone_two }} <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->ddd_three && $workCompanyContact->phone_three)
+                                                                <!-- Contact Phone 3 -->
+                                                                ({{ $workCompanyContact->ddd_three }})
+                                                                {{ $workCompanyContact->phone_three }} <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->ddd_four && $workCompanyContact->phone_four)
+                                                                <!-- Contact Phone 4 -->
+                                                                ({{ $workCompanyContact->ddd_four }})
+                                                                {{ $workCompanyContact->phone_four }} <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->email)
+                                                                <!-- Contact E-mail 1 -->
+                                                                <a href="mailto:{{ $workCompanyContact->email }}">
+                                                                    {{ $workCompanyContact->email }}
+                                                                </a> <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->secondary_email)
+                                                                <!-- Contact E-mail 2 -->
+                                                                <a href="mailto:{{ $workCompanyContact->secondary_email }}">
+                                                                    {{ $workCompanyContact->secondary_email }}
+                                                                </a> <br>
+                                                            @endif
+
+                                                            @if ($workCompanyContact->tertiary_email)
+                                                                <!-- Contact E-mail 3 -->
+                                                                <a href="mailto:{{ $workCompanyContact->tertiary_email }}">
+                                                                    {{ $workCompanyContact->tertiary_email }}
+                                                                </a> <br>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        @endif
+
                         @empty
                         <tr>
                             <td colspan="5" class="py-4 text-center">
@@ -411,6 +434,9 @@
         <style>
             #activity-field-wrapper {
                 display: none;
+            }
+            .intec-contact-wrapper {
+                min-height: 260px;
             }
         </style>
     @endpush

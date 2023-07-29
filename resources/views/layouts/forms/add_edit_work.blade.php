@@ -116,7 +116,14 @@
                 <div class="row">
                     <div class="col-md-4 mb-2">
                         <label for="complement">Bairro</label>
-                        <input type="text" id="district" name="district" class="form-control @error('district') is-invalid @enderror" value="{{ old('district', $work->district) }}" placeholder="">
+                        <input
+                            type="text"
+                            id="district"
+                            name="district"
+                            class="form-control @error('district') is-invalid @enderror"
+                            value="{{ old('district', $work->district) }}"
+                            placeholder=""
+                            >
                         @error('district')
                             <div class="invalid-feedback">
                                 {{ $errors->first('district') }}
