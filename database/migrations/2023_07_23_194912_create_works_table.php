@@ -22,7 +22,7 @@ class CreateWorksTable extends Migration
             $table->string('old_code')->nullable();
             $table->date('last_review')->nullable();
             $table->string('name')->nullable(); // projeto
-            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('price', 14, 2)->nullable();
 
             $table->string('address', 100)->nullable();
             $table->string('number')->nullable();
