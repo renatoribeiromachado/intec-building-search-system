@@ -28,7 +28,7 @@ class StoreCompanyRequest extends FormRequest
             'trading_name' => ['required'],
             'revision' => ['required'],
             'cnpj' => ['required'],
-            'primary_email' => ['required'],
+            'primary_email' => ['nullable'],
             'secondary_email' => ['nullable'],
             'phone_one' => ['required'],
             'zip_code' => ['required'],
