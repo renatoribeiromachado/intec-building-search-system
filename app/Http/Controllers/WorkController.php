@@ -6,7 +6,6 @@ use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\ActivityField;
 use App\Models\Company;
-use App\Models\Contact;
 use App\Models\Phase;
 use App\Models\Position;
 use App\Models\Researcher;
@@ -16,8 +15,6 @@ use App\Models\Stage;
 use App\Models\User;
 use App\Models\Work;
 use App\Models\WorkFeature;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -117,70 +114,84 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        $work = $this->work;
-        $work->old_code = $request->old_code;
-        $work->last_review = convertPtBrDateToEnDate($request->last_review);
-        $work->name = $request->name;
-        $work->price = $request->price;
-        $work->address = $request->address;
-        $work->number = $request->number;
-        $work->district = $request->district;
-        $work->city = $request->city;
-        $work->state = $request->state;
-        $work->state_acronym = $request->state_acronym;
-        $work->zip_code = $request->zip_code;
-        $work->phase_id = $request->phase_id;
-        $work->stage_id = $request->stage_id;
-        $work->segment_id = $request->segment_id;
-        $work->segment_sub_type_id = $request->segment_sub_type_id;
-        $work->started_at = convertPtBrDateToEnDate($request->started_at);
-        $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
-        $work->notes = $request->notes;
+        try {
+            DB::beginTransaction();
 
-        $work->revision = $request->revision;
-        $work->start_and_end = $request->start_and_end;
-        $work->total_project_area = $request->total_project_area;
-        $work->cub = $request->cub;
-        $work->quotation_type = $request->quotation_type;
-        $work->coin = $request->coin;
-        $work->investment_standard = $request->investment_standard;
+            $work = $this->work;
+            $work->old_code = $request->old_code;
+            $work->last_review = convertPtBrDateToEnDate($request->last_review);
+            $work->name = $request->name;
+            $work->price = $request->price;
+            $work->address = $request->address;
+            $work->number = $request->number;
+            $work->district = $request->district;
+            $work->city = $request->city;
+            $work->state = $request->state;
+            $work->state_acronym = $request->state_acronym;
+            $work->zip_code = $request->zip_code;
+            $work->phase_id = $request->phase_id;
+            $work->stage_id = $request->stage_id;
+            $work->segment_id = $request->segment_id;
+            $work->segment_sub_type_id = $request->segment_sub_type_id;
+            $work->started_at = convertPtBrDateToEnDate($request->started_at);
+            $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
+            $work->notes = $request->notes;
 
-        $work->tower = $request->tower;
-        $work->house = $request->house;
-        $work->condominium = $request->condominium;
-        $work->floor = $request->floor;
-        $work->apartment_per_floor = $request->apartment_per_floor;
-        $work->bedroom = $request->bedroom;
-        $work->suite = $request->suite;
-        $work->bathroom = $request->bathroom;
-        $work->washbasin = $request->washbasin;
-        $work->living_room = $request->living_room;
-        $work->cup_and_kitchen = $request->cup_and_kitchen;
-        $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
-        $work->maid_dependency = $request->maid_dependency;
-        $work->other_leisure = $request->other_leisure;
-        $work->total_unities = $request->total_unities;
-        $work->useful_area = $request->useful_area;
-        $work->total_area = $request->total_area;
-        $work->elevator = $request->elevator;
-        $work->garage = $request->garage;
-        $work->coverage = $request->coverage;
-        $work->air_conditioner = $request->air_conditioner;
-        $work->heating = $request->heating;
-        $work->foundry = $request->foundry;
-        $work->frame = $request->frame;
-        $work->completion = $request->completion;
-        $work->facade = $request->facade;
-        $work->status = $request->status;
+            $work->revision = $request->revision;
+            $work->start_and_end = $request->start_and_end;
+            $work->total_project_area = $request->total_project_area;
+            $work->cub = $request->cub;
+            $work->quotation_type = $request->quotation_type;
+            $work->coin = $request->coin;
+            $work->investment_standard = $request->investment_standard;
 
-        $work->created_by = auth()->guard('web')->user()->id;
-        $work->updated_by = auth()->guard('web')->user()->id;
-        $work->save();
+            $work->tower = $request->tower;
+            $work->house = $request->house;
+            $work->condominium = $request->condominium;
+            $work->floor = $request->floor;
+            $work->apartment_per_floor = $request->apartment_per_floor;
+            $work->bedroom = $request->bedroom;
+            $work->suite = $request->suite;
+            $work->bathroom = $request->bathroom;
+            $work->washbasin = $request->washbasin;
+            $work->living_room = $request->living_room;
+            $work->cup_and_kitchen = $request->cup_and_kitchen;
+            $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
+            $work->maid_dependency = $request->maid_dependency;
+            $work->other_leisure = $request->other_leisure;
+            $work->total_unities = $request->total_unities;
+            $work->useful_area = $request->useful_area;
+            $work->total_area = $request->total_area;
+            $work->elevator = $request->elevator;
+            $work->garage = $request->garage;
+            $work->coverage = $request->coverage;
+            $work->air_conditioner = $request->air_conditioner;
+            $work->heating = $request->heating;
+            $work->foundry = $request->foundry;
+            $work->frame = $request->frame;
+            $work->completion = $request->completion;
+            $work->facade = $request->facade;
+            $work->status = $request->status;
 
-        $work->features()->sync($request->work_features);
+            $work->created_by = auth()->guard('web')->user()->id;
+            $work->updated_by = auth()->guard('web')->user()->id;
+            $work->save();
 
-        $researcher = $this->researcher->findOrFail($request->researcher_id);
-        $work->researches()->sync($researcher);
+            $work->features()->sync($request->work_features);
+
+            $researcher = $this->researcher->findOrFail($request->researcher_id);
+            $work->researches()->sync($researcher);
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['error' => $ex->getMessage()]);
+        }
 
         return redirect()->route('work.edit', $work->id);
     }
@@ -230,70 +241,84 @@ class WorkController extends Controller
      */
     public function update(UpdateWorkRequest $request, Work $work)
     {
-        $work->old_code = $request->old_code;
-        $work->last_review = convertPtBrDateToEnDate($request->last_review);
-        $work->name = $request->name;
-        $work->price = $request->price;
-        $work->address = $request->address;
-        $work->number = $request->number;
-        $work->district = $request->district;
-        $work->city = $request->city;
-        $work->state = $request->state;
-        $work->state_acronym = $request->state_acronym;
-        $work->zip_code = $request->zip_code;
-        $work->phase_id = $request->phase_id;
-        $work->stage_id = $request->stage_id;
-        $work->segment_id = $request->segment_id;
-        $work->segment_sub_type_id = $request->segment_sub_type_id;
-        $work->started_at = convertPtBrDateToEnDate($request->started_at);
-        $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
-        $work->notes = $request->notes;
+        try {
+            DB::beginTransaction();
 
-        $work->revision = $request->revision;
-        $work->start_and_end = $request->start_and_end;
-        $work->total_project_area = $request->total_project_area;
-        $work->cub = $request->cub;
-        $work->quotation_type = $request->quotation_type;
-        $work->coin = $request->coin;
-        $work->investment_standard = $request->investment_standard;
+            $work->old_code = $request->old_code;
+            $work->last_review = convertPtBrDateToEnDate($request->last_review);
+            $work->name = $request->name;
+            $work->price = $request->price;
+            $work->address = $request->address;
+            $work->number = $request->number;
+            $work->district = $request->district;
+            $work->city = $request->city;
+            $work->state = $request->state;
+            $work->state_acronym = $request->state_acronym;
+            $work->zip_code = $request->zip_code;
+            $work->phase_id = $request->phase_id;
+            $work->stage_id = $request->stage_id;
+            $work->segment_id = $request->segment_id;
+            $work->segment_sub_type_id = $request->segment_sub_type_id;
+            $work->started_at = convertPtBrDateToEnDate($request->started_at);
+            $work->ends_at = convertPtBrDateToEnDate($request->ends_at);
+            $work->notes = $request->notes;
 
-        $work->tower = $request->tower;
-        $work->house = $request->house;
-        $work->condominium = $request->condominium;
-        $work->floor = $request->floor;
-        $work->apartment_per_floor = $request->apartment_per_floor;
-        $work->bedroom = $request->bedroom;
-        $work->suite = $request->suite;
-        $work->bathroom = $request->bathroom;
-        $work->washbasin = $request->washbasin;
-        $work->living_room = $request->living_room;
-        $work->cup_and_kitchen = $request->cup_and_kitchen;
-        $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
-        $work->maid_dependency = $request->maid_dependency;
-        $work->other_leisure = $request->other_leisure;
-        $work->total_unities = $request->total_unities;
-        $work->useful_area = $request->useful_area;
-        $work->total_area = $request->total_area;
-        $work->elevator = $request->elevator;
-        $work->garage = $request->garage;
-        $work->coverage = $request->coverage;
-        $work->air_conditioner = $request->air_conditioner;
-        $work->heating = $request->heating;
-        $work->foundry = $request->foundry;
-        $work->frame = $request->frame;
-        $work->completion = $request->completion;
-        $work->facade = $request->facade;
-        $work->status = $request->status;
+            $work->revision = $request->revision;
+            $work->start_and_end = $request->start_and_end;
+            $work->total_project_area = $request->total_project_area;
+            $work->cub = $request->cub;
+            $work->quotation_type = $request->quotation_type;
+            $work->coin = $request->coin;
+            $work->investment_standard = $request->investment_standard;
 
-        $work->updated_by = auth()->guard('web')->user()->id;
-        $work->save();
+            $work->tower = $request->tower;
+            $work->house = $request->house;
+            $work->condominium = $request->condominium;
+            $work->floor = $request->floor;
+            $work->apartment_per_floor = $request->apartment_per_floor;
+            $work->bedroom = $request->bedroom;
+            $work->suite = $request->suite;
+            $work->bathroom = $request->bathroom;
+            $work->washbasin = $request->washbasin;
+            $work->living_room = $request->living_room;
+            $work->cup_and_kitchen = $request->cup_and_kitchen;
+            $work->service_area_terrace_balcony = $request->service_area_terrace_balcony;
+            $work->maid_dependency = $request->maid_dependency;
+            $work->other_leisure = $request->other_leisure;
+            $work->total_unities = $request->total_unities;
+            $work->useful_area = $request->useful_area;
+            $work->total_area = $request->total_area;
+            $work->elevator = $request->elevator;
+            $work->garage = $request->garage;
+            $work->coverage = $request->coverage;
+            $work->air_conditioner = $request->air_conditioner;
+            $work->heating = $request->heating;
+            $work->foundry = $request->foundry;
+            $work->frame = $request->frame;
+            $work->completion = $request->completion;
+            $work->facade = $request->facade;
+            $work->status = $request->status;
 
-        $work->features()->sync($request->work_features);
+            $work->updated_by = auth()->guard('web')->user()->id;
+            $work->save();
 
-        $this->applyWorkCoverImage($request, $work);
+            $work->features()->sync($request->work_features);
 
-        $researcher = $this->researcher->findOrFail($request->researcher_id);
-        $work->researches()->sync($researcher);
+            $this->applyWorkCoverImage($request, $work);
+
+            $researcher = $this->researcher->findOrFail($request->researcher_id);
+            $work->researches()->sync($researcher);
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['error' => $ex->getMessage()]);
+        }
 
         return redirect()->route('work.index');
     }
@@ -304,9 +329,24 @@ class WorkController extends Controller
      * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Work $work)
+    public function destroy(Request $request, Work $work)
     {
-        $work->delete();
+        try {
+            DB::beginTransaction();
+
+            $work->delete();
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+        }
+
         return redirect()->route('work.index');
     }
 
@@ -325,19 +365,32 @@ class WorkController extends Controller
 
     public function bindCompanies(Request $request, Work $work)
     {
-        $companies = $this->company
-            ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
-            ->whereIn('id', $request->companies_list)
-            ->get();
+        try {
+            DB::beginTransaction();
+                
+            $companies = $this->company
+                ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+                ->whereIn('id', $request->companies_list)
+                ->get();
 
-        foreach ($companies as $company) {
-            $work->companyActivityFields()->attach(
-                $company->activity_field_id,
-                ['company_id' => $company->id]
-            );
+            foreach ($companies as $company) {
+                $work->companyActivityFields()->attach(
+                    $company->activity_field_id,
+                    ['company_id' => $company->id]
+                );
+            }
+
+            $work->companies()->attach($request->companies_list);
+
+        } catch(\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
         }
 
-        $work->companies()->attach($request->companies_list);
         return redirect()->back();
     }
 
@@ -375,11 +428,10 @@ class WorkController extends Controller
         } catch(\Exception $ex) {
 
             DB::rollBack();
-
-            echo $ex->getMessage();
-            echo "<br>Houve um problema ao tentar atualizar as atividades da empresa com a obra<br>";
-            echo "<br>Entre em contato com os desenvolvedores do sistema.";
-            exit;
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
         }
 
         return redirect()->back();
@@ -409,11 +461,10 @@ class WorkController extends Controller
         } catch(\Exception $ex) {
 
             DB::rollBack();
-
-            echo $ex->getMessage();
-            echo "<br>Houve um problema ao tentar atualizar os contatos da empresa com a obra<br>";
-            echo "<br>Entre em contato com os desenvolvedores do sistema.";
-            exit;
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
         }
 
         return redirect()->back();

@@ -42,6 +42,8 @@
             </a>
         </div>
 
+        @include('layouts.alerts.all-errors')
+
         <table class="table">
             <thead>
                 <tr>
