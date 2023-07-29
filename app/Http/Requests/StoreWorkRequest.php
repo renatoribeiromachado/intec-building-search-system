@@ -33,7 +33,7 @@ class StoreWorkRequest extends FormRequest
             'zip_code' => 'required',
             'address' => 'required',
             'district' => 'required',
-            'number' => 'required',
+            'number' => 'nullable',
             'city' => 'required',
             'state' => 'required',
             'segment_id' => 'required',
