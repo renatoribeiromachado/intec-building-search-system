@@ -382,6 +382,8 @@ class WorkController extends Controller
 
             $work->companies()->attach($request->companies_list);
 
+            DB::commit();
+
         } catch(\Exception $ex) {
 
             DB::rollBack();
