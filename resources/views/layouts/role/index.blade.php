@@ -64,7 +64,7 @@
                             </a>
 
                             @can('excluir-funcao-administrativa')
-                                @if($role->name != 'Webmaster')
+                                @if ($role->name != 'Webmaster')
                                     <a
                                         href="#"
                                         class="btn btn-sm btn-outline-danger"

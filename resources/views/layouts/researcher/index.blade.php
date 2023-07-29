@@ -63,61 +63,63 @@
                                 Editar
                             </a>
 
-                            <a
-                                href="#"
-                                class="btn btn-sm btn-outline-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteResearcher{{$loop->index}}"
-                                >
-                                Excluir
-                            </a>
+                            @can('excluir-pesquisador')
+                                <a
+                                    href="#"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteResearcher{{$loop->index}}"
+                                    >
+                                    Excluir
+                                </a>
 
-                            <!-- Modal -->
-                            <div class="modal fade"
-                                id="deleteResearcher{{$loop->index}}"
-                                data-bs-backdrop="static"
-                                data-bs-keyboard="false"
-                                tabindex="-1"
-                                aria-labelledby="deleteResearcherLabel"
-                                aria-hidden="true"
-                                >
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteResearcherLabel">Excluir Registro</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
+                                <!-- Modal -->
+                                <div class="modal fade"
+                                    id="deleteResearcher{{$loop->index}}"
+                                    data-bs-backdrop="static"
+                                    data-bs-keyboard="false"
+                                    tabindex="-1"
+                                    aria-labelledby="deleteResearcherLabel"
+                                    aria-hidden="true"
+                                    >
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteResearcherLabel">Excluir Registro</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
 
-                                        <div class="modal-body">
-                                            <div class="text-center">
-                                                Tem certeza que deseja excluir o registro do(a) pesquisador(a): <br>
-                                                <strong class="text-danger">{{ $researcher->name }}</strong>?
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    Tem certeza que deseja excluir o registro do(a) pesquisador(a): <br>
+                                                    <strong class="text-danger">{{ $researcher->name }}</strong>?
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal"
+                                                    >
+                                                    Fechar
+                                                </button>
+
+                                                <form action="{{ route('researcher.destroy', $researcher->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-danger"
+                                                        >
+                                                        Deletar
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button"
-                                                class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal"
-                                                >
-                                                Fechar
-                                            </button>
-
-                                            <form action="{{ route('researcher.destroy', $researcher->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-outline-danger"
-                                                    >
-                                                    Deletar
-                                                </button>
-                                            </form>
-                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- End the Modal -->
+                                </div><!-- End the Modal -->
+                            @endcan
                         </td>
                     </tr>
                     @empty

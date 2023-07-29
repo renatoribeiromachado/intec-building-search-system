@@ -24,6 +24,8 @@ class CreateContactsTable extends Migration
             $table->string('ddd_fax')->nullable();
             $table->string('fax', 20)->nullable();
             $table->string('email')->nullable();
+            $table->string('secondary_email')->nullable();
+            $table->string('tertiary_email')->nullable();
             $table->string('ddd_two', 5)->nullable();
             $table->string('phone_two', 20)->nullable();
             $table->string('ddd_three', 5)->nullable();

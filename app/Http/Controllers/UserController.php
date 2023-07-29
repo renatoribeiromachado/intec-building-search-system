@@ -29,6 +29,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('ver-lista-de-usuarios');
+
         $users = $this->user->allUsers();
         return view('layouts.user.index', compact('users'));
     }
@@ -40,6 +42,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('criar-usuario');
+
         $user = $this->user;
         $roles = $this->role->findRoles();
         return view('layouts.user.create', compact(
@@ -56,6 +60,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('criar-usuario');
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -88,6 +94,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('editar-usuario');
+
         $roles = $this->role->findRoles();
         return view('layouts.user.edit', compact(
             'user',
@@ -104,6 +112,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('editar-usuario');
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
@@ -136,6 +146,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('excluir-usuario');
+
         $user->delete();
         return redirect()->route('user.index');
     }

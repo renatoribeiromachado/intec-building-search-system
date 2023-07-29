@@ -15,121 +15,148 @@ class PermissionRoleTableSeeder extends Seeder
      */
     public function run()
     {
+        // ===========================================
+        // ======= Webmaster's Permission ============
+        // ===========================================
         $webmasterRole = (new Role())->userRole('Webmaster')->firstOrFail();
 
         $webmasterPermissions = Permission::all();
 
         $webmasterRole->permissions()->attach($webmasterPermissions);
 
-        // // ======= Administrator's Permission ========
-        // $administratorRole = (new Role)->userRole('Administrador')->firstOrFail();
 
-        // // now we retrieve all permissions
-        // $administratorPermissions = Permission::whereNotIn('name', [
+        // ===========================================
+        // ======= Supporter's Permission ============
+        // ===========================================
+        $supportRole = (new Role())->userRole('Suporte')->firstOrFail();
 
-        //     // FOR ROLES
-        //     'Ver Lista de Funções Administrativas', 
-        //     'Ver Função Administrativa',
+        $supportPermissions = Permission::all();
 
-        //     // FOR PERMISSIONS
-        //     'Ver Lista de Permissões', 
-        //     'Ver Permissão', 
+        $supportRole->permissions()->attach($supportPermissions);
 
-        //     // FOR SETTINGS
-        //     'Ver Configurações Globais',
 
-        //     // FOR PEOPLE
-        //     'Ver Lista de Pessoas', 
-        //     'Criar Pessoa', 
-        //     'Editar Pessoa', 
-        //     'Habilitar Pessoa', 
-        //     'Desabilitar Pessoa', 
-        //     'Excluir Pessoa', 
+        // ===========================================
+        // ======= Administrator's Permission ========
+        // ===========================================
+        $administratorRole = (new Role)->userRole('Administrador')->firstOrFail();
+
+        $administratorPermissions = Permission::whereNotIn('name', [
+
+            // FOR SETTINGS
+            'Ver Configurações',
+            'Ver Configurações Globais',
+            'Editar Configurações Globais',
+            'Editar Proprietário do Projeto',
+
+            // FOR ROLES
+            'Excluir Função Administrativa',
+
+            // FOR PERMISSIONS
+            'Ver Lista de Permissões',
+            'Ver Permissão',
+
+            // FOR COMPANIES
+            'Importar Empresas',
+
+        ])->get();
+
+        $administratorRole->permissions()->attach($administratorPermissions);
+
+
+        // ===========================================
+        // ======= Operator's Permission =============
+        // ===========================================
+        $operatorRole = (new Role)->userRole('Operador')->firstOrFail();
+
+        $operatorPermissions = Permission::whereIn('name', [
+
+            // FOR ADMINISTRATIVE RESOURCES
+            'Ver Administrativo',
+
+            // FOR COMPANIES
+            'Ver Lista de Empresas',
+            'Criar Empresa',
+            'Ver Empresa',
+            'Editar Empresa',
+            'Habilitar Empresa',
+            'Desabilitar Empresa',
+            'Pesquisar Empresa',
+            'Destacar Empresa',
+
+            // FOR ACTIVITY FIELDS
+            'Ver Lista de Atividades de Empresas',
+            'Criar Atividade de Empresa',
+            'Ver Atividade de Empresa',
+            'Editar Atividade de Empresa',
+            'Habilitar Atividade de Empresa',
+            'Desabilitar Atividade de Empresa',
+            'Pesquisar Atividade de Empresa',
+
+            // FOR PHASES
+            'Ver Lista de Fases',
+            'Criar Fase',
+            'Ver Fase',
+            'Editar Fase',
+            'Habilitar Fase',
+            'Desabilitar Fase',
+            'Pesquisar Fase',
+
+            // FOR RESEARCHERS
+            'Ver Lista de Pesquisadores',
+            'Criar Pesquisador',
+            'Ver Pesquisador',
+            'Editar Pesquisador',
+            'Habilitar Pesquisador',
+            'Desabilitar Pesquisador',
+            'Pesquisar Pesquisador',
+
+            // FOR WORK
+            'Ver Lista de Obras',
+            'Criar Obra',
+            'Ver Obra',
+            'Editar Obra',
+            'Habilitar Obra',
+            'Desabilitar Obra',
+            'Pesquisar Obra',
+
+            // FOR SEGMENT
+            'Ver Lista de Segmentos de Atuação',
+            'Criar Segmento de Atuação',
+            'Ver Segmento de Atuação',
+            'Editar Segmento de Atuação',
+            'Habilitar Segmento de Atuação',
+            'Desabilitar Segmento de Atuação',
+            'Pesquisar Segmento de Atuação',
+
+            // FOR SEGMENT SUB TYPES
+            'Ver Lista de Subtipos de Segmentos de Atuação',
+            'Criar Subtipo de Segmento de Atuação',
+            'Ver Subtipo de Segmento de Atuação',
+            'Editar Subtipo de Segmento de Atuação',
+            'Habilitar Subtipo de Segmento de Atuação',
+            'Desabilitar Subtipo de Segmento de Atuação',
+            'Pesquisar Subtipo de Segmento de Atuação',
+
+            // FOR SEGMENT SUB TYPES
+            'Ver Lista de Estágios',
+            'Criar Subtipo de Estágio',
+            'Ver Subtipo de Estágio',
+            'Editar Subtipo de Estágio',
+            'Habilitar Subtipo de Estágio',
+            'Desabilitar Subtipo de Estágio',
+            'Pesquisar Subtipo de Estágio',
+
+            // FOR POSITIONS
+            'Ver Lista de Cargos',
+            'Criar Cargo',
+            'Ver Cargo',
+            'Editar Cargo',
+            'Habilitar Cargo',
+            'Desabilitar Cargo',
+            'Pesquisar Cargo',
                 
-        // ])->get();
+        ])->get();
 
-        // // then, for each permission we will bind Administrator role
-        // $administratorRole->permissions()->attach($administratorPermissions);
-
-        // $humanResourceRole = (new Role)->userRole('Recursos Humanos')->firstOrFail();
-
-        // $rhPermissions = Permission::whereIn('name', [
-
-        //     // FOR AGENTS
-        //     'Ver Lista de Corretores',
-        //     'Criar Corretor',
-        //     'Ver Corretor',
-        //     'Editar Corretor',
-        //     'Habilitar Corretor',
-        //     'Desabilitar Corretor',
-        //     'Excluir Corretor',
-        //     'Pesquisar Corretor',
-        //     'Destacar Corretor',
-        //     'Exportar Corretores',
-
-        //     //FOR LOCALES
-        //     'Ver Lista de Locais de Trabalho',
-        //     'Criar Local de Trabalho',
-        //     'Ver Local de Trabalho',
-        //     'Editar Local de Trabalho',
-        //     'Habilitar Local de Trabalho',
-        //     'Desabilitar Local de Trabalho',
-        //     'Excluir Local de Trabalho',
-        //     'Pesquisar Local de Trabalho',
-        //     'Destacar Local de Trabalho',
-
-        //     // FOR CREWS
-        //     'Ver Lista de Equipes',
-        //     'Criar Equipe',
-        //     'Ver Equipe',
-        //     'Editar Equipe',
-        //     'Habilitar Equipe',
-        //     'Desabilitar Equipe',
-        //     'Excluir Equipe',
-        //     'Pesquisar Equipe',
-        //     'Destacar Equipe',
-
-        //     // FOR COMPANIES
-        //     'Ver Lista de Unidades',
-        //     'Criar Unidade',
-        //     'Ver Unidade',
-        //     'Editar Unidade',
-        //     'Habilitar Unidade',
-        //     'Desabilitar Unidade',
-        //     'Excluir Unidade',
-        //     'Pesquisar Unidade',
-        //     'Destacar Unidade',
-                
-        // ])->get();
-
-        // $humanResourceRole->permissions()->attach($rhPermissions);
-
-        // $rhConsultRole = (new Role)->userRole('Recursos Humanos Consulta')->firstOrFail();
-
-        // $rhConsultPermissions = Permission::whereIn('name', [
-
-        //     // FOR AGENTS
-        //     'Ver Lista de Corretores',
-        //     'Ver Corretor',
-        //     'Pesquisar Corretor',
-
-        //     //FOR LOCALES
-        //     'Ver Lista de Locais de Trabalho',
-        //     'Ver Local de Trabalho',
-        //     'Pesquisar Local de Trabalho',
-
-        //     //FOR CREWS
-        //     'Ver Lista de Equipes',
-        //     'Ver Equipe',
-        //     'Pesquisar Equipe',
-
-        //     // FOR COMPANIES
-        //     'Ver Lista de Unidades',
-        //     'Ver Unidade',
-        //     'Pesquisar Unidade',
-                
-        // ])->get();
-
-        // $rhConsultRole->permissions()->attach($rhConsultPermissions);
+        $operatorRole->permissions()->attach($operatorPermissions);
     }
 }

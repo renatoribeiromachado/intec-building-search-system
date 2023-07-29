@@ -55,11 +55,27 @@
                                 </div>
 
                                 <div class="row mt-2">
-                                    <div class="col-md-12 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <label for="email">E-mail</label>
                                         <input type="email" id="email" name="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             value="{{ old('email', $contact->email) }}"
+                                            placeholder=""
+                                            >
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="secondary_email">E-mail 2</label>
+                                        <input type="email" id="secondary_email" name="secondary_email"
+                                            class="form-control @error('secondary_email') is-invalid @enderror"
+                                            value="{{ old('secondary_email', $contact->secondary_email) }}"
+                                            placeholder=""
+                                            >
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label for="tertiary_email">E-mail 3</label>
+                                        <input type="email" id="tertiary_email" name="tertiary_email"
+                                            class="form-control @error('tertiary_email') is-invalid @enderror"
+                                            value="{{ old('tertiary_email', $contact->tertiary_email) }}"
                                             placeholder=""
                                             >
                                     </div>

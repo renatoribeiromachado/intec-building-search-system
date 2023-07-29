@@ -58,14 +58,31 @@
                                     
                                     @if (isset($contact->email))
                                     <a href="mailto:{{ $contact->email }}"
-                                        class="card-link d-block mb-2"
-                                        >{{ $contact->email }}
+                                        class="card-link d-block mb-2 ms-0"
+                                        >
+                                        {{ $contact->email }}
+                                    </a>
+                                    @endif
+                                    
+                                    @if (isset($contact->secondary_email))
+                                    <a href="mailto:{{ $contact->secondary_email }}"
+                                        class="card-link d-block mb-2 ms-0"
+                                        >
+                                        {{ $contact->secondary_email }}
+                                    </a>
+                                    @endif
+                                    
+                                    @if (isset($contact->tertiary_email))
+                                    <a href="mailto:{{ $contact->tertiary_email }}"
+                                        class="card-link d-block mb-2 ms-0"
+                                        >
+                                        {{ $contact->tertiary_email }}
                                     </a>
                                     @endif
 
                                     @if (isset($contact->ddd) && isset($contact->main_phone))
                                     <a href="tel:+55{{ $contact->ddd }}{{ $contact->main_phone }}"
-                                        class="card-link d-block ms-0 mb-2"
+                                        class="card-link d-block ms-0 mb-2 ms-0"
                                         >({{ $contact->ddd }}) {{ $contact->main_phone }}
                                     </a>
                                     @endif
@@ -91,7 +108,7 @@
                                     </a>
                                     @endif
 
-                                    <div>
+                                    <div class="mt-3">
                                         <button
                                             data-bs-toggle="modal"
                                             data-bs-target="#editContact{{$loop->index}}"

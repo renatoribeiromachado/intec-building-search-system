@@ -19,6 +19,8 @@ class Contact extends Model
         'ddd_fax',
         'fax',
         'email',
+        'secondary_email',
+        'tertiary_email',
         'ddd_two',
         'phone_two',
         'ddd_three',

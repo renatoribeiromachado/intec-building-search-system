@@ -18,13 +18,14 @@ class PermissionSeeder extends Seeder
         $permissions = [
             // IMPORTANT: Do not move the order of permissions persistence!
 
-            // ['name' => 'Ver Módulos'],
+            // FOR ADMINISTRATIVE RESOURCES
+            ['name' => 'Ver Administrativo'],
 
             // FOR SETTINGS
             ['name' => 'Ver Configurações'],
             ['name' => 'Ver Configurações Globais'],
             ['name' => 'Editar Configurações Globais'],
-            // ['name' => 'Editar Proprietário do Projeto'],
+            ['name' => 'Editar Proprietário do Projeto'],
 
             // FOR ROLES
             ['name' => 'Ver Lista de Funções Administrativas'],
@@ -42,15 +43,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'Atualizar Permissão'],
             ['name' => 'Excluir Permissão'],
 
-            // // FOR PEOPLE
-            // ['name' => 'Ver Lista de Pessoas'],
-            // ['name' => 'Criar Pessoa'],
-            // ['name' => 'Ver Pessoa'],
-            // ['name' => 'Editar Pessoa'],
-            // ['name' => 'Habilitar Pessoa'],
-            // ['name' => 'Desabilitar Pessoa'],
-            // ['name' => 'Excluir Pessoa'],
-
             // FOR USERS
             ['name' => 'Ver Lista de Usuários'],
             ['name' => 'Criar Usuário'],
@@ -59,25 +51,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'Habilitar Usuário'],
             ['name' => 'Desabilitar Usuário'],
             ['name' => 'Excluir Usuário'],
-
-            // // FOR USERS PROFILE
-            // ['name' => 'Ver Perfil'],
-            // ['name' => 'Excluir Foto do Perfil'],
-
-            // // FOR PROFESSIONALS
-            // ['name' => 'Ver Profissionais'],
-            // ['name' => 'Ver Lista de Solicitações para se Tornar Profissional'],
-            // ['name' => 'Aprovar Solicitação para se Tornar Profissional'],
-
-            // // FOR REPORTS
-            // ['name' => 'Pesquisar Relatórios'],
-
-            // // FOR DASHBOARD
-            // ['name' => 'Ver Dashboard'],
-            // ['name' => 'Ver Indicadores do Dashboard'],
-            // ['name' => 'Ver Tabela de Orçamentos no Dashboard'],
-            // ['name' => 'Ver Tabela de Integradores no Dashboard'],
-            // ['name' => 'Ver Tabela de Vendedores no Dashboard'],
 
             // FOR COMPANIES
             ['name' => 'Ver Lista de Empresas'],
@@ -91,28 +64,85 @@ class PermissionSeeder extends Seeder
             ['name' => 'Destacar Empresa'],
             ['name' => 'Importar Empresas'],
 
-            // // FOR LOCALES
-            // ['name' => 'Ver Lista de Locais de Trabalho'],
-            // ['name' => 'Criar Local de Trabalho'],
-            // ['name' => 'Ver Local de Trabalho'],
-            // ['name' => 'Editar Local de Trabalho'],
-            // ['name' => 'Habilitar Local de Trabalho'],
-            // ['name' => 'Desabilitar Local de Trabalho'],
-            // ['name' => 'Excluir Local de Trabalho'],
-            // ['name' => 'Pesquisar Local de Trabalho'],
-            // ['name' => 'Destacar Local de Trabalho'],
+            // FOR ACTIVITY FIELDS
+            ['name' => 'Ver Lista de Atividades de Empresas'],
+            ['name' => 'Criar Atividade de Empresa'],
+            ['name' => 'Ver Atividade de Empresa'],
+            ['name' => 'Editar Atividade de Empresa'],
+            ['name' => 'Habilitar Atividade de Empresa'],
+            ['name' => 'Desabilitar Atividade de Empresa'],
+            ['name' => 'Excluir Atividade de Empresa'],
+            ['name' => 'Pesquisar Atividade de Empresa'],
 
-            // // FOR CREWS
-            // ['name' => 'Ver Lista de Equipes'],
-            // ['name' => 'Criar Equipe'],
-            // ['name' => 'Ver Equipe'],
-            // ['name' => 'Editar Equipe'],
-            // ['name' => 'Habilitar Equipe'],
-            // ['name' => 'Desabilitar Equipe'],
-            // ['name' => 'Excluir Equipe'],
-            // ['name' => 'Pesquisar Equipe'],
-            // ['name' => 'Destacar Equipe'],
+            // FOR PHASES
+            ['name' => 'Ver Lista de Fases'],
+            ['name' => 'Criar Fase'],
+            ['name' => 'Ver Fase'],
+            ['name' => 'Editar Fase'],
+            ['name' => 'Habilitar Fase'],
+            ['name' => 'Desabilitar Fase'],
+            ['name' => 'Excluir Fase'],
+            ['name' => 'Pesquisar Fase'],
 
+            // FOR RESEARCHERS
+            ['name' => 'Ver Lista de Pesquisadores'],
+            ['name' => 'Criar Pesquisador'],
+            ['name' => 'Ver Pesquisador'],
+            ['name' => 'Editar Pesquisador'],
+            ['name' => 'Habilitar Pesquisador'],
+            ['name' => 'Desabilitar Pesquisador'],
+            ['name' => 'Excluir Pesquisador'],
+            ['name' => 'Pesquisar Pesquisador'],
+
+            // FOR WORK
+            ['name' => 'Ver Lista de Obras'],
+            ['name' => 'Criar Obra'],
+            ['name' => 'Ver Obra'],
+            ['name' => 'Editar Obra'],
+            ['name' => 'Habilitar Obra'],
+            ['name' => 'Desabilitar Obra'],
+            ['name' => 'Excluir Obra'],
+            ['name' => 'Pesquisar Obra'],
+
+            // FOR SEGMENT
+            ['name' => 'Ver Lista de Segmentos de Atuação'],
+            ['name' => 'Criar Segmento de Atuação'],
+            ['name' => 'Ver Segmento de Atuação'],
+            ['name' => 'Editar Segmento de Atuação'],
+            ['name' => 'Habilitar Segmento de Atuação'],
+            ['name' => 'Desabilitar Segmento de Atuação'],
+            ['name' => 'Excluir Segmento de Atuação'],
+            ['name' => 'Pesquisar Segmento de Atuação'],
+
+            // FOR SEGMENT SUB TYPES
+            ['name' => 'Ver Lista de Subtipos de Segmentos de Atuação'],
+            ['name' => 'Criar Subtipo de Segmento de Atuação'],
+            ['name' => 'Ver Subtipo de Segmento de Atuação'],
+            ['name' => 'Editar Subtipo de Segmento de Atuação'],
+            ['name' => 'Habilitar Subtipo de Segmento de Atuação'],
+            ['name' => 'Desabilitar Subtipo de Segmento de Atuação'],
+            ['name' => 'Excluir Subtipo de Segmento de Atuação'],
+            ['name' => 'Pesquisar Subtipo de Segmento de Atuação'],
+
+            // FOR SEGMENT SUB TYPES
+            ['name' => 'Ver Lista de Estágios'],
+            ['name' => 'Criar Subtipo de Estágio'],
+            ['name' => 'Ver Subtipo de Estágio'],
+            ['name' => 'Editar Subtipo de Estágio'],
+            ['name' => 'Habilitar Subtipo de Estágio'],
+            ['name' => 'Desabilitar Subtipo de Estágio'],
+            ['name' => 'Excluir Subtipo de Estágio'],
+            ['name' => 'Pesquisar Subtipo de Estágio'],
+
+            // FOR POSITIONS
+            ['name' => 'Ver Lista de Cargos'],
+            ['name' => 'Criar Cargo'],
+            ['name' => 'Ver Cargo'],
+            ['name' => 'Editar Cargo'],
+            ['name' => 'Habilitar Cargo'],
+            ['name' => 'Desabilitar Cargo'],
+            ['name' => 'Excluir Cargo'],
+            ['name' => 'Pesquisar Cargo'],
 
         ];
 

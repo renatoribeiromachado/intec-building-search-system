@@ -217,6 +217,8 @@ class CompanyController extends Controller
         $contact->ddd_fax = $request->ddd_fax;
         $contact->fax = $request->fax;
         $contact->email = $request->email;
+        $contact->secondary_email = $request->secondary_email;
+        $contact->tertiary_email = $request->tertiary_email;
         $contact->ddd_two = $request->ddd_two;
         $contact->phone_two = $request->phone_two;
         $contact->ddd_three = $request->ddd_three;
@@ -249,6 +251,8 @@ class CompanyController extends Controller
         $contact->ddd_fax = $request->ddd_fax;
         $contact->fax = $request->fax;
         $contact->email = $request->email;
+        $contact->secondary_email = $request->secondary_email;
+        $contact->tertiary_email = $request->tertiary_email;
         $contact->ddd_two = $request->ddd_two;
         $contact->phone_two = $request->phone_two;
         $contact->ddd_three = $request->ddd_three;
@@ -273,13 +277,10 @@ class CompanyController extends Controller
 
     public function importCompanies()
     {
-        // $this->authorize('importar-empresas');
+        $this->authorize('importar-empresas');
 
         try {
-            // $filename = 'companies.xlsx';
             $filename = request()->file('file');
-
-            // $contents = \Storage::disk('public')->get('import_companies/' . $filename);
 
             \Maatwebsite\Excel\Facades\Excel::import(
                 // new \App\Imports\CompaniesImport, public_path('storage/import_companies/' . $filename)
@@ -290,10 +291,11 @@ class CompanyController extends Controller
 
             $error = $ex->getMessage();
             echo $error;
+            exit;
             // return redirect()->back()->with('error', $error);
 
         }
 
-        // return redirect()->back()->with('success', 'Empresas importadas!');
+        return redirect()->back()->with('success', 'Empresas importadas!');
     }
 }

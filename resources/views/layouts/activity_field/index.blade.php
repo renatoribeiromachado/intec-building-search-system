@@ -65,66 +65,68 @@
                                 Editar
                             </a>
 
-                            @if ($activityField->companies_count == 0)
-                                <a
-                                    href="#"
-                                    class="btn btn-sm btn-outline-danger"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop{{$loop->index}}"
+                            @can('excluir-atividade-de-empresa')
+                                @if ($activityField->companies_count == 0)
+                                    <a
+                                        href="#"
+                                        class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{$loop->index}}"
+                                        >
+                                        Excluir
+                                    </a>
+                                @endif
+
+                                <!-- Modal -->
+                                <div class="modal fade"
+                                    id="staticBackdrop{{$loop->index}}"
+                                    data-bs-backdrop="static"
+                                    data-bs-keyboard="false"
+                                    tabindex="-1"
+                                    aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true"
                                     >
-                                    Excluir
-                                </a>
-                            @endif
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Excluir Registro</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
 
-                            <!-- Modal -->
-                            <div class="modal fade"
-                                id="staticBackdrop{{$loop->index}}"
-                                data-bs-backdrop="static"
-                                data-bs-keyboard="false"
-                                tabindex="-1"
-                                aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true"
-                                >
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Excluir Registro</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    Tem certeza que deseja excluir o registro da atividade: <br>
+                                                    <strong class="text-danger">{{ $activityField->description }}</strong>?
+                                                </div>
+                                            </div>
 
-                                        <div class="modal-body">
-                                            <div class="text-center">
-                                                Tem certeza que deseja excluir o registro da atividade: <br>
-                                                <strong class="text-danger">{{ $activityField->description }}</strong>?
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal"
+                                                    >
+                                                    Fechar
+                                                </button>
+
+                                                <form
+                                                    action="{{ route('activity_field.destroy', $activityField->id) }}"
+                                                    method="post"
+                                                    >
+                                                    @csrf
+                                                    @method('delete')
+
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-outline-danger"
+                                                        >
+                                                        Deletar
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button"
-                                                class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal"
-                                                >
-                                                Fechar
-                                            </button>
-
-                                            <form
-                                                action="{{ route('activity_field.destroy', $activityField->id) }}"
-                                                method="post"
-                                                >
-                                                @csrf
-                                                @method('delete')
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-outline-danger"
-                                                    >
-                                                    Deletar
-                                                </button>
-                                            </form>
-                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- End the Modal -->
+                                </div><!-- End the Modal -->
+                            @endcan
                         </td>
                     </tr>
                     @empty
