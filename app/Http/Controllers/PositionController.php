@@ -48,6 +48,8 @@ class PositionController extends Controller
     {
         $position = $this->position;
         $position->description = $request->description;
+        $position->created_by = auth()->guard('web')->user()->id;
+        $position->updated_by = auth()->guard('web')->user()->id;
         $position->save();
 
         return redirect()->route('position.index');
@@ -74,6 +76,7 @@ class PositionController extends Controller
     public function update(UpdatePositionRequest $request, Position $position)
     {
         $position->description = $request->description;
+        $position->updated_by = auth()->guard('web')->user()->id;
         $position->save();
 
         return redirect()->route('position.index');

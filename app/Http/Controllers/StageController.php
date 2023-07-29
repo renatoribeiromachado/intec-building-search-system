@@ -57,6 +57,8 @@ class StageController extends Controller
         $stage = $this->stage;
         $stage->description = $request->description;
         $stage->phase_id = $request->phase_id;
+        $stage->created_by = auth()->guard('web')->user()->id;
+        $stage->updated_by = auth()->guard('web')->user()->id;
         $stage->save();
 
         return redirect()->route('stage.index');
@@ -87,6 +89,7 @@ class StageController extends Controller
     public function update(UpdateStageRequest $request, Stage $stage)
     {
         $stage->description = $request->description;
+        $stage->updated_by = auth()->guard('web')->user()->id;
         $stage->save();
 
         return redirect()->route('stage.index');

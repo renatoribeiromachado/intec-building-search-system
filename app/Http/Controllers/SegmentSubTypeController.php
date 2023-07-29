@@ -57,6 +57,8 @@ class SegmentSubTypeController extends Controller
         $segmentSubType = $this->segmentSubType;
         $segmentSubType->description = $request->description;
         $segmentSubType->segment_id = $request->segment_id;
+        $segmentSubType->created_by = auth()->guard('web')->user()->id;
+        $segmentSubType->updated_by = auth()->guard('web')->user()->id;
         $segmentSubType->save();
 
         return redirect()->route('segment_sub_type.index');
@@ -88,6 +90,7 @@ class SegmentSubTypeController extends Controller
     {
         $segmentSubType->description = $request->description;
         $segmentSubType->segment_id = $request->segment_id;
+        $segmentSubType->updated_by = auth()->guard('web')->user()->id;
         $segmentSubType->save();
 
         return redirect()->route('segment_sub_type.index');
