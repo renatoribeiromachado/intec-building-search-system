@@ -17,7 +17,7 @@ class CreatePermissionRoleTable extends Migration
             $table->foreignId('permission_id');
             $table->foreignId('role_id');
 
-            $table->primary(['permission_id', 'work_id', 'role_id']);
+            $table->primary(['permission_id', 'role_id']);
         });
 
         schema::table('permission_role', function (Blueprint $table) {
