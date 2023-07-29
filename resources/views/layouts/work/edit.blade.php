@@ -132,33 +132,33 @@
                                         ->get() as $workCompanyContact
                                     )
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->name)
                                         <!-- Contact Name -->
                                         {{ $workCompanyContact->name }}  <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->position)
                                         <!-- Contact Position -->
-                                        ({{ optional($workCompanyContact->position)->description}}) <br>
+                                        ({{ optional($workCompanyContact->position)->description }}) <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->ddd && $workCompanyContact->main_phone)
                                         <!-- Contact Phone 1 -->
                                         ({{ $workCompanyContact->ddd }}) {{ $workCompanyContact->main_phone }} <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->ddd_two && $workCompanyContact->phone_two)
                                         <!-- Contact Phone 2 -->
                                         ({{ $workCompanyContact->ddd_two }}) {{ $workCompanyContact->phone_two }} <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->ddd_three && $workCompanyContact->phone_three)
                                         <!-- Contact Phone 3 -->
                                         ({{ $workCompanyContact->ddd_three }})
                                         {{ $workCompanyContact->phone_three }} <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->ddd_four && $workCompanyContact->phone_four)
                                         <!-- Contact Phone 4 -->
                                         ({{ $workCompanyContact->ddd_four }}) {{ $workCompanyContact->phone_four }} <br>
                                     @endif
@@ -170,14 +170,14 @@
                                         </a> <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->secondary_email)
                                         <!-- Contact E-mail 2 -->
                                         <a href="mailto:{{ $workCompanyContact->secondary_email }}">
                                             {{ $workCompanyContact->secondary_email }}
                                         </a> <br>
                                     @endif
 
-                                    @if ($workCompanyContact->email)
+                                    @if ($workCompanyContact->tertiary_email)
                                         <!-- Contact E-mail 3 -->
                                         <a href="mailto:{{ $workCompanyContact->tertiary_email }}">
                                             {{ $workCompanyContact->tertiary_email }}
