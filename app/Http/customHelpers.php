@@ -13,13 +13,16 @@ if (! function_exists('convertPtBrDateToEnDate')) {
 }
 
 if (! function_exists('convertMaskToDecimal')) {
-    function convertMaskToDecimal(string $getValue)
+    function convertMaskToDecimal(string|null $value)
     {
-        $source = array('.', ',');
-        $replace = array('', '.');
-        $valueConverted = str_replace($source, $replace, $getValue);
+        if (! is_null($value) || (! empty($value))) {
+            $source = array('.', ',');
+            $replace = array('', '.');
+            $valueConverted = str_replace($source, $replace, $value);
 
-        return $valueConverted;
+            return $valueConverted;
+        }
+        return 0;
     }
 }
 
