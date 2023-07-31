@@ -52,7 +52,7 @@
                             <p class="text-uppercase"><input type="checkbox" class="phase2" /> <b>Fase 2</b>  <code>* Selecione Todos</code></p>
                             <hr>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4"> 
                             <p class="text-right"><strong></strong> <input type="checkbox" name="stage[]" class="F2" value="" /></p>
                         </div>
                     </div>
