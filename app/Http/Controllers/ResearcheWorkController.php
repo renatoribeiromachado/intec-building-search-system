@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 class ResearcheWorkController extends Controller
 {
-    protected $stage;
+    //protected $stage;
 
-    public function __construct(
-        Stage $stage
-    ) {
-        $this->stage = $stage;
-    }
+    //public function __construct(
+        //Stage $stage
+    //) {
+        //$this->stage = $stage;
+    //}
 
     public function index()
     {
