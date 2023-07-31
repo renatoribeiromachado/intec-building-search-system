@@ -22,10 +22,6 @@ class ResearcheWorkController extends Controller
         //$stagesTwo = $this->stage->where('phase_id', 2)->get();
         //$stagesThree = $this->stage->where('phase_id', 3)->get();
 
-        return view('layouts.researche_work.index', compact(
-            //'stagesOne',
-            //'stagesTwo',
-            //'stagesThree',
-        ));
+        return view('layouts.researche_work.index');
     }
 }
