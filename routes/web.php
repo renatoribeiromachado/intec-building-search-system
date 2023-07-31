@@ -203,7 +203,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Pesquisas obras - filtro
-    Route::get('works', [ResearcheWorkController::class, 'index'])->name('researches.index');
+    Route::get('work', [ResearcheWorkController::class, 'index'])->name('researches.index');
 
 
     Route::prefix('positions')->group(function () {
