@@ -12,6 +12,7 @@ use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\ResearcheWorkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -200,6 +201,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', AssociateWorkController::class)->name('search.work.index');
         });
     });
+
+    //Pesquisas obras - filtro
+    Route::post('/', [ResearcheWorkController::class, 'index'])->name('researches.index');
+
 
     Route::prefix('positions')->group(function () {
         Route::get('/', [PositionController::class, 'index'])->name('position.index');
