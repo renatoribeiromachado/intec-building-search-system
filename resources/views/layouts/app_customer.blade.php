@@ -71,7 +71,7 @@
                                     <li><a class="dropdown-item" href="#">Empresas</a></li>
                                 {{-- @endcan --}}
 
-                                <li><a class="dropdown-item" href="{{ route('researches.index') }}">Obras</a></li>
+                                <li><a class="dropdown-item" href="{{ route('researches.index') }}">Obras</a></li> 
                             </ul>
                         </li>
 
