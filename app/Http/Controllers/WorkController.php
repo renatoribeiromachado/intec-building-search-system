@@ -472,6 +472,56 @@ class WorkController extends Controller
         return redirect()->back();
     }
 
+    public function showWorkSearchStepOne()
+    {
+        //$stagesOne = $this->stage->where('phase_id', 1)->get();
+        //$stagesTwo = $this->stage->where('phase_id', 2)->get();
+        //$stagesThree = $this->stage->where('phase_id', 3)->get();
+
+        return view('layouts.work.search.step_one.index');
+    }
+
+    public function showWorkSearchStepTwo(Request $request)
+    {
+        $works = $this->getFilteredWorks($request);
+
+        return view('layouts.work.search.step_two.index', compact('works'));
+    }
+
+    public function showWorkSearchStepThree(Request $request)
+    {
+        $works = $this->getFilteredWorks($request);
+
+        return view('layouts.work.search.step_three.index', compact('works'));
+    }
+
+    private function getFilteredWorks(Request $request)
+    {
+        $startedAt = convertPtBrDateToEnDate($request->started_at);
+        $endsAt = convertPtBrDateToEnDate($request->ends_at);
+        $works = \DB::table('works')
+            ->select(
+                'works.*',
+                'phases.description AS phase_description',
+                'segments.description AS segment_description',
+            )
+            ->join('phases', 'works.phase_id', '=', 'phases.id')
+            ->join('segments', 'works.segment_id', '=', 'segments.id');
+
+        if ($startedAt && $endsAt) {
+            $works = $works->where('works.started_at', '>', $startedAt);
+            $works = $works->where('works.ends_at', '>', $endsAt);
+        }
+
+        $allWorkIds = null;
+        if ($request->works_selected) {
+            $allWorkIds = $request->works_selected;
+            $works = $works->whereIn('works.id', $allWorkIds);
+        }
+
+        return $works->paginate();
+    }
+
     private function applyWorkCoverImage(Request $request, Work $work): void
     {
         // Cover upload

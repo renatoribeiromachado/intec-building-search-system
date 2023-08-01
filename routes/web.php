@@ -194,6 +194,21 @@ Route::middleware(['auth'])->group(function () {
             'bind-contacts/{work}/{company}',
             [WorkController::class, 'addCompanyContactsIntoWork']
         )->name('work.bind.company.contacts');
+
+        Route::get(
+            'search/step-1',
+            [WorkController::class, 'showWorkSearchStepOne']
+        )->name('work.search.step_one.index');
+
+        Route::get(
+            'search/step-2',
+            [WorkController::class, 'showWorkSearchStepTwo']
+        )->name('work.search.step_two.index');
+
+        Route::get(
+            'search/step-3',
+            [WorkController::class, 'showWorkSearchStepThree']
+        )->name('work.search.step_three.index');
     });
 
     Route::prefix('associates')->group(function() {
@@ -201,9 +216,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('', AssociateWorkController::class)->name('search.work.index');
         });
     });
-
-    //Pesquisas obras - filtro
-    Route::get('work', [ResearcheWorkController::class, 'index'])->name('researches.index');
 
 
     Route::prefix('positions')->group(function () {
