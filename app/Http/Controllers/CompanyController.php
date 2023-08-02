@@ -114,7 +114,7 @@ class CompanyController extends Controller
             $company->save();
 
             $researcher = $this->researcher->findOrFail($request->researcher_id);
-            $company->researches()->sync($researcher);
+            $company->researchers()->sync($researcher);
 
             DB::commit();
 
@@ -199,7 +199,7 @@ class CompanyController extends Controller
             $company->save();
 
             $researcher = $this->researcher->findOrFail($request->researcher_id);
-            $company->researches()->sync($researcher);
+            $company->researchers()->sync($researcher);
 
             DB::commit();
 

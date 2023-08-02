@@ -66,9 +66,13 @@ class WorkController extends Controller
     {
         $works = $this->work->allWorks();
         $positions = $this->position->get();
+        $researchers = $this->researcher
+            ->orderBy('name', 'asc')
+            ->get();
         return view('layouts.work.index', compact(
             'works',
-            'positions'
+            'positions',
+            'researchers'
         ));
     }
 
@@ -180,7 +184,7 @@ class WorkController extends Controller
             $work->features()->sync($request->work_features);
 
             $researcher = $this->researcher->findOrFail($request->researcher_id);
-            $work->researches()->sync($researcher);
+            $work->researchers()->sync($researcher);
 
             DB::commit();
 
@@ -307,7 +311,7 @@ class WorkController extends Controller
             $this->applyWorkCoverImage($request, $work);
 
             $researcher = $this->researcher->findOrFail($request->researcher_id);
-            $work->researches()->sync($researcher);
+            $work->researchers()->sync($researcher);
 
             DB::commit();
 

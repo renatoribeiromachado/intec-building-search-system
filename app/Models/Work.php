@@ -93,8 +93,17 @@ class Work extends Model
             $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
         }
 
+        $work = $work->where($where);
+
+        if (request()->researcher_id) {
+            $researcherId = request()->researcher_id;
+            // $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
+            $work->whereHas('researchers', function ($q) use ($researcherId) {
+                return $q->whereIn('researchers.id', [$researcherId]);
+            });
+        }
+
         return $work
-            ->where($where)
             ->orderBy('works.id', 'asc')
             ->paginate(15);
     }
@@ -140,7 +149,7 @@ class Work extends Model
         return $this->belongsToMany(Contact::class)->withPivot('company_id');
     }
 
-    public function researches()
+    public function researchers()
     {
         return $this->belongsToMany(Researcher::class);
     }

@@ -9,6 +9,37 @@
             <form action="{{ route('work.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
+                        <label for="researcher">Pesquisador</label>
+                        <select
+                            id="researcher"
+                            name="researcher_id"
+                            class="form-select @error('researcher_id') is-invalid @enderror"
+                            >
+                            @forelse ($researchers as $researcher)
+                                @if ($loop->index == 0)
+                                <option value="">-- Selecione --</option>
+                                @endif
+
+                                <option
+                                    value="{{ $researcher->id }}"
+                                    @if (old('researcher_id', request()->researcher_id) == $researcher->id)
+                                    selected
+                                    @endif
+                                    >
+                                    {{ $researcher->name }}
+                                </option>
+                                @empty
+                                <option value="">-- Selecione --</option>
+                            @endforelse
+                        </select>
+                        @error('researcher_id')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('researcher_id') }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col">
                         <label for="old_code_search">Código Antigo</label>
                         <input
                             id="old_code_search"
@@ -64,6 +95,7 @@
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
                     <th scope="col">Segmento</th>
+                    <th scope="col">Pesquisador</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -77,6 +109,14 @@
                         <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                         <td>{{ optional($work->phase)->description }}</td>
                         <td>{{ optional($work->segment)->description }}</td>
+                        <td>
+                            @foreach (
+                                $work->researchers()->where('researcher_work.work_id', $work->id)->get() as
+                                $researcher
+                                )
+                                {{ $researcher->name }}
+                            @endforeach
+                        </td>
                         <td>
                             <a
                                 href="{{ route('work.edit', $work->id) }}"

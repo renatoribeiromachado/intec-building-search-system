@@ -101,7 +101,7 @@ class Company extends Model
         return $this->belongsToMany(Work::class);
     }
 
-    public function researches()
+    public function researchers()
     {
         return $this->belongsToMany(Researcher::class);
     }
