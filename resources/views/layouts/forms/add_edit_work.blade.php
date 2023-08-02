@@ -678,7 +678,6 @@
                         <th>Aquecimento</th>
                         <th>Fundações</th>
                         <th>Estrutura</th>
-                        <th>Acabamento</th>
                         <th>Fachada</th>
                     </tr>
                     <tr>
@@ -745,18 +744,33 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="text" name="completion" class="form-control @error('completion') is-invalid @enderror" value="{{ old('completion', $work->completion) }}"/>
-                            @error('completion')
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('completion') }}
-                                </div>
-                            @enderror
-                        </td>
-                        <td>
                             <input type="text" name="facade" class="form-control @error('facade') is-invalid @enderror" value="{{ old('facade', $work->facade) }}"/>
                             @error('facade')
                                 <div class="invalid-feedback">
                                     {{ $errors->first('facade') }}
+                                </div>
+                            @enderror
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th colspan="5">
+                            <label for="completion">Acabamento</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <textarea
+                                type="text"
+                                id="completion"
+                                name="completion"
+                                class="form-control @error('completion') is-invalid @enderror"
+                                rows="4"
+                                placeholder=""
+                                >{{ old('completion', $work->completion) }}</textarea>
+                            @error('completion')
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('completion') }}
                                 </div>
                             @enderror
                         </td>
