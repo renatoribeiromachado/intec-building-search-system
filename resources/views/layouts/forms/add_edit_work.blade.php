@@ -43,7 +43,7 @@
                                 <option
                                     value="{{ $researcher->id }}"
                                     @if (old('researcher_id') == $researcher->id ||
-                                        $work->researches->contains($researcher)) selected @endif
+                                        $work->researchers->contains($researcher)) selected @endif
                                     >
                                     {{ $researcher->name }}
                                 </option>

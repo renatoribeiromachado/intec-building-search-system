@@ -291,7 +291,7 @@
                             <option
                                 value="{{ $researcher->id }}"
                                 @if (old('researcher_id') == $researcher->id ||
-                                    $company->researches->contains($researcher)) selected @endif
+                                    $company->researchers->contains($researcher)) selected @endif
                                 >
                                 {{ $researcher->name }}
                             </option>
