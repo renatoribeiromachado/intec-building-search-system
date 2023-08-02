@@ -124,6 +124,42 @@
                             @endcan
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="3">
+                            <h4>Permissões:</h4>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <a
+                                        href="{{ route('role.permission.edit', $role->id) }}"
+                                        class="btn btn-primary btn-sm"
+                                        title="Editar permissões"
+                                        >
+                                        <i class="fa fa-eraser"></i> Editar Permissões
+                                    </a>
+                                </div>
+                            </div>
+
+                            {{-- <ul>
+                                @foreach ($role->permissions as $permission)
+                                <li>{{ $permission->name }}</li>
+                                @endforeach
+                            </ul> --}}
+
+
+                            <ul>
+                                @foreach ($role->permissions as $perm)
+        
+                                    @if($loop->index % 20 == 0)
+                                        </ul>
+                                        <ul class="float-start">
+                                    @endif
+                                    
+                                    <li>{{ $perm->name }}</li>
+        
+                                @endforeach
+                            </ul>
+                        </td>
+                    </tr>
                     @empty
                     <tr>
                         <td colspan="6">

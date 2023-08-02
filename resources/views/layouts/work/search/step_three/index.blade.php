@@ -141,43 +141,45 @@
             </div>
         </div>
 
-        <!--INFORMAÇÕES ADICIONAIS-->
-        <div class="row mt-2">
-            <div class="col-md-12">
-                <p class="text-success"><b>DESCRIÇÃO:</b></p>
-                <table class="table table-condensed">
-                    <tr>
-                        <td><strong>Edifício(s) Residenciais</strong>: <span class="text">{{ $work->tower }}</span>
-                            <br>
-                            <strong>Nº de pavimentos</strong>: <span class="text">{{ $work->floor }}</span>
-                            <br>
-                            <strong>Apart. Por andar</strong>: {{ $work->apartment_per_floor }}
-                            <br>
-                            <strong>Dormitório(s)</strong>: {{ $work->bedroom }}
-                            <br>
-                            <strong>Condominio</strong>: {{ $work->condominium }}
-                        </td>
-                        <td>  
-                            <strong>Suíte(s)</strong>: {{ $work->suite }} 
-                            <br>
-                            <strong>Banheiro(s)</strong>: {{ $work->bathroom }}
-                            <br>
-                            <strong>Lavabo(s)</strong>: {{ $work->washbasin }}
-                            <br>
-                            <strong>Sala(s) de jantar / estar</strong>: {{ $work->living_room }}
-                        </td>
+        @if ($work->segment_description == \App\Models\Work::RESIDENTIAL_SEGMENT)
+            <!--INFORMAÇÕES ADICIONAIS-->
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <p class="text-success"><b>DESCRIÇÃO:</b></p>
+                    <table class="table table-condensed">
+                        <tr>
+                            <td><strong>Edifício(s) Residenciais</strong>: <span class="text">{{ $work->tower }}</span>
+                                <br>
+                                <strong>Nº de pavimentos</strong>: <span class="text">{{ $work->floor }}</span>
+                                <br>
+                                <strong>Apart. Por andar</strong>: {{ $work->apartment_per_floor }}
+                                <br>
+                                <strong>Dormitório(s)</strong>: {{ $work->bedroom }}
+                                <br>
+                                <strong>Condominio</strong>: {{ $work->condominium }}
+                            </td>
+                            <td>
+                                <strong>Suíte(s)</strong>: {{ $work->suite }}
+                                <br>
+                                <strong>Banheiro(s)</strong>: {{ $work->bathroom }}
+                                <br>
+                                <strong>Lavabo(s)</strong>: {{ $work->washbasin }}
+                                <br>
+                                <strong>Sala(s) de jantar / estar</strong>: {{ $work->living_room }}
+                            </td>
 
-                        <td>
-                            <strong>Área(s) de Serv. / Terraço(s) / Varanda(s)</strong>: {{ $work->tower }}
-                            <br>
-                            <strong>Copa / Cozinha</strong>: {{ $work->cup_and_kitchen }}
-                            <br>
-                            <strong>Dependência(s) de empregada(s)</strong>: {{ $work->maid_dependency }}
-                        </td>
-                    </tr>
-                </table>
+                            <td>
+                                <strong>Área(s) de Serv. / Terraço(s) / Varanda(s)</strong>: {{ $work->tower }}
+                                <br>
+                                <strong>Copa / Cozinha</strong>: {{ $work->cup_and_kitchen }}
+                                <br>
+                                <strong>Dependência(s) de empregada(s)</strong>: {{ $work->maid_dependency }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
+        @endif
 
         <!--Informações adicionais -->
         <div class="row mt-2">
@@ -218,7 +220,7 @@
             </div>
         </div>
 
-        {{-- <!--AREA DE LAZER-->
+        <!--AREA DE LAZER-->
         <div class="row mt-2">
             <div class="col-md-12">
                 <p class="boxtitle text-success"><strong>ÁREA DE LAZER</strong> <code>*Itens marcados estão disponiveis na Obra</code></p>
@@ -245,14 +247,7 @@
                     </tr>
                 </table>
             </div>
-        </div> --}}
-
-        @php
-
-            // $contacts = (new \App\Models\Work)->find($work->id)->contacts()->get();
-            $contacts = (new \App\Models\Work)->with('contacts')->find($work->id);
-
-        @endphp
+        </div>
 
         <!--CONTATOS-->
         <div class="row mt-2">

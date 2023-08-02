@@ -22,9 +22,9 @@ class Role extends Model
         return self::paginate(15);
     }
 
-    public function findRole($role_uuid)
+    public function findRole($id)
     {
-        return self::where('uuid', $role_uuid)->firstOrFail();
+        return self::where('id', $id)->firstOrFail();
     }
 
     public function findRoles($paginate = true)

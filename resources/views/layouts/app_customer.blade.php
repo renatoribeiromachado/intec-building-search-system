@@ -153,6 +153,12 @@
                                             Cargos
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('permission.index') }}">
+                                            Permissões
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endcan

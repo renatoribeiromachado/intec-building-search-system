@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ResearcherController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ResearcheWorkController;
+use App\Http\Controllers\RolesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -155,8 +157,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('update/{role}', [RoleController::class, 'update'])->name('role.update');
         Route::delete('{role}', [RoleController::class, 'destroy'])->name('role.destroy');
 
-        // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
-        // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
+        Route::get(
+            '{id}/permissions',
+            [RoleController::class, 'permissions']
+        )->name('role.permission.edit');
+        Route::put(
+            'sync/permission-role',
+            [RoleController::class, 'syncPermissionRole']
+        )->name('role.permission.sync.permission_role');
     });
 
     Route::prefix('users')->group(function() {
@@ -217,7 +225,6 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
     Route::prefix('positions')->group(function () {
         Route::get('/', [PositionController::class, 'index'])->name('position.index');
         Route::get('create', [PositionController::class, 'create'])->name('position.create');
@@ -226,6 +233,20 @@ Route::middleware(['auth'])->group(function () {
         Route::post('update/{position}', [PositionController::class, 'update'])->name('position.update');
         Route::delete('{position}', [PositionController::class, 'destroy'])->name('position.destroy');
     });
+
+    Route::resource('permission', PermissionsController::class)
+        ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
+    Route::get('permission/{permission}', [PermissionsController::class, 'undo'])
+        ->middleware('auth:sanctum')->name('permission.undo');
+    
+    // Route::resource('role', RolesController::class)
+    //     ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
+    // Route::get('role/{role}', [RolesController::class, 'undo'])
+    //     ->middleware('auth:sanctum')->name('role.undo');
+    // Route::get('{id}/permissions', [RolesController::class, 'permissions'])
+    //     ->middleware('auth:sanctum')->name('role.perm.edit');
+    // Route::put('sync/permission-role', [RolesController::class, 'syncPermissionRole'])
+    //     ->middleware('auth:sanctum')->name('perm.sync.permission_role');
 });
 
 

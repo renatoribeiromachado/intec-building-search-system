@@ -13,6 +13,7 @@ class Work extends Model
     const LARGE_DIR_STORAGE_PATH = 'work';
     const LARGE_PHOTO_IMAGE_WIDTH = 620;
     const LARGE_PHOTO_IMAGE_HEIGHT = 372;
+    const RESIDENTIAL_SEGMENT = 'RESIDENCIAL';
 
     protected $fillable = [
         'phase_id',
