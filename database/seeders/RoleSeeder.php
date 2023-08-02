@@ -22,6 +22,7 @@ class RoleSeeder extends Seeder
             ['name' => 'Associado'],
             ['name' => 'Contato'],
             ['name' => 'Operador'],
+            ['name' => 'Vendedor'],
         ];
 
         $rolesQuantity = count($roles);
