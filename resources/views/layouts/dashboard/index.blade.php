@@ -14,10 +14,18 @@
                     <li class="list-group-item bg-danger text-white"><i class="fa fa-check"></i> Resultado mensal</li>
                     <li class="list-group-item text-center"><strong>OBRAS NOVAS E ATUALIZADAS</strong></li>
                     <li class="list-group-item text-warning text-center"><strong>EM JULHO 2023</strong></li>
-                    <li class="list-group-item text-center">19.344 <strong>obras em todo Brasil</strong></li>
-                    <li class="list-group-item text-center">Residencial: 10.220</li>
-                    <li class="list-group-item text-center">Comercial: 7.450</li>
-                    <li class="list-group-item text-center">Industrial: 1.664</li>
+                    <li class="list-group-item text-center">
+                        {{ $worksInBrazil }} <strong>obras em todo Brasil</strong>
+                    </li>
+                    <li class="list-group-item text-center">
+                        Residencial:  {{ $residentialWorks }}
+                    </li>
+                    <li class="list-group-item text-center">
+                        Comercial: {{ $businessWorks }}
+                    </li>
+                    <li class="list-group-item text-center">
+                        Industrial: {{ $industrialWorks }}
+                    </li>
                 </ul>
             </div>
 

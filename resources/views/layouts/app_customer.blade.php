@@ -28,7 +28,7 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard') }}">INTEC</a>
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}">INTEC</a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -45,7 +45,7 @@
                             <a
                                 class="nav-link active"
                                 aria-current="page"
-                                href="{{ route('dashboard') }}"
+                                href="{{ route('dashboard.index') }}"
                                 >
                                 Início
                             </a>
@@ -154,11 +154,13 @@
                                         </a>
                                     </li>
 
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('permission.index') }}">
-                                            Permissões
-                                        </a>
-                                    </li>
+                                    @can('ver-funcao-administrativa')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('permission.index') }}">
+                                                Permissões
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </li>
                         @endcan

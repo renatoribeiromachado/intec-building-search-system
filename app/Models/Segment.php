@@ -28,4 +28,10 @@ class Segment extends Model
             ->orderBy('segments.id', 'asc')
             ->paginate(15);
     }
+
+    // Eloquent relationship methods
+    public function works()
+    {
+        return $this->hasMany(Work::class);
+    }
 }

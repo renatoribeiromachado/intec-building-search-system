@@ -14,6 +14,8 @@ class Work extends Model
     const LARGE_PHOTO_IMAGE_WIDTH = 620;
     const LARGE_PHOTO_IMAGE_HEIGHT = 372;
     const RESIDENTIAL_SEGMENT = 'RESIDENCIAL';
+    const INDUSTRY_SEGMENT = 'INDUSTRIAL';
+    const BUSINESS_SEGMENT = 'COMERCIAL';
 
     protected $fillable = [
         'phase_id',

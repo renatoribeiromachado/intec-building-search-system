@@ -25,6 +25,8 @@ class PermissionsController extends Controller
      */
     public function index()
     {
+        $this->authorize('ver-funcao-administrativa');
+        
         $permissions = $this->permission->orderBy('id', 'asc')->paginate(20);
 
         // if(Auth::user()->role->name != 'Webmaster') {

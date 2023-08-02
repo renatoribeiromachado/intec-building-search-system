@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
@@ -35,11 +36,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        // $logout = \Auth::guard('web')->logout();
-        
-        return view('layouts.dashboard.index');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
 
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
