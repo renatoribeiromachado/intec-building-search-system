@@ -109,9 +109,14 @@ class Work extends Model
         return $this->belongsTo(Segment::class);
     }
 
+    public function segmentSubType()
+    {
+        return $this->belongsTo(SegmentSubType::class);
+    }
+
     public function contacts()
     {
-        return $this->hasMany(Contact::class);
+        return $this->belongsToMany(Contact::class);
     }
 
     public function features()

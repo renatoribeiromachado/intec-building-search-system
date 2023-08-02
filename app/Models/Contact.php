@@ -40,4 +40,9 @@ class Contact extends Model
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

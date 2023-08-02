@@ -503,14 +503,18 @@ class WorkController extends Controller
             ->select(
                 'works.*',
                 'phases.description AS phase_description',
+                'stages.description AS stage_description',
                 'segments.description AS segment_description',
+                'segment_sub_types.description AS segment_sub_type_description',
             )
             ->join('phases', 'works.phase_id', '=', 'phases.id')
-            ->join('segments', 'works.segment_id', '=', 'segments.id');
+            ->join('stages', 'works.stage_id', '=', 'stages.id')
+            ->join('segments', 'works.segment_id', '=', 'segments.id')
+            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         if ($startedAt && $endsAt) {
-            $works = $works->where('works.started_at', '>', $startedAt);
-            $works = $works->where('works.ends_at', '>', $endsAt);
+            $works = $works->where('works.started_at', '>=', $startedAt);
+            $works = $works->where('works.ends_at', '<=', $endsAt);
         }
 
         $allWorkIds = null;
