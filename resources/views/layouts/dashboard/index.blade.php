@@ -34,9 +34,16 @@
 
             <div class="col-md-4">
                 <ul class="list-group">
-                    <li class="list-group-item bg-warning text-white"><i class="fa fa-check"></i> Analise trimestral</li>
-                    <li class="list-group-item text-center">Relatório trimestral de obras <br>
-                        <img src="../imgs/trimestral.png" alt="Imagem" class="img-fluid">
+                    <li class="list-group-item bg-warning text-white">
+                        <i class="fa fa-check"></i> Analise trimestral
+                    </li>
+                    <li class="list-group-item text-center">
+                        Relatório trimestral de obras <br>
+                        <img
+                            src="{{ asset('images/dashboard-trimestral.png') }}"
+                            alt="Imagem Relatório Trimestral"
+                            class="img-fluid"
+                            >
                     </li>
 
                 </ul>
