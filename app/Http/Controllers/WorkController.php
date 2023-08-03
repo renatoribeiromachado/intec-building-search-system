@@ -133,6 +133,7 @@ class WorkController extends Controller
             $work->state = $request->state;
             $work->state_acronym = $request->state_acronym;
             $work->zip_code = $request->zip_code;
+            $work->zone = findZoneForStates($request->state);
             $work->phase_id = $request->phase_id;
             $work->stage_id = $request->stage_id;
             $work->segment_id = $request->segment_id;
@@ -263,6 +264,7 @@ class WorkController extends Controller
             $work->state = $request->state;
             $work->state_acronym = $request->state_acronym;
             $work->zip_code = $request->zip_code;
+            $work->zone = findZoneForStates($request->state);
             $work->phase_id = $request->phase_id;
             $work->stage_id = $request->stage_id;
             $work->segment_id = $request->segment_id;
