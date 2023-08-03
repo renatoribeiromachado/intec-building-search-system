@@ -225,7 +225,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', AssociateWorkController::class)->name('associate.index');
 
         Route::get('/associated_registration', function () {
-            return view('layout.customer_area.associated_registration');
+            return view('layouts.customer_area.associated_registration');
         })->name('associates.associated_registration');
         
     });
