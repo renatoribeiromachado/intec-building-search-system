@@ -6,7 +6,7 @@
                     type="checkbox"
                     id="{{ $id }}"
                     name="{{ $inputOneName }}"
-                    class="{{ $classOne }} checkRegiaoGeral"
+                    class="{{ $classOne }}"
                     value="1"
                     >
                 <label for="{{ $id }}" class="text-uppercase">
@@ -23,7 +23,7 @@
                         type="checkbox"
                         id="{{ "{$listInputIdFor}{$item->id}" }}"
                         name="{{ $listInputName }}"
-                        class="checkRegiaoGeral {{ $classTwo }}"
+                        class="{{ $classTwo }}"
                         value="{{ $item->id }}"
                         >
                     <label
