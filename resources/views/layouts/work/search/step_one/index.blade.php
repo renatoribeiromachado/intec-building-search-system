@@ -120,7 +120,7 @@
                 </div>
                 
                 <!--FASE 3-->
-                <div class="row mt-3 bg-light border">
+                <div class="row mt-3 bg-light border mb-5">
                     <div class="col-md-12 pt-3">
                         <p class="text-uppercase">
                             <input
@@ -195,7 +195,7 @@
                 </div> --}}
 
                 <!--MARCAR TODAS AS REGIÕES-->
-                {{-- <div class="row mt-4">
+                <div class="row mt-3 mb-3">
                     <div class="col-md-12">
                         <label class="control-label text-uppercase">
                             <strong>
@@ -206,62 +206,67 @@
                             <code>* Selecione Todas as Regiões</code>
                         </label>
                     </div>
-                </div> --}}
-
-                <!--NORDESTE-->
-                {{-- <div class="row  mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="nordeste checkRegiaoGeral" /> <b>Nordeste</b> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkNordeste" value="" /></p>
-                    </div>
-                </div> --}}
-
-                <!--SUDESTE-->
-                {{-- <div class="row mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="sudeste checkRegiaoGeral" /> <strong>Sudeste</strong></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkSudeste" value="" /></p>
-                    </div>
-                </div> --}}
-
-                <!--SUL-->
-                {{-- <div class="row mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="sul checkRegiaoGeral" /> <strong>Sul</strong> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkSul" value="" /></p>
-                    </div>
                 </div>
 
                 <!--NORTE-->
-                <div class="row mt-2 bg-light border">
-                    <div class="col-md-12 jumbotronBox">
-                        <p class="text-uppercase"><input type="checkbox" class="norte checkRegiaoGeral" /> <strong>Norte</strong>  <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkNorte" value="" /></p>
-                    </div>
-                </div>
+                <x-state-checkbox-group
+                    id="zone-all-1"
+                    input-one-name="zones[0]"
+                    class-one="norte"
+                    label-text="Norte"
+                    :data-list="$statesOne"
+                    class-two="checkNorte"
+                    list-input-id-for="state-one-"
+                    list-input-name="states[]"
+                />
+
+                <!--NORDESTE-->
+                <x-state-checkbox-group
+                    id="zone-all-2"
+                    input-one-name="zones[0]"
+                    class-one="nordeste"
+                    label-text="Nordeste"
+                    :data-list="$statesTwo"
+                    class-two="checkNordeste"
+                    list-input-id-for="state-two-"
+                    list-input-name="states[]"
+                />
 
                 <!--CENTRO-OESTE-->
-                <div class="row mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="centro-oeste checkRegiaoGeral" /> <strong>Centro-Oeste</strong> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkCentro" value="" /></p>
-                    </div>
-                </div> --}}
+                <x-state-checkbox-group
+                    id="zone-all-3"
+                    input-one-name="zones[0]"
+                    class-one="centro-oeste"
+                    label-text="Centro-Oeste"
+                    :data-list="$statesThree"
+                    class-two="checkCentroOeste"
+                    list-input-id-for="state-three-"
+                    list-input-name="states[]"
+                />
+
+                <!--SUDESTE-->
+                <x-state-checkbox-group
+                    id="zone-all-4"
+                    input-one-name="zones[0]"
+                    class-one="sudeste"
+                    label-text="Sudeste"
+                    :data-list="$statesFour"
+                    class-two="checkSudeste"
+                    list-input-id-for="state-four-"
+                    list-input-name="states[]"
+                />
+
+                <!--SUL-->
+                <x-state-checkbox-group
+                    id="zone-all-5"
+                    input-one-name="zones[0]"
+                    class-one="sul"
+                    label-text="Sul"
+                    :data-list="$statesFive"
+                    class-two="checkSul"
+                    list-input-id-for="state-five-"
+                    list-input-name="states[]"
+                />
 
                 <!--FILTRO ESPECIFICO-->
                 {{-- <div class="row mt-4 pb-4 bg-light border">
@@ -548,6 +553,67 @@
         phase3Checkbox.addEventListener('click', function() {
             const isChecked = phase3Checkbox.checked;
             checkboxesF3.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO GERAL*/
+        const geralCheckbox = document.querySelector('.regiaoGeral');
+        const checkboxesGeral = document.querySelectorAll('.checkRegiaoGeral');
+        geralCheckbox.addEventListener('click', function() {
+            const isChecked = geralCheckbox.checked;
+            checkboxesGeral.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO NORTE*/
+        const norteCheckbox = document.querySelector('.norte');
+        const checkboxesNor = document.querySelectorAll('.checkNorte');
+        norteCheckbox.addEventListener('click', function() {
+            console.log('asdfasdfasdfa !!!!!')
+            const isChecked = norteCheckbox.checked;
+            checkboxesNor.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO NORDESTE*/
+        const nordesteCheckbox = document.querySelector('.nordeste');
+        const checkboxesNordeste = document.querySelectorAll('.checkNordeste');
+        nordesteCheckbox.addEventListener('click', function() {
+            const isChecked = nordesteCheckbox.checked;
+            checkboxesNordeste.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO CENTRO-OESTE*/
+        const centroCheckbox = document.querySelector('.centro-oeste');
+        const checkboxesCen = document.querySelectorAll('.checkCentroOeste');
+        centroCheckbox.addEventListener('click', function() {
+            const isChecked = centroCheckbox.checked;
+            checkboxesCen.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO SULDESTE*/
+        const sudesteCheckbox = document.querySelector('.sudeste');
+        const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
+        sudesteCheckbox.addEventListener('click', function() {
+            const isChecked = sudesteCheckbox.checked;
+            checkboxesSudeste.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*REGIÃO SUL*/
+        const sulCheckbox = document.querySelector('.sul');
+        const checkboxesSul = document.querySelectorAll('.checkSul');
+        sulCheckbox.addEventListener('click', function() {
+            const isChecked = sulCheckbox.checked;
+            checkboxesSul.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });

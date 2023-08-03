@@ -3,6 +3,7 @@
     <div class="container">
 
         @include('layouts.alerts.all-errors')
+        @include('layouts.alerts.success')
         
         <div class="row mt-2">
             

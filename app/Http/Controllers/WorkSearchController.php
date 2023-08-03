@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stage;
+use App\Models\State;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class WorkSearchController extends Controller
 {
     protected $stage;
+    protected $work;
+    protected $state;
 
     public function __construct(
         Stage $stage,
+        Work $work,
+        State $state,
     ) {
         $this->stage = $stage;
+        $this->work = $work;
+        $this->state = $state;
     }
 
     public function showWorkSearchStepOne()
@@ -22,10 +30,23 @@ class WorkSearchController extends Controller
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
 
+        $statesOne = $this->state->where('zone_id', 1)->get();
+        $statesTwo = $this->state->where('zone_id', 2)->get();
+        $statesThree = $this->state->where('zone_id', 3)->get();
+        $statesFour = $this->state->where('zone_id', 4)->get();
+        $statesFive = $this->state->where('zone_id', 5)->get();
+
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
-            'stagesThree'
+            'stagesThree',
+            'statesOne',
+
+            'statesOne',
+            'statesTwo',
+            'statesThree',
+            'statesFour',
+            'statesFive',
         ));
     }
 
@@ -48,6 +69,16 @@ class WorkSearchController extends Controller
         $startedAt = $request->started_at;
         $endsAt = $request->ends_at;
         $allStageIds = $request->stages;
+        $allStateIds = $request->states;
+        $allStatesAcronym = null;
+
+        if ($allStateIds) {
+            $states = $this->state
+                ->select('state_acronym')
+                ->whereIn('id', $allStateIds)
+                ->get();
+            $allStatesAcronym = $states->pluck('state_acronym');
+        }
         
         $works = DB::table('works')
             ->select(
@@ -77,6 +108,10 @@ class WorkSearchController extends Controller
 
         if ($allStageIds) {
             $works = $works->whereIn('stages.id', $allStageIds);
+        }
+
+        if ($allStatesAcronym) {
+            $works = $works->whereIn('works.state', $allStatesAcronym);
         }
 
         return $works->paginate();

@@ -209,7 +209,9 @@
             @yield('content')
         </main>
         <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
@@ -232,6 +234,16 @@
             
                 $('.phone').mask(SPMaskBehavior, spOptions);
                 // end jquery mask
+
+                // alerts
+                $('.alert-success').on('click', function () {
+                    $( this ).hide('slow');
+                })
+
+                setInterval(() => {
+                    $('.alert-success').trigger( 'click' );
+                }, 3000);
+                // end alerts
             });
 
             base_url = function () {

@@ -328,7 +328,9 @@ class WorkController extends Controller
                 ->withErrors(['error' => $ex->getMessage()]);
         }
 
-        return redirect()->route('work.index');
+        session()->flash('success', 'Obra atualizada.');
+
+        return redirect()->route('work.edit', $work->id);
     }
 
     /**
