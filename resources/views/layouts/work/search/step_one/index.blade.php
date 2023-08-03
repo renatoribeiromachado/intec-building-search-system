@@ -219,10 +219,10 @@
                 <x-state-checkbox-group
                     id="zone-all-1"
                     input-one-name="zones[0]"
-                    class-one="norte"
+                    class-one="norte checkRegiaoGeral"
                     label-text="Norte"
                     :data-list="$statesOne"
-                    class-two="checkNorte"
+                    class-two="checkNorte checkRegiaoGeral"
                     list-input-id-for="state-one-"
                     list-input-name="states[]"
                 />
@@ -231,10 +231,10 @@
                 <x-state-checkbox-group
                     id="zone-all-2"
                     input-one-name="zones[0]"
-                    class-one="nordeste"
+                    class-one="nordeste checkRegiaoGeral"
                     label-text="Nordeste"
                     :data-list="$statesTwo"
-                    class-two="checkNordeste"
+                    class-two="checkNordeste checkRegiaoGeral"
                     list-input-id-for="state-two-"
                     list-input-name="states[]"
                 />
@@ -243,10 +243,10 @@
                 <x-state-checkbox-group
                     id="zone-all-3"
                     input-one-name="zones[0]"
-                    class-one="centro-oeste"
+                    class-one="centro-oeste checkRegiaoGeral"
                     label-text="Centro-Oeste"
                     :data-list="$statesThree"
-                    class-two="checkCentroOeste"
+                    class-two="checkCentroOeste checkRegiaoGeral"
                     list-input-id-for="state-three-"
                     list-input-name="states[]"
                 />
@@ -255,10 +255,10 @@
                 <x-state-checkbox-group
                     id="zone-all-4"
                     input-one-name="zones[0]"
-                    class-one="sudeste"
+                    class-one="sudeste checkRegiaoGeral"
                     label-text="Sudeste"
                     :data-list="$statesFour"
-                    class-two="checkSudeste"
+                    class-two="checkSudeste checkRegiaoGeral"
                     list-input-id-for="state-four-"
                     list-input-name="states[]"
                 />
@@ -267,10 +267,10 @@
                 <x-state-checkbox-group
                     id="zone-all-5"
                     input-one-name="zones[0]"
-                    class-one="sul"
+                    class-one="sul checkRegiaoGeral"
                     label-text="Sul"
                     :data-list="$statesFive"
-                    class-two="checkSul"
+                    class-two="checkSul checkRegiaoGeral"
                     list-input-id-for="state-five-"
                     list-input-name="states[]"
                 />
