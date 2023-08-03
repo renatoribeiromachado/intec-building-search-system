@@ -10,13 +10,16 @@
         @method('get')
 
         <div class="row">
+            <div class="col mt-3 mb-3">
+                Resultados encontrados: &nbsp;
+                <span class="fs-3">{{ $works->total() }}</span>
+            </div>
+
             <div class="col mt-3 mb-3 clearfix">
                 <button type="submit" class="btn btn-success submit float-end" title="Pesquisar">
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
-            {{-- </div> --}}
 
-            {{-- <div class="col mt-3 mb-3 clearfix"> --}}
                 <a href="{{ url()->full() }}"
                     class="btn btn-outline-success submit float-end me-3" title="Pesquisar">
                     <i class="fa fa-search"></i> Deselecionar Todos
