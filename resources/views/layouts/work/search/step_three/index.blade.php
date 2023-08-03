@@ -41,7 +41,7 @@
         border: none !important;
         padding: 0 !important;
     }
-    input[type=checkbox] {
+    /* input[type=checkbox] {
         -moz-appearance:none !important;
         -webkit-appearance:none !important;
         -o-appearance:none !important;
@@ -63,13 +63,16 @@
 
     input[type=checkbox]:checked:before {
         color: black !important;
-    }
+    } */
+
     .alinhadoDireita {
         text-align:right;
     }
+
     .margin{
         margin-top:-20px;
     }
+
     .pg{
         page-break-after: always;
     }
@@ -81,20 +84,23 @@
             <div class="col-md-12">
                 <p>
                     <strong>Código</strong>: {{ $work->old_code }} -
-                    Última Atualização: <strong>{{ optional($work->last_review)->format('d/m/Y') }}</strong> -
+                    Última Atualização:
+                        @if (isset($work->last_review))
+                        <strong>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</strong> -
+                        @endif
                     Revisão: <strong>{{ $work->revision }}</strong> -
-                    Emitido em: <strong>{{ date('d/m/Y h:i:Y') }}</strong>
+                    Emitido em: <strong>{{ date('d/m/Y h:i:s') }}</strong>
                 </p>
             </div>
         </div>
 
-        <div class="row mt-2">
-            <!--BOTÕES-->
+        <!--BOTÕES-->
+        {{-- <div class="row mt-2">
             <div class="col-md-4">
                 <button class='btn btn-primary' type='button' onclick='' title="DESATIVAR OBRA"> Desativar</button>
                 <a class="btn btn-default" title="Cadastrar SIG" onclick=""> NOVO SIG</a>
             </div>
-        </div>
+        </div> --}}
     
         <div class="row mt-2">
             <div class="col-md-12">
@@ -211,9 +217,13 @@
                         <td>
                             <strong>Estrutura</strong>: {{ $work->frame }}
                             <br>
-                            <strong>Acabamento</strong>: {{ $work->completion }}
-                            <br>
                             <strong>Fachada</strong>: {{ $work->facade }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" class="py-2">
+                            <strong>Acabamento</strong>: {{ $work->completion }}
                         </td>
                     </tr>
                 </table>
@@ -223,25 +233,42 @@
         <!--AREA DE LAZER-->
         <div class="row mt-2">
             <div class="col-md-12">
-                <p class="boxtitle text-success"><strong>ÁREA DE LAZER</strong> <code>*Itens marcados estão disponiveis na Obra</code></p>
+                <p class="boxtitle text-success">
+                    <strong>ÁREA DE LAZER</strong>
+                    <code>*Itens marcados estão disponiveis na Obra</code>
+                </p>
+
                 <table class="table table-condensed">
                     <tr>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Salão de festas</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Salão de jogos</td>
-                        <td><input type="checkbox" name="" value=""  disabled=""/> Piscina</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Sauna</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Churrasqueira</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Quadra</td>
+                        @foreach($workFeatures as $workFeature)
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    name="work_features[]"
+                                    value="{{ $workFeature->id }}"
+                                    class="form-check-input me-1"
+                                    id="check-feature-{{ $loop->index }}"
+                                    onclick="return false;"
+
+                                    @if (empty(old('work_features')) &&
+                                        \App\Models\Work::find($work->id)->features->contains($workFeature->id))
+                                    checked
+                                    @endif
+                                    />
+                                <label class="form-check-label" for="check-feature-{{ $loop->index }}">
+                                    {{ $workFeature->description }}
+                                </label>
+                            </td>
+
+                            @if ($loop->iteration % 4 == 0)
+                                </tr>
+                                <tr>
+                            @endif
+                        @endforeach
                     </tr>
+                    
                     <tr>
-                        <td><input type="checkbox" name="" value=""  disabled=""/> Fitness</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Gourmet</td>
-                        <td><input type="checkbox" name="" value="" disabled=""/> Playground</td>
-                        <td><input type="checkbox" name="" value=""  disabled=""/> Spa</td>
-                        <td><input type="checkbox" name="" value=""  disabled=""/> Brinquedoteca</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" style="padding-top: 8px !important;padding-bottom: 8px !important;">
+                        <td colspan="6" class="py-3">
                             <strong>Outros</strong>: {{ $work->other_leisure }}
                         </td>
                     </tr>
@@ -267,10 +294,18 @@
                     </tr>
                     @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
                         <tr>
-                            <td style="padding: 5px 0 5px 0 !important;">{{ $contact->name }}</td>
-                            <td style="padding: 5px 0 5px 0 !important;">{{ optional($contact->position)->description }}</td>
-                            <td style="padding: 5px 0 5px 0 !important;">{{ optional($contact->company)->company_name }}</td>
-                            <td style="padding: 5px 0 5px 0 !important;">{{ $work->name }}</td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                {{ $contact->name }}
+                            </td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                {{ optional($contact->position)->description }}
+                            </td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                {{ optional($contact->company)->company_name }}
+                            </td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                {{ $work->name }}
+                            </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 @if ($contact->ddd && $contact->main_phone)
                                 ({{ $contact->ddd }}) {{ $contact->main_phone }}

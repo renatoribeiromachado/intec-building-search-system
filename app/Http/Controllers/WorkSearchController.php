@@ -6,6 +6,7 @@ use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\Work;
+use App\Models\WorkFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,17 +18,20 @@ class WorkSearchController extends Controller
     protected $work;
     protected $state;
     protected $segmentSubType;
+    protected $workFeature;
 
     public function __construct(
         Stage $stage,
         Work $work,
         State $state,
         SegmentSubType $segmentSubType,
+        WorkFeature $workFeature,
     ) {
         $this->stage = $stage;
         $this->work = $work;
         $this->state = $state;
         $this->segmentSubType = $segmentSubType;
+        $this->workFeature = $workFeature;
     }
 
     public function showWorkSearchStepOne()
@@ -74,8 +78,14 @@ class WorkSearchController extends Controller
     public function showWorkSearchStepThree(Request $request)
     {
         $works = $this->getFilteredWorks($request);
+        $workFeatures = $this->workFeature
+            ->orderBy('description', 'asc')
+            ->get();
 
-        return view('layouts.work.search.step_three.index', compact('works'));
+        return view('layouts.work.search.step_three.index', compact(
+            'works',
+            'workFeatures'
+        ));
     }
 
     private function getFilteredWorks(Request $request)
@@ -94,7 +104,7 @@ class WorkSearchController extends Controller
                 ->get();
             $allStatesAcronym = $states->pluck('state_acronym');
         }
-        
+
         $works = DB::table('works')
             ->select(
                 'works.*',
