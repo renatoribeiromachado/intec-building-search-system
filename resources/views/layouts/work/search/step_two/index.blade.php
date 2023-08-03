@@ -33,6 +33,7 @@
                     <th scope="col">Revisado em</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
+                    <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
                 </tr>
             </thead>
@@ -62,6 +63,7 @@
                         <td>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</td>
                         <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                         <td>{{ $work->phase_description }}</td>
+                        <td>{{ $work->stage_description }}</td>
                         <td>{{ $work->segment_description }}</td>
                     </tr>
                     @empty

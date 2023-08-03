@@ -43,36 +43,86 @@
                 </div>
 
                 <!--FASES-->
-                {{-- <div class="row mt-4">
+               <div class="row mt-4">
                     <div class="col-md-12">
-                        <label class="control-label text-uppercase"><i class="fa fa-check-square-o"></i> <strong>Selecione as Fases</strong></label>
+                        <label class="control-label text-uppercase">
+                            <i class="fa fa-check-square-o"></i> <strong>Selecione as Fases</strong>
+                        </label>
                     </div>
                 </div>
 
                 <!--FASE 1-->
                 <div class="row mt-2 bg-light border">
                     <div class="col-md-12 pt-3">
-                        <p class="text-uppercase"><input type="checkbox" class="phase1" /> <b>Fase 1</b>  <code>* Selecione Todos</code></p>
+                        <p class="text-uppercase">
+                            <input
+                                type="checkbox"
+                                name="phases[0]"
+                                id="stage-all-1"
+                                class="phase1"
+                                value="1"
+                                >
+                            <label for="stage-all-1"><b>Fase 1</b> <code>* Selecione Todos</code></label>
+                        </p>
                         <hr>
-                    </div>  
-                    <div class="col-md-4">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="stage[]" class="F1" value="" /></p>
                     </div>
+
+                    @foreach($stagesOne as $stageOne)
+                        <div class="col-md-4">
+                            <p class="text-right">
+                                <input
+                                    type="checkbox"
+                                    id="stage-{{ $stageOne ->id }}"
+                                    {{-- name="phases[0][1][stages][]" --}}
+                                    name="stages[]"
+                                    class="F1"
+                                    value="{{ $stageOne->id }}"
+                                    />
+                                <label for="stage-{{ $stageOne->id }}">
+                                    <strong>{{ $stageOne->description }}</strong>
+                                </label>
+                            </p>
+                        </div>
+                    @endforeach
                 </div>
                 
                 <!--FASE 2-->
                 <div class="row mt-3 bg-light border">
                     <div class="col-md-12 pt-3">
-                        <p class="text-uppercase"><input type="checkbox" class="phase2" /> <b>Fase 2</b>  <code>* Selecione Todos</code></p>
+                        <p class="text-uppercase">
+                            <input
+                                type="checkbox"
+                                name="phases[0]"
+                                id="stage-all-2"
+                                class="phase2"
+                                value="2"
+                                >
+                            <label for="stage-all-2"><b>Fase 2</b> <code>* Selecione Todos</code></label>
+                        </p>
                         <hr>
                     </div>
-                    <div class="col-md-4"> 
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="stage[]" class="F2" value="" /></p>
-                    </div>
+
+                    @foreach($stagesTwo as $stageTwo)
+                        <div class="col-md-4">
+                            <p class="text-right">
+                                <input
+                                    type="checkbox"
+                                    id="stage-two-{{ $stageTwo ->id }}"
+                                    {{-- name="phases[0][2][stages][]" --}}
+                                    name="stages[]"
+                                    class="F2"
+                                    value="{{ $stageTwo->id }}"
+                                    />
+                                <label for="stage-two-{{ $stageTwo->id }}">
+                                    <strong>{{ $stageTwo->description }}</strong>
+                                </label>
+                            </p>
+                        </div>
+                    @endforeach
                 </div>
                 
                 <!--FASE 3-->
-                <div class="row mt-3 bg-light border">
+                {{-- <div class="row mt-3 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-uppercase"><input type="checkbox" class="phase3" /> <b>Fase 3</b>  <code>* Selecione Todos</code></p>
                         <hr>
@@ -437,5 +487,35 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+
+    <script>
+        $(document).ready(function () {
+            
+        })
+        
+        /*PHASE 1*/
+        const phase1Checkbox = document.querySelector('.phase1');
+        const checkboxesF1 = document.querySelectorAll('.F1');
+        phase1Checkbox.addEventListener('click', function() {
+            const isChecked = phase1Checkbox.checked;
+            checkboxesF1.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*PHASE 2*/
+        const phase2Checkbox = document.querySelector('.phase2');
+        const checkboxesF2 = document.querySelectorAll('.F2');
+        phase2Checkbox.addEventListener('click', function() {
+            const isChecked = phase2Checkbox.checked;
+            checkboxesF2.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+    </script>
+
+@endpush
 
 

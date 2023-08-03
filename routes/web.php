@@ -16,6 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ResearcheWorkController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\WorkSearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -126,14 +127,18 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('v1')->group(function () {
 
         Route::get('segment-sub-types', function (Request $request) {
-            $segmentSubTypes = \App\Models\SegmentSubType::whereSegmentId($request->segment)->get();
+            $segmentSubTypes = \App\Models\SegmentSubType::whereSegmentId($request->segment)
+                ->orderBy('description', 'asc')
+                ->get();
             return response()->json([
                 'segmentSubTypes' => $segmentSubTypes
             ], 200);
         });
 
         Route::get('stages', function (Request $request) {
-            $stages = \App\Models\Stage::wherePhaseId($request->phase)->get();
+            $stages = \App\Models\Stage::wherePhaseId($request->phase)
+                ->orderBy('description', 'asc')
+                ->get();
             return response()->json([
                 'stages' => $stages
             ], 200);
@@ -202,12 +207,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get(
             'search/step-1',
-            [WorkController::class, 'showWorkSearchStepOne']
+            [WorkSearchController::class, 'showWorkSearchStepOne']
         )->name('work.search.step_one.index');
 
         Route::get(
             'search/step-2',
-            [WorkController::class, 'showWorkSearchStepTwo']
+            [WorkSearchController::class, 'showWorkSearchStepTwo']
         )->name('work.search.step_two.index');
 
         Route::get(

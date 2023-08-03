@@ -210,8 +210,12 @@ class WorkController extends Controller
     {
         $phases = $this->phase->get();
         $segments = $this->segment->get();
-        $segmentSubTypes = $this->segmentSubType->get();
-        $stages = $this->stage->get();
+        $segmentSubTypes = $this->segmentSubType
+            ->orderBy('description', 'asc')
+            ->get();
+        $stages = $this->stage
+            ->orderBy('description', 'asc')
+            ->get();
         $researchers = $this->researcher->get();
         $workFeatures = $this->workFeature
             ->orderBy('description', 'asc')
@@ -474,22 +478,6 @@ class WorkController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    public function showWorkSearchStepOne()
-    {
-        //$stagesOne = $this->stage->where('phase_id', 1)->get();
-        //$stagesTwo = $this->stage->where('phase_id', 2)->get();
-        //$stagesThree = $this->stage->where('phase_id', 3)->get();
-
-        return view('layouts.work.search.step_one.index');
-    }
-
-    public function showWorkSearchStepTwo(Request $request)
-    {
-        $works = $this->getFilteredWorks($request);
-
-        return view('layouts.work.search.step_two.index', compact('works'));
     }
 
     public function showWorkSearchStepThree(Request $request)
