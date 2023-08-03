@@ -33,7 +33,7 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <a href="{{ url('associated_registration') }}" class="btn btn-primary" title="Cadastrar Novo Cliente (Associado)"><i class="fa fa-ok"></i> Cadastrar Novo</a>
+                <a href="{{ url('layout/customer_area/associated_registration') }}" class="btn btn-primary" title="Cadastrar Novo Cliente (Associado)"><i class="fa fa-ok"></i> Cadastrar Novo</a>
                 <button type="submit" class="btn btn-success submit" title="Pesquisar" ><i class="fa fa-search"></i> Pesquisar</button> 
             </div>
         </div>
