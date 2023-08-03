@@ -90,8 +90,8 @@ class WorkSearchController extends Controller
 
     private function getFilteredWorks(Request $request)
     {
-        $startedAt = $request->started_at;
-        $endsAt = $request->ends_at;
+        $startedAt = $request->last_review_from;
+        $endsAt = $request->last_review_to;
         $allStageIds = $request->stages;
         $allStateIds = $request->states;
         $allSegmentSubTypeIds = $request->segment_sub_types;
@@ -121,8 +121,7 @@ class WorkSearchController extends Controller
         if ($startedAt && $endsAt) {
             $startedAt = convertPtBrDateToEnDate($startedAt);
             $endsAt = convertPtBrDateToEnDate($endsAt);
-            $works = $works->where('works.started_at', '>=', $startedAt);
-            $works = $works->where('works.ends_at', '<=', $endsAt);
+            $works = $works->whereBetween('works.last_review', [$startedAt, $endsAt]);
         }
 
         $allWorkIds = null;

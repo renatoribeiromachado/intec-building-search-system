@@ -26,7 +26,7 @@
                         <label class="control-label"><strong>Data Inicial</strong></label>
                         <input
                             type="text"
-                            name="started_at"
+                            name="last_review_from"
                             class="date form-control datepicker"
                             value=""
                             placeholder="Data Inicial..."/>
@@ -35,7 +35,7 @@
                         <label class="control-label"><strong>Data Final</strong></label>
                         <input
                             type="text"
-                            name="ends_at"
+                            name="last_review_to"
                             class="date form-control datepicker"
                             value=""
                             placeholder="Data Final..."/>
