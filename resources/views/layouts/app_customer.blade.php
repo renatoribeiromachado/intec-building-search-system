@@ -91,9 +91,13 @@
                                     ADMINISTRATIVO
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="administrative">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('associate.index') }}">Associados</a>
-                                    </li>
+                                    @can('ver-configuracoes')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('associate.index') }}">
+                                                Associados
+                                            </a>
+                                        </li>
+                                    @endcan
 
                                     <li>
                                         <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
