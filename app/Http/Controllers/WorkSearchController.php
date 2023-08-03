@@ -56,7 +56,7 @@ class WorkSearchController extends Controller
 
         if ($startedAt && $endsAt) {
             $startedAt = convertPtBrDateToEnDate($startedAt);
-            $endsAt = convertPtBrDateToEnDate($startedAt);
+            $endsAt = convertPtBrDateToEnDate($endsAt);
             $works = $works->where('works.started_at', '>=', $startedAt);
             $works = $works->where('works.ends_at', '<=', $endsAt);
         }
