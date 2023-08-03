@@ -217,7 +217,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get(
             'search/step-3',
-            [WorkController::class, 'showWorkSearchStepThree']
+            [WorkSearchController::class, 'showWorkSearchStepThree']
         )->name('work.search.step_three.index');
     });
 

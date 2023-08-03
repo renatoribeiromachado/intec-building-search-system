@@ -73,7 +73,6 @@
                                 <input
                                     type="checkbox"
                                     id="stage-{{ $stageOne ->id }}"
-                                    {{-- name="phases[0][1][stages][]" --}}
                                     name="stages[]"
                                     class="F1"
                                     value="{{ $stageOne->id }}"
@@ -108,7 +107,6 @@
                                 <input
                                     type="checkbox"
                                     id="stage-two-{{ $stageTwo ->id }}"
-                                    {{-- name="phases[0][2][stages][]" --}}
                                     name="stages[]"
                                     class="F2"
                                     value="{{ $stageTwo->id }}"
@@ -122,19 +120,41 @@
                 </div>
                 
                 <!--FASE 3-->
-                {{-- <div class="row mt-3 bg-light border">
+                <div class="row mt-3 bg-light border">
                     <div class="col-md-12 pt-3">
-                        <p class="text-uppercase"><input type="checkbox" class="phase3" /> <b>Fase 3</b>  <code>* Selecione Todos</code></p>
+                        <p class="text-uppercase">
+                            <input
+                                type="checkbox"
+                                name="phases[0]"
+                                id="stage-all-3"
+                                class="phase3"
+                                value="3"
+                                >
+                            <label for="stage-all-3"><b>Fase 3</b> <code>* Selecione Todos</code></label>
+                        </p>
                         <hr>
                     </div>
 
-                    <div class="col-md-4">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="stage[]" class="F3" value="" /></p>
-                    </div>
+                    @foreach($stagesThree as $stageThree)
+                        <div class="col-md-4">
+                            <p class="text-right">
+                                <input
+                                    type="checkbox"
+                                    id="stage-three-{{ $stageThree ->id }}"
+                                    name="stages[]"
+                                    class="F3"
+                                    value="{{ $stageThree->id }}"
+                                    />
+                                <label for="stage-three-{{ $stageThree->id }}">
+                                    <strong>{{ $stageThree->description }}</strong>
+                                </label>
+                            </p>
+                        </div>
+                    @endforeach
                 </div>
 
                 <!--SEGMENTO E ATUAÇÕES-->
-                <div class="row mt-4">
+                {{-- <div class="row mt-4">
                     <div class="col-md-12">
                         <label class="control-label text-uppercase"> <i class="fa fa-check-square-o"></i> <strong>Segmentos de Atuação</strong></label>
                     </div>
@@ -172,17 +192,24 @@
                     <div class="col-md-4">
                         <p class="text-right"><strong></strong> <input type="checkbox" name="type[]" class="Res" value="" /></p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--MARCAR TODAS AS REGIÕES-->
-                <div class="row mt-4">
+                {{-- <div class="row mt-4">
                     <div class="col-md-12">
-                        <label class="control-label text-uppercase"><strong> <i class="fa fa-check-square-o"></i> Regiões do Brasil</strong> <input type="checkbox" class="regiaoGeral" /> <code>* Selecione Todas as Regiões</code></label>
+                        <label class="control-label text-uppercase">
+                            <strong>
+                                <i class="fa fa-check-square-o"></i>
+                                Regiões do Brasil
+                            </strong>
+                            <input type="checkbox" class="regiaoGeral" />
+                            <code>* Selecione Todas as Regiões</code>
+                        </label>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--NORDESTE-->
-                <div class="row  mt-2 bg-light border">
+                {{-- <div class="row  mt-2 bg-light border">
                     <div class="col-md-12">
                         <p class="text-uppercase"><input type="checkbox" class="nordeste checkRegiaoGeral" /> <b>Nordeste</b> <code>* Selecione Todos</code></p>
                         <hr>
@@ -190,10 +217,10 @@
                     <div class="col-md-4 pt-3">
                         <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkNordeste" value="" /></p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--SUDESTE-->
-                <div class="row  mt-2 bg-light border">
+                {{-- <div class="row mt-2 bg-light border">
                     <div class="col-md-12">
                         <p class="text-uppercase"><input type="checkbox" class="sudeste checkRegiaoGeral" /> <strong>Sudeste</strong></p>
                         <hr>
@@ -201,10 +228,10 @@
                     <div class="col-md-4 pt-3">
                         <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkSudeste" value="" /></p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--SUL-->
-                <div class="row mt-2 bg-light border">
+                {{-- <div class="row mt-2 bg-light border">
                     <div class="col-md-12">
                         <p class="text-uppercase"><input type="checkbox" class="sul checkRegiaoGeral" /> <strong>Sul</strong> <code>* Selecione Todos</code></p>
                         <hr>
@@ -234,10 +261,10 @@
                     <div class="col-md-4 pt-3">
                         <p class="text-right"><strong></strong> <input type="checkbox" name="state[]" class="checkRegiaoGeral checkCentro" value="" /></p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--FILTRO ESPECIFICO-->
-                <div class="row mt-4 pb-4 bg-light border">
+                {{-- <div class="row mt-4 pb-4 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-left"> <i class="fa fa-check"></i><strong>FILTRO ESPECÍFICO</strong></p>
                         <hr>
@@ -511,6 +538,16 @@
         phase2Checkbox.addEventListener('click', function() {
             const isChecked = phase2Checkbox.checked;
             checkboxesF2.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*PHASE 3*/
+        const phase3Checkbox = document.querySelector('.phase3');
+        const checkboxesF3 = document.querySelectorAll('.F3');
+        phase3Checkbox.addEventListener('click', function() {
+            const isChecked = phase3Checkbox.checked;
+            checkboxesF3.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });

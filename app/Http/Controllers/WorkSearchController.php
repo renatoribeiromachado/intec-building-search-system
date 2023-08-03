@@ -20,11 +20,12 @@ class WorkSearchController extends Controller
     {
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
-        //$stagesThree = $this->stage->where('phase_id', 3)->get();
+        $stagesThree = $this->stage->where('phase_id', 3)->get();
 
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
+            'stagesThree'
         ));
     }
 
@@ -33,6 +34,13 @@ class WorkSearchController extends Controller
         $works = $this->getFilteredWorks($request);
 
         return view('layouts.work.search.step_two.index', compact('works'));
+    }
+
+    public function showWorkSearchStepThree(Request $request)
+    {
+        $works = $this->getFilteredWorks($request);
+
+        return view('layouts.work.search.step_three.index', compact('works'));
     }
 
     private function getFilteredWorks(Request $request)
