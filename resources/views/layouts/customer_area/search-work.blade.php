@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <form class="search" action="{{ route('annotations.store') }}" method="post">
+    <form class="search" action="" method="post">
     @csrf
 
         <div class="row mt-2">
