@@ -92,6 +92,10 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="administrative">
                                     <li>
+                                        <a class="dropdown-item" href="{{ route('associate.index') }}">Associados</a>
+                                    </li>
+
+                                    <li>
                                         <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
                                     </li>
 

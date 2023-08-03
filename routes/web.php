@@ -222,9 +222,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('associates')->group(function() {
-        Route::prefix('searches')->group(function() {
-            Route::get('', AssociateWorkController::class)->name('search.work.index');
-        });
+        Route::get('/', AssociateWorkController::class)->name('associate.index');
     });
 
     Route::prefix('positions')->group(function () {
