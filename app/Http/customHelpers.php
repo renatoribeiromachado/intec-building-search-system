@@ -37,3 +37,63 @@ if (! function_exists('convertDecimalToBRL')) {
     }
 
 }
+
+if (! function_exists('findZoneForStates')) {
+    function findZoneForStates($state)
+    {
+        $zone = null;
+        switch ($state) {
+            // REGIÃO NORTE
+            case 'AC':
+            case 'AM':
+            case 'AP':
+            case 'PA':
+            case 'RO':
+            case 'RR':
+            case 'TO':
+                $zone = 'NORTE';
+                break;
+
+            // REGIÃO NORDESTE
+            case 'AL':
+            case 'BA':
+            case 'CE':
+            case 'MA':
+            case 'PB':
+            case 'PE':
+            case 'PI':
+            case 'RN':
+            case 'SE':
+                $zone = 'NORDESTE';
+                break;
+
+            // REGIÃO CENTRO-OESTE
+            case 'DF':
+            case 'GO':
+            case 'MT':
+            case 'MS':
+                $zone = 'CENTRO-OESTE';
+                break;
+
+            // REGIÃO SUDESTE
+            case 'ES':
+            case 'MG':
+            case 'RJ':
+            case 'SP':
+                $zone = 'SUDESTE';
+                break;
+
+            // REGIÃO SUL
+            case 'PR':
+            case 'RS':
+            case 'SC':
+                $zone = 'SUL';
+                break;
+
+            default:
+                break;
+        }
+
+        return $zone;
+    }
+}
