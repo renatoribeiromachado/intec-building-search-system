@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\Work;
@@ -15,15 +16,18 @@ class WorkSearchController extends Controller
     protected $stage;
     protected $work;
     protected $state;
+    protected $segmentSubType;
 
     public function __construct(
         Stage $stage,
         Work $work,
         State $state,
+        SegmentSubType $segmentSubType,
     ) {
         $this->stage = $stage;
         $this->work = $work;
         $this->state = $state;
+        $this->segmentSubType = $segmentSubType;
     }
 
     public function showWorkSearchStepOne()
@@ -38,6 +42,10 @@ class WorkSearchController extends Controller
         $statesFour = $this->state->where('zone_id', 4)->get();
         $statesFive = $this->state->where('zone_id', 5)->get();
 
+        $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+        $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+        $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
@@ -49,6 +57,10 @@ class WorkSearchController extends Controller
             'statesThree',
             'statesFour',
             'statesFive',
+
+            'segmentSubTypeOne',
+            'segmentSubTypeTwo',
+            'segmentSubTypeThree',
         ));
     }
 
@@ -72,6 +84,7 @@ class WorkSearchController extends Controller
         $endsAt = $request->ends_at;
         $allStageIds = $request->stages;
         $allStateIds = $request->states;
+        $allSegmentSubTypeIds = $request->segment_sub_types;
         $allStatesAcronym = null;
 
         if ($allStateIds) {
@@ -114,6 +127,10 @@ class WorkSearchController extends Controller
 
         if ($allStatesAcronym) {
             $works = $works->whereIn('works.state', $allStatesAcronym);
+        }
+
+        if ($allSegmentSubTypeIds) {
+            $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
 
         return $works->paginate(self::REGISTRIES_PER_PAGE);
