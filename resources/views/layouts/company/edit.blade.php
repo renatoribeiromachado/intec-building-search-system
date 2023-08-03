@@ -137,3 +137,19 @@
 
     </div>
 @endsection
+
+@push('scripts')
+
+    <script>
+        $(document).ready(function () {
+            $('.alert-success').on('click', function () {
+                $( this ).hide('slow');
+            })
+
+            setInterval(() => {
+                $('.alert-success').trigger( 'click' );
+            }, 3000);
+        });
+    </script>
+
+@endpush

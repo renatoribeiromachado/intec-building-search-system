@@ -212,7 +212,9 @@ class CompanyController extends Controller
                 ->withErrors(['message' => $ex->getMessage()]);
         }
 
-        return redirect()->route('company.index');
+        session()->flash('success', 'Empresa atualizada.');
+
+        return redirect()->route('company.edit', $company->id);
     }
 
     /**
