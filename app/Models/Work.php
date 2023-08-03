@@ -33,6 +33,7 @@ class Work extends Model
         'state',
         'state_acronym',
         'zip_code',
+        'zone',
         'started_at',
         'ends_at',
         'notes',
