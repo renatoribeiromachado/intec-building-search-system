@@ -223,6 +223,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('associates')->group(function() {
         Route::get('/', AssociateWorkController::class)->name('associate.index');
+
+        Route::get('/associated_registration', function () {
+            return view('layout.customer_area.associated_registration');
+        });
+        
     });
 
     Route::prefix('positions')->group(function () {
