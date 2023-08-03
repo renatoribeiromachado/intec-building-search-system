@@ -226,7 +226,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/associated_registration', function () {
             return view('layout.customer_area.associated_registration');
-        });
+        })->name('associates.associated_registration');
         
     });
 
