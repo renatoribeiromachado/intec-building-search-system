@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class WorkSearchController extends Controller
 {
+    const REGISTRIES_PER_PAGE = 50;
+
     protected $stage;
     protected $work;
     protected $state;
@@ -114,6 +116,6 @@ class WorkSearchController extends Controller
             $works = $works->whereIn('works.state', $allStatesAcronym);
         }
 
-        return $works->paginate();
+        return $works->paginate(self::REGISTRIES_PER_PAGE);
     }
 }
