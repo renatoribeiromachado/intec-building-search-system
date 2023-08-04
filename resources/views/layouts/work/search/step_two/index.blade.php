@@ -42,10 +42,11 @@
             </thead>
             <tbody>
                 @forelse($works as $work)
-                <tr class="@if(optional($work->segment)->description == 'INDUSTRIAL') industrial @endif
-                            @if(optional($work->segment)->description == 'RESIDENCIAL') residencial @endif
-                            @if(optional($work->segment)->description == 'COMERCIAL') comercial @endif
-                    ">
+                <tr class="
+    @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
+    @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
+    @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
+">
                         <td style="cursor: pointer;">
                             <div style="cursor: pointer;">
                                 <div class="form-check">
