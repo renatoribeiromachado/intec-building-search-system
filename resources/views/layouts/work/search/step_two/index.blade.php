@@ -42,7 +42,11 @@
             </thead>
             <tbody>
                 @forelse($works as $work)
-                    <tr>
+                
+                    <tr class="@if(optional($work->segment)->description == 'INDUSTRIAL') industrial @endif
+                            @if(optional($work->segment)->description == 'RESIDENCIAL') residencial @endif
+                            @if(optional($work->segment)->description == 'COMERCIAL') comercial @endif
+                    ">
                         <td style="cursor: pointer;">
                             <div style="cursor: pointer;">
                                 <div class="form-check">
@@ -67,8 +71,9 @@
                         <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                         <td>{{ $work->phase_description }}</td>
                         <td>{{ $work->stage_description }}</td>
-                        <td>{{ $work->segment_description }}</td>
+                        <td style="background">{{ $work->segment_description }}</td>
                     </tr>
+              
                     @empty
                     <tr>
                         <td colspan="8">
@@ -87,3 +92,21 @@
     </div>
 </div>
 @endsection
+
+
+@push('styles')
+
+    <style>
+        .industrial{
+            background: #acc4d0;
+
+        }
+        .comercial{
+            background: #b5b253;
+        }
+        .residencial{
+            background: #ccb364;
+        }
+    </style>
+
+@endpush
