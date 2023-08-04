@@ -27,11 +27,11 @@
         </style>
 
         @stack('styles')
-    </head> 
+    </head>  
     <body style="background: #f2f6fc">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard.index') }}">INTEC</a>
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
                 <button
                     class="navbar-toggler"
                     type="button"
