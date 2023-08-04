@@ -25,7 +25,7 @@
 
         @stack('styles')
     </head> 
-    <body style="background: #d8ebf8">
+    <body style="background: #f2f6fc">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('dashboard.index') }}">INTEC</a>
@@ -213,7 +213,7 @@
             </div>
         </nav>
           
-        <main class="container-fluid" style="background: #d8ebf8">
+        <main class="container-fluid" style="background: #f2f6fc">
             @yield('content')
         </main>
         <!-- Option 1: Bootstrap Bundle with Popper -->
