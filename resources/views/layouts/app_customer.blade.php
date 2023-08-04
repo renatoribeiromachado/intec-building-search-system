@@ -213,7 +213,7 @@
             </div>
         </nav>
           
-        <main class="container">
+        <main class="container-fluid" style="background: #d8ebf8">
             @yield('content')
         </main>
         <!-- Option 1: Bootstrap Bundle with Popper -->
