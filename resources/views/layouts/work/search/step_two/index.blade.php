@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="bg-light p-5 rounded">
+<div class="container bg-light p-5 rounded">
     <h1>OBRAS</h1>
 
     <form action="{{ route('work.search.step_three.index') }}" method="get">
