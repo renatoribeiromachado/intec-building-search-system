@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container bg-light p-5 rounded">
-    <h1>OBRAS</h1>
+    <div class="alert alert-primary"><h4>PESQUISA DE OBRAS</h4></div>
 
     <form action="{{ route('work.search.step_three.index') }}" method="get">
         @csrf
