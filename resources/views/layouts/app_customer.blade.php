@@ -21,12 +21,15 @@
                 min-height: 75rem;
                 padding-top: 4.5rem;
             }
+            .menu_bg{
+                background:#000742;
+            }
         </style>
 
         @stack('styles')
     </head> 
     <body style="background: #f2f6fc">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('dashboard.index') }}">INTEC</a>
                 <button
