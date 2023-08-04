@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityFieldController;
+use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
@@ -222,12 +223,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('associates')->group(function() {
-        Route::get('/', AssociateWorkController::class)->name('associate.index');
-
-        Route::get('/associated_registration', function () {
-            return view('layouts.customer_area.associated_registration');
-        })->name('associates.associated_registration');
-        
+        Route::get('/', AssociateController::class)->name('associate.index');
+        Route::get('create', [AssociateController::class, 'create'])->name('associate.create');
+        Route::post('store', [AssociateController::class, 'store'])->name('associate.store');
     });
 
     Route::prefix('positions')->group(function () {
