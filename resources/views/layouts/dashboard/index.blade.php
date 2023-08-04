@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container pb-4 bg-light border">
+<div class="container pt-4 pb-4 bg-light border">
         <div class="row mt-3">
             <h4 class="text-center" style="color:#ff3b00">Bem vindo a Intec - Informações Técnicas da Construção</h4>
             <p class="text-center">A empresa pioneira no ramo de informações online de obras do Brasil</p>
