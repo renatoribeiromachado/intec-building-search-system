@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="bg-light p-5 rounded">
-    <h1>OBRAS</h1>
+<div class="container bg-light p-5 rounded">
+    <div class="alert alert-primary"><h4>PESQUISA DE OBRAS</h4></div>
 
     <form action="{{ route('work.search.step_three.index') }}" method="get">
         @csrf
@@ -42,7 +42,11 @@
             </thead>
             <tbody>
                 @forelse($works as $work)
-                    <tr>
+                <tr class="
+    @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
+    @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
+    @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
+">
                         <td style="cursor: pointer;">
                             <div style="cursor: pointer;">
                                 <div class="form-check">
@@ -87,3 +91,20 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+
+    <style>
+        .industrial{
+            background: #acc4d0;
+
+        }
+        .comercial{
+            background: #b5b253;
+        }
+        .residencial{
+            background: #ccb364;
+        }
+    </style>
+
+@endpush

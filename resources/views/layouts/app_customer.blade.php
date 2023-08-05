@@ -13,7 +13,7 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-        <title>SISTEMA SINTEC | ACESSO RESTRITO</title>
+        <title>SISTEMA INTEC | ACESSO RESTRITO</title>
 
         <style>
             /* Show it is fixed to the top */
@@ -21,14 +21,17 @@
                 min-height: 75rem;
                 padding-top: 4.5rem;
             }
+            .menu_bg{
+                background:#000742;
+            }
         </style>
 
         @stack('styles')
-    </head> 
-    <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    </head>  
+    <body style="background: #f2f6fc">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard.index') }}">INTEC</a>
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -41,15 +44,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a
-                                class="nav-link active"
-                                aria-current="page"
-                                href="{{ route('dashboard.index') }}"
-                                >
-                                Início
-                            </a>
-                        </li>
+                   
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
                         </li>
@@ -213,7 +208,7 @@
             </div>
         </nav>
           
-        <main class="container">
+        <main class="container-fluid" style="background: #f2f6fc">
             @yield('content')
         </main>
         <!-- Option 1: Bootstrap Bundle with Popper -->
