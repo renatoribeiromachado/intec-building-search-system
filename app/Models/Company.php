@@ -75,6 +75,7 @@ class Company extends Model
 
         return $company
             ->where($where)
+            ->doesntHave('associate')
             ->orderBy('companies.id', 'asc')
             ->paginate(15);
     }
@@ -104,5 +105,10 @@ class Company extends Model
     public function researchers()
     {
         return $this->belongsToMany(Researcher::class);
+    }
+
+    public function associate()
+    {
+        return $this->hasOne(Associate::class);
     }
 }

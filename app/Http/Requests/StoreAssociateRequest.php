@@ -26,10 +26,8 @@ class StoreAssociateRequest extends FormRequest
         return [
             'company_name' => ['required', 'min:3', 'max:150', 'unique:companies,company_name'],
             'trading_name' => ['required'],
-            'revision' => ['required'],
             'cnpj' => ['required'],
-            'primary_email' => ['nullable'],
-            'secondary_email' => ['nullable'],
+            'primary_email' => ['required', 'email'],
             'phone_one' => ['required'],
             'zip_code' => ['required'],
             'address' => ['required'],
@@ -39,13 +37,15 @@ class StoreAssociateRequest extends FormRequest
             'city' => ['required'],
             'state' => ['required'],
             'state_registration' => ['required'],
-            'city_registration' => ['required'],
             'activity_field_id' => ['required'],
             'is_active' => ['required'],
-            'home_page' => ['nullable'],
-            'last_review' => ['required'],
-            'researcher_id' => ['required'],
+            'home_page' => ['required'],
             'notes' => ['required'],
+            'business_branch' => ['required'],
+            'contract_due_date_start' => ['required', 'date_format:d/m/Y'],
+            'products_and_services' => ['required'],
+            'salesperson_id' => ['required'],
+            'company_date_birth' => ['required'],
         ];
     }
 }

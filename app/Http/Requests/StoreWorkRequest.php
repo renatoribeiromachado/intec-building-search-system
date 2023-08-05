@@ -25,7 +25,7 @@ class StoreWorkRequest extends FormRequest
     {
         return [
             'old_code' => "required|min:3|max:20|unique:works,old_code",
-            //'last_review' => ['nullable', 'date_format:d/m/Y'],
+            'last_review' => ['nullable', 'date_format:d/m/Y'],
             'researcher_id' => 'required',
             'revision' => 'required',
             'name' => "required|unique:works,name",

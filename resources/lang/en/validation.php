@@ -209,7 +209,14 @@ return [
         'segment_id' => 'Segmento de Atuação',
 
         // Activity Field
-        'description' => 'Descrição'
+        'description' => 'Descrição',
+
+        // Associate
+        'business_branch' => 'Ramo',
+        'contract_due_date_start' => 'Emissão',
+        'products_and_services' => 'Produtos e serviços',
+        'salesperson_id' => 'Vendedor(a)',
+        'company_date_birth' => 'Aniversário da empresa',
     ],
 
 ];

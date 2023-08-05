@@ -1,5 +1,5 @@
 <!-- Smile, breathe, and go slowly. - Thich Nhat Hanh -->
-{{-- <div class="form-group @error($selectName) has-error @enderror"> --}}
+<div class="form-group">
     <label for="{{ $selectName }}">
         <strong>{{ $selectLabel }}</strong>
         {{-- @if(isset($required) && ($required == true))
@@ -9,7 +9,7 @@
     <select
         id="{{ $selectName }}"
         name="{{ $selectName }}"
-        class="{{ $selectClass }}"
+        class="{{ $selectClass }} @error($selectName) is-invalid @enderror"
         >
         <option value="">{{ $placeholder }}</option>
 
@@ -24,6 +24,8 @@
     </select>
     
     @error($selectName)
-        <span class="text-danger">{!!$errors->first($selectName)!!}</span>
+        <div class="invalid-feedback">
+            {{ $errors->first($selectName) }}
+        </div>
     @enderror
-{{-- </div> --}}
+</div>

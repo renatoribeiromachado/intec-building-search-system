@@ -366,6 +366,7 @@ class WorkController extends Controller
     {
         $companies = $this->company
             ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+            ->doesntHave('associate')
             ->whereActivityFieldId($activityField->id)
             ->where('trading_name', 'like', '%'.$request->trading_name.'%')
             ->get();
@@ -382,6 +383,7 @@ class WorkController extends Controller
                 
             $companies = $this->company
                 ->select('id', 'activity_field_id', 'cnpj', 'trading_name')
+                ->doesntHave('associate')
                 ->whereIn('id', $request->companies_list)
                 ->get();
 

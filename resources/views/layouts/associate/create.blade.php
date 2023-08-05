@@ -83,12 +83,12 @@
 
                 <div class="col-md-6">
                     <x-intec-input
-                        label-input-id="trade_name"
+                        label-input-id="trading_name"
                         label-text="Fantasia:"
                         input-type="text"
-                        input-name="trade_name"
+                        input-name="trading_name"
                         class-one=""
-                        input-value="{{ $company->trade_name }}"
+                        input-value="{{ $company->trading_name }}"
                         :input-readonly="false"
                     />
                 </div>
@@ -121,13 +121,13 @@
 
                 <div class="col-md-3">
                     <x-intec-select
-                        select-name="state"
+                        select-name="business_branch"
                         select-label="Ramo:"
                         select-class="form-select"
                         required=""
                         placeholder="-- Selecione --"
-                        :collection="$segments"
-                        value="{{ $associate->segment }}"
+                        :collection="$businessBranches"
+                        value="{{ $associate->business_branch }}"
                     />
                 </div>
 
@@ -207,7 +207,7 @@
                     />
                 </div>
 
-                <div class="col-md-10">
+                <div class="col-md-5">
                     <x-intec-input
                         label-input-id="address"
                         label-text="Endereço:"
@@ -215,6 +215,30 @@
                         input-name="address"
                         class-one=""
                         input-value="{{ $company->address }}"
+                        :input-readonly="false"
+                    />
+                </div>
+
+                <div class="col-md-2">
+                    <x-intec-input
+                        label-input-id="number"
+                        label-text="Nº:"
+                        input-type="text"
+                        input-name="number"
+                        class-one=""
+                        input-value="{{ $company->number }}"
+                        :input-readonly="false"
+                    />
+                </div>
+
+                <div class="col-md-3">
+                    <x-intec-input
+                        label-input-id="complement"
+                        label-text="Complemento:"
+                        input-type="text"
+                        input-name="complement"
+                        class-one=""
+                        input-value="{{ $company->complement }}"
                         :input-readonly="false"
                     />
                 </div>
@@ -246,17 +270,6 @@
                 </div>
 
                 <div class="col-md-2">
-                    <x-intec-input
-                        label-input-id="number"
-                        label-text="Nº:"
-                        input-type="text"
-                        input-name="number"
-                        class-one=""
-                        input-value="{{ $company->number }}"
-                        :input-readonly="false"
-                    />
-                </div>
-                <div class="col-md-2">
                     <x-intec-select
                         select-name="state"
                         select-label="Estado:"
@@ -279,6 +292,21 @@
                         class-one=""
                         input-value="{{ $associate->products_and_services }}"
                         :input-readonly="false"
+                    />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <x-intec-textarea
+                        label-textarea-id="notes"
+                        label-text="Observações:"
+                        textarea-type="text"
+                        textarea-name="notes"
+                        class-one=""
+                        textarea-value="{{ $associate->notes }}"
+                        :textarea-readonly="false"
+                        rows="5"
                     />
                 </div>
             </div>

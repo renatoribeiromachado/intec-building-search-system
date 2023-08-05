@@ -60,7 +60,7 @@ class AssociateController extends Controller
             ->orderBy('state_acronym', 'asc')
             ->pluck('state_acronym', 'state_acronym');
 
-        $segments = collect([
+        $businessBranches = collect([
             ['description' => 'Comércio'],
             ['description' => 'Fabricação'],
             ['description' => 'Indústria'],
@@ -92,7 +92,7 @@ class AssociateController extends Controller
             'company',
             'associate',
             'states',
-            'segments',
+            'businessBranches',
             'activityFields',
             'cnpjs',
             'isActive',
@@ -108,23 +108,21 @@ class AssociateController extends Controller
      */
     public function store(StoreAssociateRequest $request) // StoreCompanyRequest
     {
-        return $request->all();
 
         try {
             DB::beginTransaction();
 
+            // Company
             $company = $this->company;
             $company->activity_field_id = $request->activity_field_id;
             $company->company_name = $request->company_name;
             $company->trading_name = $request->trading_name;
             $company->trading_name_slug = Str::slug($request->trading_name_slug);
-            $company->minified_name = $request->minified_name;
             $company->address = $request->address;
             $company->number = $request->number;
             $company->complement = $request->complement;
             $company->district = $request->district;
             $company->city = $request->city;
-            // $company->city_registration = $request->city_registration;
             $company->state = $request->state;
             $company->state_registration = $request->state_registration;
             $company->state_acronym = $request->state_acronym;
@@ -133,25 +131,26 @@ class AssociateController extends Controller
             $company->notes = $request->notes;
             $company->cnpj = $request->cnpj;
             $company->primary_email = $request->primary_email;
-            $company->secondary_email = $request->secondary_email;
             $company->home_page = $request->home_page;
-            $company->skype = $request->skype;
-            $company->sponsor = $request->sponsor;
-            $company->sponsor_slug = $request->sponsor_slug;
-            $company->company_segment_id = $request->company_segment_id;
             $company->is_active = $request->is_active;
             $company->is_project_owner = false;
-            $company->image_storage_link = $request->image_storage_link;
-            $company->image_public_link = $request->image_public_link;
             $company->last_review = convertPtBrDateToEnDate($request->last_review);
-            $company->revision = $request->revision;
             $company->created_by = auth()->user()->id;
             $company->updated_by = auth()->user()->id;
-            $company->register_ip = $request->register_ip;
             $company->save();
 
-            $researcher = $this->researcher->findOrFail($request->researcher_id);
-            $company->researchers()->sync($researcher);
+            // Associate
+            $associate = $this->associate;
+            $associate->company_id = $company->id;
+            $associate->salesperson_id = $request->salesperson_id;
+            $associate->linked_company = $request->linked_company;
+            $associate->business_branch = $request->business_branch;
+            $associate->company_date_birth = $request->company_date_birth;
+            $associate->contract_due_date_start = convertPtBrDateToEnDate($request->contract_due_date_start);
+            $associate->products_and_services = $request->products_and_services;
+            $associate->created_by = auth()->user()->id;
+            $associate->updated_by = auth()->user()->id;
+            $associate->save();
 
             DB::commit();
 
@@ -164,6 +163,8 @@ class AssociateController extends Controller
                 ->withErrors(['message' => $ex->getMessage()]);
         }
 
-        return redirect()->route('company.edit', $company->id);
+        session()->flash('success', 'Associado criado.');
+
+        return redirect()->route('associate.create');
     }
 }
