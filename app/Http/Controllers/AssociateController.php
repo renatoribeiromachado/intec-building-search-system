@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssociateRequest;
-use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateAssociateRequest;
 use App\Models\ActivityField;
 use App\Models\Associate;
 use App\Models\Company;
+use App\Models\Contact;
+use App\Models\Position;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\User;
+use App\Traits\ContactActionsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AssociateController extends Controller
 {
+    use ContactActionsTrait;
+    
     const BUSINESS_BRANCH = [
         ['description' => 'Comércio'],
         ['description' => 'Fabricação'],
@@ -33,6 +37,8 @@ class AssociateController extends Controller
     protected $state;
     protected $activityField;
     protected $salesperson;
+    protected $contact;
+    protected $position;
 
     public function __construct(
         Stage $stage,
@@ -40,7 +46,9 @@ class AssociateController extends Controller
         Associate $associate,
         State $state,
         ActivityField $activityField,
-        User $salesperson
+        User $salesperson,
+        Contact $contact,
+        Position $position
     ) {
         $this->stage = $stage;
         $this->company = $company;
@@ -48,6 +56,8 @@ class AssociateController extends Controller
         $this->state = $state;
         $this->activityField = $activityField;
         $this->salesperson = $salesperson;
+        $this->contact = $contact;
+        $this->position = $position;
     }
 
     public function __invoke()
@@ -203,6 +213,10 @@ class AssociateController extends Controller
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
 
+        $contact = $this->contact;
+
+        $positions = $this->position->get();
+
         return view('layouts.associate.edit', compact(
             'associate',
             'states',
@@ -212,6 +226,8 @@ class AssociateController extends Controller
             'cnpjs',
             'isActive',
             'salespersons',
+            'contact',
+            'positions',
         ));
     }
 

@@ -228,6 +228,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [AssociateController::class, 'store'])->name('associate.store');
         Route::get('edit/{associate}', [AssociateController::class, 'edit'])->name('associate.edit');
         Route::put('{associate}', [AssociateController::class, 'update'])->name('associate.update');
+
+        // Add / Edit contact
+        Route::post(
+            'store/{company}',
+            [AssociateController::class, 'storeContact']
+        )->name('associate.contact.store');
+
+        Route::put(
+            'update/{contact}',
+            [AssociateController::class, 'updateContact']
+        )->name('associate.contact.update');
+
+        Route::delete(
+            'destroy/{contact}',
+            [CompanyController::class, 'destroyContact']
+        )->name('associate.contact.destroy');
     });
 
     Route::prefix('positions')->group(function () {
