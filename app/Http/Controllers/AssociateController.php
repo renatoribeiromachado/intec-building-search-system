@@ -8,6 +8,8 @@ use App\Models\ActivityField;
 use App\Models\Associate;
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Order;
+use App\Models\Plan;
 use App\Models\Position;
 use App\Models\Stage;
 use App\Models\State;
@@ -39,6 +41,7 @@ class AssociateController extends Controller
     protected $salesperson;
     protected $contact;
     protected $position;
+    protected $plan;
 
     public function __construct(
         Stage $stage,
@@ -48,7 +51,8 @@ class AssociateController extends Controller
         ActivityField $activityField,
         User $salesperson,
         Contact $contact,
-        Position $position
+        Position $position,
+        Plan $plan
     ) {
         $this->stage = $stage;
         $this->company = $company;
@@ -58,6 +62,7 @@ class AssociateController extends Controller
         $this->salesperson = $salesperson;
         $this->contact = $contact;
         $this->position = $position;
+        $this->plan = $plan;
     }
 
     public function __invoke()
@@ -214,11 +219,16 @@ class AssociateController extends Controller
             ->get()->pluck('name', 'id');
 
         $contact = $this->contact;
+        $positions = $this->position->getPositionList();
+        $orders = $company->orders()->get();
+        
+        $situations = collect(Order::ORDER_SITUATIONS)
+            ->pluck('description', 'description');
 
-        $positions = $this->position
-            ->select('id', 'description')
-            ->orderBy('description', 'asc')
-            ->get()->pluck('description', 'id');
+        $plans = $this->plan->pluck('description', 'id');
+
+        $installments = collect(Order::ORDER_INSTALLMENTS)
+            ->pluck('description', 'installment');
 
         return view('layouts.associate.edit', compact(
             'associate',
@@ -231,6 +241,10 @@ class AssociateController extends Controller
             'salespersons',
             'contact',
             'positions',
+            'orders',
+            'situations',
+            'plans',
+            'installments',
         ));
     }
 

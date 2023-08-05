@@ -111,4 +111,9 @@ class Company extends Model
     {
         return $this->hasOne(Associate::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

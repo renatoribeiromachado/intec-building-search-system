@@ -25,16 +25,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function index()
-    // {
-    //     //
-    // }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -42,21 +32,13 @@ class OrderController extends Controller
     public function create(Request $request, Company $company)
     {
         $order = $this->plan;
-
-        $situations = collect([
-            ['description' => 'Novo'],
-            ['description' => 'Upgrade'],
-            ['description' => 'Renovação'],
-            ['description' => 'Retorno']
-        ])->pluck('description', 'description');
+        $situations = collect(Order::ORDER_SITUATIONS)
+            ->pluck('description', 'description');
 
         $plans = $this->plan->pluck('description', 'id');
 
-        $installments = collect([
-            ['installment' => 1, 'description' => 'Parcelado em 1x'],
-            ['installment' => 2, 'description' => 'Parcelado em 2x'],
-            ['installment' => 3, 'description' => 'Parcelado em 3x'],
-        ])->pluck('description', 'installment');
+        $installments = collect(Order::ORDER_INSTALLMENTS)
+            ->pluck('description', 'installment');
 
         return view('layouts.order.create', compact(
             'order',
@@ -115,37 +97,48 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateOrderRequest  $request
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Company $company, Order $order)
     {
-        //
+        try {
+
+            DB::beginTransaction();
+
+            $order->plan_id = $request->plan_id;
+            $order->work_notes = $request->work_notes;
+            $order->situation = $request->situation;
+            $order->start_at = convertPtBrDateToEnDate($request->start_at);
+            $order->ends_at = convertPtBrDateToEnDate($request->ends_at);
+            $order->original_price = convertMaskToDecimal($request->original_price);
+            $order->discount = convertMaskToDecimal($request->discount);
+            $order->final_price = convertMaskToDecimal($request->final_price);
+            $order->first_due_date = convertPtBrDateToEnDate($request->first_due_date);
+            $order->installments = $request->installments;
+            $order->easy_payment_condition = $request->easy_payment_condition;
+            $order->notes = $request->notes;
+            $order->updated_by = auth()->user()->id;
+            $order->save();
+
+            DB::commit();
+
+        } catch (Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+
+        }
+
+        session()->flash('success', 'Pedido atualizado.');
+
+        return redirect()->route('associate.edit', $company->associate->id);
     }
 
     /**

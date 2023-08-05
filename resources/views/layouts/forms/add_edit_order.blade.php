@@ -44,7 +44,7 @@
             input-type="text"
             input-name="start_at"
             class-one="date"
-            input-value=""
+            input-value="{{ optional($order->start_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
     </div>
@@ -56,7 +56,7 @@
             input-type="text"
             input-name="ends_at"
             class-one="date"
-            input-value=""
+            input-value="{{ optional($order->ends_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
     </div>
@@ -70,7 +70,7 @@
             input-type="text"
             input-name="original_price"
             class-one="money"
-            input-value=""
+            input-value="{{ convertDecimalToBRL($order->original_price) }}"
             :input-readonly="false"
         />
     </div>
@@ -81,7 +81,7 @@
             input-type="text"
             input-name="discount"
             class-one="money"
-            input-value=""
+            input-value="{{ convertDecimalToBRL($order->original_price) }}"
             :input-readonly="false"
         />
     </div>
@@ -92,7 +92,7 @@
             input-type="text"
             input-name="final_price"
             class-one="money"
-            input-value=""
+            input-value="{{ convertDecimalToBRL($order->final_price) }}"
             :input-readonly="false"
         />
     </div>
@@ -103,7 +103,7 @@
             input-type="text"
             input-name="first_due_date"
             class-one="date"
-            input-value=""
+            input-value="{{ optional($order->first_due_date)->format('d/m/Y') }}"
             :input-readonly="false"
         />
     </div>
