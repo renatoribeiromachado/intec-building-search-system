@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssociateRequest;
 use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateAssociateRequest;
 use App\Models\ActivityField;
 use App\Models\Associate;
 use App\Models\Company;
@@ -16,6 +17,16 @@ use Illuminate\Support\Str;
 
 class AssociateController extends Controller
 {
+    const BUSINESS_BRANCH = [
+        ['description' => 'Comércio'],
+        ['description' => 'Fabricação'],
+        ['description' => 'Indústria'],
+        ['description' => 'Serviços'],
+    ];
+    const LINKED_COMPANY_CNPJS = [
+        ['cnpj' => '30.252.400/0001-55'],
+    ];
+
     protected $stage;
     protected $company;
     protected $associate;
@@ -60,21 +71,16 @@ class AssociateController extends Controller
             ->orderBy('state_acronym', 'asc')
             ->pluck('state_acronym', 'state_acronym');
 
-        $businessBranches = collect([
-            ['description' => 'Comércio'],
-            ['description' => 'Fabricação'],
-            ['description' => 'Indústria'],
-            ['description' => 'Serviços'],
-        ])->pluck('description', 'description');
+        $businessBranches = collect(self::BUSINESS_BRANCH)
+            ->pluck('description', 'description');
 
         $activityFields = $this->activityField
             ->select('id', 'description')
             ->orderBy('description', 'asc')
             ->get()->pluck('description', 'id');
 
-        $cnpjs = collect([
-                ['cnpj' => '30.252.400/0001-55'],
-            ])->pluck('cnpj', 'cnpj');
+        $cnpjs = collect(self::LINKED_COMPANY_CNPJS)
+            ->pluck('cnpj', 'cnpj');
 
         $isActive = collect([
                 'Inativo',
@@ -108,7 +114,6 @@ class AssociateController extends Controller
      */
     public function store(StoreAssociateRequest $request) // StoreCompanyRequest
     {
-
         try {
             DB::beginTransaction();
 
@@ -166,5 +171,105 @@ class AssociateController extends Controller
         session()->flash('success', 'Associado criado.');
 
         return redirect()->route('associate.create');
+    }
+
+    public function edit(Request $request, Associate $associate)
+    {
+        $company = $associate->company;
+        $states = $this->state
+            ->orderBy('state_acronym', 'asc')
+            ->pluck('state_acronym', 'state_acronym');
+
+        $businessBranches = collect(self::BUSINESS_BRANCH)
+            ->pluck('description', 'description');
+
+        $activityFields = $this->activityField
+            ->select('id', 'description')
+            ->orderBy('description', 'asc')
+            ->get()->pluck('description', 'id');
+
+        $cnpjs = collect(self::LINKED_COMPANY_CNPJS)
+            ->pluck('cnpj', 'cnpj');
+
+        $isActive = collect([
+                'Inativo',
+                'Ativo',
+            ]);
+
+        $salespersons = $this->salesperson
+            ->whereHas('role', function ($query) {
+                return $query->userRole('Vendedor');
+            })
+            ->orderBy('name', 'asc')
+            ->get()->pluck('name', 'id');
+
+        return view('layouts.associate.edit', compact(
+            'associate',
+            'states',
+            'company',
+            'businessBranches',
+            'activityFields',
+            'cnpjs',
+            'isActive',
+            'salespersons',
+        ));
+    }
+
+    public function update(UpdateAssociateRequest $request, Associate $associate)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Company
+            $company = $associate->company;
+            $company->activity_field_id = $request->activity_field_id;
+            $company->company_name = $request->company_name;
+            $company->trading_name = $request->trading_name;
+            $company->trading_name_slug = Str::slug($request->trading_name_slug);
+            $company->address = $request->address;
+            $company->number = $request->number;
+            $company->complement = $request->complement;
+            $company->district = $request->district;
+            $company->city = $request->city;
+            $company->state = $request->state;
+            $company->state_registration = $request->state_registration;
+            $company->state_acronym = $request->state_acronym;
+            $company->zip_code = $request->zip_code;
+            $company->phone_one = $request->phone_one;
+            $company->notes = $request->notes;
+            $company->cnpj = $request->cnpj;
+            $company->primary_email = $request->primary_email;
+            $company->home_page = $request->home_page;
+            $company->is_active = $request->is_active;
+            $company->is_project_owner = false;
+            $company->last_review = convertPtBrDateToEnDate($request->last_review);
+            $company->updated_by = auth()->user()->id;
+            $company->save();
+
+            // Associate
+            $associate->company_id = $company->id;
+            $associate->salesperson_id = $request->salesperson_id;
+            $associate->linked_company = $request->linked_company;
+            $associate->business_branch = $request->business_branch;
+            $associate->company_date_birth = $request->company_date_birth;
+            $associate->contract_due_date_start = convertPtBrDateToEnDate($request->contract_due_date_start);
+            $associate->products_and_services = $request->products_and_services;
+            $associate->updated_by = auth()->user()->id;
+            $associate->save();
+
+            DB::commit();
+
+        } catch(\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+        }
+
+        session()->flash('success', 'Associado atualizado.');
+
+        return redirect()->route('associate.edit', $associate->id);
     }
 }

@@ -226,6 +226,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', AssociateController::class)->name('associate.index');
         Route::get('create', [AssociateController::class, 'create'])->name('associate.create');
         Route::post('store', [AssociateController::class, 'store'])->name('associate.store');
+        Route::get('edit/{associate}', [AssociateController::class, 'edit'])->name('associate.edit');
+        Route::put('{associate}', [AssociateController::class, 'update'])->name('associate.update');
     });
 
     Route::prefix('positions')->group(function () {
