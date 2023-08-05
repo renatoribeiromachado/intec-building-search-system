@@ -250,7 +250,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
             // Route::get('edit/{segment}', [SegmentController::class, 'edit'])->name('segment.edit');
             Route::put('update/{order}', [OrderController::class, 'update'])->name('associate.order.update');
-            // Route::delete('{segment}', [SegmentController::class, 'destroy'])->name('segment.destroy');
+            Route::delete('{order}', [OrderController::class, 'destroy'])->name('associate.order.destroy');
         });
     });
 

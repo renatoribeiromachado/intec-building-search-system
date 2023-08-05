@@ -7,6 +7,7 @@
 
         <table class="table table-condensed">
             <tr>
+                <th class="bg-dark text-white">Nº</th>
                 <th class="bg-dark text-white">Posição</th>
                 <th class="bg-dark text-white">Plano</th>
                 <th class="bg-dark text-white">Início</th>
@@ -19,6 +20,9 @@
 
             @forelse ($orders as $order)
                 <tr>
+                    <td>
+                        {{ fillLeftWithZeros($order->id) }}
+                    </td>
                     <td>
                         {{ $order->situation }}
                     </td>
@@ -50,12 +54,12 @@
                                 >Editar
                             </button>
                             
-                            {{-- <button
+                            <button
                                 data-bs-toggle="modal"
-                                data-bs-target="#deleteContact{{$loop->index}}"
+                                data-bs-target="#deleteOrder{{$loop->index}}"
                                 class="btn btn-outline-danger"
                                 >Excluir
-                            </button> --}}
+                            </button>
                         </div>
 
                         <x-intec-modal
@@ -76,11 +80,11 @@
                             </div>
                         </x-intec-modal>
 
-                        {{-- <x-intec-modal
-                            id="deleteContact{{ $loop->index }}"
-                            aria-labelledby="deleteContactLabel{{ $loop->index }}"
-                            route="{{ route('associate.contact.destroy', $order->id) }}"
-                            title="Excluir Contato"
+                        <x-intec-modal
+                            id="deleteOrder{{ $loop->index }}"
+                            aria-labelledby="deleteOrderLabel{{ $loop->index }}"
+                            route="{{ route('associate.order.destroy', [$company->id, $order->id]) }}"
+                            title="Excluir Pedido"
                             collection="{{ $order }}"
                             submit-button-class="btn btn-outline-danger"
                             submit-button-text="Deletar"
@@ -88,10 +92,10 @@
                             http-method="delete"
                             >
                             <div class="text-center">
-                                Tem certeza que deseja excluir o registro do contato: <br>
-                                <strong class="text-danger">{{ $order->name }}</strong>?
+                                Tem certeza que deseja excluir o registro do pedido: <br>
+                                <strong class="text-danger">Nº {{ fillLeftWithZeros($order->id) }}</strong>?
                             </div>
-                        </x-intec-modal> --}}
+                        </x-intec-modal>
                     </td>
                 </tr>
                 @empty

@@ -93,7 +93,7 @@ class OrderController extends Controller
 
         session()->flash('success', 'Pedido criado.');
 
-        return redirect()->route('associate.edit', $company->id);
+        return redirect()->route('associate.edit', $company->associate->id);
     }
 
     /**
@@ -147,8 +147,26 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request, Company $company, Order $order)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $order->whereCompanyId($company->id)->delete();
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+        }
+
+        session()->flash('success', 'Pedido excluído.');
+
+        return redirect()->route('associate.edit', $company->associate->id);
     }
 }
