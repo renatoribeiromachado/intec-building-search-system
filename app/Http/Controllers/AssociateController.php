@@ -215,7 +215,10 @@ class AssociateController extends Controller
 
         $contact = $this->contact;
 
-        $positions = $this->position->get();
+        $positions = $this->position
+            ->select('id', 'description')
+            ->orderBy('description', 'asc')
+            ->get()->pluck('description', 'id');
 
         return view('layouts.associate.edit', compact(
             'associate',

@@ -242,7 +242,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::delete(
             'destroy/{contact}',
-            [CompanyController::class, 'destroyContact']
+            [AssociateController::class, 'destroyContact']
         )->name('associate.contact.destroy');
     });
 

@@ -10,6 +10,7 @@
     value="{{ old($inputName, $inputValue) }}"
     placeholder=""
     @if ($inputReadonly) readonly @endif
+    {{ $attributes }}
     >
 @error($inputName)
     <div class="invalid-feedback">

@@ -3,7 +3,7 @@
     <div class="col-md-7 mb-2">
         <x-intec-input
             label-input-id="name"
-            label-text="Nome 2"
+            label-text="Nome"
             input-type="text"
             input-name="name"
             class-one=""
@@ -13,125 +13,151 @@
     </div>
 
     <div class="col-md-5 mb-2">
-        <label for="position">Cargo</label>
-        <select id="position" name="position_id" class="form-control">
-            <option selected>-- Selecione --</option>
-            @forelse ($positions as $position)
-                {{-- @if ($loop->index == 0)
-                <option selected>-- Selecione --</option>
-                @endif --}}
-
-                <option
-                    value="{{ $position->id }}"
-                    @if (old('position_id', optional($contact->position)->id) == $position->id)
-                    selected
-                    @endif
-                    >
-                    {{ $position->description }}
-                </option>
-                @empty
-                <option selected>-- Selecione --</option>
-            @endforelse
-        </select>
+        <x-intec-select
+            select-name="position_id"
+            select-label="Cargo"
+            select-class="form-select"
+            required=""
+            placeholder="-- Selecione --"
+            :collection="$positions"
+            value="{{ optional($contact->position)->id }}"
+        />
     </div>
 </div>
 
 <div class="row mt-2">
     <div class="col-md-4 mb-2">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email"
-            class="form-control @error('email') is-invalid @enderror"
-            value="{{ old('email', $contact->email) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="email"
+            label-text="E-mail"
+            input-type="email"
+            input-name="email"
+            class-one=""
+            input-value="{{ $contact->email }}"
+            :input-readonly="false"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="secondary_email">E-mail 2</label>
-        <input type="email" id="secondary_email" name="secondary_email"
-            class="form-control @error('secondary_email') is-invalid @enderror"
-            value="{{ old('secondary_email', $contact->secondary_email) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="secondary_email"
+            label-text="E-mail 2"
+            input-type="email"
+            input-name="secondary_email"
+            class-one=""
+            input-value="{{ $contact->secondary_email }}"
+            :input-readonly="false"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="tertiary_email">E-mail 3</label>
-        <input type="email" id="tertiary_email" name="tertiary_email"
-            class="form-control @error('tertiary_email') is-invalid @enderror"
-            value="{{ old('tertiary_email', $contact->tertiary_email) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="tertiary_email"
+            label-text="E-mail 3"
+            input-type="email"
+            input-name="tertiary_email"
+            class-one=""
+            input-value="{{ $contact->tertiary_email }}"
+            :input-readonly="false"
+        />
     </div>
 </div>
 
 <div class="row mt-2">
     <div class="col-md-2 mb-2">
-        <label for="ddd">DDD 1</label>
-        <input maxlength="3" type="text" id="ddd" name="ddd"
-            class="form-control @error('ddd') is-invalid @enderror"
-            value="{{ old('ddd', $contact->ddd) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="ddd"
+            label-text="DDD 1"
+            input-type="text"
+            input-name="ddd"
+            class-one=""
+            input-value="{{ $contact->ddd }}"
+            :input-readonly="false"
+            maxlength="3"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="main_phone">Telefone 1</label>
-        <input type="text" id="main_phone" name="main_phone"
-            class="form-control @error('main_phone') is-invalid @enderror"
-            value="{{ old('main_phone', $contact->main_phone) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="main_phone"
+            label-text="Telefone 1"
+            input-type="text"
+            input-name="main_phone"
+            class-one=""
+            input-value="{{ $contact->main_phone }}"
+            :input-readonly="false"
+        />
     </div>
 
     <div class="col-md-2 mb-2">
-        <label for="ddd_two">DDD 2</label>
-        <input maxlength="3" type="text" id="ddd_two" name="ddd_two"
-            class="form-control @error('ddd_two') is-invalid @enderror"
-            value="{{ old('ddd_two', $contact->ddd_two) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="ddd_two"
+            label-text="DDD 2"
+            input-type="text"
+            input-name="ddd_two"
+            class-one=""
+            input-value="{{ $contact->ddd_two }}"
+            :input-readonly="false"
+            maxlength="3"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="phone_two">Telefone 2</label>
-        <input type="text" id="phone_two" name="phone_two"
-            class="form-control @error('phone_two') is-invalid @enderror"
-            value="{{ old('phone_two', $contact->phone_two) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="phone_two"
+            label-text="Telefone 2"
+            input-type="text"
+            input-name="phone_two"
+            class-one=""
+            input-value="{{ $contact->phone_two }}"
+            :input-readonly="false"
+        />
     </div>
 </div>
 
 <div class="row mt-2">
     <div class="col-md-2 mb-2">
-        <label for="ddd_three">DDD 3</label>
-        <input maxlength="3" type="text" id="ddd_three" name="ddd_three"
-            class="form-control @error('ddd_three') is-invalid @enderror"
-            value="{{ old('ddd_three', $contact->ddd_three) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="ddd_three"
+            label-text="DDD 3"
+            input-type="text"
+            input-name="ddd_three"
+            class-one=""
+            input-value="{{ $contact->ddd_three }}"
+            :input-readonly="false"
+            maxlength="3"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="phone_three">Telefone 3</label>
-        <input type="text" id="phone_three" name="phone_three"
-            class="form-control @error('phone_three') is-invalid @enderror"
-            value="{{ old('phone_three', $contact->phone_three) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="phone_three"
+            label-text="Telefone 3"
+            input-type="text"
+            input-name="phone_three"
+            class-one=""
+            input-value="{{ $contact->phone_three }}"
+            :input-readonly="false"
+        />
     </div>
 
     <div class="col-md-2 mb-2">
-        <label for="ddd_four">DDD 4</label>
-        <input maxlength="3" type="text" id="ddd_four" name="ddd_four"
-            class="form-control @error('ddd_four') is-invalid @enderror"
-            value="{{ old('ddd_four', $contact->ddd_four) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="ddd_four"
+            label-text="DDD 4"
+            input-type="text"
+            input-name="ddd_four"
+            class-one=""
+            input-value="{{ $contact->ddd_four }}"
+            :input-readonly="false"
+            maxlength="3"
+        />
     </div>
     <div class="col-md-4 mb-2">
-        <label for="phone_four">Telefone 4</label>
-        <input type="text" id="phone_four" name="phone_four"
-            class="form-control @error('phone_four') is-invalid @enderror"
-            value="{{ old('phone_four', $contact->phone_four) }}"
-            placeholder=""
-            >
+        <x-intec-input
+            label-input-id="phone_four"
+            label-text="Telefone 4"
+            input-type="text"
+            input-name="phone_four"
+            class-one=""
+            input-value="{{ $contact->phone_four }}"
+            :input-readonly="false"
+        />
     </div>
 </div>
                             

@@ -7,7 +7,6 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Contact;
 use App\Models\Position;
 use App\Models\Researcher;
 use App\Traits\ContactActionsTrait;
@@ -245,28 +244,6 @@ class CompanyController extends Controller
         }
 
         return redirect()->route('company.index');
-    }
-
-
-    public function destroyContact(Request $request, Contact $contact)
-    {
-        try {
-            DB::beginTransaction();
-
-            $contact->delete();
-
-            DB::commit();
-
-        } catch (\Exception $ex) {
-
-            DB::rollBack();
-            
-            return redirect()->back()
-                ->withInput($request->all())
-                ->withErrors(['message' => $ex->getMessage()]);
-        }
-
-        return redirect()->back();
     }
 
     public function importCompanies()

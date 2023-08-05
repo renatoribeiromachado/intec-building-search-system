@@ -110,4 +110,27 @@ trait ContactActionsTrait
 
         return redirect()->back();
     }
+
+    public function destroyContact(Request $request, Contact $contact)
+    {
+        try {
+            DB::beginTransaction();
+
+            $contact->delete();
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+        }
+
+        session()->flash('success', 'Contato excluído.');
+
+        return redirect()->back();
+    }
 }

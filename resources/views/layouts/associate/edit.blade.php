@@ -74,7 +74,7 @@
                         <th class="bg-dark text-white text-center">Ação</th>
                     </tr>
 
-                    @foreach ($company->contacts()->get() as $contact)
+                    @forelse ($company->contacts()->get() as $contact)
                         <tr>
                             <td>
                                 {{ $contact->name }}
@@ -178,7 +178,7 @@
                                 <x-intec-modal
                                     id="deleteContact{{ $loop->index }}"
                                     aria-labelledby="deleteContactLabel{{ $loop->index }}"
-                                    route="{{ route('associate.contact.destroy', [$company->id, $contact->id]) }}"
+                                    route="{{ route('associate.contact.destroy', $contact->id) }}"
                                     title="Excluir Contato"
                                     collection="{{ $contact }}"
                                     submit-button-class="btn btn-outline-danger"
@@ -193,7 +193,13 @@
                                 </x-intec-modal>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-4">
+                                Nenhum contato encontrado.
+                            </td>
+                        </tr>
+                    @endforelse
                 </table>
             </div>
         </div>
