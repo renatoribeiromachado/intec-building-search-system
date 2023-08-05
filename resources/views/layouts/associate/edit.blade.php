@@ -19,6 +19,12 @@
 
             <div class="row mt-4">
                 <div class="col-md-12">
+                    <a
+                        href="{{ route('associate.order.create', $company->id) }}"
+                        class="btn btn-outline-info me-1 text-dark">
+                        Gerar pedido
+                    </a>
+
                     <button
                         type="button"
                         class="btn btn-outline-success me-1"
@@ -27,6 +33,7 @@
                         >
                         Add contatos
                     </button>
+
                     <button
                         type="submit"
                         class="btn btn-outline-success me-1 text-dark"

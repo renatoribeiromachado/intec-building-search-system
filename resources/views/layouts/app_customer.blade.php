@@ -236,6 +236,33 @@
                 };
             
                 $('.phone').mask(SPMaskBehavior, spOptions);
+
+                // $(".cpfcnpj").keydown(function() {
+                //     try {
+                //         $(".cpfcnpj").unmask();
+                //     } catch (e) {
+                //         // console.log(e)
+                //     }
+
+                //     var tamanho = $(".cpfcnpj").val().length;
+
+                //     if(tamanho < 11){
+                //         $(".cpfcnpj").mask("999.999.999-99");
+                //     } else {
+                //         $(".cpfcnpj").mask("99.999.999/9999-99");
+                //     }
+
+                //     // adjusting the focus
+                //     var elem = this;
+                //     setTimeout(function(){
+                //         // change the selector position
+                //         elem.selectionStart = elem.selectionEnd = 10000;
+                //     }, 0);
+                //     // clone value to change the focus
+                //     var currentValue = $(this).val();
+                //     $(this).val('');
+                //     $(this).val(currentValue);
+                // });
                 // end jquery mask
 
                 // alerts

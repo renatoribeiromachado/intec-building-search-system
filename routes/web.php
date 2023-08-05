@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateController;
-use App\Http\Controllers\AssociateWorkController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
@@ -15,8 +15,6 @@ use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
-use App\Http\Controllers\ResearcheWorkController;
-use App\Http\Controllers\RolesController;
 use App\Http\Controllers\WorkSearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -244,6 +242,16 @@ Route::middleware(['auth'])->group(function () {
             'destroy/{contact}',
             [AssociateController::class, 'destroyContact']
         )->name('associate.contact.destroy');
+
+        // Add / Edit Order
+        Route::prefix('{company}/orders')->group(function () {
+            // Route::get('/', [SegmentController::class, 'index'])->name('segment.index');
+            Route::get('create', [OrderController::class, 'create'])->name('associate.order.create');
+            Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
+            // Route::get('edit/{segment}', [SegmentController::class, 'edit'])->name('segment.edit');
+            // Route::put('update/{segment}', [SegmentController::class, 'update'])->name('segment.update');
+            // Route::delete('{segment}', [SegmentController::class, 'destroy'])->name('segment.destroy');
+        });
     });
 
     Route::prefix('positions')->group(function () {
@@ -259,7 +267,7 @@ Route::middleware(['auth'])->group(function () {
         ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
     Route::get('permission/{permission}', [PermissionsController::class, 'undo'])
         ->middleware('auth:sanctum')->name('permission.undo');
-    
+
     // Route::resource('role', RolesController::class)
     //     ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
     // Route::get('role/{role}', [RolesController::class, 'undo'])

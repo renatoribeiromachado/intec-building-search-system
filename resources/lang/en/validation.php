@@ -217,6 +217,19 @@ return [
         'products_and_services' => 'Produtos e serviços',
         'salesperson_id' => 'Vendedor(a)',
         'company_date_birth' => 'Aniversário da empresa',
+        
+        // Order
+        'plan_id' => 'Plano',
+        'work_notes' => 'Informações de Obras',
+        'situation' => 'Posição',
+        'start_at' => 'Início',
+        'ends_at' => 'Término',
+        'original_price' => 'Valor Original',
+        'discount' => 'Desconto Aplicado',
+        'final_price' => 'Valor Concedido',
+        'first_due_date' => '1º Vencimento',
+        'installments' => 'Qtde. de Parcelas',
+        'easy_payment_condition' => 'Condição Facilitada de Pagamento',
     ],
 
 ];
