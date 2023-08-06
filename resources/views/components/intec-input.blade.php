@@ -8,7 +8,7 @@
     name="{{ $inputName }}"
     class="form-control {{ $classOne }} @error($inputName) is-invalid @enderror"
     value="{{ old($inputName, $inputValue) }}"
-    placeholder=""
+    {{-- placeholder="{{ $inputPlaceholder }}" --}}
     @if ($inputReadonly) readonly @endif
     {{ $attributes }}
     >
