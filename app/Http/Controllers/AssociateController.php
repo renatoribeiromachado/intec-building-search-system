@@ -192,7 +192,7 @@ class AssociateController extends Controller
 
         session()->flash('success', 'Associado criado.');
 
-        return redirect()->route('associate.create');
+        return redirect()->route('associate.edit', $associate->id);
     }
 
     public function edit(Request $request, Associate $associate)

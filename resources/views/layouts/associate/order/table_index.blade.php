@@ -100,7 +100,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center py-4">
+                    <td colspan="9" class="text-center py-4">
                         Nenhum contato encontrado.
                     </td>
                 </tr>

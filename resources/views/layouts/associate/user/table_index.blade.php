@@ -105,7 +105,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center py-4">
+                    <td colspan="5" class="text-center py-4">
                         Nenhum acesso a associado encontrado.
                     </td>
                 </tr>
