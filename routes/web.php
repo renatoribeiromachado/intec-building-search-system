@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\ActivityFieldController;
-use App\Http\Controllers\AssociateWorkController;
+use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
@@ -14,8 +15,6 @@ use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
-use App\Http\Controllers\ResearcheWorkController;
-use App\Http\Controllers\RolesController;
 use App\Http\Controllers\WorkSearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -222,12 +221,44 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('associates')->group(function() {
-        Route::get('/', AssociateWorkController::class)->name('associate.index');
+        Route::get('/', AssociateController::class)->name('associate.index');
+        Route::get('create', [AssociateController::class, 'create'])->name('associate.create');
+        Route::post('store', [AssociateController::class, 'store'])->name('associate.store');
+        Route::get('edit/{associate}', [AssociateController::class, 'edit'])->name('associate.edit');
+        Route::put('{associate}', [AssociateController::class, 'update'])->name('associate.update');
 
-        Route::get('/associated_registration', function () {
-            return view('layouts.customer_area.associated_registration');
-        })->name('associates.associated_registration');
-        
+        // Add / Edit contact
+        Route::post(
+            'store/{company}',
+            [AssociateController::class, 'storeContact']
+        )->name('associate.contact.store');
+
+        Route::put(
+            'update/{contact}',
+            [AssociateController::class, 'updateContact']
+        )->name('associate.contact.update');
+
+        Route::delete(
+            'destroy/{contact}',
+            [AssociateController::class, 'destroyContact']
+        )->name('associate.contact.destroy');
+
+        // Add / Edit Order
+        Route::prefix('{company}/orders')->group(function () {
+            Route::get('create', [OrderController::class, 'create'])->name('associate.order.create');
+            Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
+            Route::put('update/{order}', [OrderController::class, 'update'])->name('associate.order.update');
+            Route::delete('{order}', [OrderController::class, 'destroy'])->name('associate.order.destroy');
+        });
+
+        Route::prefix('{company}/users')->group(function () {
+            Route::post('store',
+                [UserController::class, 'storeAssociateUser'])->name('associate.user.store');
+            Route::put('update/{contact}',
+                [UserController::class, 'updateAssociateUser'])->name('associate.user.update');
+            Route::delete('{contact}',
+                [UserController::class, 'destroyAssociateUser'])->name('associate.user.destroy');
+        });
     });
 
     Route::prefix('positions')->group(function () {
@@ -243,7 +274,7 @@ Route::middleware(['auth'])->group(function () {
         ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
     Route::get('permission/{permission}', [PermissionsController::class, 'undo'])
         ->middleware('auth:sanctum')->name('permission.undo');
-    
+
     // Route::resource('role', RolesController::class)
     //     ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
     // Route::get('role/{role}', [RolesController::class, 'undo'])

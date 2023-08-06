@@ -28,4 +28,11 @@ class Position extends Model
             ->orderBy('positions.id', 'asc')
             ->paginate(15);
     }
+
+    public function getPositionList()
+    {
+        return self::select('id', 'description')
+            ->orderBy('description', 'asc')
+            ->get()->pluck('description', 'id');
+    }
 }

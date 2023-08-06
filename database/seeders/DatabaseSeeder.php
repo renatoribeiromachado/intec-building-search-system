@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             ActivityFieldSeeder::class,
             WorkFeatureSeeder::class,
             ZoneSeeder::class,
-            StateSeeder::class
+            StateSeeder::class,
+            PlanSeeder::class
         ]);
     }
 }

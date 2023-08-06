@@ -38,6 +38,16 @@ if (! function_exists('convertDecimalToBRL')) {
 
 }
 
+if (! function_exists('fillLeftWithZeros')) {
+    function fillLeftWithZeros($value, int $length = 4)
+    {
+        if (is_null($value) || empty($value)) {
+            return 'String não encontrada.';
+        }
+        return str_pad($value, $length, "0", STR_PAD_LEFT);
+    }
+}
+
 if (! function_exists('findZoneForStates')) {
     function findZoneForStates($state)
     {

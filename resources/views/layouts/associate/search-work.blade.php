@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <form class="search" action="" method="post">
-    @csrf
+    <form class="search" action="" method="get">
+        @csrf
 
         <div class="row mt-2">
             <div class="col-md-2">
@@ -33,7 +33,7 @@
 
         <div class="row mt-4">
             <div class="col-md-12">
-                <a href="{{ route('associates.associated_registration') }}" class="btn btn-primary" title="Cadastrar Novo Cliente (Associado)"><i class="fa fa-ok"></i> Cadastrar Novo</a>
+                <a href="{{ route('associate.create') }}" class="btn btn-primary" title="Cadastrar Novo Cliente (Associado)"><i class="fa fa-ok"></i> Cadastrar Novo</a>
                 <button type="submit" class="btn btn-success submit" title="Pesquisar" ><i class="fa fa-search"></i> Pesquisar</button> 
             </div>
         </div>

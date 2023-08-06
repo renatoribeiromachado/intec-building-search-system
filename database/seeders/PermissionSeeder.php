@@ -144,6 +144,15 @@ class PermissionSeeder extends Seeder
             ['name' => 'Excluir Cargo'],
             ['name' => 'Pesquisar Cargo'],
 
+            // FOR ORDER
+            ['name' => 'Ver Lista de Pedidos'],
+            ['name' => 'Criar Pedido'],
+            ['name' => 'Ver Pedido'],
+            ['name' => 'Editar Pedido'],
+            ['name' => 'Habilitar Pedido'],
+            ['name' => 'Desabilitar Pedido'],
+            ['name' => 'Excluir Pedido'],
+            ['name' => 'Pesquisar Pedido'],
         ];
 
         $permissionsQuantity = count($permissions);
