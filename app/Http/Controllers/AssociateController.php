@@ -72,16 +72,14 @@ class AssociateController extends Controller
         $this->role = $role;
     }
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $stagesOne = $this->stage->where('phase_id', 1)->get();
-        $stagesTwo = $this->stage->where('phase_id', 2)->get();
-        $stagesThree = $this->stage->where('phase_id', 3)->get();
+        $associates = $request->has('search_id')
+            ? $this->associate->allAssociates($request)
+            : [];
 
-        return view('layouts.associate.search-work', compact(
-            'stagesOne',
-            'stagesTwo',
-            'stagesThree',
+        return view('layouts.associate.index', compact(
+            'associates',
         ));
     }
 
@@ -137,6 +135,7 @@ class AssociateController extends Controller
     public function store(StoreAssociateRequest $request) // StoreCompanyRequest
     {
         try {
+
             DB::beginTransaction();
 
             // Company
@@ -280,6 +279,7 @@ class AssociateController extends Controller
     public function update(UpdateAssociateRequest $request, Associate $associate)
     {
         try {
+            
             DB::beginTransaction();
 
             // Company
