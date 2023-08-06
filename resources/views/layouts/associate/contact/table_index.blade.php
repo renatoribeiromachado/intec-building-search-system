@@ -35,7 +35,7 @@
                 <th class="bg-dark text-white text-center">Ação</th>
             </tr>
 
-            @forelse ($company->contacts()->get() as $contact)
+            @forelse ($contacts as $contact)
                 <tr>
                     <td>
                         {{ $contact->name }}

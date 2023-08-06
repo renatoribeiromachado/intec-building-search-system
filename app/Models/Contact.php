@@ -13,6 +13,7 @@ class Contact extends Model
         'work_id',
         'position_id',
         'company_id',
+        'user_id',
         'name',
         'ddd',
         'main_phone',
@@ -44,5 +45,10 @@ class Contact extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

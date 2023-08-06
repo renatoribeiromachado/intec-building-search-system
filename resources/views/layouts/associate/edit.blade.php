@@ -36,6 +36,15 @@
                     </button>
 
                     <button
+                        type="button"
+                        class="btn btn-outline-secondary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addAcesso"
+                        >
+                        Dados de acesso
+                    </button>
+
+                    <button
                         type="submit"
                         class="btn btn-outline-success me-1 text-dark"
                         >
@@ -45,28 +54,9 @@
             </div>
         </form>
 
-        {{-- @if ($company->order->exists())
-            <x-intec-modal
-                id="editOrder"
-                aria-labelledby="editOrderLabel"
-                route="{{ route('associate.contact.update', optional($company->order)->id) }}"
-                title="Adicionar Contato"
-                collection="{{ $contact }}"
-                submit-button-class="btn btn-primary"
-                submit-button-text="Salvar"
-                size="modal-xl"
-                http-method="post"
-                >
-                <div class="container-fluid">
-                    <div class="container">
-                        @include('layouts.associate.modals.add_edit_associate_contact')
-                        @include('layouts.forms.add_edit_order')
-                    </div>
-                </div>
-            </x-intec-modal>
-        @endif --}}
-
         @include('layouts.associate.contact.table_index')
+
+        @include('layouts.associate.user.table_index')
 
         @include('layouts.associate.order.table_index')
 

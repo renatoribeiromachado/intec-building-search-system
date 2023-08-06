@@ -47,6 +47,11 @@ class Role extends Model
     {
         return $query->where('name', $role);
     }
+
+    public static function scopeUserRoleIsNot($query, $name)
+    {
+        return $query->where('name', '!=', $name);
+    }
     
     // Eloquent Relationship Methods
     public function permissions()

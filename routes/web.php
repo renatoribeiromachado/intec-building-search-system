@@ -245,12 +245,19 @@ Route::middleware(['auth'])->group(function () {
 
         // Add / Edit Order
         Route::prefix('{company}/orders')->group(function () {
-            // Route::get('/', [SegmentController::class, 'index'])->name('segment.index');
             Route::get('create', [OrderController::class, 'create'])->name('associate.order.create');
             Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
-            // Route::get('edit/{segment}', [SegmentController::class, 'edit'])->name('segment.edit');
             Route::put('update/{order}', [OrderController::class, 'update'])->name('associate.order.update');
             Route::delete('{order}', [OrderController::class, 'destroy'])->name('associate.order.destroy');
+        });
+
+        Route::prefix('{company}/users')->group(function () {
+            Route::post('store',
+                [UserController::class, 'storeAssociateUser'])->name('associate.user.store');
+            Route::put('update/{contact}',
+                [UserController::class, 'updateAssociateUser'])->name('associate.user.update');
+            Route::delete('{contact}',
+                [UserController::class, 'destroyAssociateUser'])->name('associate.user.destroy');
         });
     });
 

@@ -11,6 +11,7 @@ use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Plan;
 use App\Models\Position;
+use App\Models\Role;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\User;
@@ -42,6 +43,8 @@ class AssociateController extends Controller
     protected $contact;
     protected $position;
     protected $plan;
+    protected $user;
+    protected $role;
 
     public function __construct(
         Stage $stage,
@@ -52,7 +55,9 @@ class AssociateController extends Controller
         User $salesperson,
         Contact $contact,
         Position $position,
-        Plan $plan
+        Plan $plan,
+        User $user,
+        Role $role
     ) {
         $this->stage = $stage;
         $this->company = $company;
@@ -63,6 +68,8 @@ class AssociateController extends Controller
         $this->contact = $contact;
         $this->position = $position;
         $this->plan = $plan;
+        $this->user = $user;
+        $this->role = $role;
     }
 
     public function __invoke()
@@ -191,6 +198,15 @@ class AssociateController extends Controller
     public function edit(Request $request, Associate $associate)
     {
         $company = $associate->company;
+        $contacts = $company->contacts()
+            ->whereDoesntHave('user')
+            ->get();
+
+        $associates = $company->contacts()
+            ->whereNotNull('contacts.user_id')
+            ->orderBy('contacts.name', 'asc')
+            ->get();
+
         $states = $this->state
             ->orderBy('state_acronym', 'asc')
             ->pluck('state_acronym', 'state_acronym');
@@ -230,6 +246,15 @@ class AssociateController extends Controller
         $installments = collect(Order::ORDER_INSTALLMENTS)
             ->pluck('description', 'installment');
 
+        $user = $this->user;
+        $roles = $this->role
+            ->select('id', 'name')
+            ->userRoleIsNot('Webmaster')
+            ->userRoleIsNot('Suporte')
+            ->userRoleIsNot('Administrador')
+            ->orderBy('name', 'asc')
+            ->get()->pluck('name', 'id');
+
         return view('layouts.associate.edit', compact(
             'associate',
             'states',
@@ -240,11 +265,15 @@ class AssociateController extends Controller
             'isActive',
             'salespersons',
             'contact',
+            'contacts',
             'positions',
             'orders',
             'situations',
             'plans',
             'installments',
+            'user',
+            'roles',
+            'associates',
         ));
     }
 

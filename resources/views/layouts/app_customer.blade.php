@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
-        {{-- <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title> --}}
-
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        >
 
         <title>SISTEMA INTEC | ACESSO RESTRITO</title>
 
@@ -19,7 +20,7 @@
             /* Show it is fixed to the top */
             body {
                 min-height: 75rem;
-                padding-top: 4.5rem;
+                padding-top: 6.5rem;
             }
             .menu_bg{
                 background:#000742;
@@ -27,11 +28,13 @@
         </style>
 
         @stack('styles')
-    </head>  
+    </head>
     <body style="background: #f2f6fc">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                </a>
                 <button
                     class="navbar-toggler"
                     type="button"
