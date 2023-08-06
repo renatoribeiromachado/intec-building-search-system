@@ -33,22 +33,24 @@
     <body style="background: #f2f6fc">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
             <div class="container-fluid">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo">
-                </a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse"
-                    aria-expanded="false" aria-label="Toggle navigation"
-                    >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ route('dashboard.index') }}">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                    </a>
+                    
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse"
+                        aria-controls="navbarCollapse"
+                        aria-expanded="false" aria-label="Toggle navigation"
+                        >
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
                    
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
@@ -56,30 +58,6 @@
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li> --}}
-                        <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="dropdown07XL"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                PESQUISAS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                {{-- @can('ver-empresas') --}}
-                                    <li><a class="dropdown-item" href="#">Empresas</a></li>
-                                {{-- @endcan --}}
-
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('work.search.step_one.index') }}">
-                                        Obras
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        @can('ver-administrativo')
 
                             <li class="nav-item dropdown">
                                 <a
@@ -198,10 +176,12 @@
                                 </li>
                             @endcan
                         </ul>
+
                         {{-- <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form> --}}
+
                         <ul class="navbar-nav me-0 mb-2 mb-md-0">
                             <li class="nav-item dropdown">
                                 <a
@@ -230,6 +210,7 @@
                                 </ul>
                             </li>
                         </ul>
+                        
                         {{-- 
                         <form action="{{ route('logout') }}" class="d-flex">
                             <button class="btn btn-link" type="submit">Sair</button>
