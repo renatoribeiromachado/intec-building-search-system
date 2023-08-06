@@ -1,5 +1,5 @@
 <div class="row mt-2">
-    <div class="col-md-7 mb-2">
+    <div class="col-md-6 mb-2">
         <x-intec-input
             label-input-id="name"
             label-text="Nome"
@@ -11,8 +11,7 @@
             required
         />
     </div>
-
-    <div class="col-md-5 mb-2">
+    <div class="col-md-6 mb-2">
         <x-intec-select
             select-name="position_id"
             select-label="Cargo"
@@ -21,6 +20,60 @@
             placeholder="-- Selecione --"
             :collection="$positions"
             value="{{ $contact->position_id }}"
+        />
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-md-2 mb-2">
+        <x-intec-input
+            label-input-id="ddd"
+            label-text="DDD"
+            input-type="text"
+            input-name="ddd"
+            class-one=""
+            input-value="{{ $contact->ddd }}"
+            :input-readonly="false"
+            required
+            maxlength="3"
+        />
+    </div>
+    <div class="col-md-4 mb-2">
+        <x-intec-input
+            label-input-id="main_phone"
+            label-text="Telefone"
+            input-type="text"
+            input-name="main_phone"
+            class-one=""
+            input-value="{{ $contact->main_phone }}"
+            :input-readonly="false"
+            required
+        />
+    </div>
+
+    <div class="col-md-2 mb-2">
+        <x-intec-input
+            label-input-id="ddd_two"
+            label-text="DDD 2"
+            input-type="text"
+            input-name="ddd_two"
+            class-one=""
+            input-value="{{ $contact->ddd_two }}"
+            :input-readonly="false"
+            required
+            maxlength="3"
+        />
+    </div>
+    <div class="col-md-4 mb-2">
+        <x-intec-input
+            label-input-id="phone_two"
+            label-text="Telefone 2"
+            input-type="text"
+            input-name="phone_two"
+            class-one=""
+            input-value="{{ $contact->phone_two }}"
+            :input-readonly="false"
+            required
         />
     </div>
 </div>

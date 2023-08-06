@@ -27,6 +27,7 @@
             <tr>
                 <th class="bg-dark text-white">Nome</th>
                 <th class="bg-dark text-white">E-mail</th>
+                <th class="bg-dark text-white">Telefone(s)</th>
                 <th class="bg-dark text-white">Cargo</th>
                 <th class="bg-dark text-white">Status</th>
                 <th class="bg-dark text-white text-center">Ação</th>
@@ -39,6 +40,14 @@
                     </td>
                     <td>
                         {{ $contact->user->email }}
+                    </td>
+                    <td>
+                        @if ($contact->ddd && $contact->main_phone)
+                        ({{ $contact->ddd }}) {{ $contact->main_phone }} /
+                        @endif
+                        @if ($contact->ddd_two && $contact->phone_two)
+                        ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
+                        @endif
                     </td>
                     <td>
                         {{ optional($contact->position)->description }}

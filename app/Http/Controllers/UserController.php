@@ -197,6 +197,10 @@ class UserController extends Controller
                 'position_id' => $request->position_id,
                 'company_id' => $company->id,
                 'name' => $user->name,
+                'ddd' => $request->ddd,
+                'main_phone' => $request->main_phone,
+                'ddd_two' => $request->ddd_two,
+                'phone_two' => $request->phone_two,
                 'email' => $user->email,
                 'is_active' => $request->user_is_active,
                 'created_by' => auth()->user()->id,
@@ -252,6 +256,10 @@ class UserController extends Controller
 
             $contact->position_id = $request->position_id;
             $contact->name = $user->name;
+            $contact->ddd = $request->ddd;
+            $contact->main_phone = $request->main_phone;
+            $contact->ddd_two = $request->ddd_two;
+            $contact->phone_two = $request->phone_two;
             $contact->email = $user->email;
             $contact->is_active = $request->user_is_active;
             $contact->updated_by = auth()->user()->id;

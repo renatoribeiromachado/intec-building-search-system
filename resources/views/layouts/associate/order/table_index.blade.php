@@ -45,9 +45,18 @@
                         Em {{ $order->installments }}x
                     </td>
 
-                    <td style="width: 210px;">
+                    <td style="width: 340px;">
                         <div class="text-center">
+                            <a
+                                href="{{ route('associate.order.report.index', [$company->id, $order->id]) }}"
+                                class="btn btn-success me-1"
+                                target="_blank"
+                                >
+                                Gerar Relatório
+                            </a>
+
                             <button
+                                type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editOrder{{$loop->index}}"
                                 class="btn btn-outline-success me-1"
@@ -55,6 +64,7 @@
                             </button>
                             
                             <button
+                                type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteOrder{{$loop->index}}"
                                 class="btn btn-outline-danger"

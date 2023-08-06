@@ -5,6 +5,7 @@ use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderReportController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PhaseController;
 use App\Http\Controllers\PositionController;
@@ -229,17 +230,17 @@ Route::middleware(['auth'])->group(function () {
 
         // Add / Edit contact
         Route::post(
-            'store/{company}',
+            'contacts/store/{company}',
             [AssociateController::class, 'storeContact']
         )->name('associate.contact.store');
 
         Route::put(
-            'update/{contact}',
+            'contacts/update/{contact}',
             [AssociateController::class, 'updateContact']
         )->name('associate.contact.update');
 
         Route::delete(
-            'destroy/{contact}',
+            'contacts/destroy/{contact}',
             [AssociateController::class, 'destroyContact']
         )->name('associate.contact.destroy');
 
@@ -249,6 +250,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
             Route::put('update/{order}', [OrderController::class, 'update'])->name('associate.order.update');
             Route::delete('{order}', [OrderController::class, 'destroy'])->name('associate.order.destroy');
+
+            Route::get('reports/{order}', OrderReportController::class)->name('associate.order.report.index');
         });
 
         Route::prefix('{company}/users')->group(function () {

@@ -9,6 +9,22 @@ class Order extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'work_notes',
+        'situation',
+        'start_at',
+        'ends_at',
+        'original_price',
+        'discount',
+        'final_price',
+        'first_due_date',
+        'installments',
+        'easy_payment_condition',
+        'notes',
+        'created_by',
+        'updated_by',
+    ];
+
     const ORDER_SITUATIONS = [
         ['description' => 'Novo'],
         ['description' => 'Upgrade'],
@@ -32,5 +48,10 @@ class Order extends Model
     public function plan()
     {
         return $this->belongsTo(Plan::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }
