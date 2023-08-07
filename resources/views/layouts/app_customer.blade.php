@@ -95,13 +95,13 @@
                                         ADMINISTRATIVO
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="administrative">
-                                        @can('ver-configuracoes')
+                                        {{-- @can('ver-configuracoes') --}}
                                             <li>
                                                 <a class="dropdown-item" href="{{ route('associate.index') }}">
                                                     Associados
                                                 </a>
                                             </li>
-                                        @endcan
+                                        {{-- @endcan --}}
 
                                         <li>
                                             <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
