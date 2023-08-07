@@ -71,4 +71,14 @@ class Associate extends Model
     {
         return $this->belongsToMany(State::class);
     }
+
+    public function segmentSubTypes()
+    {
+        return $this->belongsToMany(
+            SegmentSubType::class,
+            'associate_segment_sub_type',
+            'associate_id',
+            'seg_sub_type_id'
+        );
+    }
 }

@@ -14,6 +14,7 @@ class StateCheckboxGroup extends Component
     public $dataList;
     public $listInputIdFor;
     public $listInputName;
+    public $collectionRelation;
 
     /**
      * Create a new component instance.
@@ -28,7 +29,8 @@ class StateCheckboxGroup extends Component
         $classTwo,
         $dataList,
         $listInputIdFor,
-        $listInputName
+        $listInputName,
+        $collectionRelation
     ) {
         $this->id = $id;
         $this->inputOneName = $inputOneName;
@@ -38,6 +40,7 @@ class StateCheckboxGroup extends Component
         $this->dataList = $dataList;
         $this->listInputIdFor = $listInputIdFor;
         $this->listInputName = $listInputName;
+        $this->collectionRelation = $collectionRelation;
     }
 
     /**

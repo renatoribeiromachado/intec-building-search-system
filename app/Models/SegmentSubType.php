@@ -34,4 +34,14 @@ class SegmentSubType extends Model
     {
         return $this->belongsTo(Segment::class);
     }
+
+    public function associates()
+    {
+        return $this->belongsToMany(
+            Associate::class,
+            'associate_segment_sub_type',
+            'seg_sub_type_id',
+            'associate_id'
+        );
+    }
 }

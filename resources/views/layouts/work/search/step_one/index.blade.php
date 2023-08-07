@@ -175,6 +175,7 @@
                     class-two="Ind"
                     list-input-id-for="segment-sub-type-one-"
                     list-input-name="segment_sub_types[]"
+                    collection-relation=""
                 />
 
                 <!--COMERCIAL-->
@@ -187,6 +188,7 @@
                     class-two="Com"
                     list-input-id-for="segment-sub-type-two-"
                     list-input-name="segment_sub_types[]"
+                    collection-relation=""
                 />
 
                 <!--RESIDENCIAL-->
@@ -199,6 +201,7 @@
                     class-two="Res"
                     list-input-id-for="segment-sub-type-three-"
                     list-input-name="segment_sub_types[]"
+                    collection-relation=""
                 />
 
                 <!--MARCAR TODAS AS REGIÕES-->
@@ -225,6 +228,7 @@
                     class-two="checkNorte checkRegiaoGeral"
                     list-input-id-for="state-one-"
                     list-input-name="states[]"
+                    collection-relation=""
                 />
 
                 <!--NORDESTE-->
@@ -237,6 +241,7 @@
                     class-two="checkNordeste checkRegiaoGeral"
                     list-input-id-for="state-two-"
                     list-input-name="states[]"
+                    collection-relation=""
                 />
 
                 <!--CENTRO-OESTE-->
@@ -249,6 +254,7 @@
                     class-two="checkCentroOeste checkRegiaoGeral"
                     list-input-id-for="state-three-"
                     list-input-name="states[]"
+                    collection-relation=""
                 />
 
                 <!--SUDESTE-->
@@ -261,6 +267,7 @@
                     class-two="checkSudeste checkRegiaoGeral"
                     list-input-id-for="state-four-"
                     list-input-name="states[]"
+                    collection-relation=""
                 />
 
                 <!--SUL-->
@@ -273,6 +280,7 @@
                     class-two="checkSul checkRegiaoGeral"
                     list-input-id-for="state-five-"
                     list-input-name="states[]"
+                    collection-relation=""
                 />
 
                 <!--FILTRO ESPECIFICO-->

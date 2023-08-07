@@ -22,6 +22,7 @@
     class-two="checkNorte checkRegiaoGeral"
     list-input-id-for="state-one-"
     list-input-name="states[]"
+    :collection-relation="$associate->states"
 />
 
 <!--NORDESTE-->
@@ -34,6 +35,7 @@
     class-two="checkNordeste checkRegiaoGeral"
     list-input-id-for="state-two-"
     list-input-name="states[]"
+    :collection-relation="$associate->states"
 />
 
 <!--CENTRO-OESTE-->
@@ -46,6 +48,7 @@
     class-two="checkCentroOeste checkRegiaoGeral"
     list-input-id-for="state-three-"
     list-input-name="states[]"
+    :collection-relation="$associate->states"
 />
 
 <!--SUDESTE-->
@@ -58,6 +61,7 @@
     class-two="checkSudeste checkRegiaoGeral"
     list-input-id-for="state-four-"
     list-input-name="states[]"
+    :collection-relation="$associate->states"
 />
 
 <!--SUL-->
@@ -70,6 +74,7 @@
     class-two="checkSul checkRegiaoGeral"
     list-input-id-for="state-five-"
     list-input-name="states[]"
+    :collection-relation="$associate->states"
 />
 
 <!--SEGMENTO E ATUAÇÕES-->
@@ -94,6 +99,7 @@
     class-two="Ind"
     list-input-id-for="segment-sub-type-one-"
     list-input-name="segment_sub_types[]"
+    :collection-relation="$associate->segmentSubTypes"
 />
 
 <!--COMERCIAL-->
@@ -106,6 +112,7 @@
     class-two="Com"
     list-input-id-for="segment-sub-type-two-"
     list-input-name="segment_sub_types[]"
+    :collection-relation="$associate->segmentSubTypes"
 />
 
 <!--RESIDENCIAL-->
@@ -118,6 +125,7 @@
     class-two="Res"
     list-input-id-for="segment-sub-type-three-"
     list-input-name="segment_sub_types[]"
+    :collection-relation="$associate->segmentSubTypes"
 />
 
 

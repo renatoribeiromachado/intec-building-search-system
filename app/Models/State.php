@@ -15,4 +15,10 @@ class State extends Model
         'created_by',
         'updated_by',
     ];
+
+    // Eloquent relationship methods
+    public function associates()
+    {
+        return $this->belongsToMany(Associate::class);
+    }
 }

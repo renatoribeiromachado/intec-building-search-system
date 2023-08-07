@@ -19,7 +19,7 @@
 <x-intec-modal
     id="addSignature"
     aria-labelledby="addSignatureLabel"
-    route="{{ route('associate.user.store', $company->id) }}"
+    route="{{ route('associate.subscription.store', $company->associate->id) }}"
     title="Adicionar Acesso para Associado"
     collection="{{ $associates }}"
     submit-button-class="btn btn-primary"

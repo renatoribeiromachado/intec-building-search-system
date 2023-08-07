@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\SegmentSubTypeController;
 use App\Http\Controllers\StageController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
@@ -262,6 +263,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('reports/{order}', OrderReportController::class)->name('associate.order.report.index');
         });
 
+        // Add / Edit Associate Access
         Route::prefix('{company}/users')->group(function () {
             Route::post('store',
                 [UserController::class, 'storeAssociateUser'])->name('associate.user.store');
@@ -269,6 +271,11 @@ Route::middleware(['auth'])->group(function () {
                 [UserController::class, 'updateAssociateUser'])->name('associate.user.update');
             Route::delete('{contact}',
                 [UserController::class, 'destroyAssociateUser'])->name('associate.user.destroy');
+        });
+
+        Route::prefix('{associate}/subscriptions')->group(function () {
+            Route::post('store',
+                [SubscriptionController::class, 'store'])->name('associate.subscription.store');
         });
     });
 

@@ -25,6 +25,10 @@
                         name="{{ $listInputName }}"
                         class="{{ $classTwo }}"
                         value="{{ $item->id }}"
+                        @if ((! \Route::is('work.search.step_one.index')) && 
+                            $collectionRelation->contains($item))
+                            checked
+                        @endif
                         >
                     <label
                         for="{{ "{$listInputIdFor}{$item->id}" }}"
