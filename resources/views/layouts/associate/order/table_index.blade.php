@@ -42,7 +42,7 @@
                         {{ optional($order->first_due_date)->format('d/m/Y') }}
                     </td>
                     <td>
-                        Em {{ $order->installments }}x
+                        {{ $order->easy_payment_condition }}
                     </td>
 
                     <td style="width: 340px;">
@@ -55,13 +55,19 @@
                                 Gerar Relatório
                             </a>
 
-                            <button
+                            <a
+                                href="{{ route('associate.order.edit',  [$company->id, $order->id]) }}"
+                                class="btn btn-outline-success me-1"
+                                >Editar
+                            </a>
+
+                            {{-- <button
                                 type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editOrder{{$loop->index}}"
                                 class="btn btn-outline-success me-1"
                                 >Editar
-                            </button>
+                            </button> --}}
                             
                             <button
                                 type="button"
@@ -72,7 +78,7 @@
                             </button>
                         </div>
 
-                        <x-intec-modal
+                        {{-- <x-intec-modal
                             id="editOrder{{ $loop->index }}"
                             aria-labelledby="editOrdertLabel{{ $loop->index }}"
                             route="{{ route('associate.order.update', [$company->id, $order->id]) }}"
@@ -88,7 +94,7 @@
                                     @include('layouts.associate.modals.edit_associate_order')
                                 </div>
                             </div>
-                        </x-intec-modal>
+                        </x-intec-modal> --}}
 
                         <x-intec-modal
                             id="deleteOrder{{ $loop->index }}"

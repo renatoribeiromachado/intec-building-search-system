@@ -142,7 +142,10 @@
 
             <table class="table table-bordered remove-margin-bottom">
                 <tr>
-                    <th class="text-center">Informações de Obras:</th>
+                    <th class="text-center">
+                        Informações de Obras:
+                        {{ $order->work_notes }}
+                    </th>
                 </tr>
             </table>
 

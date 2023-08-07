@@ -18,9 +18,9 @@ if (! function_exists('convertMaskToDecimal')) {
         if (! is_null($value) || (! empty($value))) {
             $source = array('.', ',');
             $replace = array('', '.');
-            $valueConverted = str_replace($source, $replace, $value);
 
-            return $valueConverted;
+            // value converted
+            return str_replace($source, $replace, $value);
         }
         return 0;
     }
@@ -45,6 +45,24 @@ if (! function_exists('fillLeftWithZeros')) {
             return 'String não encontrada.';
         }
         return str_pad($value, $length, "0", STR_PAD_LEFT);
+    }
+}
+
+if (! function_exists('applyDiscount')) {
+
+    /**
+     * @param $value ex.: 400.00
+     * @param $discountValue ex.: 20
+     */
+    function applyDiscount(float $value = null, float $discountValue = null, bool $inPercentage = true)
+    {
+        if ($inPercentage) {
+            $result = (float) round( $value - ( ($discountValue * $value) / 100 ), 2 );
+            return number_format($result, 2, ',', '.');
+        }
+
+        $result = round($value - $discountValue, 2);
+        return number_format($result, 2, ',', '.');
     }
 }
 

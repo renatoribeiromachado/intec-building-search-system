@@ -4,16 +4,16 @@
     <div class="container pb-4 bg-light border">
         <div class="row mt-4">
             <div class="col-md-12">
-                <h4><i class="fa fa-check"></i> GERAR PEDIDO</h4>
+                <h4><i class="fa fa-check"></i> EDITAR PEDIDO</h4>
             </div>
         </div>
 
         @include('layouts.alerts.all-errors')
         @include('layouts.alerts.success')
 
-        <form action="{{ route('associate.order.store', $company->id) }}" method="post" role="form">
+        <form action="{{ route('associate.order.update', [$company->id, $order->id]) }}" method="post" role="form">
             @csrf
-            @method('post')
+            @method('put')
 
             @include('layouts.forms.add_edit_order')
 
@@ -23,7 +23,7 @@
                         type="submit"
                         class="btn btn-success"
                         >
-                        Gerar Pedido
+                        Atualizar Pedido
                     </button>
                 </div>
             </div>

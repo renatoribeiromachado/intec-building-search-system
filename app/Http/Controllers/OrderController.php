@@ -10,6 +10,7 @@ use App\Models\Plan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
@@ -96,6 +97,25 @@ class OrderController extends Controller
         return redirect()->route('associate.edit', $company->associate->id);
     }
 
+    public function edit(Request $request, Company $company, Order $order)
+    {
+        $situations = collect(Order::ORDER_SITUATIONS)
+            ->pluck('description', 'description');
+
+        $plans = $this->plan->pluck('description', 'id');
+
+        $installments = collect(Order::ORDER_INSTALLMENTS)
+            ->pluck('description', 'installment');
+
+        return view('layouts.order.edit', compact(
+            'company',
+            'order',
+            'situations',
+            'plans',
+            'installments',
+        ));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -168,5 +188,38 @@ class OrderController extends Controller
         session()->flash('success', 'Pedido excluído.');
 
         return redirect()->route('associate.edit', $company->associate->id);
+    }
+
+    public function getFinalPrice(Request $request)
+    {
+        $originalPrice = convertMaskToDecimal($request->original_price);
+        $discount = convertMaskToDecimal($request->discount);
+        $discountInPercentage = (bool) $request->discount_in_percentage;
+
+        $discount = applyDiscount(
+            $originalPrice,
+            $discount,
+            $discountInPercentage
+        );
+
+        $finalPrice = convertMaskToDecimal($discount);
+
+        return response()->json(['final_price' => $finalPrice], Response::HTTP_OK);
+    }
+
+    public function calculateInstallments(Request $request)
+    {
+        $decimalValue = convertMaskToDecimal($request->final_price);
+        $installments = $request->installments;
+        $result = 0;
+
+        if ($decimalValue >= 0) {
+            $finalCalculation = $decimalValue / $installments;
+            $result = convertDecimalToBRL($finalCalculation);
+        }
+
+        $message = "{$installments}x de R$ {$result}";
+
+        return response()->json(['message' => $message], Response::HTTP_OK);
     }
 }

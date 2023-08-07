@@ -149,6 +149,13 @@ Route::middleware(['auth'])->group(function () {
             [WorkController::class, 'getCompaniesByItsActivityField']
         )->name('company.by.activity.field');
 
+        Route::post('apply-discount',
+            [OrderController::class, 'getFinalPrice']
+        )->name('associate.order.apply.discount');
+
+        Route::post('calculate-installments',
+            [OrderController::class, 'calculateInstallments']
+        )->name('associate.order.calculate_installments');
     });
 
     Route::prefix('roles')->group(function() {
@@ -247,6 +254,7 @@ Route::middleware(['auth'])->group(function () {
         // Add / Edit Order
         Route::prefix('{company}/orders')->group(function () {
             Route::get('create', [OrderController::class, 'create'])->name('associate.order.create');
+            Route::get('edit/{order}', [OrderController::class, 'edit'])->name('associate.order.edit');
             Route::post('store', [OrderController::class, 'store'])->name('associate.order.store');
             Route::put('update/{order}', [OrderController::class, 'update'])->name('associate.order.update');
             Route::delete('{order}', [OrderController::class, 'destroy'])->name('associate.order.destroy');

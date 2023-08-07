@@ -77,14 +77,33 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="discount"
-            label-text="Desconto Aplicado:"
+            label-text="Valor do Desconto:"
             input-type="text"
             input-name="discount"
             class-one="money"
-            input-value="{{ convertDecimalToBRL($order->original_price) }}"
+            input-value="{{ convertDecimalToBRL($order->discount) }}"
             :input-readonly="false"
         />
     </div>
+
+    <div class="col-md-2">
+        <div class="d-flex align-items-center" style="height: 84px;">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="discount_in_percentage"
+                    name="discount_in_percentage"
+                    @if (old('discount_in_percentage', 1)) checked @endif
+                    >
+                <label class="form-check-label" for="discount_in_percentage">
+                Desconto em % ?
+                </label>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-2">
         <x-intec-input
             label-input-id="final_price"
@@ -93,10 +112,10 @@
             input-name="final_price"
             class-one="money"
             input-value="{{ convertDecimalToBRL($order->final_price) }}"
-            :input-readonly="false"
+            :input-readonly="true"
         />
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
         <x-intec-input
             label-input-id="first_due_date"
             label-text="1º Vencimento:"
@@ -107,6 +126,9 @@
             :input-readonly="false"
         />
     </div>
+</div>
+
+<div class="row mt-2">
     <div class="col-md-4">
         <x-intec-select
             select-name="installments"
@@ -118,9 +140,6 @@
             value="{{ $order->installments }}"
         />
     </div>
-</div>
-
-<div class="row mt-2">
     <div class="col-md-4">
         <x-intec-input
             label-input-id="easy_payment_condition"
@@ -129,7 +148,7 @@
             input-name="easy_payment_condition"
             class-one=""
             input-value="{{ $order->easy_payment_condition }}"
-            :input-readonly="false"
+            :input-readonly="true"
         />
     </div>
 </div>
