@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Permission;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PermissionsController extends Controller
@@ -26,8 +28,12 @@ class PermissionsController extends Controller
     public function index()
     {
         $this->authorize('ver-funcao-administrativa');
+
+        $permission = $this->permission;
         
-        $permissions = $this->permission->orderBy('id', 'asc')->paginate(20);
+        $permissions = $this->permission
+            ->orderBy('id', 'asc')
+            ->paginate(50);
 
         // if(Auth::user()->role->name != 'Webmaster') {
             
@@ -53,11 +59,10 @@ class PermissionsController extends Controller
         //                             ->orderBy('id', 'desc')->paginate(20);
         // }
 
-        return view(
-            'layouts.settings.permissions.index', compact(
-                'permissions'
-            )
-        );
+        return view('layouts.settings.permission.index', compact(
+            'permissions',
+            'permission',
+        ));
     }
 
     /**
@@ -68,17 +73,30 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        $permission = $this->permission;
-        $inputs = $request->all();
+        try {
 
-        $permission->name = $inputs['name'];
-        $permission->slug = Str::slug($permission->name);
+            DB::beginTransaction();
 
-        $permission->save();
+            $permission = $this->permission;
+            $permission->name = $request->name;
+            $permission->slug = Str::slug($request->name);
+            $permission->save();
 
-        return redirect()->back()
-            ->with('success',  'A permissão <strong>' . $permission->name . '</strong> foi adicionada!');
+            DB::commit();
 
+        } catch(Exception $ex) {
+
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+            
+        }
+
+        session()->flash('success', 'Permissão criada.');
+
+        return redirect()->back();
     }
 
     /**
@@ -90,15 +108,29 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        $inputs = $request->all();
+        try {
 
-        $permission->name = $inputs['name'];
-        $permission->slug = Str::slug($permission->name);
+            DB::beginTransaction();
 
-        $permission->save();
+            $permission->name = $request->name;
+            $permission->slug = Str::slug($request->name);
+            $permission->save();
 
-        return redirect()->back()
-            ->with('success',  'A permissão <strong>' . $permission->name . '</strong> foi editada!');
+            DB::commit();
+
+        } catch(Exception $ex) {
+
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+            
+        }
+
+        session()->flash('success', 'Permissão atualizada.');
+
+        return redirect()->back();
     }
 
     /**
@@ -107,13 +139,35 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy(Request $request, Permission $permission)
     {
-        $route = route('permission.undo', ['permission' => $permission]);
-        $permission->delete();
+        try {
 
-        return redirect()->back()
-            ->with('success',  'A permissão <strong>' . $permission->name . '</strong> foi deletada!' . undoLink($route));
+            DB::beginTransaction();
+
+            $permission->delete();
+
+            DB::commit();
+
+        } catch(Exception $ex) {
+
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+            
+        }
+
+        session()->flash('success', 'Permissão excluída.');
+
+        return redirect()->back();
+
+        // $route = route('permission.undo', ['permission' => $permission]);
+        // $permission->delete();
+
+        // return redirect()->back()
+        //     ->with('success',  'A permissão <strong>' . $permission->name . '</strong> foi deletada!' . undoLink($route));
     }
 
     public function undo(Request $request)

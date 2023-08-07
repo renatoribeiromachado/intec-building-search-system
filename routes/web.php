@@ -281,8 +281,20 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{position}', [PositionController::class, 'destroy'])->name('position.destroy');
     });
 
-    Route::resource('permission', PermissionsController::class)
-        ->only('index', 'create', 'store', 'edit', 'update', 'destroy')->middleware('auth:sanctum');
+    // Route::resource('permissions', PermissionsController::class)
+    //     ->only('index', 'create', 'store', 'edit', 'update', 'destroy')
+    //     ->middleware('auth:sanctum');
+
+    Route::prefix('permissions')->group(function () {
+        Route::get('', [PermissionsController::class, 'index'])->name('permission.index');
+        Route::get('create', [PermissionsController::class, 'create'])->name('permission.create');
+        Route::post('store', [PermissionsController::class, 'store'])->name('permission.store');
+        // Route::get('edit/{position}', [PermissionsController::class, 'edit'])->name('position.edit');
+        Route::put('{permission}', [PermissionsController::class, 'update'])->name('permission.update');
+        // Route::delete('{position}', [PermissionsController::class, 'destroy'])->name('position.destroy');
+    });
+
+
     Route::get('permission/{permission}', [PermissionsController::class, 'undo'])
         ->middleware('auth:sanctum')->name('permission.undo');
 

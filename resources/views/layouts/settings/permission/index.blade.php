@@ -1,42 +1,72 @@
 @extends('layouts.app_customer')
 
 @section('content')
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Permissões') }}
-        </h2>
-    </x-slot>
-
-    @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>PERMISSÕES</h1>
-
-        @php
-            $tabindex = 1
-        @endphp
+        <h1>LISTA DE PERMISSÕES</h1>
         
+        @can('criar-permissao')
+            <div class="">
+                <button
+                    data-bs-toggle="modal"
+                    data-bs-target="#addPermission"
+                    type="button"
+                    class="btn btn-primary float-end"
+                    >
+                    Novo Cadastro
+                </button>
+            </div>
+        @endcan
 
-        <table class="table">
+        @include('layouts.alerts.all-errors')
+        @include('layouts.alerts.success')
+
+        <!-- Modal to edit Permission -->
+        <x-intec-modal
+            id="addPermission"
+            aria-labelledby="addPermissionLabel"
+            route="{{ route('permission.store') }}"
+            title="Adicionar Permissão"
+            collection="{{ $permission }}"
+            submit-button-class="btn btn-primary"
+            submit-button-text="Salvar"
+            size=""
+            http-method="post"
+            >
+            <div class="container-fluid">
+                <div class="container">
+                    @include('layouts.forms.add_edit_permission')
+                    {{-- resources/views/layouts/forms/add_edit_permission.blade.php --}}
+                </div>
+            </div>
+        </x-intec-modal>
+
+        <table class="table table-hover">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Descrição</th>
-                    {{-- <th scope="col" class="text-center">Ação</th> --}}
+                    <th scope="col" class="text-center">Ação</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($permissions as $permission)
                     <tr>
+                        <th scope="row" style="width: 10px;">{{ $permission->id }}</th>
                         <td>{{ $permission->name }}</td>
-                        {{-- <td class="text-center">
-                            <a data-toggle="modal" data-target="#editPermissionModal{{ $loop->iteration }}" title="Editar Permissão" class="btn btn-link" tabindex="{{ $tabindex++ }}">
-                                <svg width="1.8em" height="1.8em" viewBox="0 0 16 16" class="bi bi-pencil-square text-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
-                            </a>
+                        <td class="width:15%;">
+                            <div class="text-center">
+                                <a
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editPermission{{ $loop->iteration }}"
+                                    title="Editar Permissão"
+                                    class="btn btn-outline-success"
+                                    >
+                                    Editar
+                                </a>
+                            </div>
 
-                            <a data-toggle="modal" data-target="#deletePermissionModal{{ $loop->iteration }}" title="Deletar Permissão" class="btn btn-link" tabindex="{{ $tabindex++ }}">
+                            {{-- <a data-toggle="modal" data-target="#deletePermissionModal{{ $loop->iteration }}" title="Deletar Permissão" class="btn btn-link" tabindex="{{ $tabindex++ }}">
                                 <svg width="1.8em" height="1.8em" viewBox="0 0 16 16" class="bi bi-trash pl-1 text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -82,10 +112,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.modal Modal to add Permission -->
+                            <!-- /.modal Modal to add Permission --> --}}
 
                             <!-- Modal to edit Permission -->
-                            <div class="modal fade" id="editPermissionModal{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <x-intec-modal
+                                id="editPermission{{$loop->iteration}}"
+                                aria-labelledby="editPermissionLabel{{$loop->iteration}}"
+                                route="{{ route('permission.update', $permission->id) }}"
+                                title="Atualizar Permissão"
+                                collection="{{ $permission }}"
+                                submit-button-class="btn btn-primary"
+                                submit-button-text="Salvar"
+                                size=""
+                                http-method="put"
+                                >
+                                <div class="container-fluid">
+                                    <div class="container">
+                                        @include('layouts.forms.add_edit_permission')
+                                        {{-- resources/views/layouts/forms/add_edit_permission.blade.php --}}
+                                    </div>
+                                </div>
+                            </x-intec-modal>
+
+                            {{--<div class="modal fade" id="editPermissionModal{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -171,5 +220,4 @@
             {{ $permissions->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
-
 @endsection
