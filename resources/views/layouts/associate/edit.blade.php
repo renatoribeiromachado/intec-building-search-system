@@ -37,9 +37,18 @@
 
                     <button
                         type="button"
+                        class="btn btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addSignature"
+                        >
+                        Dados da assinatura
+                    </button>
+
+                    <button
+                        type="button"
                         class="btn btn-outline-secondary me-1"
                         data-bs-toggle="modal"
-                        data-bs-target="#addAcesso"
+                        data-bs-target="#addAccess"
                         >
                         Dados de acesso
                     </button>

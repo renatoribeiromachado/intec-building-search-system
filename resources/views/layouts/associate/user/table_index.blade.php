@@ -1,6 +1,6 @@
 <x-intec-modal
-    id="addAcesso"
-    aria-labelledby="addAcessoLabel"
+    id="addAccess"
+    aria-labelledby="addAccessLabel"
     route="{{ route('associate.user.store', $company->id) }}"
     title="Adicionar Acesso para Associado"
     collection="{{ $associates }}"
@@ -12,6 +12,24 @@
     <div class="container-fluid">
         <div class="container">
             @include('layouts.associate.modals.add_edit_associate_user')
+        </div>
+    </div>
+</x-intec-modal>
+
+<x-intec-modal
+    id="addSignature"
+    aria-labelledby="addSignatureLabel"
+    route="{{ route('associate.user.store', $company->id) }}"
+    title="Adicionar Acesso para Associado"
+    collection="{{ $associates }}"
+    submit-button-class="btn btn-primary"
+    submit-button-text="Salvar"
+    size="modal-xl"
+    http-method="post"
+    >
+    <div class="container-fluid">
+        <div class="container">
+            @include('layouts.associate.modals.add_edit_associate_subscription')
         </div>
     </div>
 </x-intec-modal>

@@ -66,4 +66,9 @@ class Associate extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function states()
+    {
+        return $this->belongsToMany(State::class);
+    }
 }

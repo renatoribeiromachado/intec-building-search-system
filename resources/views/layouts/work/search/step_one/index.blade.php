@@ -530,10 +530,6 @@
 @push('scripts')
 
     <script>
-        $(document).ready(function () {
-            
-        })
-        
         /*PHASE 1*/
         const phase1Checkbox = document.querySelector('.phase1');
         const checkboxesF1 = document.querySelectorAll('.F1');

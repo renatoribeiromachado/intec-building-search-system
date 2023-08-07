@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\Plan;
 use App\Models\Position;
 use App\Models\Role;
+use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\User;
@@ -45,6 +46,7 @@ class AssociateController extends Controller
     protected $plan;
     protected $user;
     protected $role;
+    protected $segmentSubType;
 
     public function __construct(
         Stage $stage,
@@ -57,7 +59,8 @@ class AssociateController extends Controller
         Position $position,
         Plan $plan,
         User $user,
-        Role $role
+        Role $role,
+        SegmentSubType $segmentSubType
     ) {
         $this->stage = $stage;
         $this->company = $company;
@@ -70,6 +73,7 @@ class AssociateController extends Controller
         $this->plan = $plan;
         $this->user = $user;
         $this->role = $role;
+        $this->segmentSubType = $segmentSubType;
     }
 
     public function __invoke(Request $request)
@@ -254,6 +258,21 @@ class AssociateController extends Controller
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
 
+        // Subscription
+        $stagesOne = $this->stage->where('phase_id', 1)->get();
+        $stagesTwo = $this->stage->where('phase_id', 2)->get();
+        $stagesThree = $this->stage->where('phase_id', 3)->get();
+
+        $statesOne = $this->state->where('zone_id', 1)->get();
+        $statesTwo = $this->state->where('zone_id', 2)->get();
+        $statesThree = $this->state->where('zone_id', 3)->get();
+        $statesFour = $this->state->where('zone_id', 4)->get();
+        $statesFive = $this->state->where('zone_id', 5)->get();
+
+        $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+        $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+        $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+
         return view('layouts.associate.edit', compact(
             'associate',
             'states',
@@ -273,6 +292,22 @@ class AssociateController extends Controller
             'user',
             'roles',
             'associates',
+
+            // subscription
+            'stagesOne',
+            'stagesTwo',
+            'stagesThree',
+            'statesOne',
+
+            'statesOne',
+            'statesTwo',
+            'statesThree',
+            'statesFour',
+            'statesFive',
+
+            'segmentSubTypeOne',
+            'segmentSubTypeTwo',
+            'segmentSubTypeThree',
         ));
     }
 
