@@ -43,7 +43,7 @@ class StoreWorkRequest extends FormRequest
             //'started_at' => ['nullable', 'date_format:d/m/Y'],
            // 'ends_at' => ['nullable', 'date_format:d/m/Y'],
             //'start_and_end' => 'required',
-            //'price' => 'required',
+            'price' => ['nullable', 'max:14'],
             //'investment_standard' => 'required',
             //'total_project_area' => 'required',
             //'tower' => 'required',
