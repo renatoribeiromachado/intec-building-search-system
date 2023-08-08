@@ -352,12 +352,12 @@
                         class="form-control money @error('price') is-invalid @enderror"
                         value="{{ old('price', $work->price) }}" placeholder=""
                         >
+                    @error('price')
+                        <div class="invalid-feedback">
+                            {{ $errors->first('price') }}
+                        </div>
+                    @enderror
                 </div>
-                @error('price')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('price') }}
-                    </div>
-                @enderror
             </div>
 
             <div class="form-group col-md-3 mb-2">
