@@ -165,7 +165,7 @@ class UserController extends Controller
         $this->authorize('criar-usuario');
 
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/u'],
+            'name' => ['required', 'string', 'max:255'], // , 'regex:/^[a-zA-Z ]+$/u'
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::defaults()],
             'role_id' => ['required'],
