@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Bootstrap5 CSS -->
+        <!-- Bootstrap CSS -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -19,7 +19,7 @@
         <title>SISTEMA INTEC | ACESSO RESTRITO</title>
 
         <style>
-            /* Show it is fixed to the top */
+            /* Show it is fixed to the top 123 */
             body {
                 min-height: 75rem;
                 padding-top: 6.5rem;
