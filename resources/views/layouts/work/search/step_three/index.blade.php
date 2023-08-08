@@ -350,7 +350,7 @@
                         @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
                             <tr>
                                 <td colspan="4">
-                                    <strong>Atividade(s):</strong>
+                                    <strong>Modalidade(s):</strong>
                                     @foreach (
                                         (new \App\Models\Work)->find($work->id)
                                             ->companyActivityFields()
