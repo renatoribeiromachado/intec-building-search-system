@@ -60,28 +60,39 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li> --}}
 
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="dropdown07XL"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    >
-                                    PESQUISAS
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                    {{-- @can('ver-empresas') --}}
-                                        <li><a class="dropdown-item" href="#">Empresas</a></li>
-                                    {{-- @endcan --}}
+                            @can('ver-pesquisas')
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        id="dropdown07XL"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        >
+                                        PESQUISAS
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                        @can('ver-pesquisa-de-empresas')
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    Empresas
+                                                </a>
+                                            </li>
+                                        @endcan
 
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('work.search.step_one.index') }}">
-                                            Obras
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                        @can('ver-pesquisa-de-obras')
+                                            <li>
+                                                <a
+                                                    class="dropdown-item"
+                                                    href="{{ route('work.search.step_one.index') }}"
+                                                    >
+                                                    Obras
+                                                </a>
+                                            </li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                            @endcan
 
                             @can('ver-administrativo')
                                 <li class="nav-item dropdown">

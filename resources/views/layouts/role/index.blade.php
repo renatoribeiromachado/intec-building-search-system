@@ -34,6 +34,9 @@
             </form>
         </div> --}}
 
+        @include('layouts.alerts.all-errors')
+        @include('layouts.alerts.success')
+
         <div class="">
             <a class="btn btn-primary float-end"
                 href="{{ route('role.create') }}"

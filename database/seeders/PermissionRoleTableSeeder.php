@@ -158,5 +158,20 @@ class PermissionRoleTableSeeder extends Seeder
         ])->get();
 
         $operatorRole->permissions()->attach($operatorPermissions);
+
+        // ===========================================
+        // ======= Associate's Permission =============
+        // ===========================================
+        $associateRole = (new Role)->userRole('Associado')->firstOrFail();
+
+        $associatePermissions = Permission::whereIn('name', [
+
+            // FOR SEARCH
+            'Ver Pesquisas',
+            'Ver Pesquisa de Obras',
+            
+        ])->get();
+
+        $associateRole->permissions()->attach($associatePermissions);
     }
 }

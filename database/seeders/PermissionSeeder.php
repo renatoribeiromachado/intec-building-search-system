@@ -153,6 +153,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'Desabilitar Pedido'],
             ['name' => 'Excluir Pedido'],
             ['name' => 'Pesquisar Pedido'],
+
+            // FOR SEARCH
+            ['name' => 'Ver Pesquisas'],
+            ['name' => 'Ver Pesquisa de Empresas'],
+            ['name' => 'Ver Pesquisa de Obras'],
         ];
 
         $permissionsQuantity = count($permissions);

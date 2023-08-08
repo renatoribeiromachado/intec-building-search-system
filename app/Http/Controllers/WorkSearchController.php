@@ -8,6 +8,7 @@ use App\Models\State;
 use App\Models\Work;
 use App\Models\WorkFeature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WorkSearchController extends Controller
@@ -36,19 +37,67 @@ class WorkSearchController extends Controller
 
     public function showWorkSearchStepOne()
     {
-        $stagesOne = $this->stage->where('phase_id', 1)->get();
-        $stagesTwo = $this->stage->where('phase_id', 2)->get();
-        $stagesThree = $this->stage->where('phase_id', 3)->get();
+        $this->authorize('ver-pesquisa-de-obras');
 
-        $statesOne = $this->state->where('zone_id', 1)->get();
-        $statesTwo = $this->state->where('zone_id', 2)->get();
-        $statesThree = $this->state->where('zone_id', 3)->get();
-        $statesFour = $this->state->where('zone_id', 4)->get();
-        $statesFive = $this->state->where('zone_id', 5)->get();
+        if (Auth::user()->role->name == 'Associado') {
+            $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = Auth::user()->contact->company->associate->segmentSubTypes()->get()->pluck('id');
 
-        $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
-        $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
-        $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+            $stagesOne = $this->stage->where('phase_id', 1)->get();
+            $stagesTwo = $this->stage->where('phase_id', 2)->get();
+            $stagesThree = $this->stage->where('phase_id', 3)->get();
+
+            $statesOne = $this->state
+                ->where('zone_id', 1)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesTwo = $this->state
+                ->where('zone_id', 2)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesThree = $this->state
+                ->where('zone_id', 3)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFour = $this->state
+                ->where('zone_id', 4)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFive = $this->state
+                ->where('zone_id', 5)
+                ->whereIn('id', $statesVisible)
+                ->get();
+
+            $segmentSubTypeOne = $this->segmentSubType
+                ->where('segment_id', 1)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeTwo = $this->segmentSubType
+                ->where('segment_id', 2)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeThree = $this->segmentSubType
+                ->where('segment_id', 3)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+        }
+
+        if (Auth::user()->role->name != 'Associado') {
+            $stagesOne = $this->stage->where('phase_id', 1)->get();
+            $stagesTwo = $this->stage->where('phase_id', 2)->get();
+            $stagesThree = $this->stage->where('phase_id', 3)->get();
+
+            $statesOne = $this->state->where('zone_id', 1)->get();
+            $statesTwo = $this->state->where('zone_id', 2)->get();
+            $statesThree = $this->state->where('zone_id', 3)->get();
+            $statesFour = $this->state->where('zone_id', 4)->get();
+            $statesFive = $this->state->where('zone_id', 5)->get();
+
+            $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+            $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+            $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+        }
+
 
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',

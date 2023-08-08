@@ -84,6 +84,8 @@ class RoleController extends Controller
         $role->slug = Str::slug($role->name);
         $role->save();
 
+        session()->flash('success', 'Perfil de usuário atualizado.');
+
         return redirect()->route('role.index');
     }
 

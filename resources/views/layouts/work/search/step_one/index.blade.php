@@ -204,84 +204,97 @@
                     collection-relation=""
                 />
 
-                <!--MARCAR TODAS AS REGIÕES-->
-                <div class="row mt-5 mb-3">
-                    <div class="col-md-12">
-                        <label class="control-label text-uppercase">
-                            <strong>
-                                <i class="fa fa-check-square-o"></i>
-                                Regiões do Brasil
-                            </strong>
-                            <input type="checkbox" class="regiaoGeral" />
-                            <code>* Selecione Todas as Regiões</code>
-                        </label>
+                @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
+                    $statesFour->count() + $statesFive->count()) > 0)
+                    <!--MARCAR TODAS AS REGIÕES-->
+                    <div class="row mt-5 mb-3">
+                        <div class="col-md-12">
+                            <label class="control-label text-uppercase">
+                                <strong>
+                                    <i class="fa fa-check-square-o"></i>
+                                    Regiões do Brasil
+                                </strong>
+                                <input type="checkbox" class="regiaoGeral" />
+                                <code>* Selecione Todas as Regiões</code>
+                            </label>
+                        </div>
                     </div>
-                </div>
+                @endif
 
-                <!--NORTE-->
-                <x-state-checkbox-group
-                    id="zone-all-1"
-                    input-one-name="zones[0]"
-                    class-one="norte checkRegiaoGeral"
-                    label-text="Norte"
-                    :data-list="$statesOne"
-                    class-two="checkNorte checkRegiaoGeral"
-                    list-input-id-for="state-one-"
-                    list-input-name="states[]"
-                    collection-relation=""
-                />
+                @if ($statesOne->count() > 0)
+                    <!--NORTE-->
+                    <x-state-checkbox-group
+                        id="zone-all-1"
+                        input-one-name="zones[0]"
+                        class-one="norte checkRegiaoGeral"
+                        label-text="Norte"
+                        :data-list="$statesOne"
+                        class-two="checkNorte checkRegiaoGeral"
+                        list-input-id-for="state-one-"
+                        list-input-name="states[]"
+                        collection-relation=""
+                    />
+                @endif
 
-                <!--NORDESTE-->
-                <x-state-checkbox-group
-                    id="zone-all-2"
-                    input-one-name="zones[0]"
-                    class-one="nordeste checkRegiaoGeral"
-                    label-text="Nordeste"
-                    :data-list="$statesTwo"
-                    class-two="checkNordeste checkRegiaoGeral"
-                    list-input-id-for="state-two-"
-                    list-input-name="states[]"
-                    collection-relation=""
-                />
+                @if ($statesTwo->count() > 0)
+                    <!--NORDESTE-->
+                    <x-state-checkbox-group
+                        id="zone-all-2"
+                        input-one-name="zones[0]"
+                        class-one="nordeste checkRegiaoGeral"
+                        label-text="Nordeste"
+                        :data-list="$statesTwo"
+                        class-two="checkNordeste checkRegiaoGeral"
+                        list-input-id-for="state-two-"
+                        list-input-name="states[]"
+                        collection-relation=""
+                    />
+                @endif
 
-                <!--CENTRO-OESTE-->
-                <x-state-checkbox-group
-                    id="zone-all-3"
-                    input-one-name="zones[0]"
-                    class-one="centro-oeste checkRegiaoGeral"
-                    label-text="Centro-Oeste"
-                    :data-list="$statesThree"
-                    class-two="checkCentroOeste checkRegiaoGeral"
-                    list-input-id-for="state-three-"
-                    list-input-name="states[]"
-                    collection-relation=""
-                />
+                @if ($statesThree->count() > 0)
+                    <!--CENTRO-OESTE-->
+                    <x-state-checkbox-group
+                        id="zone-all-3"
+                        input-one-name="zones[0]"
+                        class-one="centro-oeste checkRegiaoGeral"
+                        label-text="Centro-Oeste"
+                        :data-list="$statesThree"
+                        class-two="checkCentroOeste checkRegiaoGeral"
+                        list-input-id-for="state-three-"
+                        list-input-name="states[]"
+                        collection-relation=""
+                    />
+                @endif
 
-                <!--SUDESTE-->
-                <x-state-checkbox-group
-                    id="zone-all-4"
-                    input-one-name="zones[0]"
-                    class-one="sudeste checkRegiaoGeral"
-                    label-text="Sudeste"
-                    :data-list="$statesFour"
-                    class-two="checkSudeste checkRegiaoGeral"
-                    list-input-id-for="state-four-"
-                    list-input-name="states[]"
-                    collection-relation=""
-                />
+                @if ($statesFour->count() > 0)
+                    <!--SUDESTE-->
+                    <x-state-checkbox-group
+                        id="zone-all-4"
+                        input-one-name="zones[0]"
+                        class-one="sudeste checkRegiaoGeral"
+                        label-text="Sudeste"
+                        :data-list="$statesFour"
+                        class-two="checkSudeste checkRegiaoGeral"
+                        list-input-id-for="state-four-"
+                        list-input-name="states[]"
+                        collection-relation=""
+                    />
+                @endif
 
-                <!--SUL-->
-                <x-state-checkbox-group
-                    id="zone-all-5"
-                    input-one-name="zones[0]"
-                    class-one="sul checkRegiaoGeral"
-                    label-text="Sul"
-                    :data-list="$statesFive"
-                    class-two="checkSul checkRegiaoGeral"
-                    list-input-id-for="state-five-"
-                    list-input-name="states[]"
-                    collection-relation=""
-                />
+                @if ($statesFive->count() > 0)
+                    <!--SUL-->
+                    <x-state-checkbox-group
+                        id="zone-all-5"
+                        input-one-name="zones[0]"
+                        class-one="sul checkRegiaoGeral"
+                        label-text="Sul"
+                        :data-list="$statesFive"
+                        class-two="checkSul checkRegiaoGeral"
+                        list-input-id-for="state-five-"
+                        list-input-name="states[]"
+                        collection-relation=""
+                    />
+                @endif
 
                 <!--FILTRO ESPECIFICO-->
                 {{-- <div class="row mt-4 pb-4 bg-light border">
