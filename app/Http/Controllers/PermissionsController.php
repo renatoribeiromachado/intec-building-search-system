@@ -11,15 +11,14 @@ use Illuminate\Support\Str;
 
 class PermissionsController extends Controller
 {
-
     protected $permission;
 
     public function __construct(
         Permission $permission
-    )
-    {
+    ) {
         $this->permission = $permission;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,38 +29,11 @@ class PermissionsController extends Controller
         $this->authorize('ver-funcao-administrativa');
 
         $permission = $this->permission;
-        
-        $permissions = $this->permission
-            ->orderBy('id', 'asc')
-            ->paginate(50);
-
-        // if(Auth::user()->role->name != 'Webmaster') {
-            
-        //     $permissions = $this->permission
-        //                             ->whereNotIn('id', [
-        //                                     4, 5, 6, 7, 8, 9, // Roles
-        //                                 10, 11, 12, 13, 14, 15, // Permissions
-        //                                 16, 17, 18, 19, 20, 21, 22, // Person
-        //                             ])
-        //                             ->orderBy('id', 'desc')->paginate(20);
-        // }
-
-        // if(Auth::user()->role->name != 'Webmaster' && 
-        //     Auth::user()->role->name != 'Administrador') {
-
-        //     $permissions = $this->permission
-        //                             ->whereNotIn('id', [
-        //                                 4, 5, 6, 7, 8, 9, // Roles
-        //                                 10, 11, 12, 13, 14, 15, // Permissions
-        //                                 16, 17, 18, 19, 20, 21, 22, // Person
-        //                                 24, 25,
-        //                             ])
-        //                             ->orderBy('id', 'desc')->paginate(20);
-        // }
+        $permissions = $this->permission->allPermissions();
 
         return view('layouts.settings.permission.index', compact(
             'permissions',
-            'permission',
+            'permission'
         ));
     }
 
@@ -162,18 +134,16 @@ class PermissionsController extends Controller
         session()->flash('success', 'Permissão excluída.');
 
         return redirect()->back();
-
-        // $route = route('permission.undo', ['permission' => $permission]);
-        // $permission->delete();
-
-        // return redirect()->back()
-        //     ->with('success',  'A permissão <strong>' . $permission->name . '</strong> foi deletada!' . undoLink($route));
     }
 
-    public function undo(Request $request)
-    {
-        $permission = $this->permission->onlyTrashed()->where('uuid', $request->permission)->firstOrFail();
-        $permission->restore();
-        return redirect()->back()->with('success', 'Exclusão desfeita!');
-    }
+    // public function undo(Request $request)
+    // {
+    //     $permission = $this->permission
+    //         ->onlyTrashed()
+    //         ->where('uuid', $request->permission)
+    //         ->firstOrFail();
+    //     $permission->restore();
+
+    //     return redirect()->back()->with('success', 'Exclusão desfeita!');
+    // }
 }
