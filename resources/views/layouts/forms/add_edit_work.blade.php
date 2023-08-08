@@ -19,8 +19,8 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-2 mb-2">
-                        <label for="inputPassword4">Data Publicação</label>
+                    <div class="col-md-3 mb-2">
+                        <label for="inputPassword4">Data de Atualização</label>
                         <input type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
                         @error('last_review')
                             <div class="invalid-feedback">
@@ -29,7 +29,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-8 mb-2">
+                    <div class="col-md-7 mb-2">
                         <label for="researcher">Pesquisador</label>
                         <select
                             id="researcher"
