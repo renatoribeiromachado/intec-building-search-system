@@ -119,6 +119,8 @@ class WorkSearchController extends Controller
 
     public function showWorkSearchStepTwo(Request $request)
     {
+        $this->authorize('ver-pesquisa-de-obras');
+
         $works = $this->getFilteredWorks($request);
 
         return view('layouts.work.search.step_two.index', compact('works'));
@@ -126,6 +128,8 @@ class WorkSearchController extends Controller
 
     public function showWorkSearchStepThree(Request $request)
     {
+        $this->authorize('ver-pesquisa-de-obras');
+        
         $works = $this->getFilteredWorks($request);
         $workFeatures = $this->workFeature
             ->orderBy('description', 'asc')
