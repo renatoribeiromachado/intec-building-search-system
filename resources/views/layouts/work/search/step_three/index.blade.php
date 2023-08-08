@@ -349,18 +349,8 @@
                     <tbody>
                         @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
                             <tr>
-                                <td colspan="2">
-                                    <strong>Modalidade(s):</strong> ??? -
-                                    <strong>Razão social:</strong> {{ $company->company_name }} -
-                                    <strong>CNPJ:</strong> {{ $company->cnpj }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>Nome Fantasia:</strong> {{ $company->trading_name }}
-                                </td>
-                                <td>
-                                    <strong>Atividade:</strong>
+                                <td colspan="4">
+                                    <strong>Atividade(s):</strong>
                                     @foreach (
                                         (new \App\Models\Work)->find($work->id)
                                             ->companyActivityFields()
@@ -369,13 +359,21 @@
                                         )
                                         {{ $workCompanyActivity->description }} <br>
                                     @endforeach
+
+                                    <strong>Razão social:</strong> {{ $company->company_name }} -
+                                    <strong>CNPJ:</strong> {{ $company->cnpj }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <strong>Nome Fantasia:</strong> {{ $company->trading_name }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>Endereço:</strong> {{ $company->address }}
                                 </td>
-                                <td>
+                                <td colspan="3">
                                     <strong>Site:</strong> {{ $company->home_page }}
                                 </td>
                             </tr>
@@ -386,7 +384,7 @@
                                 <td>
                                     <strong>E-mail:</strong> {{ $company->primary_email }}
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     <strong>E-mail Secundário:</strong> {{ $company->secondary_email }}
                                 </td>
                             </tr>
