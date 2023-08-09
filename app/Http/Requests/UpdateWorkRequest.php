@@ -43,7 +43,7 @@ class UpdateWorkRequest extends FormRequest
             //'started_at' => ['nullable', 'date_format:d/m/Y'],
             //'ends_at' => ['nullable', 'date_format:d/m/Y'],
             //'start_and_end' => 'required',
-            'price' => ['nullable', 'max:14'],
+            'price' => ['nullable', 'max:19'],
             //'investment_standard' => 'required',
             //'total_project_area' => 'required',
             //'tower' => 'required',
@@ -86,7 +86,7 @@ class UpdateWorkRequest extends FormRequest
             'ends_at.date_format' => 'Data Término da Obra inválida.',
             'notes.required' => 'O campo Descrições Complementares é obrigatório.',
             'name.required' => 'O campo Obra é obrigatório.',
-            'price.max' => 'O campo Preço não deve ser maior que 10 dígitos.',
+            'price.max' => 'O campo Preço não deve ser maior que 13 dígitos.',
         ];
     }
 }
