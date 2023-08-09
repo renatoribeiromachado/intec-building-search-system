@@ -11,6 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
+    const IT_IS_ACTIVE = 1;
+    const IT_IS_NOT_ACTIVE = 0;
     /**
      * Display the login view.
      *
@@ -33,8 +35,50 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $user = Auth::user();
 
-        if ($user->is_active == 0) {
+        if ($user->is_active == self::IT_IS_ACTIVE) {
+
+            // // valid for associate managers and common associate users
+            // if (
+            //     $user->contact()->exists() &&
+            //     $user->contact->company()->exists() &&
+            //     $user->contact->company->associate()->exists() &&
+            //     ($user->is_active == self::IT_IS_NOT_ACTIVE)
+            // ) {
+            //     Auth::guard('web')->logout();
             
+            //     $request->session()->invalidate();
+                
+            //     $request->session()->regenerateToken();
+    
+            //     session()->flash('message', 'Acesso não permitido, entre em contato com a INTEC.');
+    
+            //     return redirect()->route('login');
+            // }
+
+            if (
+                $user->contact()->exists() &&
+                $user->contact->company()->exists() &&
+                $user->contact->company->associate()->exists() &&
+                ($user->is_active == self::IT_IS_ACTIVE) &&
+                (Auth::user()->role->slug == 'associado-gestora')
+            ) {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+
+            if (
+                $user->contact()->exists() &&
+                $user->contact->company()->exists() &&
+                $user->contact->company->associate()->exists() &&
+                ($user->is_active == self::IT_IS_ACTIVE) &&
+                (Auth::user()->role->slug == 'associado-usuario')
+            ) {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        else {
+
             Auth::guard('web')->logout();
             
             $request->session()->invalidate();
@@ -45,8 +89,6 @@ class AuthenticatedSessionController extends Controller
 
             return redirect()->route('login');
         }
-
-        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
