@@ -37,6 +37,22 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->is_active == self::IT_IS_ACTIVE) {
 
+            if (
+                $user->contact()->exists() &&
+                $user->contact->company()->exists() &&
+                ($user->contact->company->is_active == self::IT_IS_NOT_ACTIVE)
+            ) {
+                Auth::guard('web')->logout();
+            
+                $request->session()->invalidate();
+                
+                $request->session()->regenerateToken();
+    
+                session()->flash('message', 'Acesso não permitido, entre em contato com a INTEC.');
+    
+                return redirect()->route('login');
+            }
+
             // // valid for associate managers and common associate users
             // if (
             //     $user->contact()->exists() &&
