@@ -71,6 +71,7 @@ class OrderController extends Controller
             $order->ends_at = convertPtBrDateToEnDate($request->ends_at);
             $order->original_price = convertMaskToDecimal($request->original_price);
             $order->discount = convertMaskToDecimal($request->discount);
+            $order->discount_in_percentage = $request->discount_in_percentage;
             $order->final_price = convertMaskToDecimal($request->final_price);
             $order->first_due_date = convertPtBrDateToEnDate($request->first_due_date);
             $order->installments = $request->installments;
@@ -136,6 +137,7 @@ class OrderController extends Controller
             $order->ends_at = convertPtBrDateToEnDate($request->ends_at);
             $order->original_price = convertMaskToDecimal($request->original_price);
             $order->discount = convertMaskToDecimal($request->discount);
+            $order->discount_in_percentage = $request->discount_in_percentage;
             $order->final_price = convertMaskToDecimal($request->final_price);
             $order->first_due_date = convertPtBrDateToEnDate($request->first_due_date);
             $order->installments = $request->installments;
@@ -172,7 +174,7 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
-            $order->whereCompanyId($company->id)->delete();
+            $order->delete();
 
             DB::commit();
 

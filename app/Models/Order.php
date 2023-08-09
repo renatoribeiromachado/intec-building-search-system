@@ -16,6 +16,7 @@ class Order extends Model
         'ends_at',
         'original_price',
         'discount',
+        'discount_in_percentage',
         'final_price',
         'first_due_date',
         'installments',

@@ -90,17 +90,18 @@
         <div class="d-flex align-items-center" style="height: 84px;">
             <div class="form-check">
                 <input
-                    class="form-check-input"
                     type="checkbox"
-                    value=""
                     id="discount_in_percentage"
                     name="discount_in_percentage"
-                    @if (old('discount_in_percentage', 1)) checked @endif
+                    class="form-check-input"
+                    value="1"
+                    @if (old('discount_in_percentage', $order->discount_in_percentage) == 1)
+                    checked
+                    @endif
                     >
                 <label class="form-check-label" for="discount_in_percentage">
                 Desconto em % ?
                 </label>
-            </div>
         </div>
     </div>
 

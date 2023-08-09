@@ -73,7 +73,7 @@
             });
 
             //set initial state.
-            $('#discount_in_percentage').val(this.checked);
+            // $('#discount_in_percentage').val(this.checked);
 
             $('#discount_in_percentage').on("change", function () {
                 getFinalPrice();
