@@ -102,6 +102,7 @@
                 <label class="form-check-label" for="discount_in_percentage">
                 Desconto em % ?
                 </label>
+            </div>
         </div>
     </div>
 
