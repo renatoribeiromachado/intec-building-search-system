@@ -107,7 +107,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Cód. Antigo</th>
                 <th scope="col">CNPJ</th>
                 <th scope="col">Razão Social</th>
                 <th scope="col">Nome Fantasia</th>
@@ -119,7 +119,7 @@
         <tbody>
             @forelse($associates as $associate)
                 <tr>
-                    <th scope="row">{{ $associate->id }}</th>
+                    <th scope="row">{{ $associate->old_code }}</th>
                     <td>{{ $associate->company->cnpj }}</td>
                     <td>{{ $associate->company->company_name }}</td>
                     <td>{{ $associate->company->trading_name }}</td>
