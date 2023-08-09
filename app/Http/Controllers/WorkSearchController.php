@@ -39,7 +39,7 @@ class WorkSearchController extends Controller
     {
         $this->authorize('ver-pesquisa-de-obras');
 
-        if (Auth::user()->role->name == 'Associado') {
+        if (Auth::user()->role->name == 'Associado / Gestor(a)') {
             $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
             $segmentSubTypesVisible = Auth::user()->contact->company->associate->segmentSubTypes()->get()->pluck('id');
 
@@ -82,7 +82,7 @@ class WorkSearchController extends Controller
                 ->get();
         }
 
-        if (Auth::user()->role->name != 'Associado') {
+        if (Auth::user()->role->name != 'Associado / Gestor(a)') {
             $stagesOne = $this->stage->where('phase_id', 1)->get();
             $stagesTwo = $this->stage->where('phase_id', 2)->get();
             $stagesThree = $this->stage->where('phase_id', 3)->get();
@@ -202,7 +202,7 @@ class WorkSearchController extends Controller
          *  - data_filter_starts_at and;
          *  - data_filter_ends_at.
          */
-        if ($loggedUser->role->name == 'Associado') {
+        if ($loggedUser->role->name == 'Associado / Gestor(a)') {
             $works = $works->whereBetween(
                 'works.last_review', [
                     $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d'),

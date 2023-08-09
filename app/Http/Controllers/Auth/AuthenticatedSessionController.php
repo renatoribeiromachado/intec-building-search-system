@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,8 +30,21 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
+        $user = Auth::user();
+
+        if ($user->is_active == 0) {
+            
+            Auth::guard('web')->logout();
+            
+            $request->session()->invalidate();
+            
+            $request->session()->regenerateToken();
+
+            session()->flash('message', 'Acesso não permitido, entre em contato com a INTEC.');
+
+            return redirect()->route('login');
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

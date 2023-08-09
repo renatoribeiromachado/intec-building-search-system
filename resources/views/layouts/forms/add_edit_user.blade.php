@@ -49,3 +49,17 @@
         </select>
     </div>
 </div>
+
+<div class="row mb-3">
+    <div class="col-md-2 col-md-12">
+        <x-intec-select
+            select-name="is_active"
+            select-label="Situação"
+            select-class="form-select"
+            required=""
+            placeholder="-- Selecione --"
+            :collection="$isActive"
+            value="{{ $user->is_active }}"
+        />
+    </div>
+</div>

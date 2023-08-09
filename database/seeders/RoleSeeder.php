@@ -19,10 +19,11 @@ class RoleSeeder extends Seeder
             ['name' => 'Webmaster'],
             ['name' => 'Suporte'],
             ['name' => 'Administrador'],
-            ['name' => 'Associado'],
+            ['name' => 'Associado / Gestor(a)'],
             ['name' => 'Contato'],
             ['name' => 'Operador'],
             ['name' => 'Vendedor'],
+            ['name' => 'Associado / Usuário'],
         ];
 
         $rolesQuantity = count($roles);

@@ -60,6 +60,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Perfil</th>
+                    <th scope="col">Situação</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -70,6 +71,13 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role->name }}</td>
+                        <td>
+                            @if((bool) $user->is_active)
+                                Ativo
+                            @else
+                                Inativo
+                            @endif
+                        </td>
                         <td style="width:15%;">
                             <a
                                 href="{{ route('user.edit', $user->id) }}"

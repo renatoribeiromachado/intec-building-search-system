@@ -45,7 +45,9 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $attemptLogin = Auth::attempt($this->only('email', 'password'), $this->boolean('remember'));
+
+        if (! $attemptLogin) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -89,5 +91,22 @@ class LoginRequest extends FormRequest
     public function throttleKey()
     {
         return Str::lower($this->input('email')).'|'.$this->ip();
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    public function guard()
+    {
+        return Auth::guard('web');
+    }
+
+    protected function sendFailedLoginResponse(string $message)
+    {
+        throw ValidationException::withMessages([
+            'email' => $message,
+        ]);
     }
 }

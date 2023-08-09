@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $user
             ->where($where)
             ->orderBy('users.id', 'asc')
-            ->paginate(15);
+            ->paginate(50);
     }
 
     // Scopes

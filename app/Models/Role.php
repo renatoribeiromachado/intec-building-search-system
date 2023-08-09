@@ -48,6 +48,11 @@ class Role extends Model
         return $query->where('name', $role);
     }
 
+    public static function scopeUserRoleSlug($query, $role)
+    {
+        return $query->where('slug', $role);
+    }
+
     public static function scopeUserRoleIsNot($query, $name)
     {
         return $query->where('name', '!=', $name);

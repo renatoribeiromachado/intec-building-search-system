@@ -208,7 +208,7 @@ class AssociateController extends Controller
             ->get();
 
         $associates = $company->contacts()
-            ->whereNotNull('contacts.user_id')
+            ->whereHas('user')
             ->orderBy('contacts.name', 'asc')
             ->get();
 
@@ -254,9 +254,7 @@ class AssociateController extends Controller
         $user = $this->user;
         $roles = $this->role
             ->select('id', 'name')
-            ->userRoleIsNot('Webmaster')
-            ->userRoleIsNot('Suporte')
-            ->userRoleIsNot('Administrador')
+            ->whereIn('slug', ['associado-gestora', 'associado-usuario'])
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
 

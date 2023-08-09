@@ -47,6 +47,7 @@
                 <th class="bg-dark text-white">E-mail</th>
                 <th class="bg-dark text-white">Telefone(s)</th>
                 <th class="bg-dark text-white">Cargo</th>
+                <th class="bg-dark text-white">Perfil de Acesso</th>
                 <th class="bg-dark text-white">Status</th>
                 <th class="bg-dark text-white text-center">Ação</th>
             </tr>
@@ -69,6 +70,9 @@
                     </td>
                     <td>
                         {{ optional($contact->position)->description }}
+                    </td>
+                    <td>
+                        {{ optional($contact->user)->role->name }}
                     </td>
                     <td>
                         @if($contact->user->is_active)

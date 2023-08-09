@@ -14,6 +14,7 @@
                                     <img src='{{ url('images/logomarca.png') }}' style="width: 285px;"/>
                                     <h4 class="mt-1 mb-5 pb-1">Pesquisa de Obras</h4>
                                 </div>
+
                                 <!--Mensagem que vem da classe app/Http/Middleware/SingleDeviceSessionMiddleware, qdo o mesmo usuario com o mesmo se login se loga em outro dispositivo-->
                                 <div class="text-center">
                                     @if(session('message'))
@@ -24,7 +25,9 @@
                                 </div>
 
                                 <form method="POST" action="{{ route('login') }}" id="myForm">
-                                    @csrf  
+                                    @csrf
+
+                                    @include('layouts.alerts.all-errors')
 
                                     <div class="form-outline mb-4">
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 

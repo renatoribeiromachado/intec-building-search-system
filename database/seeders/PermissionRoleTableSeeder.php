@@ -162,7 +162,7 @@ class PermissionRoleTableSeeder extends Seeder
         // ===========================================
         // ======= Associate's Permission =============
         // ===========================================
-        $associateRole = (new Role)->userRole('Associado')->firstOrFail();
+        $associateRole = (new Role)->userRole('Associado / Gestor(a)')->firstOrFail();
 
         $associatePermissions = Permission::whereIn('name', [
 

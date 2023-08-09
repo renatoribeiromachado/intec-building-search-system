@@ -15,6 +15,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+    const IS_ACTIVE = [
+        'Inativo',
+        'Ativo',
+    ];
+
     protected $user;
     protected $role;
     protected $contact;
@@ -51,11 +56,14 @@ class UserController extends Controller
     {
         $this->authorize('criar-usuario');
 
+        $isActive = collect(self::IS_ACTIVE);
+
         $user = $this->user;
         $roles = $this->role->findRoles();
         return view('layouts.user.create', compact(
             'user',
-            'roles'
+            'roles',
+            'isActive'
         ));
     }
 
@@ -86,7 +94,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $request->role_id,
-            'is_active' => true,
+            'is_active' => $request->is_active
         ]);
 
         event(new Registered($user));
@@ -104,10 +112,13 @@ class UserController extends Controller
     {
         $this->authorize('editar-usuario');
 
+        $isActive = collect(self::IS_ACTIVE);
+
         $roles = $this->role->findRoles();
         return view('layouts.user.edit', compact(
             'user',
-            'roles'
+            'roles',
+            'isActive'
         ));
     }
 
@@ -141,6 +152,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->role_id = $request->role_id;
+        $user->is_active = $request->is_active;
         $user->save();
 
         return redirect()->route('user.index');
@@ -227,7 +239,7 @@ class UserController extends Controller
     public function updateAssociateUser(Request $request, Company $company, Contact $contact)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/u'],
+            'name' => ['required', 'string', 'max:255'], // , 'regex:/^[a-zA-Z ]+$/u'
             'email' => ['required', 'string', 'email', 'max:255', "unique:users,email,{$contact->user->id},id"],
             'password' => ['required', Password::defaults()],
             'role_id' => ['required'],
