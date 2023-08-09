@@ -34,7 +34,6 @@
             class-one=""
             input-value="{{ $contact->ddd }}"
             :input-readonly="false"
-            required
             maxlength="3"
         />
     </div>
@@ -47,7 +46,6 @@
             class-one=""
             input-value="{{ $contact->main_phone }}"
             :input-readonly="false"
-            required
         />
     </div>
 
@@ -60,7 +58,6 @@
             class-one=""
             input-value="{{ $contact->ddd_two }}"
             :input-readonly="false"
-            required
             maxlength="3"
         />
     </div>
@@ -73,7 +70,6 @@
             class-one=""
             input-value="{{ $contact->phone_two }}"
             :input-readonly="false"
-            required
         />
     </div>
 </div>
