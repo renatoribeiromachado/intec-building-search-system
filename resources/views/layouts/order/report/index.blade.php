@@ -165,7 +165,13 @@
                         <strong>Valor Original:</strong><br>
                         R$ {{ convertDecimalToBRL($order->original_price) }}<br>
                         <strong>Total de Desconto Aplicado:</strong><br>
-                        R$ {{ convertDecimalToBRL($order->discount) }}
+                        @if($order->discount_in_percentage)
+                            {{ $order->discount }}%
+                        @endif
+                        
+                        @if(! $order->discount_in_percentage)
+                            R$ {{ convertDecimalToBRL($order->discount) }}
+                        @endif
                     </td>
                     <td>
                         <strong>Valor Concedido:</strong><br>
