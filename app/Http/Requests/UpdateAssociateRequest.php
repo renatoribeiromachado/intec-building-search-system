@@ -51,6 +51,8 @@ class UpdateAssociateRequest extends FormRequest
             'products_and_services' => ['required'],
             'salesperson_id' => ['required'],
             'company_date_birth' => ['required'],
+            'data_filter_starts_at' => ['nullable'],
+            'data_filter_ends_at' => ['nullable'],
         ];
     }
 }

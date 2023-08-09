@@ -176,6 +176,8 @@ class AssociateController extends Controller
             $associate->linked_company = $request->linked_company;
             $associate->business_branch = $request->business_branch;
             $associate->company_date_birth = $request->company_date_birth;
+            $associate->data_filter_starts_at = convertPtBrDateToEnDate($request->data_filter_starts_at);
+            $associate->data_filter_ends_at = convertPtBrDateToEnDate($request->data_filter_ends_at);
             $associate->contract_due_date_start = convertPtBrDateToEnDate($request->contract_due_date_start);
             $associate->products_and_services = $request->products_and_services;
             $associate->created_by = auth()->user()->id;
@@ -349,6 +351,8 @@ class AssociateController extends Controller
             $associate->linked_company = $request->linked_company;
             $associate->business_branch = $request->business_branch;
             $associate->company_date_birth = $request->company_date_birth;
+            $associate->data_filter_starts_at = convertPtBrDateToEnDate($request->data_filter_starts_at);
+            $associate->data_filter_ends_at = convertPtBrDateToEnDate($request->data_filter_ends_at);
             $associate->contract_due_date_start = convertPtBrDateToEnDate($request->contract_due_date_start);
             $associate->products_and_services = $request->products_and_services;
             $associate->updated_by = auth()->user()->id;

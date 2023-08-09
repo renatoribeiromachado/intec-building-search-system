@@ -108,7 +108,7 @@ class Work extends Model
 
         return $work
             ->orderBy('works.id', 'asc')
-            ->paginate(15);
+            ->paginate(50);
     }
 
     // Eloquent relationship methods

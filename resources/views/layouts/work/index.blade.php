@@ -77,15 +77,21 @@
             </form>
         </div>
 
-        <div class="">
-            <a class="btn btn-primary float-end"
-                href="{{ route('work.create') }}"
-                >
-                Novo Cadastro
-            </a>
+        <div class="row mb-2">
+            <div class="col">
+                <a class="btn btn-primary float-end"
+                    href="{{ route('work.create') }}"
+                    >
+                    Novo Cadastro
+                </a>
+            </div>
         </div>
 
         @include('layouts.alerts.all-errors')
+
+        <div class="row">
+            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
         <table class="table">
             <thead>

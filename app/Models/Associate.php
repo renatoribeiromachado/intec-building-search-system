@@ -13,6 +13,8 @@ class Associate extends Model
         'linked_company',
         'business_branch',
         'company_date_birth',
+        'data_filter_starts_at',
+        'data_filter_ends_at',
         'contract_due_date_start',
         'products_and_services',
         'created_by',
@@ -20,7 +22,9 @@ class Associate extends Model
     ];
 
     protected $dates = [
-        'contract_due_date_start'
+        'contract_due_date_start',
+        'data_filter_starts_at',
+        'data_filter_ends_at'
     ];
 
     // App methods

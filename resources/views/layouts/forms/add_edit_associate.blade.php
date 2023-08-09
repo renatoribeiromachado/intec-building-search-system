@@ -52,7 +52,7 @@
 </div>
 
 <div class="row mt-2">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <x-intec-input
             label-input-id="company_name"
             label-text="Razão Social:"
@@ -64,7 +64,7 @@
         />
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <x-intec-input
             label-input-id="trading_name"
             label-text="Fantasia:"
@@ -72,6 +72,30 @@
             input-name="trading_name"
             class-one=""
             input-value="{{ $company->trading_name }}"
+            :input-readonly="false"
+        />
+    </div>
+
+    <div class="col-md-2">
+        <x-intec-input
+            label-input-id="data_filter_starts_at"
+            label-text="Início de Visualização:"
+            input-type="text"
+            input-name="data_filter_starts_at"
+            class-one="date"
+            input-value="{{ optional($associate->data_filter_starts_at)->format('d/m/Y') }}"
+            :input-readonly="false"
+        />
+    </div>
+
+    <div class="col-md-2">
+        <x-intec-input
+            label-input-id="data_filter_ends_at"
+            label-text="Término de Visualização:"
+            input-type="text"
+            input-name="data_filter_ends_at"
+            class-one="date"
+            input-value="{{ optional($associate->data_filter_ends_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
     </div>

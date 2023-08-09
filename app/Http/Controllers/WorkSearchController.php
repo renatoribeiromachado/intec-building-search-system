@@ -143,6 +143,7 @@ class WorkSearchController extends Controller
 
     private function getFilteredWorks(Request $request)
     {
+        $loggedUser = Auth::user();
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
         $allStageIds = $request->stages;
@@ -193,6 +194,21 @@ class WorkSearchController extends Controller
 
         if ($allSegmentSubTypeIds) {
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
+        }
+
+        /**
+         * The associate user only can search works based in the associate period fields:
+         *
+         *  - data_filter_starts_at and;
+         *  - data_filter_ends_at.
+         */
+        if ($loggedUser->role->name == 'Associado') {
+            $works = $works->whereBetween(
+                'works.last_review', [
+                    $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d'),
+                    $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d')
+                ]
+            );
         }
 
         return $works->paginate(self::REGISTRIES_PER_PAGE);
