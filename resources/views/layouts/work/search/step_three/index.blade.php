@@ -118,10 +118,13 @@
                             <strong>Segmento</strong>:
                             <span class="text-uppercase">{{ $work->segment_description }}</span> -
                             <b>Subtipo</b>: {{ $work->segment_sub_type_description }}<br>
+
                             <strong>Início da obra</strong>
-                            {{ optional($work->started_at)->format('d/m/Y') }}
+                            {{ \Carbon\Carbon::parse($work->started_at)->format('d/m/Y') }}
+
                             <strong>Término da obra</strong>
-                            {{ optional($work->ends_at)->format('d/m/Y') }} -
+                            {{ \Carbon\Carbon::parse($work->ends_at)->format('d/m/Y') }} -
+
                             <strong>Início / Término</strong>:
                             {{ $work->start_and_end }}<br>
                             <strong>Fase</strong>: {{ $work->phase_description }}
@@ -285,7 +288,6 @@
                         <td><strong>Nome</strong></td>
                         <td><strong>Cargo</strong></td>
                         <td><strong>Empresa</strong></td>
-                        <td><strong>Obra</strong></td>
                         <td><strong>Telefone</strong></td>
                         <td><strong>Telefone2</strong></td>
                         <td><strong>Celular</strong></td>
@@ -302,9 +304,6 @@
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 {{ optional($contact->company)->company_name }}
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                {{ $work->name }}
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 @if ($contact->ddd && $contact->main_phone)
