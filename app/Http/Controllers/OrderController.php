@@ -65,6 +65,7 @@ class OrderController extends Controller
             $order = $this->order;
             $order->company_id = $company->id;
             $order->plan_id = $request->plan_id;
+            $order->old_code = $request->old_code;
             $order->work_notes = $request->work_notes;
             $order->situation = $request->situation;
             $order->start_at = convertPtBrDateToEnDate($request->start_at);
@@ -131,6 +132,7 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $order->plan_id = $request->plan_id;
+            $order->old_code = $request->old_code;
             $order->work_notes = $request->work_notes;
             $order->situation = $request->situation;
             $order->start_at = convertPtBrDateToEnDate($request->start_at);

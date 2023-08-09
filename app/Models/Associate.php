@@ -10,6 +10,7 @@ class Associate extends Model
     use HasFactory;
 
     protected $fillable = [
+        'old_code',
         'linked_company',
         'business_branch',
         'company_date_birth',

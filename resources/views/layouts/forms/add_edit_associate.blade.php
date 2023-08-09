@@ -1,4 +1,17 @@
 <div class="row mt-2">
+    <div class="col-md-2">
+        <x-intec-input
+            label-input-id="old_code"
+            label-text="Cód. Antigo"
+            input-type="text"
+            input-name="old_code"
+            class-one=""
+            input-value="{{ $associate->old_code }}"
+            :input-readonly="false"
+            maxlength="14"
+        />
+    </div>
+
     <div class="col-md-3">
         <x-intec-input
             label-input-id="linked_company"
@@ -26,7 +39,7 @@
         />
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <x-intec-input
             label-input-id="phone_one"
             label-text="Telefone:"
@@ -38,7 +51,7 @@
         />
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <x-intec-input
             label-input-id="primary_email"
             label-text="E-mail Principal:"

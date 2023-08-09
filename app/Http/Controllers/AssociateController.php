@@ -173,6 +173,7 @@ class AssociateController extends Controller
             $associate = $this->associate;
             $associate->company_id = $company->id;
             $associate->salesperson_id = $request->salesperson_id;
+            $associate->old_code = $request->old_code;
             $associate->linked_company = $request->linked_company;
             $associate->business_branch = $request->business_branch;
             $associate->company_date_birth = $request->company_date_birth;
@@ -346,6 +347,7 @@ class AssociateController extends Controller
             // Associate
             $associate->company_id = $company->id;
             $associate->salesperson_id = $request->salesperson_id;
+            $associate->old_code = $request->old_code;
             $associate->linked_company = $request->linked_company;
             $associate->business_branch = $request->business_branch;
             $associate->company_date_birth = $request->company_date_birth;

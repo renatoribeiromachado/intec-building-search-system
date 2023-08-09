@@ -43,11 +43,11 @@
                         {{ $order->company->trading_name }}
                     </td>
                     <td>
-                        <strong>Codigo:</strong>
-                        {{ fillLeftWithZeros($order->company->associate->id) }}
+                        <strong>Código:</strong>
+                        {{ $order->company->associate->old_code }}
                         /
                         <strong>Pedido:</strong>
-                        {{ fillLeftWithZeros($order->id) }}
+                        {{ $order->old_code }}
                     </td>
                 </tr>
             </table>

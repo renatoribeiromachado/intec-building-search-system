@@ -7,7 +7,7 @@
 
         <table class="table table-condensed">
             <tr>
-                <th class="bg-dark text-white">Nº</th>
+                <th class="bg-dark text-white">Cód.</th>
                 <th class="bg-dark text-white">Posição</th>
                 <th class="bg-dark text-white">Plano</th>
                 <th class="bg-dark text-white">Início</th>
@@ -21,7 +21,7 @@
             @forelse ($orders as $order)
                 <tr>
                     <td>
-                        {{ fillLeftWithZeros($order->id) }}
+                        {{ $order->old_code }}
                     </td>
                     <td>
                         {{ $order->situation }}

@@ -1,5 +1,18 @@
 <div class="row mt-2">
-    <div class="col-md-12">
+    <div class="col-md-2">
+        <x-intec-input
+            label-input-id="old_code"
+            label-text="Cód. Antigo"
+            input-type="text"
+            input-name="old_code"
+            class-one=""
+            input-value="{{ $order->old_code }}"
+            :input-readonly="false"
+            maxlength="14"
+        />
+    </div>
+
+    <div class="col-md-10">
         <x-intec-input
             label-input-id="work_notes"
             label-text="Informações de Obras:"
