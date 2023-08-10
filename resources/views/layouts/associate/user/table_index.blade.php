@@ -83,12 +83,19 @@
                     </td>
                     <td style="width: 210px;">
                         <div class="text-center">
-                            <button
+                            {{-- <button
                                 data-bs-toggle="modal"
                                 data-bs-target="#editAssociate{{$loop->index}}"
                                 class="btn btn-outline-success me-1"
                                 >Editar
-                            </button>
+                            </button> --}}
+                            <a
+                                {{-- data-bs-toggle="modal"
+                                data-bs-target="#editAssociate{{$loop->index}}" --}}
+                                href="{{ route('associate.user.edit', [$company->id, $contact->id]) }}"
+                                class="btn btn-outline-success me-1"
+                                >Editar
+                            </a>
                             
                             <button
                                 data-bs-toggle="modal"

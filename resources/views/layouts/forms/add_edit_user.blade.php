@@ -18,7 +18,15 @@
 <div class="form-row mb-3">
     <div class="form-group col-md-12">
         <label for="password">Senha <small>(mínimo de 8 dígitos)</small></label>
-        <input type="password" id="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" value="{{ old('password') }}" autocomplete="current-password" @if(! \Route::is('user.edit')) required @endif>
+        <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+            value="{{ old('password') }}"
+            autocomplete="new-password"
+            @if(! \Route::is('user.edit')) required @endif
+            >
     </div>
 </div>
 
@@ -32,11 +40,11 @@
 <div class="form-row mb-3">
     <div class="form-group col-md-12">
         <label for="role">Perfil</label>
-        <select id="role" name="role_id" class="form-control">
+        <select id="role" name="role_id" class="form-control" required>
 
             @foreach ($roles as $role)
                 @if ($loop->index == 0)
-                    <option selected>-- Selecione --</option>
+                    <option value="">-- Selecione --</option>
                 @endif
 
                 <option

@@ -3,18 +3,18 @@
 @section('content')
 
     <div class="bg-light p-5 rounded">
-        <h1>CADASTRO DE USUÁRIO</h1>
+        <h1>EDIÇÃO DE DADOS DE ACESSO</h1>
 
         <form
-            action="{{ route('user.store') }}"
-            method="post"
+            action="{{ route('associate.user.update', [$company->id, $contact->id]) }}"
+            method="POST"
             role="form"
             autocomplete="off"
             >
             @csrf
-            @method('post')
+            @method('put')
 
-            @include('layouts.forms.add_edit_user')
+            @include('layouts.associate.modals.add_edit_associate_user')
 
             <div class="form-row my-3">
                 <div class="form-group">

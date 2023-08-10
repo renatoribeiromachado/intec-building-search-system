@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateController;
+use App\Http\Controllers\AssociateUserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
@@ -263,20 +264,18 @@ Route::middleware(['auth'])->group(function () {
             Route::get('reports/{order}', OrderReportController::class)->name('associate.order.report.index');
         });
 
-        // Add / Edit Associate Access
-        Route::prefix('{company}/users')->group(function () {
-            Route::post('store',
-                [UserController::class, 'storeAssociateUser'])->name('associate.user.store');
-            Route::put('update/{contact}',
-                [UserController::class, 'updateAssociateUser'])->name('associate.user.update');
-            Route::delete('{contact}',
-                [UserController::class, 'destroyAssociateUser'])->name('associate.user.destroy');
-        });
-
         Route::prefix('{associate}/subscriptions')->group(function () {
-            Route::post('store',
-                [SubscriptionController::class, 'store'])->name('associate.subscription.store');
+            Route::post('store', [SubscriptionController::class, 'store'])->name('associate.subscription.store');
         });
+    });
+
+    // Add / Edit Associate Access
+    Route::prefix('associates/users')->group(function() {
+        Route::get('create/{company}', [AssociateUserController::class, 'create'])->name('associate.user.create');
+        Route::post('store/{company}', [AssociateUserController::class, 'store'])->name('associate.user.store');
+        Route::get('edit/{company}/{contact}', [AssociateUserController::class, 'edit'])->name('associate.user.edit');
+        Route::put('update/{company}/{contact}', [AssociateUserController::class, 'update'])->name('associate.user.update');
+        Route::delete('destroy/{company}/{contact}', [AssociateUserController::class, 'destroy'])->name('associate.user.destroy');
     });
 
     Route::prefix('positions')->group(function () {

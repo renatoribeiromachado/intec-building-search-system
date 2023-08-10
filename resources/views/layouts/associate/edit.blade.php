@@ -11,7 +11,12 @@
         @include('layouts.alerts.all-errors')
         @include('layouts.alerts.success')
 
-        <form action="{{ route('associate.update', $associate->id) }}" method="post" role="form">
+        <form
+            action="{{ route('associate.update', $associate->id) }}"
+            method="post"
+            role="form"
+            autocomplete="off"
+            >
             @csrf
             @method('put')
 
@@ -44,14 +49,21 @@
                         Dados da assinatura
                     </button>
 
-                    <button
+                    {{-- <button
                         type="button"
                         class="btn btn-outline-secondary me-1"
                         data-bs-toggle="modal"
                         data-bs-target="#addAccess"
                         >
                         Dados de acesso
-                    </button>
+                    </button> --}}
+
+                    <a
+                        href="{{ route('associate.user.create', $company->id) }}"
+                        class="btn btn-outline-secondary me-1"
+                        >
+                        Dados de acesso
+                    </a>
 
                     <button
                         type="submit"
