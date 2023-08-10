@@ -118,7 +118,7 @@
                     </td>
                 </tr>
 
-                @foreach($contacts as $contact)
+                {{-- @foreach($contacts as $contact)
                     <tr>
                         <td>
                             <strong>Contato:</strong>
@@ -137,7 +137,7 @@
                             {{ $contact->email }}
                         </td>
                     </tr>
-                @endforeach
+                @endforeach --}}
             </table>
 
             <table class="table table-bordered remove-margin-bottom">
@@ -205,7 +205,7 @@
                     <th>E-Mail</th>
                 </tr>
 
-                @foreach($associateUsers as $associateUser)
+                {{-- @foreach($associateUsers as $associateUser)
                     <tr>
                         <td>
                             {{ $associateUser->name }}
@@ -223,6 +223,28 @@
                         </td>
                         <td>
                             {{ $associateUser->user->email }}
+                        </td>
+                    </tr>
+                @endforeach --}}
+
+                @foreach($contacts as $contact)
+                    <tr>
+                        <td>
+                            {{ $contact->name }}
+                        </td>
+                        <td>
+                            {{ optional($contact->position)->description }}
+                        </td>
+                        <td>
+                            @if ($contact->ddd && $contact->main_phone)
+                            ({{ $contact->ddd }}) {{ $contact->main_phone }} /
+                            @endif
+                            @if ($contact->ddd_two && $contact->phone_two)
+                            ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
+                            @endif
+                        </td>
+                        <td>
+                            {{ $contact->email }}
                         </td>
                     </tr>
                 @endforeach
