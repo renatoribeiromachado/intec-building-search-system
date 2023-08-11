@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WorkSearchStepTwoRequest;
+use App\Models\Associate;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
@@ -117,7 +119,7 @@ class WorkSearchController extends Controller
         ));
     }
 
-    public function showWorkSearchStepTwo(Request $request)
+    public function showWorkSearchStepTwo(WorkSearchStepTwoRequest $request)
     {
         $this->authorize('ver-pesquisa-de-obras');
 
@@ -189,12 +191,6 @@ class WorkSearchController extends Controller
             ->join('stages', 'works.stage_id', '=', 'stages.id')
             ->join('segments', 'works.segment_id', '=', 'segments.id')
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
-
-        if ($startedAt && $endsAt) {
-            $startedAt = convertPtBrDateToEnDate($startedAt);
-            $endsAt = convertPtBrDateToEnDate($endsAt);
-            $works = $works->whereBetween('works.last_review', [$startedAt, $endsAt]);
-        }
 
         $allWorkIds = null;
         if ($request->works_selected) {
@@ -302,12 +298,32 @@ class WorkSearchController extends Controller
          *  - data_filter_starts_at and;
          *  - data_filter_ends_at.
          */
-        if ($loggedUser->role->name == 'Associado / Gestor(a)') {
+        if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $loggedUser->role->slug == Associate::ASSOCIATE_USER) {
+
+            $dataFilterStartsAt1 = $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d');
+            $dataFilterEndsAt1 = $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d');
+
+            // Final criteria initialization.
+            $dataFilterStartsAtFinal = $dataFilterStartsAt1;
+            $dataFilterEndsAtFinal = $dataFilterEndsAt1;
+
+            // Date verification informed by associate members
+            if ($startedAt && $endsAt) {
+
+                // Filter dt ini >= $dataFilterStartsAt1? yes, so it is on the associate period range
+                $dataFilterStartsAtFinal = ($startedAt >= $dataFilterStartsAt1)
+                    ? $startedAt
+                    : $dataFilterStartsAt1;
+
+                // Filter dt end <= $dataFilterEndsAt1? yes, so it is on the associate period range
+                $dataFilterEndsAtFinal = ($endsAt <= $dataFilterEndsAt1)
+                    ? $endsAt
+                    : $dataFilterEndsAt1;
+            }
+
             $works = $works->whereBetween(
-                'works.last_review', [
-                    $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d'),
-                    $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d')
-                ]
+                'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
             );
         }
 

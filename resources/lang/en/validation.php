@@ -230,6 +230,10 @@ return [
         'first_due_date' => '1º Vencimento',
         'installments' => 'Qtde. de Parcelas',
         'easy_payment_condition' => 'Condição Facilitada de Pagamento',
+
+        // Associate Work Search
+        'last_review_from' => 'Data Inicial',
+        'last_review_to' => 'Data Final',
     ],
 
 ];

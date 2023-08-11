@@ -9,6 +9,8 @@
                 </div>
             </div>
 
+            {{-- @include('layouts.alerts.all-errors') --}}
+
             <form action="{{ route('work.search.step_two.index') }}" id="formulario" method="get">
                 @csrf
                 @method('GET')
@@ -23,22 +25,36 @@
                     </div>
 
                     <div class="col-md-6 pb-5">
-                        <label class="control-label"><strong>Data Inicial</strong></label>
+                        <label for="last_review_from" class="control-label">
+                            <strong>Data Inicial</strong>
+                        </label>
                         <input
                             type="text"
                             name="last_review_from"
-                            class="date form-control datepicker"
-                            value=""
+                            class="date form-control datepicker @error('last_review_from') is-invalid @enderror"
+                            value="{{ old('last_review_from') }}"
                             placeholder="Data Inicial..."/>
+                            @error('last_review_from')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('last_review_from') }}</strong>
+                            </div>
+                            @enderror
                     </div>
                     <div class="col-md-6 pb-5">
-                        <label class="control-label"><strong>Data Final</strong></label>
+                        <label for="last_review_to" class="control-label">
+                            <strong>Data Final</strong>
+                        </label>
                         <input
                             type="text"
                             name="last_review_to"
-                            class="date form-control datepicker"
-                            value=""
+                            class="date form-control datepicker @error('last_review_to') is-invalid @enderror"
+                            value="{{ old('last_review_to') }}"
                             placeholder="Data Final..."/>
+                            @error('last_review_to')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('last_review_to') }}</strong>
+                            </div>
+                            @enderror
                     </div>
                 </div>
 
