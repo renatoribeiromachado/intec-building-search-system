@@ -7,7 +7,11 @@
     type="{{ $inputType }}"
     name="{{ $inputName }}"
     class="form-control {{ $classOne }} @error($inputName) is-invalid @enderror"
+    @if($inputType == 'password' && \Route::is('associate.user.create'))
+    value="{{ old($inputName, 'intec!@#') }}"
+    @else
     value="{{ old($inputName, $inputValue) }}"
+    @endif
     {{-- placeholder="{{ $inputPlaceholder }}" --}}
     @if ($inputReadonly) readonly @endif
     {{ $attributes }}

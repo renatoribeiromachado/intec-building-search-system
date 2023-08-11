@@ -121,7 +121,14 @@ class UserController extends Controller
 
         $isActive = collect(self::IS_ACTIVE);
 
-        $roles = $this->role->findRoles();
+        $roles = $this->role
+            ->whereNotIn('slug', [
+                'associado-gestora',
+                'associado-usuario',
+                'webmaster',
+                'contato'
+            ])
+            ->get();
         return view('layouts.user.edit', compact(
             'user',
             'roles',

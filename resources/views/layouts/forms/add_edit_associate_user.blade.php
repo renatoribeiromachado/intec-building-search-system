@@ -91,15 +91,10 @@
         <x-intec-input
             label-input-id="password"
             label-text="Senha"
-            input-type="text"
+            input-type="password"
             input-name="password"
             class-one=""
-            {{-- input-value="{{ optional($contact->user)->password ? $defaultPassword : null }}" --}}
-            @if(\Route::is('associate.user.create'))
-            input-value="intec!@#"
-            @else
             input-value=""
-            @endif
             :input-readonly="false"
         />
     </div>

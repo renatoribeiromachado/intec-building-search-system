@@ -11,7 +11,7 @@
             @csrf
             @method('post')
 
-            @include('layouts.associate.modals.add_edit_associate_user')
+            @include('layouts.forms.add_edit_associate_user')
 
             <div class="form-row my-3">
                 <div class="form-group">
