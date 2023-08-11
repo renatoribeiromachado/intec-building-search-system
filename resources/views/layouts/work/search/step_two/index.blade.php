@@ -19,22 +19,42 @@
                 <button type="submit" class="btn btn-success submit float-end" title="Pesquisar">
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
-
+                {{--
                 <a href="{{ url()->full() }}"
                     class="btn btn-outline-success submit float-end me-3" title="Pesquisar">
                     <i class="fa fa-search"></i> Deselecionar Todos
-                </a>
+                </a>--}}
             </div>
         </div>
+        <script>
+          function toggleCheckboxes() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            var allChecked = true;
+
+            checkboxes.forEach(function(checkbox) {
+                if (!checkbox.checked) {
+                    allChecked = false;
+                }
+            });
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !allChecked;
+            });
+
+            var button = document.getElementById('toggleButton');
+            button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+        }
+    </script>
+    <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
+    
+<button type="button" id="toggleButton" class="btn btn-primary" onclick="toggleCheckboxes()">Selecionar Todos</button>
 
         <table class="table">
             <thead>
                 <tr>
-                    {{-- <th scope="col">#</th> --}}
-                    {{-- <th scope="col">Código Antigo</th> --}}
+                    <th scope="col">Código</th>
                     <th scope="col">Projeto</th>
-                    <th scope="col">Revisado em</th>
-                    <th scope="col">Padrão</th>
+                    <th scope="col">Revisado</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
@@ -42,12 +62,12 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($works as $work)
+                @forelse($works as $work) 
                 <tr class="
                     @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
                     @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
                     @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
-                    ">
+                "> 
                         <td style="cursor: pointer;">
                             <div style="cursor: pointer;">
                                 <div class="form-check">
@@ -61,15 +81,13 @@
                                         class="form-check-label"
                                         for="flexCheckDefault{{$loop->index}}"
                                         >
-                                        {{ $work->old_code }} {{ $work->name }}
+                                        {{ $work->old_code }}
                                     </label>
                                 </div>
                             </div>
                         </td>
-                        {{-- <td>{{ $work->old_code }}</td> --}}
-                        {{-- <td>{{ $work->name }}</td> --}}
+                       <td>{{ $work->name }}</td>
                         <td>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</td>
-                        <td>{{ $work->investment_standard }}</td>
                         <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                         <td>{{ $work->phase_description }}</td>
                         <td>{{ $work->stage_description }}</td>

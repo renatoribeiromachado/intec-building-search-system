@@ -78,7 +78,7 @@
     }
 </style>
 
-<div class="">
+<div class="container pt-5">
     @foreach ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
@@ -304,7 +304,7 @@
                                 {{ optional($contact->position)->description }}
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
-                                {{ optional($contact->company)->company_name }}
+                                {{ optional($contact->company)->company_name }} 
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 @if ($contact->ddd && $contact->main_phone)
