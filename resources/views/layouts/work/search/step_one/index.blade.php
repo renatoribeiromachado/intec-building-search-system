@@ -590,6 +590,7 @@
             });
         });
 
+        @if (($segmentSubTypeOne->count() > 0))
         /*INDUSTRIAL*/
         const industrialCheckbox = document.querySelector('.industrial');
         const checkboxesInd = document.querySelectorAll('.Ind');
@@ -599,7 +600,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
         
+        @if (($segmentSubTypeTwo->count() > 0))
         /*COMERCIAL*/
         const commercialCheckbox = document.querySelector(".comercial");
         const comCheckboxes = document.querySelectorAll(".Com");
@@ -609,7 +612,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
         
+        @if (($segmentSubTypeThree->count() > 0))
         /*RESIDENCIAL*/
         const residentialCheckbox = document.querySelector('.residential');
         const checkboxesRes = document.querySelectorAll('.Res');
@@ -619,7 +624,10 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
+                    $statesFour->count() + $statesFive->count()) > 0)
         /*REGIÃO GERAL*/
         const geralCheckbox = document.querySelector('.regiaoGeral');
         const checkboxesGeral = document.querySelectorAll('.checkRegiaoGeral');
@@ -629,7 +637,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesOne->count() > 0)
         /*REGIÃO NORTE*/
         const norteCheckbox = document.querySelector('.norte');
         const checkboxesNor = document.querySelectorAll('.checkNorte');
@@ -640,7 +650,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesTwo->count() > 0)
         /*REGIÃO NORDESTE*/
         const nordesteCheckbox = document.querySelector('.nordeste');
         const checkboxesNordeste = document.querySelectorAll('.checkNordeste');
@@ -650,7 +662,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesThree->count() > 0)
         /*REGIÃO CENTRO-OESTE*/
         const centroCheckbox = document.querySelector('.centro-oeste');
         const checkboxesCen = document.querySelectorAll('.checkCentroOeste');
@@ -660,7 +674,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesFour->count() > 0)
         /*REGIÃO SULDESTE*/
         const sudesteCheckbox = document.querySelector('.sudeste');
         const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
@@ -670,7 +686,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesFive->count() > 0)
         /*REGIÃO SUL*/
         const sulCheckbox = document.querySelector('.sul');
         const checkboxesSul = document.querySelectorAll('.checkSul');
@@ -680,6 +698,7 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
     </script>
 
 @endpush
