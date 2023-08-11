@@ -130,6 +130,7 @@
                             <strong>Fase</strong>: {{ $work->phase_description }}
                             <strong>Estágio</strong>: {{ $work->stage_description }}<br>
                             <strong>Área total construída (m<sup>2</sup>)</strong>: {{ $work->total_project_area }}<br>
+                            <strong>Padrão</strong>: {{ $work->investment_standard }}<br>
                             <strong>Valor do investimento</strong>: R$ {{ convertDecimalToBRL($work->price) }}<br>
                         </td>
                         <td style="width:15% !important;">

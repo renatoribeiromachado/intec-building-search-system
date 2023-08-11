@@ -33,7 +33,7 @@
                     {{-- <th scope="col">#</th> --}}
                     {{-- <th scope="col">Código Antigo</th> --}}
                     <th scope="col">Projeto</th>
-                    <th scope="col">Revisado em</th>
+                    <th scope="col">Revisado</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
@@ -43,10 +43,10 @@
             <tbody>
                 @forelse($works as $work)
                 <tr class="
-    @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
-    @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
-    @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
-">
+                    @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
+                    @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
+                    @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
+                ">
                         <td style="cursor: pointer;">
                             <div style="cursor: pointer;">
                                 <div class="form-check">
