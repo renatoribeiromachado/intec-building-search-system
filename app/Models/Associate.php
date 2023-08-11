@@ -37,8 +37,8 @@ class Associate extends Model
     {
         $associate = self::select('associates.*');
 
-        if ($request->search_id) {
-            $associate = $associate->where('id', $request->search_id);
+        if ($request->search_old_code) {
+            $associate = $associate->where('old_code', $request->search_old_code);
         }
 
         if ($request->search_cnpj) {

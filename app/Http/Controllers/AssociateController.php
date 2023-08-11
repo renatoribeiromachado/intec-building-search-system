@@ -78,7 +78,10 @@ class AssociateController extends Controller
 
     public function __invoke(Request $request)
     {
-        $associates = $request->has('search_id')
+        $associates = $request->has('search_old_code') ||
+            $request->has('search_cnpj') ||
+            $request->has('search_company_name') ||
+            $request->has('search_trading_name')
             ? $this->associate->allAssociates($request)
             : [];
 

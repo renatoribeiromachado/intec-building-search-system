@@ -19,12 +19,12 @@
         <div class="row mt-2">
             <div class="col-md-2">
                 <x-intec-input
-                    label-input-id="search_cnpj"
+                    label-input-id="search_old_code"
                     label-text="Codigo"
                     input-type="text"
-                    input-name="search_id"
+                    input-name="search_old_code"
                     class-one=""
-                    input-value="{{ request()->search_id }}"
+                    input-value="{{ request()->search_old_code }}"
                     :input-readonly="false"
                     placeholder="Digite o Codigo..."
                 />
