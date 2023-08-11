@@ -200,8 +200,8 @@ class WorkSearchController extends Controller
             if ((! is_null($associate->data_filter_starts_at)) &&
                 ! is_null($associate->data_filter_ends_at)) {
 
-                $dataFilterStartsAt = convertPtBrDateToEnDate($associate->data_filter_starts_at);
-                $dataFilterEndsAt = convertPtBrDateToEnDate($associate->data_filter_ends_at);
+                $dataFilterStartsAt = $associate->data_filter_starts_at;
+                $dataFilterEndsAt = $associate->data_filter_ends_at;
 
                 $works = $works->whereBetween('works.last_review', [$dataFilterStartsAt, $dataFilterEndsAt]);
             }
