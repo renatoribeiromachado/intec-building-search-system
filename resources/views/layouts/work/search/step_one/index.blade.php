@@ -306,7 +306,7 @@
                 @endif
 
                 <!--FILTRO ESPECIFICO-->
-                {{-- <div class="row mt-4 pb-4 bg-light border">
+                <div class="row mt-4 pb-4 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-left"> <i class="fa fa-check"></i><strong>FILTRO ESPECÍFICO</strong></p>
                         <hr>
@@ -318,27 +318,27 @@
                             <div class="col-md-3">
                                 <label class="control-label"> Padrão</label>
                                 <select name="investment_standard" class="form-select">
-                                    <option value="0">-- Selecione --</option>
+                                    <option value="">-- Selecione --</option>
                                     <option value="Alto">Alto</option>
                                     <option value="Baixo">Baixo</option>
-                                    <option value="Medio">Médio</option>  
+                                    <option value="Medio">Médio</option>
                                 </select>
                             </div>
-                            <div class="col-md-9">
+                            {{-- <div class="col-md-9">
                                 <label class="control-label"> Nome da Obra</label>
                                 <input type="text" name="name" class="form-control" id="busca-obra" value="" />
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <div class="row mt-2">
+                        {{-- <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> Endereço </label>
                                 <input type="text" name="adress" class="form-control" id="busca-adress" value="" />
                             </div>
-                        </div>
+                        </div> --}}
 
                         <!--Estado-->
-                        <div class="row mt-2">
+                        {{-- <div class="row mt-2">
                             <div class="col-md-2">
                                 <label class="control-label"> Estado</label>
                                 <select name="state" class="form-select">
@@ -359,7 +359,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2">
+                        {{-- <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> CEP Inicial</label>
                                 <input type="text" name="initial_zip_code" class="form-control cep" value="" />
@@ -499,8 +499,8 @@
                                 <input type="text" name="end_final" class="form-control datepicker" value="" placeholder="Data final do mês desejado para Término"/> 
                             </div>
                         </div>   
-                    </div><!--fim lado direito-->
-                </div> --}}
+                    </div><!--fim lado direito-->--}}
+                </div> 
 
                 <div class="row mt-4 pb-4">
 

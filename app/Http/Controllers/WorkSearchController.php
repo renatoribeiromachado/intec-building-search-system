@@ -45,10 +45,12 @@ class WorkSearchController extends Controller
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
 
-        if (Auth::user()->role->slug == Associate::ASSOCIATE_MANAGER ||
-            Auth::user()->role->slug == Associate::ASSOCIATE_USER) {
-            $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = Auth::user()->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+        $authUser = Auth::user();
+
+        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $authUser->role->slug == Associate::ASSOCIATE_USER) {
+            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
             
             $statesOne = $this->state
                 ->where('zone_id', 1)
@@ -120,6 +122,23 @@ class WorkSearchController extends Controller
     {
         $this->authorize('ver-pesquisa-de-obras');
 
+        $startedAt = $request->last_review_from;
+        $endsAt = $request->last_review_to;
+        $allStageIds = $request->stages;
+        $allStateIds = $request->states;
+        $allSegmentSubTypeIds = $request->segment_sub_types;
+        $investmentStandard = $request->investment_standard;
+
+        if (! isset($startedAt) &&
+            ! isset($endsAt) &&
+            ! isset($allStageIds) &&
+            ! isset($allStateIds) &&
+            ! isset($allSegmentSubTypeIds) &&
+            ! isset($investmentStandard)
+        ) {
+            return redirect()->route('work.search.step_one.index');
+        }
+
         $works = $this->getFilteredWorks($request);
 
         return view('layouts.work.search.step_two.index', compact('works'));
@@ -148,6 +167,7 @@ class WorkSearchController extends Controller
         $allStageIds = $request->stages;
         $allStateIds = $request->states;
         $allSegmentSubTypeIds = $request->segment_sub_types;
+        $investmentStandard = $request->investment_standard;
         $allStatesAcronym = null;
 
         if ($allStateIds) {
@@ -171,7 +191,21 @@ class WorkSearchController extends Controller
             ->join('segments', 'works.segment_id', '=', 'segments.id')
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
-        if ($startedAt && $endsAt) {
+        
+
+        if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $loggedUser->role->slug == Associate::ASSOCIATE_USER) {
+            $associate = $loggedUser->contact->company->associate;
+
+            if ((! is_null($associate->data_filter_starts_at)) &&
+                ! is_null($associate->data_filter_ends_at)) {
+
+                $dataFilterStartsAt = convertPtBrDateToEnDate($associate->data_filter_starts_at);
+                $dataFilterEndsAt = convertPtBrDateToEnDate($associate->data_filter_ends_at);
+
+                $works = $works->whereBetween('works.last_review', [$dataFilterStartsAt, $dataFilterEndsAt]);
+            }
+        } elseif ($startedAt && $endsAt) {
             $startedAt = convertPtBrDateToEnDate($startedAt);
             $endsAt = convertPtBrDateToEnDate($endsAt);
             $works = $works->whereBetween('works.last_review', [$startedAt, $endsAt]);
@@ -195,13 +229,19 @@ class WorkSearchController extends Controller
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
 
+        if ($investmentStandard) {
+            $works = $works->where('works.investment_standard', $investmentStandard);
+        }
+
         /**
          * The associate user only can search works based in the associate period fields:
          *
          *  - data_filter_starts_at and;
          *  - data_filter_ends_at.
          */
-        if ($loggedUser->role->name == 'Associado / Gestor(a)') {
+        if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $loggedUser->role->slug == Associate::ASSOCIATE_USER
+        ) {
             $works = $works->whereBetween(
                 'works.last_review', [
                     $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d'),

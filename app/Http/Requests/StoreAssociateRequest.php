@@ -46,6 +46,8 @@ class StoreAssociateRequest extends FormRequest
             'products_and_services' => ['required'],
             'salesperson_id' => ['required'],
             'company_date_birth' => ['required'],
+            'data_filter_starts_at' => ['nullable', 'date_format:d/m/Y'],
+            'data_filter_ends_at' => ['nullable', 'date_format:d/m/Y'],
         ];
     }
 }

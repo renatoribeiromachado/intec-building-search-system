@@ -99,7 +99,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Código Antigo</th>
                     <th scope="col">Projeto</th>
-                    <th scope="col">Revisado em</th>
+                    <th scope="col">Data de Atualização</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Fase</th>
                     <th scope="col">Segmento</th>

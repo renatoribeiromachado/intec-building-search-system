@@ -88,12 +88,12 @@ class Work extends Model
     {
         $work = self::select('works.*');
 
-        if (request()->old_code) {
-            $where[]  = ['works.old_code', 'like', '%'.request()->old_code.'%'];
-        }
+        // if (request()->search_old_code) {
+        //     $where[]  = ['works.old_code', 'like', '%'.request()->search_old_code.'%'];
+        // }
 
         if (request()->name) {
-            $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
+            $work = $work->where('works.name', 'like', '%'.request()->name.'%');
         }
 
         $work = $work->where($where);
