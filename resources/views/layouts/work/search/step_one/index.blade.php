@@ -153,56 +153,65 @@
                     @endforeach
                 </div>
 
-                <!--SEGMENTO E ATUAÇÕES-->
-                <div class="row mt-4">
-                    <div class="col-md-12">
-                        <label class="control-label text-uppercase">
-                            <strong>
-                                <i class="fa fa-check-square-o"></i>
-                                Segmentos de Atuação
-                            </strong>
-                        </label>
+                @if (($segmentSubTypeOne->count() + $segmentSubTypeTwo->count() +
+                    $segmentSubTypeThree->count()) > 0)
+                    <!--SEGMENTO E ATUAÇÕES-->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label class="control-label text-uppercase">
+                                <strong>
+                                    <i class="fa fa-check-square-o"></i>
+                                    Segmentos de Atuação
+                                </strong>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <!--INDUSTRIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-1"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="industrial"
-                    label-text="Industrial"
-                    :data-list="$segmentSubTypeOne"
-                    class-two="Ind"
-                    list-input-id-for="segment-sub-type-one-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
+                    @if (($segmentSubTypeOne->count() > 0))
+                        <!--INDUSTRIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-1"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="industrial"
+                            label-text="Industrial"
+                            :data-list="$segmentSubTypeOne"
+                            class-two="Ind"
+                            list-input-id-for="segment-sub-type-one-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
 
-                <!--COMERCIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-2"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="comercial"
-                    label-text="Comercial"
-                    :data-list="$segmentSubTypeTwo"
-                    class-two="Com"
-                    list-input-id-for="segment-sub-type-two-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
+                    @if (($segmentSubTypeTwo->count() > 0))
+                        <!--COMERCIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-2"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="comercial"
+                            label-text="Comercial"
+                            :data-list="$segmentSubTypeTwo"
+                            class-two="Com"
+                            list-input-id-for="segment-sub-type-two-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
 
-                <!--RESIDENCIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-3"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="residential"
-                    label-text="Residencial"
-                    :data-list="$segmentSubTypeThree"
-                    class-two="Res"
-                    list-input-id-for="segment-sub-type-three-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
+                    @if (($segmentSubTypeThree->count() > 0))
+                        <!--RESIDENCIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-3"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="residential"
+                            label-text="Residencial"
+                            :data-list="$segmentSubTypeThree"
+                            class-two="Res"
+                            list-input-id-for="segment-sub-type-three-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
+                @endif
 
                 @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
                     $statesFour->count() + $statesFive->count()) > 0)

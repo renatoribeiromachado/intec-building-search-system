@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Associate;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Position;
@@ -42,7 +43,7 @@ class AssociateUserController extends Controller
 
         $roles = $this->role
             ->select('id', 'name')
-            ->whereIn('slug', ['associado-gestora', 'associado-usuario'])
+            ->whereIn('slug', [Associate::ASSOCIATE_MANAGER, Associate::ASSOCIATE_USER])
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
 
@@ -137,7 +138,7 @@ class AssociateUserController extends Controller
 
         $roles = $this->role
             ->select('id', 'name')
-            ->whereIn('slug', ['associado-gestora', 'associado-usuario'])
+            ->whereIn('slug', [Associate::ASSOCIATE_MANAGER, Associate::ASSOCIATE_USER])
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
         $isActive = collect([

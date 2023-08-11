@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Associate;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +77,7 @@ class AuthenticatedSessionController extends Controller
                 $user->contact->company()->exists() &&
                 $user->contact->company->associate()->exists() &&
                 ($user->is_active == self::IT_IS_ACTIVE) &&
-                (Auth::user()->role->slug == 'associado-gestora')
+                (Auth::user()->role->slug == Associate::ASSOCIATE_MANAGER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
@@ -86,7 +87,7 @@ class AuthenticatedSessionController extends Controller
                 $user->contact->company()->exists() &&
                 $user->contact->company->associate()->exists() &&
                 ($user->is_active == self::IT_IS_ACTIVE) &&
-                (Auth::user()->role->slug == 'associado-usuario')
+                (Auth::user()->role->slug == Associate::ASSOCIATE_USER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }

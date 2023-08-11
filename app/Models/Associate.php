@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Associate extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    const ASSOCIATE_MANAGER = 'associado-gestora';
+    const ASSOCIATE_USER = 'associado-usuario';
 
     protected $fillable = [
         'old_code',

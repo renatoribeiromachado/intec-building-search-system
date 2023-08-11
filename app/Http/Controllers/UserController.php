@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Associate;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Role;
@@ -61,8 +62,8 @@ class UserController extends Controller
         $user = $this->user;
         $roles = $this->role
             ->whereNotIn('slug', [
-                'associado-gestora',
-                'associado-usuario',
+                Associate::ASSOCIATE_MANAGER,
+                Associate::ASSOCIATE_USER,
                 'webmaster',
                 'contato'
             ])
@@ -123,8 +124,8 @@ class UserController extends Controller
 
         $roles = $this->role
             ->whereNotIn('slug', [
-                'associado-gestora',
-                'associado-usuario',
+                Associate::ASSOCIATE_MANAGER,
+                Associate::ASSOCIATE_USER,
                 'webmaster',
                 'contato'
             ])

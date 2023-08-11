@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Associate;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
@@ -39,14 +40,16 @@ class WorkSearchController extends Controller
     {
         $this->authorize('ver-pesquisa-de-obras');
 
-        if (Auth::user()->role->name == 'Associado / Gestor(a)') {
+        // Data for all kind of Users
+        $stagesOne = $this->stage->where('phase_id', 1)->get();
+        $stagesTwo = $this->stage->where('phase_id', 2)->get();
+        $stagesThree = $this->stage->where('phase_id', 3)->get();
+
+        if (Auth::user()->role->slug == Associate::ASSOCIATE_MANAGER ||
+            Auth::user()->role->slug == Associate::ASSOCIATE_USER) {
             $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
             $segmentSubTypesVisible = Auth::user()->contact->company->associate->segmentSubTypes()->get()->pluck('id');
-
-            $stagesOne = $this->stage->where('phase_id', 1)->get();
-            $stagesTwo = $this->stage->where('phase_id', 2)->get();
-            $stagesThree = $this->stage->where('phase_id', 3)->get();
-
+            
             $statesOne = $this->state
                 ->where('zone_id', 1)
                 ->whereIn('id', $statesVisible)
@@ -82,11 +85,8 @@ class WorkSearchController extends Controller
                 ->get();
         }
 
-        if (Auth::user()->role->name != 'Associado / Gestor(a)') {
-            $stagesOne = $this->stage->where('phase_id', 1)->get();
-            $stagesTwo = $this->stage->where('phase_id', 2)->get();
-            $stagesThree = $this->stage->where('phase_id', 3)->get();
-
+        if (Auth::user()->role->slug != Associate::ASSOCIATE_MANAGER ||
+            Auth::user()->role->slug != Associate::ASSOCIATE_USER) {
             $statesOne = $this->state->where('zone_id', 1)->get();
             $statesTwo = $this->state->where('zone_id', 2)->get();
             $statesThree = $this->state->where('zone_id', 3)->get();
@@ -97,7 +97,6 @@ class WorkSearchController extends Controller
             $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
         }
-
 
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',

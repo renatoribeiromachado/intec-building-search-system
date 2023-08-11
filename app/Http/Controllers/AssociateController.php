@@ -255,7 +255,7 @@ class AssociateController extends Controller
         $user = $this->user;
         $roles = $this->role
             ->select('id', 'name')
-            ->whereIn('slug', ['associado-gestora', 'associado-usuario'])
+            ->whereIn('slug', [Associate::ASSOCIATE_MANAGER, Associate::ASSOCIATE_USER])
             ->orderBy('name', 'asc')
             ->get()->pluck('name', 'id');
 
