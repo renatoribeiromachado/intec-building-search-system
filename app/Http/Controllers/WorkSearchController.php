@@ -85,7 +85,7 @@ class WorkSearchController extends Controller
                 ->get();
         }
 
-        if (Auth::user()->role->slug != Associate::ASSOCIATE_MANAGER ||
+        if (Auth::user()->role->slug != Associate::ASSOCIATE_MANAGER &&
             Auth::user()->role->slug != Associate::ASSOCIATE_USER) {
             $statesOne = $this->state->where('zone_id', 1)->get();
             $statesTwo = $this->state->where('zone_id', 2)->get();
