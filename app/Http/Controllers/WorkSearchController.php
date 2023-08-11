@@ -169,6 +169,24 @@ class WorkSearchController extends Controller
         $allSegmentSubTypeIds = $request->segment_sub_types;
         $investmentStandard = $request->investment_standard;
         $allStatesAcronym = null;
+        $name = $request->name;
+        $investment_standard = $request->investment_standard;
+        $address = $request->address;
+        $old_code = $request->old_code;
+        $district = $request->district;
+        $initial_zip_code = $request->initial_zip_code;
+        $final_zip_code = $request->final_zip_code;
+        $notes = $request->notes;
+        
+        $qi = $request->qi;
+        $price = $request->price;
+        
+        $qr = $request->qr;
+        $revision = $request->revision;
+        
+        $qa = $request->qa;
+        $total_area = $request->total_area;
+         
 
         if ($allStateIds) {
             $states = $this->state
@@ -228,6 +246,88 @@ class WorkSearchController extends Controller
         if ($allSegmentSubTypeIds) {
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
+        /*Nome da Obra*/
+        if ($name) {
+            $works = $works->where('works.name', 'LIKE', '%' . $name . '%');
+        }
+        
+        /*Padrão investimento*/
+        if ($investment_standard) {
+            $works = $works->where('works.investment_standard', $investment_standard);
+        }
+        
+        /*Ednereço*/
+        if ($address) {
+            $works = $works->where('works.address', 'LIKE', '%' . $address . '%');
+        }
+        
+        /*Codigo da obra*/
+        if ($old_code) {
+            $old_codes = explode(',', $old_code); // Transforma a string de códigos em um array
+            $works = $works->whereIn('works.old_code', $old_codes);
+        }
+        
+        /*Bairro*/
+        if ($district) {
+            $works = $works->where('works.district', 'LIKE', '%' . $district . '%');
+        }
+        
+        /*CEP*/
+        if ($initial_zip_code && $final_zip_code) {
+            $works = $works->whereBetween('works.zip_code', [$initial_zip_code, $final_zip_code]);
+        }
+        
+        /*Codigo da obra*/
+        if ($notes) {
+            $notes = $works->where('works.notes', $notes);
+        }
+        
+        /* Investimento */
+        $qi = $request->input('qi');
+        $price = $request->input('price');
+
+        if ($qi && $price !== null) {
+            // Convertendo valor monetário do formato brasileiro para numérico
+            $price = str_replace(['.', ','], ['', '.'], $price);
+
+            $works = $works->where(function($query) use ($qi, $price) {
+                if ($qi == '>') {
+                    $query->where('price', '>', $price);
+                } elseif ($qi == '<') {
+                    $query->where('price', '<', $price);
+                }
+            });
+        }
+
+        
+        /* Revision */
+        $qr = $request->input('qr');
+        $revision = $request->input('revision');
+
+        if ($qr && $revision !== null) {
+            $works = $works->where(function($query) use ($qr, $revision) {
+                if ($qr == '>') {
+                    $query->where('revision', '>=', $revision);
+                } elseif ($qr == '<') {
+                    $query->where('revision', '<=', $revision);
+                }
+            });
+        }
+
+        
+        /* Área Construída */
+         $qa = $request->input('qa');
+         $total_area = $request->input('total_area');
+
+         if ($qa && $total_area !== null) {
+             $works = $works->where(function($query) use ($qa, $total_area) {
+                 if ($qa == '>') {
+                     $query->where('total_area', '>', $total_area);
+                 } elseif ($qa == '<') {
+                     $query->where('total_area', '<', $total_area);
+                 }
+             });
+         }
 
         if ($investmentStandard) {
             $works = $works->where('works.investment_standard', $investmentStandard);

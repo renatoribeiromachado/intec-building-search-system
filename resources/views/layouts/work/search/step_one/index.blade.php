@@ -304,6 +304,8 @@
                         collection-relation=""
                     />
                 @endif
+                
+         
 
                 <!--FILTRO ESPECIFICO-->
                 <div class="row mt-4 pb-4 bg-light border">
@@ -333,22 +335,22 @@
                         {{-- <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> Endereço </label>
-                                <input type="text" name="adress" class="form-control" id="busca-adress" value="" />
+                                <input type="text" name="address" class="form-control" id="busca-adress" value="" />
                             </div>
                         </div> --}}
 
                         <!--Estado-->
                         {{-- <div class="row mt-2">
                             <div class="col-md-2">
-                                <label class="control-label"> Estado</label>
+                                <label class="control-label"> Estado *</label>
                                 <select name="state" class="form-select">
                                     <option value="">Sel</option>
                                 </select>
                             </div>
                             
-                            <!--Cidades-->
+                            <!--Cidades--> 
                             <div class="col-md-10">
-                                <label class="control-label"> <code>*Selecione até 4 cidade(s) para busca</code></label>
+                                <label class="control-label"> <code>*Selecione até 4 cidade(s) para busca *</code></label>
                                 <select name="city" class="form-select cidade" id="selected"><!--IMPORTANTE O id="selected"-->
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
                                 </select>
@@ -365,9 +367,10 @@
                                 <input type="text" name="initial_zip_code" class="form-control cep" value="" />
                             </div>
                         </div>
+                        --}}
 
                         <div class="row mt-2">
-                            <label class="control-label"> Área Construída(m²)</label>
+                            <label class="control-label"> Área Construída(m²)*</label>
                             <div class="col-md-6">
                                 <select name="qa" class="form-select">
                                     <option value="0">-- Selecione --</option>
@@ -379,10 +382,10 @@
                                 <input type="text" name="total_area" class="form-control" value=""/>
                             </div>
                         </div>
-
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label"> Empresa Participante</label>
+                                <label class="control-label"> Empresa Participante*</label>
                                 <input type="text" name="company" class="form-control" id="company" value="" />
                             </div>
                         </div>
@@ -393,7 +396,8 @@
                                 <input type="text" name="notes" class="form-control" id="notes" value="" />
                             </div>
                         </div>
-
+                        --}}
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label class="control-label"> Pesquisador *Associado não verá</label>
@@ -409,6 +413,7 @@
                                 </select>
                             </div>
                         </div>
+                        --}}
 
                     </div><!--fim lado direito-->
 
@@ -427,25 +432,26 @@
                                 <input type="text" name="district" class="form-control"  id="district" value="" />
                             </div>
                         </div>
-
+                        {{--
                         <!--Cidades selecioandas-->
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Cidades Selecionadas - <a class="clear">Limpar selecionada(s)</a></label>
+                                <label class="control-label">Cidades Selecionadas - <a class="clear">Limpar selecionada(s)</a> *</label>
                                 <input type="text" name="cities" class="form-control viewSelect" style="color:blue;" placeholder="Selecione independente do Estado, mas será consultado até 4 Cidade(s) ..." readonly="">
                             </div>
                         </div>
-
+                        
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> CEP final</label>
                                 <input type="text" name="final_zip_code" class="form-control cep" value="" />
                             </div>
                         </div>
+                      --}}
 
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label class="control-label"> Valor do Investimento</label>
+                                <label class="control-label"> Valor do Investimento </label>
 
                                 <select name="qi" class="form-select">
                                     <option value="0">-- Selecione --</option>
@@ -458,7 +464,7 @@
                                 <input type="text" name="price" class="form-control money" value=""/>
                             </div>
                         </div>
-
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label class="control-label"> Modalidade</label>
@@ -472,6 +478,7 @@
                             </div>
 
                         </div> 
+                        --}}
 
                         <div class="row mt-2">
                             <label class="control-label"> Número de Revisão</label>
@@ -486,20 +493,21 @@
                                 <input type="text" name="revision" class="form-control" value=""/>
                             </div>
                         </div>
-
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label class="control-label"> Início das Obras</label>
+                                <label class="control-label"> Início das Obras *</label>
                                 <input type="text" name="initial_start" class="form-control datepicker" value="" placeholder="Data incial do mês desejado para Inicio"/>
                                 <input type="text" name="start_end" class="form-control datepicker" value="" placeholder="Data final do mês desejado para Inicio"/> 
                             </div>
                             <div class="col-md-6">
-                                <label class="control-label"> Término das Obras</label>
+                                <label class="control-label"> Término das Obras *</label>
                                 <input type="text" name="initial_term" class="form-control datepicker" value="" placeholder="Data incial do mês desejado para Término"/>
                                 <input type="text" name="end_final" class="form-control datepicker" value="" placeholder="Data final do mês desejado para Término"/> 
                             </div>
-                        </div>   
-                    </div><!--fim lado direito-->--}}
+                        </div>
+                        --}}
+                    </div><!--fim lado direito-->
                 </div> 
 
                 <div class="row mt-4 pb-4">
