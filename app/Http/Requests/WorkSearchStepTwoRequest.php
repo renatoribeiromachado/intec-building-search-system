@@ -24,8 +24,8 @@ class WorkSearchStepTwoRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_review_from' => ['required', 'date', 'before_or_equal:last_review_to'],
-            'last_review_to' => ['required', 'date', 'after_or_equal:last_review_from'],
+            'last_review_from' => ['nullable', 'date', 'before_or_equal:last_review_to'],
+            'last_review_to' => ['nullable', 'date', 'after_or_equal:last_review_from'],
         ];
     }
 
