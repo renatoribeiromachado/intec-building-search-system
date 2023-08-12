@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class WorkSearchController extends Controller
 {
-    const REGISTRIES_PER_PAGE = 1;
+    const REGISTRIES_PER_PAGE = 50;
 
     protected $stage;
     protected $work;
