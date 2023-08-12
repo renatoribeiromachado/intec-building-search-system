@@ -372,9 +372,11 @@ class WorkSearchController extends Controller
             }
         }
 
-        $works = $works->whereBetween(
-            'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
-        );
+        if ($dataFilterStartsAtFinal || $dataFilterEndsAtFinal) {
+            $works = $works->whereBetween(
+                'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
+            );
+        }
 
         if (\Route::is('work.search.step_three.index')) {
             return $works->get();
