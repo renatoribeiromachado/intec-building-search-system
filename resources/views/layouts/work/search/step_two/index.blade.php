@@ -11,19 +11,71 @@
         @csrf
         @method('get')
 
-        <input type="hidden" name="last_review_from" value="{{ convertPtBrDateToEnDate(request()->last_review_from) }}">
-        <input type="hidden" name="last_review_to" value="{{ convertPtBrDateToEnDate(request()->last_review_to) }}">
-        <input type="hidden" name="investment_standard" value="{{ request()->investment_standard }}">
-        <input type="hidden" name="name" value="{{ request()->name }}">
-        <input type="hidden" name="old_code" value="{{ request()->old_code }}">
-        <input type="hidden" name="address" value="{{ request()->address }}">
-        <input type="hidden" name="district" value="{{ request()->district }}">
-        <input type="hidden" name="qa" value="{{ request()->qa }}">
-        <input type="hidden" name="total_area" value="{{ request()->total_area }}">
-        <input type="hidden" name="qi" value="{{ request()->qi }}">
-        <input type="hidden" name="price" value="{{ request()->price }}">
-        <input type="hidden" name="qr" value="{{ request()->qr }}">
-        <input type="hidden" name="revision" value="{{ request()->revision }}">
+        <input
+            type="hidden"
+            id="last_review_from"
+            name="last_review_from"
+            value="{{ convertPtBrDateToEnDate(request()->last_review_from) }}">
+        <input
+            type="hidden"
+            id="last_review_to"
+            name="last_review_to"
+            value="{{ convertPtBrDateToEnDate(request()->last_review_to) }}">
+        <input
+            type="hidden"
+            id="investment_standard"
+            name="investment_standard"
+            value="{{ request()->investment_standard }}">
+        <input
+            type="hidden"
+            id="name"
+            name="name"
+            value="{{ request()->name }}">
+        <input
+            type="hidden"
+            id="old_code"
+            name="old_code"
+            value="{{ request()->old_code }}">
+        <input
+            type="hidden"
+            id="address"
+            name="address"
+            value="{{ request()->address }}">
+        <input
+            type="hidden"
+            id="district"
+            name="district"
+            value="{{ request()->district }}">
+        <input
+            type="hidden"
+            id="qa"
+            name="qa"
+            value="{{ request()->qa }}">
+        <input
+            type="hidden"
+            id="total_area"
+            name="total_area"
+            value="{{ request()->total_area }}">
+        <input
+            type="hidden"
+            id="qi"
+            name="qi"
+            value="{{ request()->qi }}">
+        <input
+            type="hidden"
+            id="price"
+            name="price"
+            value="{{ request()->price }}">
+        <input
+            type="hidden"
+            id="qr"
+            name="qr"
+            value="{{ request()->qr }}">
+        <input
+            type="hidden"
+            id="revision"
+            name="revision"
+            value="{{ request()->revision }}">
         @foreach ($statesChecked as $stateChecked)
         <input type="hidden" name="states[]" value="{{ $stateChecked }}">
         @endforeach
@@ -33,7 +85,6 @@
         @foreach ($stagesChecked as $stageChecked)
         <input type="hidden" name="stages[]" value="{{ $stageChecked }}">
         @endforeach
-
 
         <div class="row">
             <div class="col mt-3 mb-3">
@@ -45,11 +96,6 @@
                 <button type="submit" class="btn btn-success submit float-end" title="Pesquisar">
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
-                {{--
-                <a href="{{ url()->full() }}"
-                    class="btn btn-outline-success submit float-end me-3" title="Pesquisar">
-                    <i class="fa fa-search"></i> Deselecionar Todos
-                </a>--}}
             </div>
         </div>
         
@@ -57,11 +103,15 @@
         <button
             type="button"
             id="toggleButton"
-            class="btn btn-primary"
+            class="btn btn-primary mb-4"
             onclick="toggleCheckboxes()"
             >
             Selecionar Todos
         </button>
+
+        <div>
+            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
         <table class="table">
             <thead>
@@ -150,15 +200,12 @@
 @push('scripts')
 
     <script>
-
         $(document).ready(function () {
-
             $('.work-checkbox').click(function () {
                 let $checkbox = $(this);
                 let isChecked = $checkbox.is(':checked')
 
                 if (isChecked) {
-
                     $.ajax({
                         type: "POST",
                         url: base_url() + 'v1/check-work',
@@ -172,11 +219,9 @@
                             console.log(event)
                         }
                     });
-
                 }
 
                 if (! isChecked) {
-
                     $.ajax({
                         type: "POST",
                         url: base_url() + 'v1/remove-check-work',
@@ -190,30 +235,62 @@
                             console.log(event)
                         }
                     });
-
                 }
             })
-
         });
 
         function toggleCheckboxes() {
+
+            let workIds = [];
+            let selectAll = false;
             var checkboxes = document.querySelectorAll('input[type="checkbox"]');
             var allChecked = true;
 
-            checkboxes.forEach(function(checkbox) {
-                if (!checkbox.checked) {
+            checkboxes.forEach(function (checkbox) {
+                if (! checkbox.checked) {
                     allChecked = false;
+                }
+                workIds = [];
+            });
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = ! allChecked;
+
+                if (checkbox.checked) {
+                    selectAll = true;
+                    workIds.push(checkbox.value);
+                }
+
+                if (! checkbox.checked) {
+                    const index = workIds.indexOf(checkbox.value);
+                    if (index > -1) { // only splice workIds when item is found
+                        workIds.splice(index, 1); // 2nd parameter means remove one item only
+                    }
                 }
             });
 
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !allChecked;
+            $.ajax({
+                type: "POST",
+                url: base_url() + 'v1/check-all-works',
+                data: {
+                    work_ids: workIds,
+                    is_all_works_checked: selectAll,
+                },
+                success: function (return_data) {
+                    // console.log(return_data)
+                },
+                error: function (event) {
+                    console.log(event)
+                }
             });
 
             var button = document.getElementById('toggleButton');
             button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            // avoid the error maximum call stack size exceeded
+            button.addEventListener("click", function(event){
+                event.preventDefault()
+            })
         }
-
     </script>
 
 @endpush

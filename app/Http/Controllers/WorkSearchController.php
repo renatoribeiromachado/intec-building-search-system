@@ -12,6 +12,7 @@ use App\Models\WorkFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class WorkSearchController extends Controller
 {
@@ -132,9 +133,7 @@ class WorkSearchController extends Controller
         $works = $this->getFilteredWorks($request);
 
         $worksChecked = session($this->worksSessionName);
-        $segmentSubTypesChecked = session($this->segmentSubTypesSessionName);
-        $stagesChecked = session($this->stagesSessionName);
-        $statesChecked = session($this->statesSessionName);
+        // request()->session()->put('btnSelectAll', 0);
         
         $statesChecked = [];
         if (! is_null(request()->states)) {
@@ -178,19 +177,45 @@ class WorkSearchController extends Controller
         ));
     }
 
+    public function checkAllWorks(Request $request)
+    {
+        $isAllWorksChecked = (bool) $request->is_all_works_checked;
+
+        if ($isAllWorksChecked) {
+            $onlyWorksSelectdIds = $request->work_ids;
+            request()->session()->put(
+                $this->worksSessionName,
+                $onlyWorksSelectdIds
+            );
+        }
+
+        if (! $isAllWorksChecked) {
+            $onlyWorksSelectdIds = [];
+            request()->session()->put(
+                $this->worksSessionName,
+                $onlyWorksSelectdIds
+            );
+        }
+
+        return response()->json(
+            ['works_selected' => $onlyWorksSelectdIds],
+            Response::HTTP_OK
+        );
+    }
+
     private function getFilteredWorks(Request $request)
     {
         $loggedUser = Auth::user();
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
         $name = $request->name;
-        $investment_standard = $request->investment_standard;
+        $investmentStandard = $request->investment_standard;
         $address = $request->address;
         $oldCode = $request->old_code;
         $district = $request->district;
-        $initial_zip_code = $request->initial_zip_code;
-        $final_zip_code = $request->final_zip_code;
-        $notes = $request->notes;
+        // $initial_zip_code = $request->initial_zip_code;
+        // $final_zip_code = $request->final_zip_code;
+        // $notes = $request->notes;
         
         $qi = $request->qi;
         $price = $request->price;
@@ -264,8 +289,8 @@ class WorkSearchController extends Controller
         }
         
         /*Padrão investimento*/
-        if ($investment_standard) {
-            $works = $works->where('works.investment_standard', $investment_standard);
+        if ($investmentStandard) {
+            $works = $works->where('works.investment_standard', $investmentStandard);
         }
         
         /*Endereço*/
@@ -387,10 +412,13 @@ class WorkSearchController extends Controller
 
     private function resetWorksSession(): void
     {
-        request()->session()->forget($this->worksSessionName);
-        request()->session()->forget($this->stagesSessionName);
-        request()->session()->forget($this->segmentSubTypesSessionName);
-        request()->session()->forget($this->statesSessionName);
+        request()->session()->forget([
+            $this->worksSessionName,
+            $this->stagesSessionName,
+            $this->segmentSubTypesSessionName,
+            $this->statesSessionName,
+            'btnSelectAll'
+        ]);
     }
 
     public function pushWorksSession(Request $request)
@@ -404,9 +432,11 @@ class WorkSearchController extends Controller
 
         request()->session()->put($this->worksSessionName, $worksChecked);
 
-        return response()->json(['works' => session($this->worksSessionName)], 200);
+        return response()->json(
+            ['works' => session($this->worksSessionName)],
+            Response::HTTP_OK
+        );
     }
-
 
     public function removeWorksSession(Request $request)
     {
@@ -419,8 +449,9 @@ class WorkSearchController extends Controller
         
         request()->session()->put($this->worksSessionName, $selectedWorks);
 
-        // request()->session()->pull($this->worksSessionName, request()->work);
-
-        return response()->json(['works' => session($this->worksSessionName)], 200);
+        return response()->json(
+            ['works' => session($this->worksSessionName)],
+            Response::HTTP_OK
+        );
     }
 }

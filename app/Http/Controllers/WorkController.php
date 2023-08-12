@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class WorkController extends Controller
 {
@@ -371,9 +372,10 @@ class WorkController extends Controller
             ->where('trading_name', 'like', '%'.$request->trading_name.'%')
             ->get();
 
-        return response()->json([
-            'companies' => $companies
-        ], 200);
+        return response()->json(
+            ['companies' => $companies],
+            Response::HTTP_OK
+        );
     }
 
     public function bindCompanies(Request $request, Work $work)

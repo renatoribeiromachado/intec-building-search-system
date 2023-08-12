@@ -208,7 +208,10 @@ class OrderController extends Controller
 
         $finalPrice = convertMaskToDecimal($discount);
 
-        return response()->json(['final_price' => $finalPrice], Response::HTTP_OK);
+        return response()->json(
+            ['final_price' => $finalPrice],
+            Response::HTTP_OK
+        );
     }
 
     public function calculateInstallments(Request $request)
@@ -224,6 +227,9 @@ class OrderController extends Controller
 
         $message = "{$installments}x de R$ {$result}";
 
-        return response()->json(['message' => $message], Response::HTTP_OK);
+        return response()->json(
+            ['message' => $message],
+            Response::HTTP_OK
+        );
     }
 }
