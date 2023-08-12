@@ -79,7 +79,7 @@
 </style>
 
 <div class="container pt-5">
-    @foreach ($works as $work)
+    @forelse ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
                 <p>
@@ -104,7 +104,7 @@
     
         <div class="row mt-2">
             <div class="col-md-12">
-                <p class="text-success"><b>DADOS DA OBRA:</b></p>
+                <p class="text-success"><b>DADOS DA OBRA {{ $loop->iteration }}:</b></p>
                 <table class="table table-condensed">
                     <tr>
                         <td style="width:85% !important;"><strong>Nome da Obra</strong>:  {{ $work->name }}<br>
@@ -421,6 +421,14 @@
                 </table> 
             </div>
         </div>
-    @endforeach
+        @empty
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <p class="text-center">
+                    Nenhuma obra encontrada com base nos critérios selecionados.
+                </p>
+            </div>
+        </div>
+    @endforelse
 </div>
 @endsection

@@ -15,13 +15,17 @@ use Illuminate\Support\Facades\DB;
 
 class WorkSearchController extends Controller
 {
-    const REGISTRIES_PER_PAGE = 50;
+    const REGISTRIES_PER_PAGE = 1;
 
     protected $stage;
     protected $work;
     protected $state;
     protected $segmentSubType;
     protected $workFeature;
+    protected $worksSessionName = 'works_checkboxes';
+    protected $stagesSessionName = 'stages_checkboxes';
+    protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
+    protected $statesSessionName = 'states_checkboxes';
 
     public function __construct(
         Stage $stage,
@@ -40,6 +44,8 @@ class WorkSearchController extends Controller
     public function showWorkSearchStepOne()
     {
         $this->authorize('ver-pesquisa-de-obras');
+
+        $this->resetWorksSession();
 
         if (Auth::user()->role->name == 'Associado / Gestor(a)') {
             $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
@@ -125,7 +131,36 @@ class WorkSearchController extends Controller
 
         $works = $this->getFilteredWorks($request);
 
-        return view('layouts.work.search.step_two.index', compact('works'));
+        $worksChecked = session($this->worksSessionName);
+        $segmentSubTypesChecked = session($this->segmentSubTypesSessionName);
+        $stagesChecked = session($this->stagesSessionName);
+        $statesChecked = session($this->statesSessionName);
+        
+        $statesChecked = [];
+        if (! is_null(request()->states)) {
+            request()->session()->put($this->statesSessionName, request()->states);
+            $statesChecked = session($this->statesSessionName);
+        }
+        
+        $segmentSubTypesChecked = [];
+        if (! is_null(request()->segment_sub_types)) {
+            request()->session()->put($this->segmentSubTypesSessionName, request()->segment_sub_types);
+            $segmentSubTypesChecked = session($this->segmentSubTypesSessionName);
+        }
+        
+        $stagesChecked = [];
+        if (! is_null(request()->stages)) {
+            request()->session()->put($this->stagesSessionName, request()->stages);
+            $stagesChecked = session($this->stagesSessionName);
+        }
+
+        return view('layouts.work.search.step_two.index', compact(
+            'works',
+            'worksChecked',
+            'statesChecked',
+            'segmentSubTypesChecked',
+            'stagesChecked'
+        ));
     }
 
     public function showWorkSearchStepThree(Request $request)
@@ -148,14 +183,10 @@ class WorkSearchController extends Controller
         $loggedUser = Auth::user();
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
-        $allStageIds = $request->stages;
-        $allStateIds = $request->states;
-        $allSegmentSubTypeIds = $request->segment_sub_types;
-        $allStatesAcronym = null;
         $name = $request->name;
         $investment_standard = $request->investment_standard;
         $address = $request->address;
-        $old_code = $request->old_code;
+        $oldCode = $request->old_code;
         $district = $request->district;
         $initial_zip_code = $request->initial_zip_code;
         $final_zip_code = $request->final_zip_code;
@@ -168,14 +199,20 @@ class WorkSearchController extends Controller
         $revision = $request->revision;
         
         $qa = $request->qa;
-        $total_area = $request->total_area;
          
 
-        if ($allStateIds) {
+        $allStateIds = null;
+        $allStatesAcronym = null;
+        if (session()->has($this->statesSessionName) || $request->states) {
+            $allStateIds = session()->has($this->statesSessionName)
+                ? session($this->statesSessionName)
+                : $request->states;
+
             $states = $this->state
                 ->select('state_acronym')
                 ->whereIn('id', $allStateIds)
                 ->get();
+
             $allStatesAcronym = $states->pluck('state_acronym');
         }
 
@@ -193,25 +230,37 @@ class WorkSearchController extends Controller
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         $allWorkIds = null;
-        if ($request->works_selected) {
-            $allWorkIds = $request->works_selected;
+        if ((session()->has($this->worksSessionName) || $request->works_selected) &&
+            ! \Route::is('work.search.step_two.index')) {
+            $allWorkIds = session()->has($this->worksSessionName)
+                ? session($this->worksSessionName)
+                : $request->works_selected;
             $works = $works->whereIn('works.id', $allWorkIds);
-        }
-
-        if ($allStageIds) {
-            $works = $works->whereIn('stages.id', $allStageIds);
         }
 
         if ($allStatesAcronym) {
             $works = $works->whereIn('works.state', $allStatesAcronym);
         }
 
-        if ($allSegmentSubTypeIds) {
+        $allStageIds = null;
+        if (session()->has($this->stagesSessionName) || $request->stages) {
+            $allStageIds = session()->has($this->stagesSessionName)
+                ? session($this->stagesSessionName)
+                : $request->stages;
+            $works = $works->whereIn('stages.id', $allStageIds);
+        }
+
+        $allSegmentSubTypeIds = null;
+        if (session()->has($this->segmentSubTypesSessionName) || $request->segment_sub_types) {
+            $allSegmentSubTypeIds = session()->has($this->segmentSubTypesSessionName)
+                ? session($this->segmentSubTypesSessionName)
+                : $request->segment_sub_types;
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
+
         /*Nome da Obra*/
         if ($name) {
-            $works = $works->where('works.name', 'LIKE', '%' . $name . '%');
+            $works = $works->where('works.name', 'LIKE', '%'.$name.'%');
         }
         
         /*Padrão investimento*/
@@ -219,31 +268,31 @@ class WorkSearchController extends Controller
             $works = $works->where('works.investment_standard', $investment_standard);
         }
         
-        /*Ednereço*/
+        /*Endereço*/
         if ($address) {
-            $works = $works->where('works.address', 'LIKE', '%' . $address . '%');
+            $works = $works->where('works.address', 'LIKE', '%'.$address.'%');
         }
         
-        /*Codigo da obra*/
-        if ($old_code) {
-            $old_codes = explode(',', $old_code); // Transforma a string de códigos em um array
-            $works = $works->whereIn('works.old_code', $old_codes);
+        /*Código da obra*/
+        if ($oldCode) {
+            $oldCodes = explode(',', $oldCode); // Transforma a string de códigos em um array
+            $works = $works->whereIn('works.old_code', $oldCodes);
         }
         
         /*Bairro*/
         if ($district) {
-            $works = $works->where('works.district', 'LIKE', '%' . $district . '%');
+            $works = $works->where('works.district', 'LIKE', '%'.$district.'%');
         }
         
-        /*CEP*/
-        if ($initial_zip_code && $final_zip_code) {
-            $works = $works->whereBetween('works.zip_code', [$initial_zip_code, $final_zip_code]);
-        }
+        // /*CEP*/
+        // if ($initial_zip_code && $final_zip_code) {
+        //     $works = $works->whereBetween('works.zip_code', [$initial_zip_code, $final_zip_code]);
+        // }
         
-        /*Codigo da obra*/
-        if ($notes) {
-            $notes = $works->where('works.notes', $notes);
-        }
+        // /*Codigo da obra*/
+        // if ($notes) {
+        //     $notes = $works->where('works.notes', $notes);
+        // }
         
         /* Investimento */
         $qi = $request->input('qi');
@@ -255,42 +304,40 @@ class WorkSearchController extends Controller
 
             $works = $works->where(function($query) use ($qi, $price) {
                 if ($qi == '>') {
-                    $query->where('price', '>', $price);
+                    $query->where('works.price', '>', $price);
                 } elseif ($qi == '<') {
-                    $query->where('price', '<', $price);
+                    $query->where('works.price', '<', $price);
                 }
             });
         }
 
-        
         /* Revision */
         $qr = $request->input('qr');
-        $revision = $request->input('revision'); 
+        $revision = $request->input('revision');
 
         if ($qr && $revision !== null) {
             $works = $works->where(function($query) use ($qr, $revision) {
                 if ($qr == '>') {
-                    $query->where('revision', '>=', $revision);
+                    $query->where('works.revision', '>=', $revision);
                 } elseif ($qr == '<') {
-                    $query->where('revision', '<=', $revision);
+                    $query->where('works.revision', '<=', $revision);
                 }
             });
         }
-
         
         /* Área Construída */
-         $qa = $request->input('qa');
-         $total_area = $request->input('total_area');
+        $qa = $request->input('qa');
+        $totalArea = $request->input('total_area');
 
-         if ($qa && $total_area !== null) {
-             $works = $works->where(function($query) use ($qa, $total_area) {
-                 if ($qa == '>') {
-                     $query->where('total_area', '>', $total_area);
-                 } elseif ($qa == '<') {
-                     $query->where('total_area', '<', $total_area);
-                 }
-             });
-         }
+        if ($qa && $totalArea !== null) {
+            $works = $works->where(function($query) use ($qa, $totalArea) {
+                if ($qa == '>') {
+                    $query->where('works.total_area', '>', $totalArea);
+                } elseif ($qa == '<') {
+                    $query->where('works.total_area', '<', $totalArea);
+                }
+            });
+        }
 
         /**
          * The associate user only can search works based in the associate period fields:
@@ -298,6 +345,8 @@ class WorkSearchController extends Controller
          *  - data_filter_starts_at and;
          *  - data_filter_ends_at.
          */
+        $dataFilterStartsAtFinal = $startedAt;
+        $dataFilterEndsAtFinal = $endsAt;
         if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER ||
             $loggedUser->role->slug == Associate::ASSOCIATE_USER) {
 
@@ -321,12 +370,55 @@ class WorkSearchController extends Controller
                     ? $endsAt
                     : $dataFilterEndsAt1;
             }
+        }
 
-            $works = $works->whereBetween(
-                'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
-            );
+        $works = $works->whereBetween(
+            'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
+        );
+
+        if (\Route::is('work.search.step_three.index')) {
+            return $works->get();
         }
 
         return $works->paginate(self::REGISTRIES_PER_PAGE);
+    }
+
+    private function resetWorksSession(): void
+    {
+        request()->session()->forget($this->worksSessionName);
+        request()->session()->forget($this->stagesSessionName);
+        request()->session()->forget($this->segmentSubTypesSessionName);
+        request()->session()->forget($this->statesSessionName);
+    }
+
+    public function pushWorksSession(Request $request)
+    {
+        $worksChecked = [];
+        if (session()->has($this->worksSessionName)){
+            $worksChecked = session()->get($this->worksSessionName);
+        }
+
+        $worksChecked = array_merge($worksChecked, [request()->work]);
+
+        request()->session()->put($this->worksSessionName, $worksChecked);
+
+        return response()->json(['works' => session($this->worksSessionName)], 200);
+    }
+
+
+    public function removeWorksSession(Request $request)
+    {
+        $selectedWorks = session($this->worksSessionName);
+
+        if (($key = array_search(request()->work, $selectedWorks)) !== false) {
+            unset($selectedWorks[$key]);
+            $selectedWorks = array_values($selectedWorks);
+        }
+        
+        request()->session()->put($this->worksSessionName, $selectedWorks);
+
+        // request()->session()->pull($this->worksSessionName, request()->work);
+
+        return response()->json(['works' => session($this->worksSessionName)], 200);
     }
 }

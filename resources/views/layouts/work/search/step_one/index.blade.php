@@ -311,8 +311,6 @@
                         collection-relation=""
                     />
                 @endif
-                
-         
 
                 <!--FILTRO ESPECIFICO-->
                  <div class="row mt-4 pb-4 bg-light border">
@@ -329,8 +327,8 @@
                                 <select name="investment_standard" class="form-select">
                                     <option value="0">-- Selecione --</option>
                                     <option value="Alto">Alto</option>
+                                    <option value="Médio">Médio</option>
                                     <option value="Baixo">Baixo</option>
-                                    <option value="Medio">Médio</option>  
                                 </select>
                             </div>
                             <div class="col-md-9">

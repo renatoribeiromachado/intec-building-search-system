@@ -158,6 +158,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('calculate-installments',
             [OrderController::class, 'calculateInstallments']
         )->name('associate.order.calculate_installments');
+
+        Route::post('check-work',
+            [WorkSearchController::class, 'pushWorksSession']
+        )->name('work.search.step_two.check_work');
+
+        Route::post('remove-check-work',
+            [WorkSearchController::class, 'removeWorksSession']
+        )->name('work.search.step_two.remove_check_work');
     });
 
     Route::prefix('roles')->group(function() {
