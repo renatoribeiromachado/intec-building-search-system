@@ -13,6 +13,22 @@
 
         <input
             type="hidden"
+            id="input_select_all"
+            name="input_select_all"
+            value="{{ $inputSelectAll }}">
+        <input
+            type="hidden"
+            id="input_page_of_pagination"
+            name="input_page_of_pagination"
+            value="{{ $inputPageOfPagination }}">
+        <input
+            type="hidden"
+            id="clicked_in_page"
+            name="clicked_in_page"
+            value="{{ $clickedInPage }}">
+
+        <input
+            type="hidden"
             id="last_review_from"
             name="last_review_from"
             value="{{ convertPtBrDateToEnDate(request()->last_review_from) }}">
@@ -239,12 +255,29 @@
             })
         });
 
+        let btnSelectAll = document.getElementById('toggleButton');
+        // avoid the error maximum call stack size exceeded
+        btnSelectAll.addEventListener("click", function(event){
+            event.preventDefault()
+        });
+
+        let inputSelectAll = document.getElementById('input_select_all');
+        let inputSelectAllWasClicked = inputSelectAll.value;
+
+        let inputPageOfPagination = document.getElementById('input_page_of_pagination');
+        let pageOfPagination = inputPageOfPagination.value;
+
+        let inputClickedInPage = document.getElementById('clicked_in_page').value;
+
+        btnSelectAll.textContent =
+            ((inputClickedInPage == pageOfPagination) && (inputSelectAllWasClicked == 1))
+            ? 'Deselecionar Todos' : 'Selecionar Todos';
+
         function toggleCheckboxes() {
 
             let workIds = [];
-            let selectAll = false;
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            var allChecked = true;
+            let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let allChecked = true;
 
             checkboxes.forEach(function (checkbox) {
                 if (! checkbox.checked) {
@@ -257,7 +290,6 @@
                 checkbox.checked = ! allChecked;
 
                 if (checkbox.checked) {
-                    selectAll = true;
                     workIds.push(checkbox.value);
                 }
 
@@ -274,7 +306,9 @@
                 url: base_url() + 'v1/check-all-works',
                 data: {
                     work_ids: workIds,
-                    is_all_works_checked: selectAll,
+                    input_select_all_was_clicked: inputSelectAllWasClicked,
+                    input_page_of_pagination: pageOfPagination,
+                    clicked_in_page: inputClickedInPage
                 },
                 success: function (return_data) {
                     // console.log(return_data)
@@ -289,7 +323,7 @@
             // avoid the error maximum call stack size exceeded
             button.addEventListener("click", function(event){
                 event.preventDefault()
-            })
+            });
         }
     </script>
 

@@ -48,13 +48,19 @@ class WorkSearchController extends Controller
 
         $this->resetWorksSession();
 
-        if (Auth::user()->role->name == 'Associado / Gestor(a)') {
-            $statesVisible = Auth::user()->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = Auth::user()->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+        $stagesOne = $this->stage->where('phase_id', 1)->get();
+        $stagesTwo = $this->stage->where('phase_id', 2)->get();
+        $stagesThree = $this->stage->where('phase_id', 3)->get();
 
-            $stagesOne = $this->stage->where('phase_id', 1)->get();
-            $stagesTwo = $this->stage->where('phase_id', 2)->get();
-            $stagesThree = $this->stage->where('phase_id', 3)->get();
+        $authUser = Auth::user();
+
+        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $authUser->role->slug == Associate::ASSOCIATE_USER) {
+
+            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
 
             $statesOne = $this->state
                 ->where('zone_id', 1)
@@ -91,11 +97,8 @@ class WorkSearchController extends Controller
                 ->get();
         }
 
-        if (Auth::user()->role->name != 'Associado / Gestor(a)') {
-            $stagesOne = $this->stage->where('phase_id', 1)->get();
-            $stagesTwo = $this->stage->where('phase_id', 2)->get();
-            $stagesThree = $this->stage->where('phase_id', 3)->get();
-
+        if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
+            $authUser->role->slug != Associate::ASSOCIATE_USER) {
             $statesOne = $this->state->where('zone_id', 1)->get();
             $statesTwo = $this->state->where('zone_id', 2)->get();
             $statesThree = $this->state->where('zone_id', 3)->get();
@@ -107,19 +110,16 @@ class WorkSearchController extends Controller
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
         }
 
-
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
             'stagesThree',
             'statesOne',
-
             'statesOne',
             'statesTwo',
             'statesThree',
             'statesFour',
             'statesFive',
-
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
@@ -131,9 +131,19 @@ class WorkSearchController extends Controller
         $this->authorize('ver-pesquisa-de-obras');
 
         $works = $this->getFilteredWorks($request);
-
         $worksChecked = session($this->worksSessionName);
-        // request()->session()->put('btnSelectAll', 0);
+        $currentPage = is_null($request->page) ? 1 : $request->page;
+        $btnExistsInSession = session()->has('btnSelectAll');
+
+        $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
+            ? session('btnSelectAll')['clicked_in_page']
+            : $currentPage;
+
+        $inputPageOfPagination = $currentPage;
+
+        $inputSelectAll = $btnExistsInSession
+            ? session('btnSelectAll')['btn_clicked']
+            : 0;
         
         $statesChecked = [];
         if (! is_null(request()->states)) {
@@ -158,7 +168,10 @@ class WorkSearchController extends Controller
             'worksChecked',
             'statesChecked',
             'segmentSubTypesChecked',
-            'stagesChecked'
+            'stagesChecked',
+            'clickedInPage',
+            'inputPageOfPagination',
+            'inputSelectAll',
         ));
     }
 
@@ -179,26 +192,49 @@ class WorkSearchController extends Controller
 
     public function checkAllWorks(Request $request)
     {
-        $isAllWorksChecked = (bool) $request->is_all_works_checked;
-
-        if ($isAllWorksChecked) {
-            $onlyWorksSelectdIds = $request->work_ids;
+        $onlyWorksSelectedIds = $request->work_ids;
+        $inputSelectAllWasClicked = (bool) $request->input_select_all_was_clicked;
+        $clickedInPage = $request->clicked_in_page;
+        $inputPageOfPagination = $request->input_page_of_pagination;
+        
+        if (! session()->has($this->worksSessionName)) {
             request()->session()->put(
                 $this->worksSessionName,
-                $onlyWorksSelectdIds
+                $onlyWorksSelectedIds
             );
-        }
 
-        if (! $isAllWorksChecked) {
-            $onlyWorksSelectdIds = [];
+            request()->session()->put(
+                'btnSelectAll', [
+                    'btn_clicked' => 1,
+                    'page_of_pagination' => $inputPageOfPagination,
+                    'clicked_in_page' => $clickedInPage
+                ]
+            );
+        } elseif (session()->has($this->worksSessionName)) {
+            request()->session()->forget(
+                $this->worksSessionName
+            );
             request()->session()->put(
                 $this->worksSessionName,
-                $onlyWorksSelectdIds
+                $onlyWorksSelectedIds
+            );
+
+            request()->session()->forget(
+                'btnSelectAll'
+            );
+            request()->session()->put(
+                'btnSelectAll', [
+                    'btn_clicked' => 0,
+                    'page_of_pagination' => $inputPageOfPagination,
+                    'clicked_in_page' => $inputSelectAllWasClicked
+                        ? $clickedInPage
+                        : $inputPageOfPagination
+                ]
             );
         }
 
         return response()->json(
-            ['works_selected' => $onlyWorksSelectdIds],
+            ['works_selected' => $onlyWorksSelectedIds],
             Response::HTTP_OK
         );
     }
