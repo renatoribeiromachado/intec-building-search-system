@@ -98,20 +98,27 @@
                 </button>
             </div>
         </div>
-        
-        <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
-        <button
-            type="button"
-            id="toggleButton"
-            class="btn btn-primary mb-4"
-            onclick="toggleCheckboxes()"
-            >
-            Selecionar Todos
-        </button>
+        <script>
+            function toggleCheckboxes() {
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                var allChecked = true;
 
-        <div>
-            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
-        </div>
+                checkboxes.forEach(function (checkbox) {
+                    if (!checkbox.checked) {
+                        allChecked = false;
+                    }
+                });
+
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = !allChecked;
+                });
+
+                var button = document.getElementById('toggleButton');
+                button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            }
+        </script>
+        <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
+        <button type="button" id="toggleButton" class="btn btn-primary" onclick="toggleCheckboxes()">Selecionar Todos</button>
 
         <table class="table">
             <thead>
@@ -123,57 +130,66 @@
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
+                    <th scope="col">SIG</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($works as $work)
-                    <tr class="
-                        @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
-                        @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
-                        @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
-                    ">
-                        <td style="cursor: pointer;">
-                            <div style="cursor: pointer;">
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input work-checkbox"
-                                        type="checkbox"
-                                        name="works_selected[]"
-                                        value="{{ $work->id }}"
-                                        id="flexCheckDefault{{$loop->index}}"
-                                        @if(collect($worksChecked)->contains($work->id))
-                                        checked
-                                        @endif
-                                        >
-                                    <label
-                                        class="form-check-label"
-                                        for="flexCheckDefault{{$loop->index}}"
-                                        >
-                                        {{ $work->old_code }}
-                                    </label>
-                                </div>
+                <tr class="
+                    @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
+                    @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
+                    @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
+                ">
+                    <td style="cursor: pointer;">
+                        <div style="cursor: pointer;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="works_selected[]" value="{{ $work->id }}" id="flexCheckDefault{{$loop->index}}">
+                                <label class="form-check-label" for="flexCheckDefault{{$loop->index}}">
+                                    {{ $work->old_code }}
+                                </label>
                             </div>
-                        </td>
-                        <td>{{ $work->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</td>
-                        <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
-                        <td>{{ $work->phase_description }}</td>
-                        <td>{{ $work->stage_description }}</td>
-                        <td>{{ $work->segment_description }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8">
-                            <p class="text-center mb-0 py-4">
-                                Nenhuma obra encontrada com base nos critérios selecionados.
-                            </p>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                    <td>{{ $work->name }}</td>
+                    <td>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</td>
+                    <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
+                    <td>{{ $work->phase_description }}</td>
+                    <td>{{ $work->stage_description }}</td>
+                    <td>{{ $work->segment_description }}</td>
+                    <td><a href="" data-bs-toggle="modal" data-bs-target="#sig"><i class="fa fa-check"></i></a></td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8">
+                        <p class="text-center mb-0 py-4">
+                            Nenhum registro de obra encontrado.
+                        </p>
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
     </form>
-
+    <!-- The Modal -->
+    <div class="modal" id="sig">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">SIG</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form></form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div>
         {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
@@ -181,20 +197,19 @@
 @endsection
 
 @push('styles')
+<style>
+    .industrial {
+        background: #acc4d0;
+    }
 
-    <style>
-        .industrial{
-            background: #acc4d0;
+    .comercial {
+        background: #b5b253;
+    }
 
-        }
-        .comercial{
-            background: #b5b253;
-        }
-        .residencial{
-            background: #ccb364;
-        }
-    </style>
-
+    .residencial {
+        background: #ccb364;
+    }
+</style>
 @endpush
 
 @push('scripts')

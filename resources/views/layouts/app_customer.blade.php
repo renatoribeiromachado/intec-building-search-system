@@ -14,7 +14,7 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         >
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
         <title>SISTEMA INTEC | ACESSO RESTRITO</title>
 
@@ -53,12 +53,7 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav me-auto mb-2 mb-md-0">
                    
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li> --}}
+                   
 
                             @can('ver-pesquisas')
                                 <li class="nav-item dropdown">
@@ -111,7 +106,9 @@
                                                 <a class="dropdown-item" href="{{ route('associate.index') }}">
                                                     Associados
                                                 </a>
-                                            </li>
+                                            </li>   <li><a class="dropdown-item" href="{{ route('work.exportExcel') }}">
+                                                       Exportar Excel
+                                                    </a></li>
                                         {{-- @endcan --}}
 
                                         <li>
@@ -238,10 +235,13 @@
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>  
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script><!-- Inserido por Acessohost - 04/05/2023 - Renato Machado - para os Modais --> 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $.ajaxSetup({
                 headers: {
@@ -249,7 +249,9 @@
                 }
             });
             
-            $(document).ready(function () {
+            $(document).ready(function () { $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd' // Define o formato da data
+        });
                 // jquery mask
                 $('.cep').mask('00000-000');
                 $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
