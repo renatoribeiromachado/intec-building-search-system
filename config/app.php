@@ -175,6 +175,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        /*
+        * Package Service Providers...Excel 12/08/2023 - Renato Machado
+        */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
     ],
 
@@ -231,6 +237,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        
+        /*Excel 12/08/2023 - Renato Machado*/
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
