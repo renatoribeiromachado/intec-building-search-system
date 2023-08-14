@@ -106,8 +106,6 @@
             <div class="col-md-12">
                 <p class="text-success"><b>DADOS DA OBRA {{ $loop->iteration }}:</b></p>
                 <img src="{{ asset('images/relatorio-obras.png') }}" alt="Descrição da Imagem" />
-
-               
                 <table class="table table-condensed mt-2">
                     <tr>
                         <td style="width:85% !important;"><strong>Nome da Obra</strong>:  {{ $work->name }}<br>

@@ -21,6 +21,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,18 +133,20 @@ Route::middleware(['auth'])->group(function () {
             $segmentSubTypes = \App\Models\SegmentSubType::whereSegmentId($request->segment)
                 ->orderBy('description', 'asc')
                 ->get();
-            return response()->json([
-                'segmentSubTypes' => $segmentSubTypes
-            ], 200);
+            return response()->json(
+                ['segmentSubTypes' => $segmentSubTypes],
+                Response::HTTP_OK
+            );
         });
 
         Route::get('stages', function (Request $request) {
             $stages = \App\Models\Stage::wherePhaseId($request->phase)
                 ->orderBy('description', 'asc')
                 ->get();
-            return response()->json([
-                'stages' => $stages
-            ], 200);
+            return response()->json(
+                ['stages' => $stages],
+                Response::HTTP_OK
+            );
         });
 
         Route::get(
@@ -158,6 +161,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('calculate-installments',
             [OrderController::class, 'calculateInstallments']
         )->name('associate.order.calculate_installments');
+
+        Route::post('check-work',
+            [WorkSearchController::class, 'pushWorksSession']
+        )->name('work.search.step_two.check_work');
+
+        Route::post('remove-check-work',
+            [WorkSearchController::class, 'removeWorksSession']
+        )->name('work.search.step_two.remove_check_work');
+
+        Route::post('check-all-works',
+            [WorkSearchController::class, 'checkAllWorks']
+        )->name('work.search.step_two.check_all_works');
     });
 
     Route::prefix('roles')->group(function() {

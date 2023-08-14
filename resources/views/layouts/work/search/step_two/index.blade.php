@@ -114,27 +114,20 @@
                 </button>
             </div>
         </div>
-        <script>
-            function toggleCheckboxes() {
-                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                var allChecked = true;
 
-                checkboxes.forEach(function (checkbox) {
-                    if (!checkbox.checked) {
-                        allChecked = false;
-                    }
-                });
-
-                checkboxes.forEach(function (checkbox) {
-                    checkbox.checked = !allChecked;
-                });
-
-                var button = document.getElementById('toggleButton');
-                button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
-            }
-        </script>
         <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
-        <button type="button" id="toggleButton" class="btn btn-primary" onclick="toggleCheckboxes()">Selecionar Todos</button>
+        <button
+            type="button"
+            id="toggleButton"
+            class="btn btn-primary mb-4"
+            onclick="toggleCheckboxes()"
+            >
+            Selecionar Todos
+        </button>
+
+        <div>
+            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+        </div>
 
         <table class="table">
             <thead>
@@ -159,10 +152,26 @@
                     <td style="cursor: pointer;">
                         <div style="cursor: pointer;">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="works_selected[]" value="{{ $work->id }}" id="flexCheckDefault{{$loop->index}}">
-                                <label class="form-check-label" for="flexCheckDefault{{$loop->index}}">
+                                <input
+                                    class="form-check-input work-checkbox"
+                                    type="checkbox"
+                                    name="works_selected[]"
+                                    value="{{ $work->id }}"
+                                    id="flexCheckDefault{{$loop->index}}"
+                                    @if(collect($worksChecked)->contains($work->id))
+                                    checked
+                                    @endif
+                                    >
+                                <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault{{$loop->index}}"
+                                    >
                                     {{ $work->old_code }}
                                 </label>
+                                {{-- <input class="form-check-input" type="checkbox" name="works_selected[]" value="{{ $work->id }}" id="flexCheckDefault{{$loop->index}}">
+                                <label class="form-check-label" for="flexCheckDefault{{$loop->index}}">
+                                    {{ $work->old_code }}
+                                </label> --}}
                             </div>
                         </div>
                     </td>
@@ -172,7 +181,11 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
-                    <td><a href="" data-bs-toggle="modal" data-bs-target="#sig"><i class="fa fa-check"></i></a></td>
+                    <td>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#sig">
+                            <i class="fa fa-check"></i>
+                        </a>
+                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -213,19 +226,17 @@
 @endsection
 
 @push('styles')
-<style>
-    .industrial {
-        background: #acc4d0;
-    }
-
-    .comercial {
-        background: #b5b253;
-    }
-
-    .residencial {
-        background: #ccb364;
-    }
-</style>
+    <style>
+        .industrial {
+            background: #acc4d0;
+        }
+        .comercial {
+            background: #b5b253;
+        }
+        .residencial {
+            background: #ccb364;
+        }
+    </style>
 @endpush
 
 @push('scripts')

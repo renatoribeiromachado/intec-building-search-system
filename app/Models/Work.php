@@ -93,7 +93,7 @@ class Work extends Model
         }
 
         if (request()->name) {
-            $where[]  = ['works.name', 'like', '%'.request()->name.'%'];
+            $work = $work->where('works.name', 'like', '%'.request()->name.'%');
         }
 
         $work = $work->where($where);
@@ -117,6 +117,7 @@ class Work extends Model
     {
         return $this->belongsTo(Stage::class);
     }
+    
     public function phase()
     {
         return $this->belongsTo(Phase::class);
