@@ -19,9 +19,10 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
+use App\Http\Controllers\SigController;
+use App\Http\Controllers\CronController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,20 +134,18 @@ Route::middleware(['auth'])->group(function () {
             $segmentSubTypes = \App\Models\SegmentSubType::whereSegmentId($request->segment)
                 ->orderBy('description', 'asc')
                 ->get();
-            return response()->json(
-                ['segmentSubTypes' => $segmentSubTypes],
-                Response::HTTP_OK
-            );
+            return response()->json([
+                'segmentSubTypes' => $segmentSubTypes
+            ], 200);
         });
 
         Route::get('stages', function (Request $request) {
             $stages = \App\Models\Stage::wherePhaseId($request->phase)
                 ->orderBy('description', 'asc')
                 ->get();
-            return response()->json(
-                ['stages' => $stages],
-                Response::HTTP_OK
-            );
+            return response()->json([
+                'stages' => $stages
+            ], 200);
         });
 
         Route::get(
@@ -161,18 +160,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('calculate-installments',
             [OrderController::class, 'calculateInstallments']
         )->name('associate.order.calculate_installments');
-
-        Route::post('check-work',
-            [WorkSearchController::class, 'pushWorksSession']
-        )->name('work.search.step_two.check_work');
-
-        Route::post('remove-check-work',
-            [WorkSearchController::class, 'removeWorksSession']
-        )->name('work.search.step_two.remove_check_work');
-
-        Route::post('check-all-works',
-            [WorkSearchController::class, 'checkAllWorks']
-        )->name('work.search.step_two.check_all_works');
     });
 
     Route::prefix('roles')->group(function() {
@@ -204,6 +191,14 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('{id}/permissions', 'RolesController@permissions')->name('perm.edit');
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
     });
+    
+    //Route::prefix('sigs')->group(function() {
+        Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
+    //});
+        
+        Route::get('cron', [CronController::class, 'cron'])->name('crom');
+    
+    
 
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');

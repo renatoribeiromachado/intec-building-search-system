@@ -168,7 +168,9 @@
                         </div>
                     @endforeach
                 </div>
-
+                
+                @if (($segmentSubTypeOne->count() + $segmentSubTypeTwo->count() +
+                $segmentSubTypeThree->count()) > 0)
                 <!--SEGMENTO E ATUAÇÕES-->
                 <div class="row mt-4">
                     <div class="col-md-12">
@@ -180,7 +182,8 @@
                         </label>
                     </div>
                 </div>
-
+                
+                @if (($segmentSubTypeOne->count() > 0))
                 <!--INDUSTRIAL-->
                 <x-state-checkbox-group
                     id="segment-sub-type-all-1"
@@ -193,7 +196,9 @@
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
                 />
-
+                @endif
+                
+                @if (($segmentSubTypeTwo->count() > 0))
                 <!--COMERCIAL-->
                 <x-state-checkbox-group
                     id="segment-sub-type-all-2"
@@ -206,7 +211,9 @@
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
                 />
-
+                @endif
+                
+                @if (($segmentSubTypeThree->count() > 0))
                 <!--RESIDENCIAL-->
                 <x-state-checkbox-group
                     id="segment-sub-type-all-3"
@@ -219,6 +226,8 @@
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
                 />
+                @endif
+                @endif
 
                 @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
                     $statesFour->count() + $statesFive->count()) > 0)

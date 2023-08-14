@@ -182,7 +182,7 @@
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
                     <td>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#sig">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
                             <i class="fa fa-check"></i>
                         </a>
                     </td>
@@ -205,20 +205,82 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">SIG</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h4 class="modal-title">Cadstro de SIG-Obra</h4>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form></form>
+                    <form action="{{ route('sig.store') }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Código: <span id="modal-code"></span></p>
+                            </div>
+                        </div>
+                        <!--Inputs hidden -->
+                        <input type="hidden" name="work_id" value="" id="modal-work-id-input">
+                        <input type="hidden" name="code" value="" id="modal-code-input">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Agendar para</label>
+                                <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Prioridade</label>
+                                <select name="priority" class="form-select">
+                                    <option value="Baixa">Baixa</option>
+                                    <option value="Média">Média</option>
+                                    <option value="Alta">Alta</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Status</label>
+                                <select name="status" class="form-select">
+                                    <option value="Em contato">Em contato</option>
+                                    <option value="Em negociação">Em negociação</option>
+                                    <option value="Pedido efetivado">Pedido efetivado</option>
+                                    <option value="Proposta enviada">Proposta enviada</option>
+                                    <option value="Sem interesse">Sem interesse</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Descriçao</label>
+                                <textarea name="note" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                        
+                    </form>
                 </div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
+                
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+        const modalCode = document.getElementById('modal-code');
+         const modalWorkIdInput = document.getElementById('modal-work-id-input');
+        const modalCodeInput = document.getElementById('modal-code-input');
+
+        sigLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const workId = this.getAttribute('data-work-id');
+                const Code = this.getAttribute('data-code');
+                modalCode.textContent = Code;
+                modalWorkIdInput.value = workId;
+                modalCodeInput.value = Code;
+            });
+        });
+    });
+    </script>
     <div>
         {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
