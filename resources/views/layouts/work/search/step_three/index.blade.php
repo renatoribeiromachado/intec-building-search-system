@@ -121,10 +121,14 @@
                             <b>Subtipo</b>: {{ $work->segment_sub_type_description }}<br>
 
                             <strong>Início da obra</strong>
+                            @if(isset($work->started_at))
                             {{ \Carbon\Carbon::parse($work->started_at)->format('d/m/Y') }}
+                            @endif
 
                             <strong>Término da obra</strong>
-                            {{ \Carbon\Carbon::parse($work->ends_at)->format('d/m/Y') }} -
+                            @if(isset($work->ends_at))
+                            {{ \Carbon\Carbon::parse($work->ends_at)->format('d/m/Y') }}
+                            @endif -
 
                             <strong>Início / Término</strong>:
                             {{ $work->start_and_end }}<br>

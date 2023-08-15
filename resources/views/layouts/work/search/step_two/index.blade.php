@@ -176,7 +176,11 @@
                         </div>
                     </td>
                     <td>{{ $work->name }}</td>
-                    <td>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</td>
+                    <td>
+                        @if(isset($work->last_review))
+                        {{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}
+                        @endif
+                    </td>
                     <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
