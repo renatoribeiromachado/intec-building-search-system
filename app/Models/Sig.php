@@ -10,10 +10,11 @@ class Sig extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'user_email',
         'work_id',
         'code',
         'appointment_date',
-        'user_email',
         'priority',
         'status',
         'note'
@@ -23,5 +24,9 @@ class Sig extends Model
     public function associates()
     {
         return $this->belongsToMany(Associate::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

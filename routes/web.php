@@ -39,6 +39,9 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+/*Cron*/
+Route::get('cron', [CronController::class, 'cron'])->name('crom');
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
@@ -192,14 +195,11 @@ Route::middleware(['auth'])->group(function () {
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
     });
     
-    //Route::prefix('sigs')->group(function() {
+        /*SIG*/
         Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
-    //});
-        
-        Route::get('cron', [CronController::class, 'cron'])->name('crom');
-    
-    
-
+        Route::get('sig_works', [SigController::class, 'index'])->name('sig_works.index');
+        Route::post('sig_works/report', [SigController::class, 'report'])->name('sig_works.report');
+      
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');
         Route::get('create', [WorkController::class, 'create'])->name('work.create');

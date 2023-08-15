@@ -141,7 +141,12 @@
 
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        Estamos em atualização
+                                        <a
+                                        class="dropdown-item"
+                                        href="{{ route('sig_works.index') }}"
+                                        >
+                                        SIG
+                                    </a>
                                     </a>
                                 </li>
 
