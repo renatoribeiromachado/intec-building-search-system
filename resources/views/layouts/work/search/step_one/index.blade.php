@@ -170,63 +170,63 @@
                 </div>
                 
                 @if (($segmentSubTypeOne->count() + $segmentSubTypeTwo->count() +
-                $segmentSubTypeThree->count()) > 0)
-                <!--SEGMENTO E ATUAÇÕES-->
-                <div class="row mt-4">
-                    <div class="col-md-12">
-                        <label class="control-label text-uppercase">
-                            <strong>
-                                <i class="fa fa-check-square-o"></i>
-                                Segmentos de Atuação
-                            </strong>
-                        </label>
+                    $segmentSubTypeThree->count()) > 0)
+                    <!--SEGMENTO E ATUAÇÕES-->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label class="control-label text-uppercase">
+                                <strong>
+                                    <i class="fa fa-check-square-o"></i>
+                                    Segmentos de Atuação
+                                </strong>
+                            </label>
+                        </div>
                     </div>
-                </div>
                 
-                @if (($segmentSubTypeOne->count() > 0))
-                <!--INDUSTRIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-1"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="industrial"
-                    label-text="Industrial"
-                    :data-list="$segmentSubTypeOne"
-                    class-two="Ind"
-                    list-input-id-for="segment-sub-type-one-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
-                @endif
+                    @if (($segmentSubTypeOne->count() > 0))
+                        <!--INDUSTRIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-1"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="industrial"
+                            label-text="Industrial"
+                            :data-list="$segmentSubTypeOne"
+                            class-two="Ind"
+                            list-input-id-for="segment-sub-type-one-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
                 
-                @if (($segmentSubTypeTwo->count() > 0))
-                <!--COMERCIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-2"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="comercial"
-                    label-text="Comercial"
-                    :data-list="$segmentSubTypeTwo"
-                    class-two="Com"
-                    list-input-id-for="segment-sub-type-two-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
-                @endif
+                    @if (($segmentSubTypeTwo->count() > 0))
+                        <!--COMERCIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-2"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="comercial"
+                            label-text="Comercial"
+                            :data-list="$segmentSubTypeTwo"
+                            class-two="Com"
+                            list-input-id-for="segment-sub-type-two-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
                 
-                @if (($segmentSubTypeThree->count() > 0))
-                <!--RESIDENCIAL-->
-                <x-state-checkbox-group
-                    id="segment-sub-type-all-3"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="residential"
-                    label-text="Residencial"
-                    :data-list="$segmentSubTypeThree"
-                    class-two="Res"
-                    list-input-id-for="segment-sub-type-three-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                />
-                @endif
+                    @if (($segmentSubTypeThree->count() > 0))
+                        <!--RESIDENCIAL-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-3"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="residential"
+                            label-text="Residencial"
+                            :data-list="$segmentSubTypeThree"
+                            class-two="Res"
+                            list-input-id-for="segment-sub-type-three-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
                 @endif
 
                 @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
@@ -322,7 +322,7 @@
                 @endif
 
                 <!--FILTRO ESPECIFICO-->
-                 <div class="row mt-4 pb-4 bg-light border">
+                <div class="row mt-4 pb-4 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-left"> <i class="fa fa-check"></i><strong>FILTRO ESPECÍFICO</strong></p>
                         <hr>
@@ -341,15 +341,31 @@
                                 </select>
                             </div>
                             <div class="col-md-9">
-                                <label class="control-label"> Nome da Obra</label>
-                                <input type="text" name="name" class="form-control" id="busca-obra" value="" />
+                                <label class="control-label">
+                                    Nome da Obra
+                                </label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    id="busca-obra"
+                                    value="{{ old('name') }}"
+                                    >
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label"> Endereço </label>
-                                <input type="text" name="address" class="form-control" id="busca-adress" value="" />
+                                <label class="control-label">
+                                    Endereço
+                                </label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    class="form-control"
+                                    id="busca-adress"
+                                    value="{{ old('address') }}"
+                                    >
                             </div>
                         </div>
 
@@ -363,7 +379,7 @@
                                 </select>
                             </div>
                             
-                            <!--Cidades--> 
+                            <!--Cidades-->
                             <div class="col-md-10">
                                 <label class="control-label"> <code>*Selecione até 4 cidade(s) para busca *</code></label>
                                 <select name="city" class="form-select cidade" id="selected"><!--IMPORTANTE O id="selected"-->
@@ -613,6 +629,7 @@
             });
         });
 
+        @if (($segmentSubTypeOne->count() > 0))
         /*INDUSTRIAL*/
         const industrialCheckbox = document.querySelector('.industrial');
         const checkboxesInd = document.querySelectorAll('.Ind');
@@ -622,7 +639,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
         
+        @if (($segmentSubTypeTwo->count() > 0))
         /*COMERCIAL*/
         const commercialCheckbox = document.querySelector(".comercial");
         const comCheckboxes = document.querySelectorAll(".Com");
@@ -632,7 +651,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
         
+        @if (($segmentSubTypeThree->count() > 0))
         /*RESIDENCIAL*/
         const residentialCheckbox = document.querySelector('.residential');
         const checkboxesRes = document.querySelectorAll('.Res');
@@ -642,7 +663,10 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
+            $statesFour->count() + $statesFive->count()) > 0)
         /*REGIÃO GERAL*/
         const geralCheckbox = document.querySelector('.regiaoGeral');
         const checkboxesGeral = document.querySelectorAll('.checkRegiaoGeral');
@@ -652,7 +676,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesOne->count() > 0)
         /*REGIÃO NORTE*/
         const norteCheckbox = document.querySelector('.norte');
         const checkboxesNor = document.querySelectorAll('.checkNorte');
@@ -663,7 +689,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesTwo->count() > 0)
         /*REGIÃO NORDESTE*/
         const nordesteCheckbox = document.querySelector('.nordeste');
         const checkboxesNordeste = document.querySelectorAll('.checkNordeste');
@@ -673,7 +701,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesThree->count() > 0)
         /*REGIÃO CENTRO-OESTE*/
         const centroCheckbox = document.querySelector('.centro-oeste');
         const checkboxesCen = document.querySelectorAll('.checkCentroOeste');
@@ -683,7 +713,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesFour->count() > 0)
         /*REGIÃO SULDESTE*/
         const sudesteCheckbox = document.querySelector('.sudeste');
         const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
@@ -693,7 +725,9 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesFive->count() > 0)
         /*REGIÃO SUL*/
         const sulCheckbox = document.querySelector('.sul');
         const checkboxesSul = document.querySelectorAll('.checkSul');
@@ -703,6 +737,7 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
     </script>
 
 @endpush
