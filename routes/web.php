@@ -195,10 +195,10 @@ Route::middleware(['auth'])->group(function () {
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
     });
     
-        /*SIG*/
-        Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
-        Route::get('sig_works', [SigController::class, 'index'])->name('sig_works.index');
-        Route::post('sig_works/report', [SigController::class, 'report'])->name('sig_works.report');
+    /*SIG*/
+    Route::get('sig-works', [SigController::class, 'index'])->name('sig_works.index');
+    Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
+    Route::get('sig-works/report', [SigController::class, 'report'])->name('sig_works.report');
       
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');

@@ -7,6 +7,8 @@
         <h4>PESQUISA DE OBRAS</h4>
     </div>
 
+    @include('layouts.alerts.success')
+
     <form action="{{ route('work.search.step_three.index') }}" method="get">
         @csrf
         @method('get')
@@ -186,7 +188,13 @@
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
                     <td>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
+                        <a
+                            href="javascript:void(0)"
+                            data-bs-toggle="modal"
+                            data-bs-target="#sig"
+                            data-work-id="{{ $work->id }}"
+                            data-code="{{ $work->old_code }}"
+                            >
                             <i class="fa fa-check"></i>
                         </a>
                     </td>
@@ -203,6 +211,7 @@
             </tbody>
         </table>
     </form>
+
     <!-- The Modal -->
     <div class="modal" id="sig">
         <div class="modal-dialog">
@@ -211,46 +220,50 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Cadstro de SIG-Obra</h4>
                 </div>
+
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="{{ route('sig.store') }}" method="post">
                         @csrf
+
                         <div class="row">
                             <div class="col-md-12">
                                 <p>Código: <span id="modal-code"></span></p>
                             </div>
                         </div>
+                        
                         <!--Inputs hidden -->
                         <input type="hidden" name="work_id" value="" id="modal-work-id-input">
-                        <input type="hidden" name="code" value="" id="modal-code-input">
+
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Agendar para</label>
                                 <input type="text" name="appointment_date" class="form-control datepicker" value="">
                             </div>
+
                             <div class="col-md-4">
-                                <label>Prioridade</label>
-                                <select name="priority" class="form-select">
-                                    <option value="Baixa">Baixa</option>
-                                    <option value="Média">Média</option>
-                                    <option value="Alta">Alta</option>
+                                <label for="priority">Prioridade</label>
+                                <select id="priority" name="priority" class="form-select">
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority }}">{{ $priority }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+
                             <div class="col-md-4">
-                                <label>Status</label>
-                                <select name="status" class="form-select">
-                                    <option value="Em contato">Em contato</option>
-                                    <option value="Em negociação">Em negociação</option>
-                                    <option value="Pedido efetivado">Pedido efetivado</option>
-                                    <option value="Proposta enviada">Proposta enviada</option>
-                                    <option value="Sem interesse">Sem interesse</option>
+                                <label for="status">Status</label>
+                                <select id="status" name="status" class="form-select">
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status }}">{{ $status }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Descriçao</label>
-                                <textarea name="note" class="form-control" rows="5"></textarea>
+                                <label for="notes">Descriçao</label>
+                                <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                         
@@ -259,28 +272,24 @@
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
-                        
                     </form>
-                </div>
-                
-            </div>
+                </div> <!-- /.modal-body -->
+            </div> <!-- /.modal-content -->
         </div>
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
         const modalCode = document.getElementById('modal-code');
-         const modalWorkIdInput = document.getElementById('modal-work-id-input');
-        const modalCodeInput = document.getElementById('modal-code-input');
+        const modalWorkIdInput = document.getElementById('modal-work-id-input');
 
         sigLinks.forEach(link => {
             link.addEventListener('click', function (event) {
                 event.preventDefault();
                 const workId = this.getAttribute('data-work-id');
-                const Code = this.getAttribute('data-code');
-                modalCode.textContent = Code;
+                const workOldCode = this.getAttribute('data-code');
+                modalCode.textContent = workOldCode;
                 modalWorkIdInput.value = workId;
-                modalCodeInput.value = Code;
             });
         });
     });

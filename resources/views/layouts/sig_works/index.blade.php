@@ -11,8 +11,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('sig_works.report') }}" method="post">
+            <form action="{{ route('sig_works.report') }}" method="get">
                 @csrf
+
                 <div class="row">
                     <div class="col-md-12">
                         <label class="form-label"><strong>Código da obra</strong></label>
@@ -23,19 +24,69 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <label class="form-label"><strong>Nome do relator</strong></label>
-                        <input type="text" class="form-control" name="reporter" value="">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label"><strong>Prioridade</strong></label>
-                        <select name="priority" class="form-select">
-                            <option value="">--Selecione--</option>
+                        <select name="reporters[]" class="form-select" multiple size="2"
+                        style="height: 90px;"
+                        >
+                            @foreach ($associates as $contact)
+                                @if ($loop->iteration == 1)
+                                <option value="">--Selecione--</option>
+                                @endif
+
+                                <option value="{{ $contact->user->id }}">{{ $contact->user->name }}</option>
+                            @endforeach
                         </select>
                     </div>
-                    <div class="col-md-3">
-                        <label class="form-label"><strong>Status</strong></label>
-                        <select name="status" class="form-select">
-                            <option value="">--Selecione--</option>
-                        </select>
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <strong>Prioridade</strong>
+                                </label>
+                                <select name="priority" class="form-select">
+                                    @foreach ($priorities as $priority)
+                                        @if ($loop->iteration == 1)
+                                        <option value="">--Selecione--</option>
+                                        @endif
+
+                                        <option value="{{ $priority }}">
+                                            {{ $priority }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <strong>Status</strong>
+                                </label>
+                                <select name="status" class="form-select">
+                                    @foreach ($statuses as $status)
+                                        @if ($loop->iteration == 1)
+                                        <option value="">--Selecione--</option>
+                                        @endif
+
+                                        <option value="{{ $status }}">
+                                            {{ $status }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="appointment_date"
+                                        class="form-control datepicker"
+                                        placeholder="Digite a data de agendamento..."
+                                        >
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

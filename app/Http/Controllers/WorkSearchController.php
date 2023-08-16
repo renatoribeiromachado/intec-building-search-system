@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WorkSearchStepTwoRequest;
 use App\Models\Associate;
 use App\Models\SegmentSubType;
+use App\Models\Sig;
 use App\Models\Stage;
 use App\Models\State;
 use App\Models\City;
@@ -145,6 +146,8 @@ class WorkSearchController extends Controller
         $worksChecked = session($this->worksSessionName);
         $currentPage = is_null($request->page) ? 1 : $request->page;
         $btnExistsInSession = session()->has('btnSelectAll');
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
 
         $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
             ? session('btnSelectAll')['clicked_in_page']
@@ -183,6 +186,8 @@ class WorkSearchController extends Controller
             'clickedInPage',
             'inputPageOfPagination',
             'inputSelectAll',
+            'statuses',
+            'priorities',
         ));
     }
 
