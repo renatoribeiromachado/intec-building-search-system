@@ -335,7 +335,8 @@
 
             $(document).ready(function () {
                 $(".datepicker").datepicker({
-                    dateFormat: 'yy-mm-dd' // Define o formato da data
+                    // dateFormat: 'yy-mm-dd' // Define o formato da data
+                    dateFormat: 'dd/mm/yy' // Define o formato da data
                 });
                 // jquery mask
                 $('.cep').mask('00000-000');
