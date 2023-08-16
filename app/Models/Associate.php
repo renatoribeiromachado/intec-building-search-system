@@ -33,32 +33,32 @@ class Associate extends Model
     ];
 
     // App methods
-    public function allAssociates($request, $where = [])
+    public function allAssociates()
     {
         $associate = self::select('associates.*');
 
-        if ($request->search_old_code) {
-            $associate = $associate->where('old_code', $request->search_old_code);
+        if (request()->search_old_code) {
+            $associate = $associate->where('old_code', request()->search_old_code);
         }
 
-        if ($request->search_cnpj) {
+        if (request()->search_cnpj) {
             $associate = $associate
-                ->whereHas('company', function ($query) use ($request) {
-                    return $query->where('cnpj', 'like', '%'.$request->search_cnpj.'%');
+                ->whereHas('company', function ($query) {
+                    return $query->where('cnpj', 'like', '%'.request()->search_cnpj.'%');
                 });
         }
 
-        if ($request->search_company_name) {
+        if (request()->search_company_name) {
             $associate = $associate
-                ->whereHas('company', function ($query) use ($request) {
-                    return $query->where('company_name', 'like', '%'.$request->search_company_name.'%');
+                ->whereHas('company', function ($query) {
+                    return $query->where('company_name', 'like', '%'.request()->search_company_name.'%');
                 });
         }
 
-        if ($request->search_trading_name) {
+        if (request()->search_trading_name) {
             $associate = $associate
-                ->whereHas('company', function ($query) use ($request) {
-                    return $query->where('trading_name', 'like', '%'.$request->search_trading_name.'%');
+                ->whereHas('company', function ($query) {
+                    return $query->where('trading_name', 'like', '%'.request()->search_trading_name.'%');
                 });
         }
 
