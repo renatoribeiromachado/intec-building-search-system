@@ -63,6 +63,45 @@
                 font-size: 24px;
                 margin-right: 10px;
             }
+            footer {
+                background-color: black;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+            footer p {
+                margin: 10px 0;
+            }
+            .parallax {
+                background-image: url("{{ asset('images/header.png') }}");
+                background-size: cover;
+                background-position: center;
+                height: 140px; /* Defina a altura desejada */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .whatsapp-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: green;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                font-size: 18px;
+                cursor: pointer;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+            }
+
+            .whatsapp-icon {
+                font-size: 24px;
+                margin-right: 10px;
+            }
         </style>
 
         @stack('styles')
@@ -76,18 +115,25 @@
                         <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logomarca" width="280">
                     </a>
                 </div>
+
                 <ul class="navbar-nav me-0 mb-2 mb-md-0">
                     <li class="nav-item dropdown">
-                        <i class="fa fa-user"></i> {{ auth()->user()->name }} <small>({{ \Auth::guard('web')->user()->role->name }})</small>
+                        <i class="fa fa-user"></i>
+                        {{ auth()->user()->name }}
+                        <small>({{ \Auth::guard('web')->user()->role->name }})</small>
                     </li>
                 </ul>
-
             </div>
         </header>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    >
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -137,22 +183,13 @@
                                 >
                                 <i class="fa fa-archive"></i> RELATÓRIO
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
 
-                                <li>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <a
-                                        class="dropdown-item"
-                                        href="{{ route('sig_works.index') }}"
-                                        >
-                                        SIG
-                                    </a>
+                                        Estamos em atualização
                                     </a>
                                 </li>
-
-                                <li>
-
-
                             </ul>
                         </li>
 
@@ -166,17 +203,13 @@
                                 >
                                 <i class="fa fa-calendar"></i> SIG
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
 
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         Estamos em atualização
                                     </a>
                                 </li>
-
-                                <li>
-
-
                             </ul>
                         </li>
 
@@ -197,15 +230,17 @@
                                     <a class="dropdown-item" href="{{ route('associate.index') }}">
                                         Associados
                                     </a>
-                                </li>   <li><a class="dropdown-item" href="{{ route('work.exportExcel') }}">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
                                         Exportar Excel
-                                    </a></li>
+                                    </a>
+                                </li>
                                 {{-- @endcan --}}
 
                                 <li>
                                     <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
                                 </li>
-
                                 <li>
                                     <a class="dropdown-item" href="{{ route('activity_field.index') }}">
                                         Atividades de Empresas
@@ -258,7 +293,6 @@
                                         Estágios
                                     </a>
                                 </li>
-
                                 <li>
                                     <a class="dropdown-item" href="{{ route('position.index') }}">
                                         Cargos
@@ -276,7 +310,6 @@
                         </li>
                         @endcan
 
-
                         <li class="nav-item dropdown">
                             <a
                                 class="nav-link dropdown-toggle"
@@ -285,10 +318,11 @@
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                                 >
-                                <i class="fa fa-sign-out"></i> SAIR DO SISTEMA
+                                <i class="fa fa-sign-out"></i>
+                                SAIR DO SISTEMA
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
 
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <form action="{{ route('logout') }}" method="post">
@@ -303,10 +337,6 @@
                                         </form>
                                     </a>
                                 </li>
-
-                                <li>
-
-
                             </ul>
                         </li>
                     </ul>
@@ -316,8 +346,8 @@
 
         <main class="container-fluid mt-3" style="background: #f2f6fc">
             @yield('content')
-        </main> 
-        <a href="https://api.whatsapp.com/send?phone=SEU_NUMERO_AQUI" class="whatsapp-button" target="_blank">
+        </main>
+        <a href="https://api.whatsapp.com/send?phone=+5511988327074" class="whatsapp-button" target="_blank">
             <i class="fa fa-whatsapp whatsapp-icon"></i>
             Fale Conosco no WhatsApp
         </a>
@@ -328,40 +358,39 @@
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>  
+                crossorigin="anonymous"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script><!-- Inserido por Acessohost - 04/05/2023 - Renato Machado - para os Modais --> 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-$(document).ready(function () {
-    $(".datepicker").datepicker({
-        dateFormat: 'yy-mm-dd' // Define o formato da data
-    });
-    // jquery mask
-    $('.cep').mask('00000-000');
-    $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
-    $('.date').mask('00/00/0000');
-    $('.money').mask('000.000.000.000.000,00', {reverse: true});
-
-    var SPMaskBehavior = function (val) {
-        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-    },
-            spOptions = {
-                onKeyPress: function (val, e, field, options) {
-                    field.mask(SPMaskBehavior.apply({}, arguments), options);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            };
+            });
 
-    $('.phone').mask(SPMaskBehavior, spOptions);
+            $(document).ready(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: 'yy-mm-dd' // Define o formato da data
+                });
+                // jquery mask
+                $('.cep').mask('00000-000');
+                $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
+                $('.date').mask('00/00/0000');
+                $('.money').mask('000.000.000.000.000,00', {reverse: true});
+
+                var SPMaskBehavior = function (val) {
+                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                },
+                spOptions = {
+                    onKeyPress: function (val, e, field, options) {
+                        field.mask(SPMaskBehavior.apply({}, arguments), options);
+                    }
+                };
+
+                $('.phone').mask(SPMaskBehavior, spOptions);
 
     // $(".cpfcnpj").keydown(function() {
     //     try {
@@ -391,16 +420,16 @@ $(document).ready(function () {
     // });
     // end jquery mask
 
-    // alerts
-    $('.alert-success').on('click', function () {
-        $(this).hide('slow');
-    })
+                // alerts
+                $('.alert-success').on('click', function () {
+                    $(this).hide('slow');
+                })
 
-    setInterval(() => {
-        $('.alert-success').trigger('click');
-    }, 3000);
-    // end alerts
-});
+                setInterval(() => {
+                    $('.alert-success').trigger('click');
+                }, 3000);
+                // end alerts
+            });
 
 base_url = function () {
     if (document.location.hostname === "localhost") {
