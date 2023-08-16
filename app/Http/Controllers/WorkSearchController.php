@@ -7,6 +7,7 @@ use App\Models\Associate;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
 use App\Models\State;
+use App\Models\City;
 use App\Models\Work;
 use App\Models\WorkFeature;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class WorkSearchController extends Controller
     protected $stage;
     protected $work;
     protected $state;
+    protected $city;
     protected $segmentSubType;
     protected $workFeature;
     protected $worksSessionName = 'works_checkboxes';
@@ -32,12 +34,14 @@ class WorkSearchController extends Controller
         Stage $stage,
         Work $work,
         State $state,
+        City $city,
         SegmentSubType $segmentSubType,
         WorkFeature $workFeature,
     ) {
         $this->stage = $stage;
         $this->work = $work;
         $this->state = $state;
+        $this->city = $city;
         $this->segmentSubType = $segmentSubType;
         $this->workFeature = $workFeature;
     }
@@ -47,7 +51,9 @@ class WorkSearchController extends Controller
         $this->authorize('ver-pesquisa-de-obras');
 
         $this->resetWorksSession();
-
+        
+        $states = $this->state->all();
+        $cities = $this->city->all();
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
@@ -61,7 +67,10 @@ class WorkSearchController extends Controller
             $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
             $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
             $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
-
+            /*Todos os estados*/
+            $states = $this->state->all();
+            $cities = $this->city->all();
+            
             $statesOne = $this->state
                 ->where('zone_id', 1)
                 ->whereIn('id', $statesVisible)
@@ -114,6 +123,8 @@ class WorkSearchController extends Controller
             'stagesOne',
             'stagesTwo',
             'stagesThree',
+            'states',
+            'cities',
             'statesOne',
             'statesOne',
             'statesTwo',

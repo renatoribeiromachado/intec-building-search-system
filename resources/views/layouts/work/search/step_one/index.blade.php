@@ -369,21 +369,27 @@
                             </div>
                         </div>
 
-                        {{--
-                        <!--Estado
+                    
+                        <!--Estado-->
                         <div class="row mt-2">
-                            <div class="col-md-2">
-                                <label class="control-label"> Estado *</label>
-                                <select name="state" class="form-select">
-                                    <option value="">Sel</option>
+                            <div class="col-md-3">
+                                <label class="control-label"> Estado </label>
+                                <select name="state" class="form-select" id="estado" onchange="carregarCidades()">
+                                    <option value="">-- Selecione --</option>
+                                    @foreach($states as $state)
+                                        <option value="{{ $state->id }}">{{ $state->state_acronym }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             
                             <!--Cidades-->
-                            <div class="col-md-10">
-                                <label class="control-label"> <code>*Selecione até 4 cidade(s) para busca *</code></label>
-                                <select name="city" class="form-select cidade" id="selected"><!--IMPORTANTE O id="selected"-->
+                            <div class="col-md-9">
+                                <label class="control-label"> Cidade</label>
+                                <select name="city" class="form-select cidade" id="cidade" >
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
+                                    @foreach($cities as $city)
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
                                 </select>
                                 <div style="display: none;">
                                     <div class="selected"><!--importante a classe selected-->
@@ -391,7 +397,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> CEP Inicial</label>
@@ -738,6 +744,16 @@
             });
         });
         @endif
+        
+           const cidadesPorEstado = {
+            acre: ["Rio Branco", "Cruzeiro do Sul", "Sena Madureira"],
+            alagoas: ["Maceió", "Arapiraca", "Marechal Deodoro"],
+            // Mais cidades por estado...
+        };
+
+        function carregarCidades() {
+            
+        }
     </script>
 
 @endpush
