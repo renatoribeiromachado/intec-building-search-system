@@ -21,192 +21,272 @@
 
         <style>
             /* Show it is fixed to the top 123 */
-            body {
-                min-height: 75rem;
-                padding-top: 6.5rem;
-            }
+
             .menu_bg{
                 background:#000742;
+            }
+            footer {
+                background-color: black;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+            footer p {
+                margin: 10px 0;
+            }
+            .parallax {
+                background-image: url("{{ asset('images/header.png') }}");
+                background-size: cover;
+                background-position: center;
+                height: 140px; /* Defina a altura desejada */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .whatsapp-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: green;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                font-size: 18px;
+                cursor: pointer;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+            }
+
+            .whatsapp-icon {
+                font-size: 24px;
+                margin-right: 10px;
             }
         </style>
 
         @stack('styles')
     </head>
     <body style="background: #f2f6fc">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top menu_bg">
-            <div class="container-fluid">
-                <div class="container">
+
+        <header class="bg-dark text-white py-3 parallax">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="logo">
                     <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                        <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logomarca" width="280">
                     </a>
-                    
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarCollapse"
-                        aria-controls="navbarCollapse"
-                        aria-expanded="false" aria-label="Toggle navigation"
-                        >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                </div>
 
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <ul class="navbar-nav me-0 mb-2 mb-md-0">
+                    <li class="nav-item dropdown">
+                        <i class="fa fa-user"></i>
+                        {{ auth()->user()->name }}
+                        <small>({{ \Auth::guard('web')->user()->role->name }})</small>
+                    </li>
+                </ul>
+            </div>
+        </header>
 
-                            @can('ver-pesquisas')
-                                <li class="nav-item dropdown">
-                                    <a
-                                        class="nav-link dropdown-toggle"
-                                        href="#"
-                                        id="dropdown07XL"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        >
-                                        PESQUISAS
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav">
+                        @can('ver-pesquisas')
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown07XL"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                <i class="fa fa-search"></i> PESQUISAS
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                @can('ver-pesquisa-de-empresas')
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Empresas
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                        @can('ver-pesquisa-de-empresas')
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Empresas
-                                                </a>
-                                            </li>
-                                        @endcan
-
-                                        @can('ver-pesquisa-de-obras')
-                                            <li>
-                                                <a
-                                                    class="dropdown-item"
-                                                    href="{{ route('work.search.step_one.index') }}"
-                                                    >
-                                                    Obras
-                                                </a>
-                                            </li>
-                                        @endcan
-                                    </ul>
                                 </li>
-                            @endcan
+                                @endcan
 
-                            @can('ver-administrativo')
-                                <li class="nav-item dropdown">
+                                @can('ver-pesquisa-de-obras')
+                                <li>
                                     <a
-                                        class="nav-link dropdown-toggle"
-                                        href="#"
-                                        id="administrative"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
+                                        class="dropdown-item"
+                                        href="{{ route('work.search.step_one.index') }}"
                                         >
-                                        ADMINISTRATIVO
+                                        Obras
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="administrative">
-                                        {{-- @can('ver-configuracoes') --}}
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('associate.index') }}">
-                                                    Associados
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
-                                                    Exportar Excel
-                                                </a>
-                                            </li>
-                                        {{-- @endcan --}}
-
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('activity_field.index') }}">
-                                                Atividades de Empresas
-                                            </a>
-                                        </li>
-
-                                        @can('ver-usuario')
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('user.index') }}">
-                                                    Usuários
-                                                </a>
-                                            </li>
-                                        @endcan
-
-                                        @can('ver-funcao-administrativa')
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('role.index') }}">
-                                                    Perfis de Usuários
-                                                </a>
-                                            </li>
-                                        @endcan
-
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('researcher.index') }}">
-                                                Pesquisadores
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('work.index') }}">
-                                                Obras
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('segment.index') }}">
-                                                Segmentos de Atuação
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
-                                                Subtipos de Segmentos de Atuação
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('phase.index') }}">
-                                                Fases
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('stage.index') }}">
-                                                Estágios
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('position.index') }}">
-                                                Cargos
-                                            </a>
-                                        </li>
-
-                                        @can('ver-funcao-administrativa')
-                                            <li>
-                                                <a class="dropdown-item" href="{{ route('permission.index') }}">
-                                                    Permissões
-                                                </a>
-                                            </li>
-                                        @endcan
-                                    </ul>
                                 </li>
-                            @endcan
-                        </ul>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
 
-                        {{-- <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form> --}}
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown07XL"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                <i class="fa fa-archive"></i> RELATÓRIO
+                            </a>
 
-                        <ul class="navbar-nav me-0 mb-2 mb-md-0">
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="dropdown-logout"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    >
-                                    {{ auth()->user()->name }} <small>({{ \Auth::guard('web')->user()->role->name; }})</small>
-                                </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                 <li>
+                                    <a class="dropdown-item" href="#">
+                                        Estamos em atualização
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-logout">
-                                    <li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown07XL"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                <i class="fa fa-calendar"></i> SIG
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Estamos em atualização
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        @can('ver-administrativo')
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="administrative"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                <i class="fa fa-check"></i> ADMINISTRATIVO
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="administrative">
+                                {{-- @can('ver-configuracoes') --}}
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('associate.index') }}">
+                                        Associados
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
+                                        Exportar Excel
+                                    </a>
+                                </li>
+                                {{-- @endcan --}}
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('activity_field.index') }}">
+                                        Atividades de Empresas
+                                    </a>
+                                </li>
+
+                                @can('ver-usuario')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                                        Usuários
+                                    </a>
+                                </li>
+                                @endcan
+
+                                @can('ver-funcao-administrativa')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('role.index') }}">
+                                        Perfis de Usuários
+                                    </a>
+                                </li>
+                                @endcan
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('researcher.index') }}">
+                                        Pesquisadores
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('work.index') }}">
+                                        Obras
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('segment.index') }}">
+                                        Segmentos de Atuação
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
+                                        Subtipos de Segmentos de Atuação
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('phase.index') }}">
+                                        Fases
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('stage.index') }}">
+                                        Estágios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('position.index') }}">
+                                        Cargos
+                                    </a>
+                                </li>
+
+                                @can('ver-funcao-administrativa')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('permission.index') }}">
+                                        Permissões
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdown07XL"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                <i class="fa fa-sign-out"></i>
+                                SAIR DO SISTEMA
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                <li>
+                                    <a class="dropdown-item" href="#">
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf
                                             @method('post')
@@ -217,32 +297,34 @@
                                                 Sair
                                             </button>
                                         </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        
-                        {{-- 
-                        <form action="{{ route('logout') }}" class="d-flex">
-                            <button class="btn btn-link" type="submit">Sair</button>
-                        </form> --}}
-                    </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
-          
-        <main class="container-fluid" style="background: #f2f6fc">
+
+        <main class="container-fluid mt-3" style="background: #f2f6fc">
             @yield('content')
         </main>
+        <a href="https://api.whatsapp.com/send?phone=+5511988327074" class="whatsapp-button" target="_blank">
+            <i class="fa fa-whatsapp whatsapp-icon"></i>
+            Fale Conosco no WhatsApp
+        </a>
+
+        <footer>
+            <p>Intec Brasil - Informações Técnicas da Construção - Todos os direitos reservados</p>
+        </footer>
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script><!-- Inserido por Acessohost - 04/05/2023 - Renato Machado - para os Modais --> 
 
-        {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> importar 2 versões de Jquery dá conflito e para de funcionar corretamente --}}
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $.ajaxSetup({
@@ -250,12 +332,11 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            
+
             $(document).ready(function () {
                 $(".datepicker").datepicker({
                     dateFormat: 'yy-mm-dd' // Define o formato da data
                 });
-
                 // jquery mask
                 $('.cep').mask('00000-000');
                 $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
@@ -263,14 +344,14 @@
                 $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
                 var SPMaskBehavior = function (val) {
-                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
                 },
                 spOptions = {
-                onKeyPress: function(val, e, field, options) {
-                    field.mask(SPMaskBehavior.apply({}, arguments), options);
+                    onKeyPress: function (val, e, field, options) {
+                        field.mask(SPMaskBehavior.apply({}, arguments), options);
                     }
                 };
-            
+
                 $('.phone').mask(SPMaskBehavior, spOptions);
 
                 // $(".cpfcnpj").keydown(function() {
@@ -303,11 +384,11 @@
 
                 // alerts
                 $('.alert-success').on('click', function () {
-                    $( this ).hide('slow');
+                    $(this).hide('slow');
                 })
 
                 setInterval(() => {
-                    $('.alert-success').trigger( 'click' );
+                    $('.alert-success').trigger('click');
                 }, 3000);
                 // end alerts
             });
