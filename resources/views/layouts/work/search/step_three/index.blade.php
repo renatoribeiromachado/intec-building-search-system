@@ -79,10 +79,12 @@
 </style>
 
 <div class="container pt-5">
+    
     @forelse ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
-                <p>
+                <img src="{{ asset('images/relatorio-obras.png') }}" class="img-fluid" alt="Descrição da Imagem" />
+                <p class="pt-1">
                     <strong>Código</strong>: {{ $work->old_code }} -
                     Última Atualização:
                         @if (isset($work->last_review))
@@ -105,7 +107,6 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <p class="text-success"><b>DADOS DA OBRA {{ $loop->iteration }}:</b></p>
-                <img src="{{ asset('images/relatorio-obras.png') }}" alt="Descrição da Imagem" />
                 <table class="table table-condensed mt-2">
                     <tr>
                         <td style="width:85% !important;"><strong>Nome da Obra</strong>:  {{ $work->name }}<br>

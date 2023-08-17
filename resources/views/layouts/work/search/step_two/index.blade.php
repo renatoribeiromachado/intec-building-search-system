@@ -141,7 +141,7 @@
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
-                    <th scope="col">SIG</th>
+                    {{-- <th scope="col">SIG</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -187,17 +187,11 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
-                    <td>
-                        <a
-                            href="javascript:void(0)"
-                            data-bs-toggle="modal"
-                            data-bs-target="#sig"
-                            data-work-id="{{ $work->id }}"
-                            data-code="{{ $work->old_code }}"
-                            >
+                    {{-- <td>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
                             <i class="fa fa-check"></i>
                         </a>
-                    </td>
+                    </td> --}}
                 </tr>
                 @empty
                 <tr>
