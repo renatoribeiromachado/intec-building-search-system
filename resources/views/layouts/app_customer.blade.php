@@ -114,11 +114,11 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 @can('ver-pesquisa-de-empresas')
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Empresas
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
+                                            Empresas
+                                        </a>
+                                    </li>
                                 @endcan
 
                                 @can('ver-pesquisa-de-obras')

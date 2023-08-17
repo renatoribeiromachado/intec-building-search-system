@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\AssociateUserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanySearchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderReportController;
@@ -66,10 +67,12 @@ Route::middleware(['auth'])->group(function () {
         //     $activityFound = $activity->where('description', '=', 'CONSTRUÇÃO CIVIL')->first();
 
         //     return $activityFound;
-
-
-
         // })->name('company.import');
+
+        Route::get(
+            'search/step-1',
+            [CompanySearchController::class, 'showCompanySearchStepOne']
+        )->name('company.search.step_one.index');
     });
 
     Route::prefix('stages')->group(function () {
