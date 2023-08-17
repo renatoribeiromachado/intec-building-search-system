@@ -9,7 +9,7 @@ class StateCity extends Model
 {
     use HasFactory;
     
-     protected $table = "tb_states"; 
+     protected $table = "state_cities"; 
     protected $fillable = [];
 
     // Eloquent relationship methods

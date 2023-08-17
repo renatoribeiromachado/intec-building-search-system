@@ -268,6 +268,7 @@ class WorkSearchController extends Controller
         $address = $request->address;
         $oldCode = $request->old_code;
         $district = $request->district;
+        $state = $request->state;
         $city = $request->city;
         // $initial_zip_code = $request->initial_zip_code;
         // $final_zip_code = $request->final_zip_code;
@@ -363,6 +364,11 @@ class WorkSearchController extends Controller
         /*Bairro*/
         if ($district) {
             $works = $works->where('works.district', 'LIKE', '%'.$district.'%');
+        }
+        
+        /*Cidade*/
+        if ($state) {
+            $works = $works->where('works.state', 'LIKE', '%'.$state.'%');
         }
         
         /*Cidade*/
@@ -521,7 +527,7 @@ class WorkSearchController extends Controller
     {
         // Aqui você precisa implementar a lógica para buscar as cidades com base no estado
         // Suponhamos que você tenha um modelo City com um relacionamento para o estado
-        $cities = $this->city->where('state_id', $stateId)->get();
+        $cities = $this->city->where('uf', $stateId)->get();
 
         return response()->json(['cities' => $cities]);
     }
