@@ -63,7 +63,7 @@ class CompanySearchController extends Controller
     public function getFilteredCompanies(Request $request)
     {
         $loggedUser = Auth::user();
-        $segments = $request->segments;
+        $activityFields = $request->activity_fields;
 
         $companies = $this->company;
 
@@ -77,8 +77,8 @@ class CompanySearchController extends Controller
             $companies = $companies->whereIn('companies.id', $allCompanyIds);
         }
 
-        if ($segments) {
-            $companies = $companies->whereIn('companies.activity_field_id', $segments);
+        if ($activityFields) {
+            $companies = $companies->whereIn('companies.activity_field_id', $activityFields);
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);
