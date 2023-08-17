@@ -374,10 +374,10 @@
                         <div class="row mt-2">
                             <div class="col-md-3">
                                 <label class="control-label"> Estado </label>
-                                <select name="state" class="form-select" id="estado" onchange="carregarCidades()">
+                                <select name="state" class="form-select" id="estado">
                                     <option value="">-- Selecione --</option>
                                     @foreach($states as $state)
-                                        <option value="{{ $state->id }}">{{ $state->state_acronym }}</option>
+                                        <option value="{{ $state->uf }}">{{ $state->uf }}</option> 
                                     @endforeach
                                 </select>
                             </div>
@@ -385,11 +385,11 @@
                             <!--Cidades-->
                             <div class="col-md-9">
                                 <label class="control-label"> Cidade</label>
-                                <select name="city" class="form-select cidade" id="cidade" >
+                                <select name="city" class="form-select cidade" id="cidade">
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
-                                    @foreach($cities as $city)
+<!--                                    @foreach($cities as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                    @endforeach
+                                    @endforeach-->
                                 </select>
                                 <div style="display: none;">
                                     <div class="selected"><!--importante a classe selected-->
@@ -397,6 +397,39 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            async function fetchCitiesByState(stateId) {
+                                try {
+                                    const response = await fetch(`/works/getCities/${stateId}`); 
+                                    const data = await response.json();
+                                    return data.cities; 
+                                } catch (error) {
+                                    console.error('Erro ao buscar cidades:', error);
+                                    return [];
+                                }
+                            }
+
+                            const estadoSelect = document.getElementById('estado');
+                            const cidadeSelect = document.getElementById('cidade');
+
+                            async function carregarCidades() {
+                                const selectedStateId = estadoSelect.value;
+                                cidadeSelect.innerHTML = '<option value="0"> -- Selecione primeiro o Estado --</option>';
+
+                                if (selectedStateId !== '') {
+                                    const selectedCities = await fetchCitiesByState(selectedStateId);
+                                    selectedCities.forEach(city => {
+                                        const option = document.createElement('option');
+                                        option.value = city.name;
+                                        option.textContent = city.name;
+                                        cidadeSelect.appendChild(option);
+                                    });
+                                }
+                            }
+
+                            estadoSelect.addEventListener('change', carregarCidades);
+                        </script>
+                        
                         {{--
                         <div class="row mt-2">
                             <div class="col-md-12">

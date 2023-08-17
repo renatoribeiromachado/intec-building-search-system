@@ -242,7 +242,10 @@ Route::middleware(['auth'])->group(function () {
             'bind-contacts/{work}/{company}',
             [WorkController::class, 'addCompanyContactsIntoWork']
         )->name('work.bind.company.contacts');
-
+        
+        /*Get Cities * Renato Machado*/
+        Route::get('getCities/{stateId}', [WorkSearchController::class, 'getCitiesByState'])->name('getCities');
+        
         Route::get(
             'search/step-1',
             [WorkSearchController::class, 'showWorkSearchStepOne']
