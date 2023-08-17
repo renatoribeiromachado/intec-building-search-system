@@ -73,6 +73,16 @@ Route::middleware(['auth'])->group(function () {
             'search/step-1',
             [CompanySearchController::class, 'showCompanySearchStepOne']
         )->name('company.search.step_one.index');
+
+        Route::get(
+            'search/step-2',
+            [CompanySearchController::class, 'showWorkSearchStepTwo']
+        )->name('company.search.step_two.index');
+
+        Route::get(
+            'search/step-3',
+            [CompanySearchController::class, 'showWorkSearchStepThree']
+        )->name('company.search.step_three.index');
     });
 
     Route::prefix('stages')->group(function () {
