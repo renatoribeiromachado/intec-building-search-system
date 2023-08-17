@@ -84,7 +84,7 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <img
-                    src="{{ asset('images/relatorio-obras.png') }}"
+                    src="{{ asset('images/relatorio-empresas.png') }}"
                     class="img-fluid"
                     alt="Descrição da Imagem"
                     >
