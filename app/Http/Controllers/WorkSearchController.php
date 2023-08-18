@@ -175,8 +175,10 @@ class WorkSearchController extends Controller
         ));
     }
 
-    public function showWorkSearchStepThree(Request $request)
-    {
+    public function showWorkSearchStepThree(
+        $companyIds,
+        Request $request
+    ) {
         $this->authorize('ver-pesquisa-de-obras');
         
         $works = $this->getFilteredWorks($request);
@@ -190,7 +192,7 @@ class WorkSearchController extends Controller
         ));
     }
 
-    public function checkAllWorks(Request $request)
+    public function checkAllInputs(Request $request)
     {
         $onlyWorksSelectedIds = $request->work_ids;
         $inputSelectAllWasClicked = (bool) $request->input_select_all_was_clicked;

@@ -10,6 +10,27 @@
             @csrf
             @method('get')
 
+            <input
+                type="hidden"
+                id="input_select_all"
+                name="input_select_all"
+                value="{{ $inputSelectAll }}">
+            <input
+                type="hidden"
+                id="input_page_of_pagination"
+                name="input_page_of_pagination"
+                value="{{ $inputPageOfPagination }}">
+            <input
+                type="hidden"
+                id="clicked_in_page"
+                name="clicked_in_page"
+                value="{{ $clickedInPage }}">
+            <input
+                type="hidden"
+                id="at_least_one_check_box_was_clicked"
+                name="at_least_one_check_box_was_clicked"
+                value="{{ $atLeastOneCheckboxWasClicked }}">
+
             <div class="row">
                 <div class="col mt-3 mb-3">
                     Resultados encontrados: &nbsp;
@@ -32,7 +53,7 @@
                 type="button"
                 id="toggleButton"
                 class="btn btn-primary mb-4"
-                {{-- onclick="toggleCheckboxes()" --}}
+                onclick="toggleCheckboxes()"
                 >
                 Selecionar Todos
             </button>
@@ -57,14 +78,14 @@
                             <div style="cursor: pointer;">
                                 <div class="form-check">
                                     <input
-                                        class="form-check-input work-checkbox"
+                                        class="form-check-input company-checkbox"
                                         type="checkbox"
                                         name="companies_selected[]"
                                         value="{{ $company->id }}"
                                         id="flexCheckDefault{{$loop->index}}"
-                                        {{-- @if(collect($worksChecked)->contains($company->id))
+                                        @if(collect($companiesChecked)->contains($company->id))
                                         checked
-                                        @endif --}}
+                                        @endif
                                         >
                                     <label
                                         class="form-check-label"
@@ -97,3 +118,135 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+
+    <script>
+        let btnSelectAll = document.getElementById('toggleButton');
+
+        $(document).ready(function () {
+            $('.company-checkbox').click(function () {
+                let $checkbox = $(this);
+                let isChecked = $checkbox.is(':checked')
+
+                btnSelectAll.textContent = 'Deselecionar Todos';
+
+                if (isChecked) {
+                    $.ajax({
+                        type: "POST",
+                        url: base_url() + 'v1/check-company',
+                        data: {
+                            company: $checkbox.val(),
+                        },
+                        success: function (return_data) {
+                            // console.log(return_data)
+                        },
+                        error: function (event) {
+                            console.log(event)
+                        }
+                    });
+                }
+
+                if (! isChecked) {
+                    $.ajax({
+                        type: "POST",
+                        url: base_url() + 'v1/remove-check-company',
+                        data: {
+                            company: $checkbox.val(),
+                        },
+                        success: function (return_data) {
+                            console.log(return_data)
+
+                            if (return_data.companies_selected == null) {
+                                btnSelectAll.textContent = 'Selecionar Todos';
+                            }
+                        },
+                        error: function (event) {
+                            console.log(event)
+                        }
+                    });
+                }
+            })
+        });
+
+        let atLeastOneCheckboxWasClicked = document
+            .getElementById('at_least_one_check_box_was_clicked').value;
+        // avoid the error maximum call stack size exceeded
+        btnSelectAll.addEventListener("click", function(event){
+            event.preventDefault()
+        });
+
+        let inputSelectAll = document.getElementById('input_select_all');
+        let inputSelectAllWasClicked = inputSelectAll.value;
+
+        let inputPageOfPagination = document.getElementById('input_page_of_pagination');
+        let pageOfPagination = inputPageOfPagination.value;
+
+        let inputClickedInPage = document.getElementById('clicked_in_page').value;
+
+        console.log(atLeastOneCheckboxWasClicked)
+        console.log('Aqui!')
+
+        btnSelectAll.textContent = (inputSelectAllWasClicked == 1)
+            // ((atLeastOneCheckboxWasClicked !== '') &&
+            //     (inputClickedInPage == pageOfPagination) &&
+            //     (inputSelectAllWasClicked == 1))
+            ? 'Deselecionar Todos' : 'Selecionar Todos';
+
+        function toggleCheckboxes() {
+
+            let companyIds = [];
+            let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let allChecked = true;
+
+            checkboxes.forEach(function (checkbox) {
+                if (! checkbox.checked) {
+                    allChecked = false;
+                }
+                companyIds = [];
+            });
+
+            checkboxes.forEach(function (checkbox) {
+                if (atLeastOneCheckboxWasClicked != 1) {
+                    checkbox.checked = ! allChecked;
+
+                    if (checkbox.checked) {
+                        companyIds.push(checkbox.value);
+                    }
+
+                    if (! checkbox.checked) {
+                        const index = companyIds.indexOf(checkbox.value);
+                        if (index > -1) { // only splice companyIds when item is found
+                            companyIds.splice(index, 1); // 2nd parameter means remove one item only
+                        }
+                    }
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: base_url() + 'v1/check-all-companies',
+                data: {
+                    company_ids: companyIds,
+                    input_select_all_was_clicked: inputSelectAllWasClicked,
+                    input_page_of_pagination: pageOfPagination,
+                    clicked_in_page: inputClickedInPage
+                },
+                success: function (return_data) {
+                    console.log(return_data)
+                },
+                error: function (event) {
+                    console.log(event)
+                }
+            });
+
+            var button = document.getElementById('toggleButton');
+            button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            // avoid the error maximum call stack size exceeded
+            button.addEventListener("click", function(event){
+                event.preventDefault()
+            });
+        }
+    </script>
+
+@endpush

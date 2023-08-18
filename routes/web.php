@@ -177,6 +177,7 @@ Route::middleware(['auth'])->group(function () {
             [OrderController::class, 'calculateInstallments']
         )->name('associate.order.calculate_installments');
 
+        // Button Select All Works
         Route::post('check-work',
             [WorkSearchController::class, 'pushWorksSession']
         )->name('work.search.step_two.check_work');
@@ -188,6 +189,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post('check-all-works',
             [WorkSearchController::class, 'checkAllWorks']
         )->name('work.search.step_two.check_all_works');
+
+        // Button Select All Companies
+        Route::post('check-company',
+            [CompanySearchController::class, 'pushCompaniesSession']
+        )->name('company.search.step_two.check_company');
+
+        Route::post('remove-check-company',
+            [CompanySearchController::class, 'removeCompaniesSession']
+        )->name('company.search.step_two.remove_check_company');
+
+        Route::post('check-all-companies',
+            [CompanySearchController::class, 'checkAllCompanies']
+        )->name('work.search.step_two.check_all_companies');
     });
 
     Route::prefix('roles')->group(function() {
