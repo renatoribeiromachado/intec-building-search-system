@@ -9,7 +9,7 @@
 
     @include('layouts.alerts.success')
 
-    <form action="{{ route('work.search.step_three.index') }}" method="get">
+    <form id="checkboxForm" action="{{ route('work.search.step_three.index') }}" method="get">
         @csrf
         @method('get')
 
@@ -110,10 +110,13 @@
                 <span class="fs-3">{{ $works->total() }}</span>
             </div>
 
-            <div class="col mt-3 mb-3 clearfix">
-                <button type="submit" class="btn btn-success submit float-end" title="Pesquisar">
+            <div class="col-md-2 mt-2 mb-3 clearfix">
+                <button type="submit" class="btn btn-success submit float-end" title="Pesquisar" id="pesquisarButton" disabled>
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
+            </div>
+            <div class="col-md-2 mt-2 mb-3 clearfix">
+                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar por e-mail</a>
             </div>
         </div>
 
@@ -123,6 +126,7 @@
             id="toggleButton"
             class="btn btn-primary mb-4"
             onclick="toggleCheckboxes()"
+            data-toggle-state="select"
             >
             Selecionar Todos
         </button>
@@ -141,7 +145,8 @@
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
-                    {{-- <th scope="col">SIG</th> --}}
+                    <th scope="col">Status</th>
+                    <th scope="col">SIG</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,6 +165,8 @@
                                     name="works_selected[]"
                                     value="{{ $work->id }}"
                                     id="flexCheckDefault{{$loop->index}}"
+                                    data-work-id="{{ $work->id }}"
+                                    data-work-code="{{ $work->old_code }}"
                                     @if(collect($worksChecked)->contains($work->id))
                                     checked
                                     @endif
@@ -187,11 +194,12 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
-                    {{-- <td>
+                    <td></td>
+                    <td>
                         <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
                             <i class="fa fa-check"></i>
                         </a>
-                    </td> --}}
+                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -212,7 +220,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Cadstro de SIG-Obra</h4>
+                    <h4 class="modal-title">Cadastro de SIG-Obra</h4>
                 </div>
 
                 <!-- Modal body -->
@@ -271,23 +279,54 @@
             </div> <!-- /.modal-content -->
         </div>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
-        const modalCode = document.getElementById('modal-code');
-        const modalWorkIdInput = document.getElementById('modal-work-id-input');
+    
+    <!--ENVIAR LINK DE OBRAS POR EMAIL-->
+    <div class="modal fade" id="sendEmail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enviar link de obra(s) por e-mail</h4>
+                </div>
+                <div class="modal-body">
+   
+                    <form id="emailForm" action="{{ route('send.email-obra') }}" method="post">
+                        @csrf
+                        <div class="row mt-2">
+                            <div class="col-md-10">
+                                <label class="control-label"><i class="glyphicon glyphicon-user"></i> Usuário</label>
+                                <input type="text" name="senderName" class="form-control" id="senderName" value="{{ auth()->user()->name }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> E-mail</label>
+                                <input type="email" name="senderEmail" class="form-control" id="senderEmail" value="{{ auth()->user()->email }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Lista de E-Mail's (separar cada-mail por vírgula) <code>* Obrigatório</code></label>
+                                <input type="text" name="emailDestination" id="emailDestination" class="form-control" value="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Obras selecionadas <code>* Obrigatório</code></label>
+                                <textarea name="selectedWorks" class="form-control" rows="5" id="selectedWorks" readonly="" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-primary btnSendEmail" id="btnSendEmail" value="Enviar" />
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        sigLinks.forEach(link => {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                const workId = this.getAttribute('data-work-id');
-                const workOldCode = this.getAttribute('data-code');
-                modalCode.textContent = workOldCode;
-                modalWorkIdInput.value = workId;
-            });
-        });
-    });
-    </script>
     <div>
         {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
@@ -372,11 +411,15 @@
 
             let workIds = [];
             let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let searchButton = document.getElementById('pesquisarButton');
             let allChecked = true;
 
             checkboxes.forEach(function (checkbox) {
                 if (! checkbox.checked) {
                     allChecked = false;
+                    searchButton.disabled = false;
+                }else{
+                    searchButton.disabled = true;
                 }
                 workIds = [];
             });
@@ -415,11 +458,124 @@
 
             var button = document.getElementById('toggleButton');
             button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            const pesquisarButton = document.getElementById('pesquisarButton');
             // avoid the error maximum call stack size exceeded
             button.addEventListener("click", function(event){
                 event.preventDefault()
+                pesquisarButton.disabled = !peloMenosUmMarcado;
             });
         }
+        
+        /*Enviar obras por email 17/08/2023 - Renato Machado*/
+        const checkboxes = document.querySelectorAll('.work-checkbox');
+        const selectedWorksTextarea = document.getElementById('selectedWorks');
+        const toggleButton = document.getElementById('toggleButton');
+        const emailForm = document.getElementById('emailForm');
+        const searchButton = document.querySelector('.btn-success.submit');
+        searchButton.addEventListener('click', function() {
+            localStorage.removeItem('selectedWorkCodes');
+        });
+
+        let selectedWorkCodes = JSON.parse(localStorage.getItem('selectedWorkCodes')) || [];
+
+        checkboxes.forEach(checkbox => {
+            const workCode = checkbox.getAttribute('data-work-code');
+            checkbox.checked = selectedWorkCodes.includes(workCode);
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked && !selectedWorkCodes.includes(workCode)) {
+                    selectedWorkCodes.push(workCode);
+                } else if (!checkbox.checked && selectedWorkCodes.includes(workCode)) {
+                    const index = selectedWorkCodes.indexOf(workCode);
+                    selectedWorkCodes.splice(index, 1);
+                }
+
+                localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
+                updateSelectedWorksTextarea();
+            });
+        });
+
+        function updateSelectedWorksTextarea() {
+            selectedWorksTextarea.value = selectedWorkCodes.join(', ');
+        }
+
+        updateSelectedWorksTextarea();
+
+        toggleButton.addEventListener('click', function () {
+            const toggleState = toggleButton.getAttribute('data-toggle-state');
+            selectedWorkCodes = [];
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = toggleState === 'select';
+                if (toggleState === 'select') {
+                    const workCode = checkbox.getAttribute('data-work-code');
+                    selectedWorkCodes.push(workCode);
+                }
+            });
+
+            localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
+            updateSelectedWorksTextarea();
+
+            toggleButton.setAttribute('data-toggle-state', toggleState === 'select' ? 'deselect' : 'select');
+        });
+
+        emailForm.addEventListener('submit', function () {
+            const emailData = {
+                selectedWorks: selectedWorkCodes,
+            };
+
+            console.log('Dados enviados por e-mail:', emailData);
+
+            setTimeout(function () {
+                selectedWorksTextarea.value = '';
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                localStorage.removeItem('selectedWorkCodes');
+            }, 0);
+        });
+
+        function updateCheckboxes() {
+            checkboxes.forEach(checkbox => {
+                const workCode = checkbox.getAttribute('data-work-code');
+                checkbox.checked = selectedWorkCodes.includes(workCode);
+            });
+        }
+        
+        /*SIG 17/08/2023 - Renato Machado*/
+        document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalCode = document.getElementById('modal-code');
+            const modalWorkIdInput = document.getElementById('modal-work-id-input');
+
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const workId = this.getAttribute('data-work-id');
+                    const workOldCode = this.getAttribute('data-code');
+                    modalCode.textContent = workOldCode;
+                    modalWorkIdInput.value = workId;
+                });
+            });
+        });
+        
+        /*Desabilita o botão pesquisar somente qdo um check ou mais estiver checado - 17/08/2023 - Renato Machado*/
+        const checkboxSearch = document.querySelectorAll('input[type="checkbox"]');
+        const pesquisarButton = document.getElementById('pesquisarButton');
+
+        checkboxSearch.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                let peloMenosUmMarcado = false;
+                checkboxSearch.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        peloMenosUmMarcado = true;
+                    }
+                });
+                
+                pesquisarButton.disabled = !peloMenosUmMarcado;
+            });
+        });
+
     </script>
 
 @endpush

@@ -21,6 +21,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
 use App\Http\Controllers\SigController;
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\EmailWorkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -214,6 +215,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sig-works', [SigController::class, 'index'])->name('sig_works.index');
     Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
     Route::get('sig-works/report', [SigController::class, 'report'])->name('sig_works.report');
+    /*Enviar email obras*/
+    Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');
       
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');
