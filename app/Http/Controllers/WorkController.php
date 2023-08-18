@@ -93,8 +93,8 @@ class WorkController extends Controller
     
     public function export(Request $request)
     {
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
+        $startDate = convertPtBrDateToEnDate($request->input('startDate'));
+        $endDate = convertPtBrDateToEnDate($request->input('endDate'));
  
         $worksExport = new WorksExport($startDate, $endDate);
 
