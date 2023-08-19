@@ -141,22 +141,39 @@
                         <hr>
                     </div>
 
-                    {{-- <div class="col-md-6">
+                    <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12">
-                                <label class="control-label">Fantasia</label>
-                                <input type="text" name class="form-control" id="busca-obra" value />
+                                <x-intec-input
+                                    label-input-id="trading_name"
+                                    label-text="Nome Fantasia"
+                                    input-type="text"
+                                    input-name="trading_name"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                    placeholder=""
+                                />
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Endereço</label>
-                                <input type="text" name class="form-control" id="busca-adress" value />
+                                <x-intec-input
+                                    label-input-id="address"
+                                    label-text="Endereço"
+                                    input-type="text"
+                                    input-name="address"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
 
-                        <div class="row mt-2">
+                        {{-- <div class="row mt-2">
                             <div class="col-md-2">
                                 <label class="control-label">Estado</label>
                                 <select name="state" class="form-select">
@@ -178,12 +195,20 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Site</label>
-                                <input type="text" name class="form-control" id="company" value />
+                                <x-intec-input
+                                    label-input-id="home_page"
+                                    label-text="Site"
+                                    input-type="text"
+                                    input-name="home_page"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
                     </div>
@@ -191,18 +216,34 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12">
-                                <label class="control-label">Razão Social</label>
-                                <input type="text" name class="form-control" value />
+                                <x-intec-input
+                                    label-input-id="company_name"
+                                    label-text="Razão Social"
+                                    input-type="text"
+                                    input-name="company_name"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Bairro</label>
-                                <input type="text" name class="form-control" id="district" value />
+                                <x-intec-input
+                                    label-input-id="district"
+                                    label-text="Bairro"
+                                    input-type="text"
+                                    input-name="district"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
 
-                        <div class="row mt-2">
+                        {{-- <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label">
                                     Cidades Selecionadas
@@ -217,23 +258,39 @@
                                     readonly
                                     >
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label class="control-label">CNPJ</label>
-                                <input type="text" name class="form-control" value />
+                                <x-intec-input
+                                    label-input-id="cnpj"
+                                    label-text="CNPJ"
+                                    input-type="text"
+                                    input-name="cnpj"
+                                    class-one="cnpj"
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                             <div class="col-md-8">
-                                <label class="control-label">Email</label>
-                                <input type="text" name class="form-control" value />
+                                <x-intec-input
+                                    label-input-id="primary_email"
+                                    label-text="E-mail Principal"
+                                    input-type="email"
+                                    input-name="primary_email"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
 
                 <div class="row mt-4 pb-4">
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label class="control-label">
                             <i class="fa fa-search"></i>
                             <strong>Pesquisa(s) Salva(s)</strong>
@@ -241,14 +298,14 @@
                         <select name id="selecao" class="form-select">
                             <option value="0">-- Selecione --</option>
                         </select>
-                    </div>
+                    </div> --}}
 
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
                         <select name id="delete" class="form-select">
                             <option value="0">Selecione - Delete automatico</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-3">
                         {{-- <label class="control-label"> <strong>Ação</strong></label>
@@ -267,7 +324,7 @@
                             type="submit"
                             class="btn btn-success submit"
                             title="Pesquisar"
-                            onclick="Acao('');"
+                            {{-- onclick="Acao('');" --}}
                             >
                             <i class="fa fa-search"></i>
                             Pesquisar

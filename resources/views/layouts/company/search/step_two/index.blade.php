@@ -31,6 +31,42 @@
                 name="at_least_one_check_box_was_clicked"
                 value="{{ $atLeastOneCheckboxWasClicked }}">
 
+            <input
+                type="hidden"
+                id="trading_name"
+                name="trading_name"
+                value="{{ request()->trading_name }}">
+            <input
+                type="hidden"
+                id="company_name"
+                name="company_name"
+                value="{{ request()->company_name }}">
+            <input
+                type="hidden"
+                id="address"
+                name="address"
+                value="{{ request()->address }}">
+            <input
+                type="hidden"
+                id="district"
+                name="district"
+                value="{{ request()->district }}">
+            <input
+                type="hidden"
+                id="cnpj"
+                name="cnpj"
+                value="{{ request()->cnpj }}">
+            <input
+                type="hidden"
+                id="primary_email"
+                name="primary_email"
+                value="{{ request()->primary_email }}">
+            <input
+                type="hidden"
+                id="home_page"
+                name="home_page"
+                value="{{ request()->home_page }}">
+
             <div class="row">
                 <div class="col mt-3 mb-3">
                     Resultados encontrados: &nbsp;

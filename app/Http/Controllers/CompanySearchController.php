@@ -188,6 +188,13 @@ class CompanySearchController extends Controller
     {
         $loggedUser = Auth::user();
         $activityFields = $request->activity_fields;
+        $tradingName = $request->trading_name;
+        $companyName = $request->company_name;
+        $address = $request->address;
+        $district = $request->district;
+        $cnpj = $request->cnpj;
+        $primaryEmail = $request->primary_email;
+        $homePage = $request->home_page;
 
         $companies = $this->company;
 
@@ -203,6 +210,34 @@ class CompanySearchController extends Controller
 
         if ($activityFields) {
             $companies = $companies->whereIn('companies.activity_field_id', $activityFields);
+        }
+
+        if ($tradingName) {
+            $companies = $companies->where('companies.trading_name', 'LIKE', '%'.$tradingName.'%');
+        }
+
+        if ($companyName) {
+            $companies = $companies->where('companies.company_name', 'LIKE', '%'.$companyName.'%');
+        }
+
+        if ($address) {
+            $companies = $companies->where('companies.address', 'LIKE', '%'.$address.'%');
+        }
+
+        if ($district) {
+            $companies = $companies->where('companies.district', 'LIKE', '%'.$district.'%');
+        }
+
+        if ($cnpj) {
+            $companies = $companies->where('companies.cnpj', 'LIKE', '%'.$cnpj.'%');
+        }
+
+        if ($primaryEmail) {
+            $companies = $companies->where('companies.primary_email', 'LIKE', '%'.$primaryEmail.'%');
+        }
+
+        if ($homePage) {
+            $companies = $companies->where('companies.home_page', 'LIKE', '%'.$homePage.'%');
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);

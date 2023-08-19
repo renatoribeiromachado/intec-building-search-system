@@ -95,7 +95,7 @@
                     Emitido em:
                     <strong>
                         {{ now()->setTimezone(
-                        config('timezones.brazil'))->format('d/m/Y h:i:s') }}
+                        config('timezones.brazil'))->format('d/m/Y') }}
                     </strong>
                 </p>
             </div>
