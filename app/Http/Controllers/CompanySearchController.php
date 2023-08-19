@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityField;
+use App\Models\Associate;
 use App\Models\Company;
+use App\Models\SegmentSubType;
+use App\Models\State;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +22,19 @@ class CompanySearchController extends Controller
     protected $activityField;
     protected $company;
     protected $companiesSessionName = 'companies_checkboxes';
+    protected $state;
+    protected $segmentSubType;
 
     public function __construct(
         ActivityField $activityField,
-        Company $company
+        Company $company,
+        State $state,
+        SegmentSubType $segmentSubType
     ) {
         $this->activityField = $activityField;
         $this->company = $company;
+        $this->state = $state;
+        $this->segmentSubType = $segmentSubType;
     }
 
     public function showCompanySearchStepOne()
@@ -37,8 +46,74 @@ class CompanySearchController extends Controller
             ->orderBy('description', 'asc')
             ->get();
 
+        $authUser = Auth::user();
+
+        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER ||
+            $authUser->role->slug == Associate::ASSOCIATE_USER) {
+
+            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+
+            $statesOne = $this->state
+                ->where('zone_id', 1)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesTwo = $this->state
+                ->where('zone_id', 2)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesThree = $this->state
+                ->where('zone_id', 3)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFour = $this->state
+                ->where('zone_id', 4)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFive = $this->state
+                ->where('zone_id', 5)
+                ->whereIn('id', $statesVisible)
+                ->get();
+
+            $segmentSubTypeOne = $this->segmentSubType
+                ->where('segment_id', 1)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeTwo = $this->segmentSubType
+                ->where('segment_id', 2)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeThree = $this->segmentSubType
+                ->where('segment_id', 3)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+        }
+
+        if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
+            $authUser->role->slug != Associate::ASSOCIATE_USER) {
+            $statesOne = $this->state->where('zone_id', 1)->get();
+            $statesTwo = $this->state->where('zone_id', 2)->get();
+            $statesThree = $this->state->where('zone_id', 3)->get();
+            $statesFour = $this->state->where('zone_id', 4)->get();
+            $statesFive = $this->state->where('zone_id', 5)->get();
+
+            $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+            $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+            $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+        }
+
         return view('layouts.company.search.step_one.index', compact(
             'activityFields',
+            'statesOne',
+            'statesTwo',
+            'statesThree',
+            'statesFour',
+            'statesFive',
+            'segmentSubTypeOne',
+            'segmentSubTypeTwo',
+            'segmentSubTypeThree',
         ));
     }
 
@@ -61,15 +136,13 @@ class CompanySearchController extends Controller
 
         $atLeastOneCheckboxWasClicked = 0;
 
-        if ($companiesChecked) {
-
-            // $atLeastOneCheckboxWasClicked = count(session($this->companiesSessionName));
-            
-            if ( count( session($this->companiesSessionName) ) &&
-                ($clickedInPage == $inputPageOfPagination) &&
-                ($inputSelectAll == 1) ) {
-                $atLeastOneCheckboxWasClicked = 1;
-            }
+        if (
+            $companiesChecked &&
+            count(session($this->companiesSessionName)) &&
+            ($clickedInPage == $inputPageOfPagination) &&
+            ($inputSelectAll == 1)
+        ) {
+            $atLeastOneCheckboxWasClicked = 1;
         }
 
         return view('layouts.company.search.step_two.index', compact(

@@ -25,7 +25,8 @@
                         name="{{ $listInputName }}"
                         class="{{ $classTwo }}"
                         value="{{ $item->id }}"
-                        @if ((! \Route::is('work.search.step_one.index')) && 
+                        @if ((! \Route::is('work.search.step_one.index')) &&
+                            (! \Route::is('company.search.step_one.index')) &&
                             $collectionRelation->contains($item))
                             checked
                         @endif
