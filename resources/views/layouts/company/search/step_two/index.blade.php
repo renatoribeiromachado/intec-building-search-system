@@ -155,9 +155,8 @@
                             company: $checkbox.val(),
                         },
                         success: function (return_data) {
-                            console.log(return_data)
-
-                            if (return_data.companies_selected == null) {
+                            if ((return_data.companies_selected == null) ||
+                                (! return_data.companies_selected.length)) {
                                 btnSelectAll.textContent = 'Selecionar Todos';
                             }
                         },
