@@ -107,71 +107,6 @@
                     />
                 @endif
 
-                {{-- <div class="row  mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="nordeste checkRegiaoGeral" />
-                            <b>Nordeste</b> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]"
-                                class="checkRegiaoGeral checkNordeste" value /></p>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="row  mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="sudeste checkRegiaoGeral" />
-                            <strong>Sudeste</strong></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]"
-                                class="checkRegiaoGeral checkSudeste" value /></p>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="row mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="sul checkRegiaoGeral" />
-                            <strong>Sul</strong> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]"
-                                class="checkRegiaoGeral checkSul" value /></p>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="row mt-2 bg-light border">
-                    <div class="col-md-12 jumbotronBox">
-                        <p class="text-uppercase"><input type="checkbox" class="norte checkRegiaoGeral" />
-                            <strong>Norte</strong> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]"
-                                class="checkRegiaoGeral checkNorte" value /></p>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="row mt-2 bg-light border">
-                    <div class="col-md-12">
-                        <p class="text-uppercase"><input type="checkbox" class="centro-oeste checkRegiaoGeral" />
-                            <strong>Centro-Oeste</strong> <code>* Selecione Todos</code></p>
-                        <hr>
-                    </div>
-                    <div class="col-md-4 pt-3">
-                        <p class="text-right"><strong></strong> <input type="checkbox" name="state[]"
-                                class="checkRegiaoGeral checkCentro" value /></p>
-                    </div>
-                </div> --}}
-
-                {{-- <form action id="formulario" method="POST"> --}}
-
-                {{-- @if (($segmentSubTypeOne->count() + $segmentSubTypeTwo->count() +
-                    $segmentSubTypeThree->count()) > 0) --}}
-
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <label class="control-label text-uppercase">
@@ -180,20 +115,6 @@
                         </label>
                     </div>
                 </div>
-
-
-                <!--INDUSTRIAL-->
-                {{-- <x-state-checkbox-group
-                    id="segment-sub-type-all-1"
-                    input-one-name="segment-sub-types[0]"
-                    class-one="industrial"
-                    label-text="Industrial"
-                    :data-list="$activityFields"
-                    class-two="Ind"
-                    list-input-id-for="segment-sub-type-one-"
-                    list-input-name="segment_sub_types[]"
-                    collection-relation=""
-                /> --}}
 
                 <div class="row mt-2 bg-light border">
                     @foreach($activityFields as $activityField)
@@ -367,65 +288,55 @@
             $(".datepicker").datepicker();
         });
 
-        /*SEGMENTO DE ATUAÇÃO*/
-        // const geralCheckbox = document.querySelector('.regiaoGeral');
-        // const checkboxesGeral = document.querySelectorAll('.checkRegiaoGeral');
-        // geralCheckbox.addEventListener('click', function() {
-        //     const isChecked = geralCheckbox.checked;
-        //     checkboxesGeral.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
+        /*REGIÃO NORDESTE*/
+        const nordesteCheckbox = document.querySelector('.nordeste');
+        const checkboxesNord = document.querySelectorAll('.checkNordeste');
+        nordesteCheckbox.addEventListener('click', function() {
+            const isChecked = nordesteCheckbox.checked;
+            checkboxesNord.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
 
-        // /*REGIÃO NORDESTE*/
-        // const nordesteCheckbox = document.querySelector('.nordeste');
-        // const checkboxesNord = document.querySelectorAll('.checkNordeste');
-        // nordesteCheckbox.addEventListener('click', function() {
-        //     const isChecked = nordesteCheckbox.checked;
-        //     checkboxesNord.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
+        /*REGIÃO SULDESTE*/
+        const sudesteCheckbox = document.querySelector('.sudeste');
+        const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
+        sudesteCheckbox.addEventListener('click', function() {
+            const isChecked = sudesteCheckbox.checked;
+            checkboxesSudeste.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
 
-        // /*REGIÃO SULDESTE*/
-        // const sudesteCheckbox = document.querySelector('.sudeste');
-        // const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
-        // sudesteCheckbox.addEventListener('click', function() {
-        //     const isChecked = sudesteCheckbox.checked;
-        //     checkboxesSudeste.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
+        /*REGIÃO SUL*/
+        const sulCheckbox = document.querySelector('.sul');
+        const checkboxesSul = document.querySelectorAll('.checkSul');
+        sulCheckbox.addEventListener('click', function() {
+            const isChecked = sulCheckbox.checked;
+            checkboxesSul.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
 
-        // /*REGIÃO SUL*/
-        // const sulCheckbox = document.querySelector('.sul');
-        // const checkboxesSul = document.querySelectorAll('.checkSul');
-        // sulCheckbox.addEventListener('click', function() {
-        //     const isChecked = sulCheckbox.checked;
-        //     checkboxesSul.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
+        /*REGIÃO NORTE*/
+        const norteCheckbox = document.querySelector('.norte');
+        const checkboxesNor = document.querySelectorAll('.checkNorte');
+        norteCheckbox.addEventListener('click', function() {
+            const isChecked = norteCheckbox.checked;
+            checkboxesNor.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
 
-        // /*REGIÃO NORTE*/
-        // const norteCheckbox = document.querySelector('.norte');
-        // const checkboxesNor = document.querySelectorAll('.checkNorte');
-        // norteCheckbox.addEventListener('click', function() {
-        //     const isChecked = norteCheckbox.checked;
-        //     checkboxesNor.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
-
-        // /*REGIÃO NORTE*/
-        // const centroCheckbox = document.querySelector('.centro-oeste');
-        // const checkboxesCen = document.querySelectorAll('.checkCentro');
-        // centroCheckbox.addEventListener('click', function() {
-        //     const isChecked = centroCheckbox.checked;
-        //     checkboxesCen.forEach(checkbox => {
-        //         checkbox.checked = isChecked;
-        //     });
-        // });
+        /*REGIÃO CENTRO-OESTE*/
+        const centroCheckbox = document.querySelector('.centro-oeste');
+        const checkboxesCen = document.querySelectorAll('.checkCentroOeste');
+        centroCheckbox.addEventListener('click', function() {
+            const isChecked = centroCheckbox.checked;
+            checkboxesCen.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
     </script>
 
 @endpush
