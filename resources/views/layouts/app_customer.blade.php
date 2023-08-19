@@ -64,6 +64,10 @@
                 font-size: 24px;
                 margin-right: 10px;
             }
+
+            .label-font-bold {
+                font-weight: bold;
+            }
         </style>
 
         @stack('styles')

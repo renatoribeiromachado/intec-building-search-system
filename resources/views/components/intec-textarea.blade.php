@@ -1,7 +1,7 @@
 
 <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
-<label for="{{ $labelTextareaId }}">
-    <strong>{{ $labelText }}</strong>
+<label class="{{ $labelClass }}" for="{{ $labelTextareaId }}">
+    {{ $labelText }}
 </label>
 <textarea
     id="{{ $labelTextareaId }}"
