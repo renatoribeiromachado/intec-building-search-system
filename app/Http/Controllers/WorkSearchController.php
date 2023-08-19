@@ -12,6 +12,7 @@ use App\Models\WorkFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkSearchController extends Controller
@@ -293,8 +294,10 @@ class WorkSearchController extends Controller
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         $allWorkIds = null;
-        if ((session()->has($this->worksSessionName) || $request->works_selected) &&
-            ! \Route::is('work.search.step_two.index')) {
+        if (
+            (session()->has($this->worksSessionName) || $request->works_selected)
+            && (! Route::is('work.search.step_two.index'))
+        ) {
             $allWorkIds = session()->has($this->worksSessionName)
                 ? session($this->worksSessionName)
                 : $request->works_selected;
@@ -441,7 +444,7 @@ class WorkSearchController extends Controller
             );
         }
 
-        if (\Route::is('work.search.step_three.index')) {
+        if (Route::is('work.search.step_three.index')) {
             return $works->get();
         }
 

@@ -22,6 +22,8 @@ class CompanySearchController extends Controller
     protected $activityField;
     protected $company;
     protected $companiesSessionName = 'companies_checkboxes';
+    protected $statesSessionName = 'states_checkboxes';
+    protected $activityFieldsSessionName = 'activity_fields_checkboxes';
     protected $state;
     protected $segmentSubType;
 
@@ -124,7 +126,8 @@ class CompanySearchController extends Controller
         $currentPage = is_null($request->page) ? 1 : $request->page;
         $btnExistsInSession = session()->has('btnSelectAll');
 
-        $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
+        $clickedInPage = $btnExistsInSession
+            && (session('btnSelectAll')['btn_clicked'] == 1)
             ? session('btnSelectAll')['clicked_in_page']
             : $currentPage;
 
@@ -137,17 +140,31 @@ class CompanySearchController extends Controller
         $atLeastOneCheckboxWasClicked = 0;
 
         if (
-            $companiesChecked &&
-            count(session($this->companiesSessionName)) &&
-            ($clickedInPage == $inputPageOfPagination) &&
-            ($inputSelectAll == 1)
+            $companiesChecked
+            && count(session($this->companiesSessionName))
+            && ($clickedInPage == $inputPageOfPagination)
+            && ($inputSelectAll == 1)
         ) {
             $atLeastOneCheckboxWasClicked = 1;
+        }
+        
+        $statesChecked = [];
+        if (! is_null(request()->states)) {
+            request()->session()->put($this->statesSessionName, request()->states);
+            $statesChecked = session($this->statesSessionName);
+        }
+        
+        $activityFieldsChecked = [];
+        if (! is_null(request()->activity_fields)) {
+            request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
+            $activityFieldsChecked = session($this->activityFieldsSessionName);
         }
 
         return view('layouts.company.search.step_two.index', compact(
             'companies',
             'companiesChecked',
+            'statesChecked',
+            'activityFieldsChecked',
             'btnExistsInSession',
             'clickedInPage',
             'inputPageOfPagination',
@@ -196,16 +213,37 @@ class CompanySearchController extends Controller
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
 
+        $allStateIds = null;
+        $allStatesAcronym = null;
+        if (session()->has($this->statesSessionName) || $request->states) {
+            $allStateIds = session()->has($this->statesSessionName)
+                ? session($this->statesSessionName)
+                : $request->states;
+
+            $states = $this->state
+                ->select('state_acronym')
+                ->whereIn('id', $allStateIds)
+                ->get();
+
+            $allStatesAcronym = $states->pluck('state_acronym');
+        }
+
         $companies = $this->company;
 
         $allCompanyIds = null;
-        if (/*(session()->has($this->companiesSessionName) || $request->companies_selected) &&*/
-            ! Route::is('company.search.step_two.index')) {
-            // $allCompanyIds = session()->has($this->companiesSessionName)
-            //     ? session($this->companiesSessionName)
-            //     : $request->companies_selected;
-            $allCompanyIds = $request->companies_selected;
+        if (
+            (session()->has($this->companiesSessionName) || $request->companies_selected)
+            && (! Route::is('company.search.step_two.index'))
+        ) {
+            $allCompanyIds = session()->has($this->companiesSessionName)
+                ? session($this->companiesSessionName)
+                : $request->companies_selected;
+            // $allCompanyIds = $request->companies_selected;
             $companies = $companies->whereIn('companies.id', $allCompanyIds);
+        }
+
+        if ($allStatesAcronym) {
+            $companies = $companies->whereIn('companies.state', $allStatesAcronym);
         }
 
         if ($activityFields) {
@@ -247,9 +285,8 @@ class CompanySearchController extends Controller
     {
         request()->session()->forget([
             $this->companiesSessionName,
-            // $this->stagesSessionName,
-            // $this->segmentSubTypesSessionName,
-            // $this->statesSessionName,
+            $this->activityFieldsSessionName,
+            $this->statesSessionName,
             'btnSelectAll'
         ]);
     }

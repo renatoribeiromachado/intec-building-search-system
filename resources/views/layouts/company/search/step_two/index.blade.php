@@ -66,6 +66,12 @@
                 id="home_page"
                 name="home_page"
                 value="{{ request()->home_page }}">
+            @foreach ($statesChecked as $stateChecked)
+            <input type="hidden" name="states[]" value="{{ $stateChecked }}">
+            @endforeach
+            @foreach ($activityFieldsChecked as $activityFieldChecked)
+            <input type="hidden" name="activity_fields[]" value="{{ $activityFieldChecked }}">
+            @endforeach
 
             <div class="row">
                 <div class="col mt-3 mb-3">
