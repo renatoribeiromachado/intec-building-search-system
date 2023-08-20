@@ -186,8 +186,11 @@
 
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                  <li>
-                                    <a class="dropdown-item" href="#">
-                                        Estamos em atualização
+                                    <a
+                                        class="dropdown-item"
+                                        href="{{ route('sig_works.index') }}"
+                                        >
+                                        SIG / Obras
                                     </a>
                                 </li>
                             </ul>
@@ -347,7 +350,7 @@
         <main class="container-fluid mt-3" style="background: #f2f6fc">
             @yield('content')
         </main>
-        <a href="https://api.whatsapp.com/send?phone=+5511988327074" class="whatsapp-button" target="_blank">
+        <a href="https://api.whatsapp.com/send?phone=5511988327074&text=&text=Ol%C3%A1%20tenho%20d%C3%BAvida%20sobre%20a%20plataforma%2C%20pode%20me%20ajudar%3F" class="whatsapp-button" target="_blank">
             <i class="fa fa-whatsapp whatsapp-icon"></i>
             Fale Conosco no WhatsApp
         </a>
