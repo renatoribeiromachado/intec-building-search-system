@@ -8,7 +8,6 @@ use App\Models\SegmentSubType;
 use App\Models\Sig;
 use App\Models\Stage;
 use App\Models\State;
-use App\Models\StateCity;
 use App\Models\City;
 use App\Models\Work;
 use App\Models\WorkFeature;
@@ -38,7 +37,6 @@ class WorkSearchController extends Controller
         Stage $stage,
         Work $work,
         State $state,
-        StateCity $state_city,
         City $city,
         SegmentSubType $segmentSubType,
         WorkFeature $workFeature,
@@ -46,7 +44,6 @@ class WorkSearchController extends Controller
         $this->stage = $stage;
         $this->work = $work;
         $this->state = $state;
-        $this->state_city = $state_city;
         $this->city = $city;
         $this->segmentSubType = $segmentSubType;
         $this->workFeature = $workFeature;
@@ -57,8 +54,6 @@ class WorkSearchController extends Controller
         $this->authorize('ver-pesquisa-de-obras');
 
         $this->resetWorksSession();
-        $states = $this->state_city->all();
-        $cities = $this->city->all();
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
@@ -72,9 +67,6 @@ class WorkSearchController extends Controller
             $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
             $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
             $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
-            /*Todos os estados*/
-            $states = $this->state_city->all();
-            $cities = $this->city->all();
             
             $statesOne = $this->state
                 ->where('zone_id', 1)
@@ -534,15 +526,5 @@ class WorkSearchController extends Controller
             ['works' => session($this->worksSessionName)],
             Response::HTTP_OK
         );
-    }
-    
-    /*Pega as cidades pelo id do estsado*/
-    public function getCitiesByState($stateId)
-    {
-        // Aqui você precisa implementar a lógica para buscar as cidades com base no estado
-        // Suponhamos que você tenha um modelo City com um relacionamento para o estado
-        $cities = $this->city->where('uf', $stateId)->get();
-
-        return response()->json(['cities' => $cities]);
     }
 }

@@ -12,7 +12,6 @@ use App\Models\Researcher;
 use App\Models\Segment;
 use App\Models\SegmentSubType;
 use App\Models\Stage;
-use App\Models\User;
 use App\Models\Work;
 use App\Models\WorkFeature;
 use Illuminate\Support\Facades\DB;
@@ -79,18 +78,16 @@ class WorkController extends Controller
     }
     
     /**
-        * Função apra exportar com excel * 12/08/2023 - Renato Machado
-    */
-    
-    public function exportExcel() 
+     * Função apra exportar com excel * 12/08/2023 - Renato Machado
+     */
+    public function exportExcel()
     {
         return view('layouts.work.excel.index');
     }
     
     /**
-        * Função apra exportar com excel * 12/08/2023 - Renato Machado
-    */
-    
+     * Função apra exportar com excel * 12/08/2023 - Renato Machado
+     */
     public function export(Request $request)
     {
         $startDate = convertPtBrDateToEnDate($request->input('startDate'));
@@ -100,7 +97,6 @@ class WorkController extends Controller
 
         return Excel::download($worksExport, 'obras.xlsx');
     }
-
 
     /**
      * Show the form for creating a new resource.

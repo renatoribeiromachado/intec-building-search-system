@@ -388,55 +388,13 @@
                             <div class="col-md-9">
                                 <label class="control-label">
                                     Cidade
-                                    <!-- <code>*Selecione até 4 cidade(s) para busca *</code> -->
                                 </label>
 
-                                <!--IMPORTANTE O id="selected"-->
-                                <select name="city_id" class="form-select cidade" id="selected">
+                                <select id="city_id" name="city_id" class="form-select cidade">
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
-<!--                                    @foreach($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                    @endforeach-->
                                 </select>
-
-                                <div style="display: none;">
-                                    <div class="selected"><!--importante a classe selected-->
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <script>
-                            async function fetchCitiesByState(stateId) {
-                                try {
-                                    const response = await fetch(`/works/getCities/${stateId}`); 
-                                    const data = await response.json();
-                                    return data.cities; 
-                                } catch (error) {
-                                    console.error('Erro ao buscar cidades:', error);
-                                    return [];
-                                }
-                            }
-
-                            const estadoSelect = document.getElementById('estado');
-                            const cidadeSelect = document.getElementById('cidade');
-
-                            async function carregarCidades() {
-                                const selectedStateId = estadoSelect.value;
-                                cidadeSelect.innerHTML = '<option value="0"> -- Selecione primeiro o Estado --</option>';
-
-                                if (selectedStateId !== '') {
-                                    const selectedCities = await fetchCitiesByState(selectedStateId);
-                                    selectedCities.forEach(city => {
-                                        const option = document.createElement('option');
-                                        option.value = city.name;
-                                        option.textContent = city.name;
-                                        cidadeSelect.appendChild(option);
-                                    });
-                                }
-                            }
-
-                            estadoSelect.addEventListener('change', carregarCidades);
-                        </script>
                         
                         {{--
                         <div class="row mt-2">
@@ -646,7 +604,6 @@
 @push('scripts')
 
     <script>
-
         $(document).ready(function () {
             $('#state_id').on('change', function () {
                 let stateId = $(this).val();
@@ -658,20 +615,22 @@
                         state_acronym: stateId
                     },
                     success: function (return_data) {
-                        console.log(return_data);
+                        let options = `<option value="" style="background:#fff;color:#454c54;">
+                            Cidades não encontradas.
+                            </option>`;
 
                         if (return_data.cities.length <= 0) {
-                            $('select[name="city_id"]')
-                                .html('<option value="" style="background:#fff;color:#454c54;"> Cidades não encontradas. </option>');
+                            $('select[name="city_id"]').html(options);
                         } else {
-
-                            var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
+                            options = `<option value="" style="background:#fff;color:#454c54;">
+                                -- Selecione --
+                                </option>`;
                             
                             for (var i = 0; i < return_data.cities.length; i++) {
                                 if (return_data.cities[i] !== "") {
-                                    options += '<option value="' + return_data.cities[i].id
-                                        + '" style="background:#fff;color:#454c54;">'
-                                        + return_data.cities[i].description + '</option>';
+                                    options += `<option value="${return_data.cities[i].id}"
+                                        style="background:#fff;color:#454c54;">
+                                        ${return_data.cities[i].description}</option>`;
                                 }
                             }
                             $('select[name="city_id"]').html(options);
@@ -820,16 +779,6 @@
             });
         });
         @endif
-        
-        const cidadesPorEstado = {
-            acre: ["Rio Branco", "Cruzeiro do Sul", "Sena Madureira"],
-            alagoas: ["Maceió", "Arapiraca", "Marechal Deodoro"],
-            // Mais cidades por estado...
-        };
-
-        function carregarCidades() {
-            
-        }
     </script>
 
 @endpush
