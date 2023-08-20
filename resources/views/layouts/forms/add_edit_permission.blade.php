@@ -5,6 +5,7 @@
     input-type="text"
     input-name="name"
     class-one=""
+    label-class="label-font-bold"
     input-value="{{ $permission->name }}"
     :input-readonly="false"
     placeholder="ex: Ver Módulo"

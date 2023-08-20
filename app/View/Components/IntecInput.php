@@ -11,6 +11,7 @@ class IntecInput extends Component
     public $labelInputId;
     public $inputName;
     public $classOne;
+    public $labelClass;
     public $inputValue;
     public $inputReadonly;
 
@@ -25,6 +26,7 @@ class IntecInput extends Component
         $labelInputId,
         $inputName,
         $classOne,
+        $labelClass,
         $inputValue,
         $inputReadonly
     ) {
@@ -33,6 +35,7 @@ class IntecInput extends Component
         $this->labelInputId = $labelInputId;
         $this->inputName = $inputName;
         $this->classOne = $classOne;
+        $this->labelClass = $labelClass;
         $this->inputValue = $inputValue;
         $this->inputReadonly = $inputReadonly;
     }

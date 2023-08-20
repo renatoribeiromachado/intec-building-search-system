@@ -1,6 +1,6 @@
 <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-<label for="{{ $labelInputId }}">
-    <strong>{{ $labelText }} @if($inputType == 'password')<code>padrão:intec!@#</code>@endif</strong>
+<label class="{{ $labelClass }}" for="{{ $labelInputId }}">
+    {{ $labelText }} @if($inputType == 'password')<code>padrão:intec!@#</code>@endif
 </label>
 <input
     id="{{ $labelInputId }}"

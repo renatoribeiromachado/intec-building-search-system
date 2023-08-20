@@ -373,24 +373,32 @@
                         <!--Estado-->
                         <div class="row mt-2">
                             <div class="col-md-3">
-                                <label class="control-label"> Estado </label>
-                                <select name="state" class="form-select" id="estado">
-                                    <option value="">-- Selecione --</option>
-                                    @foreach($states as $state)
-                                        <option value="{{ $state->uf }}">{{ $state->uf }}</option> 
-                                    @endforeach
-                                </select>
+                                <x-intec-select
+                                    select-name="state_id"
+                                    select-label="Estado"
+                                    select-class="form-select"
+                                    required=""
+                                    placeholder="-- Selecione --"
+                                    :collection="$states"
+                                    value=""
+                                />
                             </div>
                             
                             <!--Cidades-->
                             <div class="col-md-9">
-                                <label class="control-label"> Cidade</label>
-                                <select name="city" class="form-select cidade" id="cidade">
+                                <label class="control-label">
+                                    Cidade
+                                    <!-- <code>*Selecione até 4 cidade(s) para busca *</code> -->
+                                </label>
+
+                                <!--IMPORTANTE O id="selected"-->
+                                <select name="city_id" class="form-select cidade" id="selected">
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
 <!--                                    @foreach($cities as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach-->
                                 </select>
+
                                 <div style="display: none;">
                                     <div class="selected"><!--importante a classe selected-->
                                     </div>
@@ -638,6 +646,41 @@
 @push('scripts')
 
     <script>
+
+        $(document).ready(function () {
+            $('#state_id').on('change', function () {
+                let stateId = $(this).val();
+
+                $.ajax({
+                    url: base_url() + 'v1/state-cities',
+                    method: 'POST',
+                    data: {
+                        state_acronym: stateId
+                    },
+                    success: function (return_data) {
+                        console.log(return_data);
+
+                        if (return_data.cities.length <= 0) {
+                            $('select[name="city_id"]')
+                                .html('<option value="" style="background:#fff;color:#454c54;"> Cidades não encontradas. </option>');
+                        } else {
+
+                            var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
+                            
+                            for (var i = 0; i < return_data.cities.length; i++) {
+                                if (return_data.cities[i] !== "") {
+                                    options += '<option value="' + return_data.cities[i].id
+                                        + '" style="background:#fff;color:#454c54;">'
+                                        + return_data.cities[i].description + '</option>';
+                                }
+                            }
+                            $('select[name="city_id"]').html(options);
+                        }
+                    }
+                })
+            })
+        })
+
         /*PHASE 1*/
         const phase1Checkbox = document.querySelector('.phase1');
         const checkboxesF1 = document.querySelectorAll('.F1');
@@ -778,7 +821,7 @@
         });
         @endif
         
-           const cidadesPorEstado = {
+        const cidadesPorEstado = {
             acre: ["Rio Branco", "Cruzeiro do Sul", "Sena Madureira"],
             alagoas: ["Maceió", "Arapiraca", "Marechal Deodoro"],
             // Mais cidades por estado...
@@ -790,5 +833,4 @@
     </script>
 
 @endpush
-
 

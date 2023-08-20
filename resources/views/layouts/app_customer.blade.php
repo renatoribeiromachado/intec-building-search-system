@@ -102,6 +102,49 @@
                 font-size: 24px;
                 margin-right: 10px;
             }
+            footer {
+                background-color: black;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+            footer p {
+                margin: 10px 0;
+            }
+            .parallax {
+                background-image: url("{{ asset('images/header.png') }}");
+                background-size: cover;
+                background-position: center;
+                height: 140px; /* Defina a altura desejada */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .whatsapp-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: green;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                font-size: 18px;
+                cursor: pointer;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+            }
+
+            .whatsapp-icon {
+                font-size: 24px;
+                margin-right: 10px;
+            }
+            
+            .label-font-bold {
+                font-weight: bold;
+            }
         </style>
 
         @stack('styles')
@@ -152,11 +195,11 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 @can('ver-pesquisa-de-empresas')
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Empresas
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
+                                            Empresas
+                                        </a>
+                                    </li>
                                 @endcan
 
                                 @can('ver-pesquisa-de-obras')

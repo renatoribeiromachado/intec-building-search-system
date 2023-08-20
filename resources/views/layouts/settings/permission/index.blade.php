@@ -15,6 +15,7 @@
                             input-type="text"
                             input-name="search_name"
                             class-one=""
+                            label-class="label-font-bold"
                             input-value="{{ request()->search_name }}"
                             :input-readonly="false"
                             placeholder="ex: Ver Lista de Obras ou apenas Lista de Obras"

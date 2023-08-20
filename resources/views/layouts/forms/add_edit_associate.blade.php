@@ -6,6 +6,7 @@
             input-type="text"
             input-name="old_code"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $associate->old_code }}"
             :input-readonly="false"
             maxlength="14"
@@ -20,6 +21,7 @@
             input-type="text"
             input-name="linked_company"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $associate->linked_company
                 ? $associate->linked_company
                 : '30.252.400/0001-55' }}"
@@ -46,6 +48,7 @@
             input-type="text"
             input-name="phone_one"
             class-one="phone"
+            label-class="label-font-bold"
             input-value="{{ $company->phone_one }}"
             :input-readonly="false"
         />
@@ -58,6 +61,7 @@
             input-type="email"
             input-name="primary_email"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->primary_email }}"
             :input-readonly="false"
         />
@@ -72,6 +76,7 @@
             input-type="text"
             input-name="company_name"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->company_name }}"
             :input-readonly="false"
         />
@@ -84,6 +89,7 @@
             input-type="text"
             input-name="trading_name"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->trading_name }}"
             :input-readonly="false"
         />
@@ -96,6 +102,7 @@
             input-type="text"
             input-name="data_filter_starts_at"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($associate->data_filter_starts_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -108,6 +115,7 @@
             input-type="text"
             input-name="data_filter_ends_at"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($associate->data_filter_ends_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -122,6 +130,7 @@
             input-type="text"
             input-name="cnpj"
             class-one="cnpj"
+            label-class="label-font-bold"
             input-value="{{ $company->cnpj }}"
             :input-readonly="false"
         />
@@ -134,6 +143,7 @@
             input-type="text"
             input-name="state_registration"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->state_registration }}"
             :input-readonly="false"
         />
@@ -172,6 +182,7 @@
             input-type="text"
             input-name="company_date_birth"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $associate->company_date_birth }}"
             :input-readonly="false"
         />
@@ -184,6 +195,7 @@
             input-type="text"
             input-name="home_page"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->home_page }}"
             :input-readonly="false"
         />
@@ -196,6 +208,7 @@
             input-type="text"
             input-name="contract_due_date_start"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($associate->contract_due_date_start)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -222,6 +235,7 @@
             input-type="text"
             input-name="zip_code"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->zip_code }}"
             :input-readonly="false"
         />
@@ -234,6 +248,7 @@
             input-type="text"
             input-name="address"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->address }}"
             :input-readonly="false"
         />
@@ -246,6 +261,7 @@
             input-type="text"
             input-name="number"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->number }}"
             :input-readonly="false"
         />
@@ -258,6 +274,7 @@
             input-type="text"
             input-name="complement"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->complement }}"
             :input-readonly="false"
         />
@@ -272,6 +289,7 @@
             input-type="text"
             input-name="district"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->district }}"
             :input-readonly="false"
         />
@@ -284,6 +302,7 @@
             input-type="text"
             input-name="city"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $company->city }}"
             :input-readonly="false"
         />
@@ -310,6 +329,7 @@
             input-type="text"
             input-name="products_and_services"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $associate->products_and_services }}"
             :input-readonly="false"
         />
@@ -324,6 +344,7 @@
             textarea-type="text"
             textarea-name="notes"
             class-one=""
+            label-class="label-font-bold"
             textarea-value="{{ $company->notes }}"
             :textarea-readonly="false"
             rows="5"

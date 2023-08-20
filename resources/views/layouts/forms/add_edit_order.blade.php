@@ -6,6 +6,7 @@
             input-type="text"
             input-name="old_code"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $order->old_code }}"
             :input-readonly="false"
             maxlength="14"
@@ -19,6 +20,7 @@
             input-type="text"
             input-name="work_notes"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $order->work_notes }}"
             :input-readonly="false"
         />
@@ -57,6 +59,7 @@
             input-type="text"
             input-name="start_at"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($order->start_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -69,6 +72,7 @@
             input-type="text"
             input-name="ends_at"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($order->ends_at)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -83,6 +87,7 @@
             input-type="text"
             input-name="original_price"
             class-one="money"
+            label-class="label-font-bold"
             input-value="{{ convertDecimalToBRL($order->original_price) }}"
             :input-readonly="false"
         />
@@ -94,6 +99,7 @@
             input-type="text"
             input-name="discount"
             class-one="money"
+            label-class="label-font-bold"
             input-value="{{ convertDecimalToBRL($order->discount) }}"
             :input-readonly="false"
         />
@@ -126,6 +132,7 @@
             input-type="text"
             input-name="final_price"
             class-one="money"
+            label-class="label-font-bold"
             input-value="{{ convertDecimalToBRL($order->final_price) }}"
             :input-readonly="true"
         />
@@ -137,6 +144,7 @@
             input-type="text"
             input-name="first_due_date"
             class-one="date"
+            label-class="label-font-bold"
             input-value="{{ optional($order->first_due_date)->format('d/m/Y') }}"
             :input-readonly="false"
         />
@@ -162,6 +170,7 @@
             input-type="text"
             input-name="easy_payment_condition"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $order->easy_payment_condition }}"
             :input-readonly="true"
         />
@@ -176,6 +185,7 @@
             textarea-type="text"
             textarea-name="notes"
             class-one=""
+            label-class="label-font-bold"
             textarea-value="{{ $order->notes }}"
             :textarea-readonly="false"
             rows="10"

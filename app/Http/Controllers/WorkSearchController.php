@@ -15,6 +15,7 @@ use App\Models\WorkFeature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkSearchController extends Controller
@@ -123,6 +124,10 @@ class WorkSearchController extends Controller
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
         }
 
+        $states = $this->state
+            ->select('state_acronym', 'description')
+            ->get()->pluck('description', 'state_acronym');
+
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
@@ -138,6 +143,7 @@ class WorkSearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'states',
         ));
     }
 
@@ -209,7 +215,7 @@ class WorkSearchController extends Controller
         ));
     }
 
-    public function checkAllWorks(Request $request)
+    public function checkAllInputs(Request $request)
     {
         $onlyWorksSelectedIds = $request->work_ids;
         $inputSelectAllWasClicked = (bool) $request->input_select_all_was_clicked;
@@ -268,6 +274,7 @@ class WorkSearchController extends Controller
         $address = $request->address;
         $oldCode = $request->old_code;
         $district = $request->district;
+        $stateAcronym = $request->state_id;
         $state = $request->state;
         $city = $request->city;
         // $initial_zip_code = $request->initial_zip_code;
@@ -312,8 +319,10 @@ class WorkSearchController extends Controller
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         $allWorkIds = null;
-        if ((session()->has($this->worksSessionName) || $request->works_selected) &&
-            ! \Route::is('work.search.step_two.index')) {
+        if (
+            (session()->has($this->worksSessionName) || $request->works_selected)
+            && (! Route::is('work.search.step_two.index'))
+        ) {
             $allWorkIds = session()->has($this->worksSessionName)
                 ? session($this->worksSessionName)
                 : $request->works_selected;
@@ -364,6 +373,11 @@ class WorkSearchController extends Controller
         /*Bairro*/
         if ($district) {
             $works = $works->where('works.district', 'LIKE', '%'.$district.'%');
+        }
+
+        /*State*/
+        if ($stateAcronym) {
+            $works = $works->where('works.state', '=', $stateAcronym);
         }
         
         /*Cidade*/
@@ -470,7 +484,7 @@ class WorkSearchController extends Controller
             );
         }
 
-        if (\Route::is('work.search.step_three.index')) {
+        if (Route::is('work.search.step_three.index')) {
             return $works->get();
         }
 

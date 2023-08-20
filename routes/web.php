@@ -3,7 +3,9 @@
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\AssociateUserController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanySearchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderReportController;
@@ -70,10 +72,22 @@ Route::middleware(['auth'])->group(function () {
         //     $activityFound = $activity->where('description', '=', 'CONSTRUÇÃO CIVIL')->first();
 
         //     return $activityFound;
-
-
-
         // })->name('company.import');
+
+        Route::get(
+            'search/step-1',
+            [CompanySearchController::class, 'showCompanySearchStepOne']
+        )->name('company.search.step_one.index');
+
+        Route::get(
+            'search/step-2',
+            [CompanySearchController::class, 'showWorkSearchStepTwo']
+        )->name('company.search.step_two.index');
+
+        Route::get(
+            'search/step-3',
+            [CompanySearchController::class, 'showWorkSearchStepThree']
+        )->name('company.search.step_three.index');
     });
 
     Route::prefix('stages')->group(function () {
@@ -168,6 +182,7 @@ Route::middleware(['auth'])->group(function () {
             [OrderController::class, 'calculateInstallments']
         )->name('associate.order.calculate_installments');
 
+        // Button Select All Works
         Route::post('check-work',
             [WorkSearchController::class, 'pushWorksSession']
         )->name('work.search.step_two.check_work');
@@ -179,6 +194,24 @@ Route::middleware(['auth'])->group(function () {
         Route::post('check-all-works',
             [WorkSearchController::class, 'checkAllWorks']
         )->name('work.search.step_two.check_all_works');
+
+        // Button Select All Companies
+        Route::post('check-company',
+            [CompanySearchController::class, 'pushCompaniesSession']
+        )->name('company.search.step_two.check_company');
+
+        Route::post('remove-check-company',
+            [CompanySearchController::class, 'removeCompaniesSession']
+        )->name('company.search.step_two.remove_check_company');
+
+        Route::post('check-all-companies',
+            [CompanySearchController::class, 'checkAllCompanies']
+        )->name('work.search.step_two.check_all_companies');
+
+        // State Select
+        Route::post('state-cities',
+            [CityController::class, 'getAllCitiesFromTheState']
+        )->name('work.search.step_one.state_cities');
     });
 
     Route::prefix('roles')->group(function() {

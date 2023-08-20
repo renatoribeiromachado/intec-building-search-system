@@ -11,6 +11,7 @@ class IntecTextarea extends Component
     public $labelTextareaId;
     public $textareaName;
     public $classOne;
+    public $labelClass;
     public $textareaValue;
     public $textareaReadonly;
     public $rows;
@@ -26,6 +27,7 @@ class IntecTextarea extends Component
         $labelTextareaId,
         $textareaName,
         $classOne,
+        $labelClass,
         $textareaValue,
         $textareaReadonly,
         $rows,
@@ -35,6 +37,7 @@ class IntecTextarea extends Component
         $this->labelTextareaId = $labelTextareaId;
         $this->textareaName = $textareaName;
         $this->classOne = $classOne;
+        $this->labelClass = $labelClass;
         $this->textareaValue = $textareaValue;
         $this->textareaReadonly = $textareaReadonly;
         $this->rows = $rows;

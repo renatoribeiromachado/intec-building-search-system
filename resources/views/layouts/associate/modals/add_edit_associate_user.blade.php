@@ -6,6 +6,7 @@
             input-type="text"
             input-name="name"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ optional($contact->user)->name }}"
             :input-readonly="false"
             required
@@ -32,6 +33,7 @@
             input-type="text"
             input-name="ddd"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $contact->ddd }}"
             :input-readonly="false"
             maxlength="3"
@@ -44,6 +46,7 @@
             input-type="text"
             input-name="main_phone"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $contact->main_phone }}"
             :input-readonly="false"
         />
@@ -56,6 +59,7 @@
             input-type="text"
             input-name="ddd_two"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $contact->ddd_two }}"
             :input-readonly="false"
             maxlength="3"
@@ -68,6 +72,7 @@
             input-type="text"
             input-name="phone_two"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ $contact->phone_two }}"
             :input-readonly="false"
         />
@@ -82,6 +87,7 @@
             input-type="email"
             input-name="email"
             class-one=""
+            label-class="label-font-bold"
             input-value="{{ optional($contact->user)->email }}"
             :input-readonly="false"
         />
@@ -94,6 +100,7 @@
             input-type="password"
             input-name="password"
             class-one=""
+            label-class="label-font-bold"
             input-value=""
             :input-readonly="false"
             autocomplete="new-password"
