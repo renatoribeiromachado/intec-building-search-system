@@ -1,7 +1,14 @@
 <!-- Smile, breathe, and go slowly. - Thich Nhat Hanh -->
 <div class="form-group">
     <label for="{{ $selectName }}">
-        <strong>{{ $selectLabel }}</strong>
+        @if(\Route::is('work.search.step_one.index')
+            || \Route::is('company.search.step_one.index'))
+        {{ $selectLabel }}
+        @endif
+        @if(! \Route::is('work.search.step_one.index')
+            && ! \Route::is('company.search.step_one.index'))
+        <strong>{{ $selectLabel }} 2</strong>
+        @endif
         {{-- @if(isset($required) && ($required == true))
         <span class="required-field">*</span>
         @endif --}}

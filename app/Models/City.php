@@ -15,10 +15,16 @@ class City extends Model
     ];
 
     // App methods
-    public function getAllCitiesFromTheState(int $stateId)
+    public function getAllCitiesFromTheState($stateAcronym)
     {
+        $state = (new State)
+            ->select('id', 'state_acronym')
+            ->where('state_acronym', '=', $stateAcronym)
+            ->first();
+
         return self::select("*")
-            ->where('state_id', $stateId)
+            ->select('id', 'description')
+            ->where('state_id', $state->id)
             ->get();
     }
 

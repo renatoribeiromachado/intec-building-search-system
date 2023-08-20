@@ -369,29 +369,39 @@
                             </div>
                         </div>
 
-                        {{--
-                        <!--Estado
                         <div class="row mt-2">
-                            <div class="col-md-2">
-                                <label class="control-label"> Estado *</label>
-                                <select name="state" class="form-select">
-                                    <option value="">Sel</option>
-                                </select>
+                            <div class="col-md-3">
+                                <x-intec-select
+                                    select-name="state_id"
+                                    select-label="Estado"
+                                    select-class="form-select"
+                                    required=""
+                                    placeholder="-- Selecione --"
+                                    :collection="$states"
+                                    value=""
+                                />
                             </div>
                             
                             <!--Cidades-->
-                            <div class="col-md-10">
-                                <label class="control-label"> <code>*Selecione até 4 cidade(s) para busca *</code></label>
-                                <select name="city" class="form-select cidade" id="selected"><!--IMPORTANTE O id="selected"-->
+                            <div class="col-md-9">
+                                <label class="control-label">
+                                    Cidade
+                                    <!-- <code>*Selecione até 4 cidade(s) para busca *</code> -->
+                                </label>
+
+                                <!--IMPORTANTE O id="selected"-->
+                                <select name="city_id" class="form-select cidade" id="selected">
                                     <option value="0"> -- Selecione primeiro o Estado --</option>
                                 </select>
+
                                 <div style="display: none;">
                                     <div class="selected"><!--importante a classe selected-->
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        
+                        {{--
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> CEP Inicial</label>
@@ -599,6 +609,41 @@
 @push('scripts')
 
     <script>
+
+        $(document).ready(function () {
+            $('#state_id').on('change', function () {
+                let stateId = $(this).val();
+
+                $.ajax({
+                    url: base_url() + 'v1/state-cities',
+                    method: 'POST',
+                    data: {
+                        state_acronym: stateId
+                    },
+                    success: function (return_data) {
+                        console.log(return_data);
+
+                        if (return_data.cities.length <= 0) {
+                            $('select[name="city_id"]')
+                                .html('<option value="" style="background:#fff;color:#454c54;"> Cidades não encontradas. </option>');
+                        } else {
+
+                            var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
+                            
+                            for (var i = 0; i < return_data.cities.length; i++) {
+                                if (return_data.cities[i] !== "") {
+                                    options += '<option value="' + return_data.cities[i].id
+                                        + '" style="background:#fff;color:#454c54;">'
+                                        + return_data.cities[i].description + '</option>';
+                                }
+                            }
+                            $('select[name="city_id"]').html(options);
+                        }
+                    }
+                })
+            })
+        })
+
         /*PHASE 1*/
         const phase1Checkbox = document.querySelector('.phase1');
         const checkboxesF1 = document.querySelectorAll('.F1');
@@ -741,5 +786,3 @@
     </script>
 
 @endpush
-
-

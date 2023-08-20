@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends Controller
 {
@@ -21,8 +22,12 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllCitiesFromTheState(Request $request, State $state)
+    public function getAllCitiesFromTheState(Request $request)
     {
-        return $this->city->getAllCitiesFromTheState($state->id);
+        $cities = $this->city->getAllCitiesFromTheState($request->state_acronym);
+        
+        return response()->json([
+            'cities' => $cities
+        ], Response::HTTP_OK);
     }
 }

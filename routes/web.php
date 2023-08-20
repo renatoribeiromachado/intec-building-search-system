@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityFieldController;
 use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\AssociateUserController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanySearchController;
 use App\Http\Controllers\DashboardController;
@@ -202,6 +203,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('check-all-companies',
             [CompanySearchController::class, 'checkAllCompanies']
         )->name('work.search.step_two.check_all_companies');
+
+        // State Select
+        Route::post('state-cities',
+            [CityController::class, 'getAllCitiesFromTheState']
+        )->name('work.search.step_one.state_cities');
     });
 
     Route::prefix('roles')->group(function() {

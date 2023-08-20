@@ -91,7 +91,7 @@
                         <strong>{{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}</strong> -
                         @endif
                     Revisão: <strong>{{ $work->revision }}</strong> -
-                    Emitido em: <strong>{{ date('d/m/Y h:i:s') }}</strong>
+                    Emitido em: <strong>{{ date('d/m/Y') }}</strong>
                 </p>
             </div>
         </div>

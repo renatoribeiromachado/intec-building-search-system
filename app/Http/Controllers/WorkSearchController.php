@@ -111,6 +111,10 @@ class WorkSearchController extends Controller
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
         }
 
+        $states = $this->state
+            ->select('state_acronym', 'description')
+            ->get()->pluck('description', 'state_acronym');
+
         return view('layouts.work.search.step_one.index', compact(
             'stagesOne',
             'stagesTwo',
@@ -124,6 +128,7 @@ class WorkSearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'states',
         ));
     }
 
@@ -176,10 +181,8 @@ class WorkSearchController extends Controller
         ));
     }
 
-    public function showWorkSearchStepThree(
-        $companyIds,
-        Request $request
-    ) {
+    public function showWorkSearchStepThree(Request $request)
+    {
         $this->authorize('ver-pesquisa-de-obras');
         
         $works = $this->getFilteredWorks($request);
@@ -252,6 +255,7 @@ class WorkSearchController extends Controller
         $address = $request->address;
         $oldCode = $request->old_code;
         $district = $request->district;
+        $stateAcronym = $request->state_id;
         // $initial_zip_code = $request->initial_zip_code;
         // $final_zip_code = $request->final_zip_code;
         // $notes = $request->notes;
@@ -348,6 +352,11 @@ class WorkSearchController extends Controller
         /*Bairro*/
         if ($district) {
             $works = $works->where('works.district', 'LIKE', '%'.$district.'%');
+        }
+
+        /*State*/
+        if ($stateAcronym) {
+            $works = $works->where('works.state', '=', $stateAcronym);
         }
         
         // /*CEP*/
