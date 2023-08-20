@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             WorkFeatureSeeder::class,
             ZoneSeeder::class,
             StateSeeder::class,
-            PlanSeeder::class
+            PlanSeeder::class,
+            CitySeeder::class
         ]);
     }
 }
