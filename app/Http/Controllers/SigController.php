@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Associate;
 use Illuminate\Http\Request;
 use App\Models\Sig;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SigController extends Controller
 {
@@ -70,17 +72,31 @@ class SigController extends Controller
             die('Registro de SIG não permitido para usuários não associados.');
         }
 
-        $sig = $this->sig;
-        $sig->user_id = $authUser->id;
-        $sig->work_id = $request->work_id;
-        $sig->associate_id = $authUser->contact->company->associate->id;
-        $sig->appointment_date = $request->appointment_date;
-        $sig->priority = $request->priority;
-        $sig->status = $request->status;
-        $sig->notes = $request->notes;
-        $sig->created_by = auth()->guard('web')->user()->id;
-        $sig->updated_by = auth()->guard('web')->user()->id;
-        $sig->save();
+        try {
+            DB::beginTransaction();
+
+            $sig = $this->sig;
+            $sig->user_id = $authUser->id;
+            $sig->work_id = $request->work_id;
+            $sig->associate_id = $authUser->contact->company->associate->id;
+            $sig->appointment_date = convertPtBrDateToEnDate($request->appointment_date);
+            $sig->priority = $request->priority;
+            $sig->status = $request->status;
+            $sig->notes = $request->notes;
+            $sig->created_by = auth()->guard('web')->user()->id;
+            $sig->updated_by = auth()->guard('web')->user()->id;
+            $sig->save();
+
+            DB::commit();
+
+        } catch (Exception $ex) {
+
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['error' => $ex->getMessage()]);
+        }
 
         session()->flash('success', 'Registro de SIG criado com sucesso.');
 
@@ -148,42 +164,6 @@ class SigController extends Controller
         return view('layouts.sig_works.report.index', [
             'reports' => $reports,
         ]);
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Work  $work
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-       
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateWorkRequest  $request
-     * @param  \App\Models\Work  $work
-     * @return \Illuminate\Http\Response
-     */
-    public function update()
-    {
-        // return redirect()->route();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Work  $work
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request)
-    {
-        
-        // return redirect()->route('');
     }
 
     private function userIsAssociate()

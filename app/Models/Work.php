@@ -162,4 +162,9 @@ class Work extends Model
     {
         return $this->belongsToMany(Researcher::class);
     }
+
+    public function sigs()
+    {
+        return $this->hasMany(Sig::class);
+    }
 }

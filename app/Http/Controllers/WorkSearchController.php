@@ -125,7 +125,6 @@ class WorkSearchController extends Controller
             'stagesTwo',
             'stagesThree',
             'states',
-            'cities',
             'statesOne',
             'statesOne',
             'statesTwo',
@@ -176,6 +175,13 @@ class WorkSearchController extends Controller
         if (! is_null(request()->stages)) {
             request()->session()->put($this->stagesSessionName, request()->stages);
             $stagesChecked = session($this->stagesSessionName);
+        }
+
+        $work2 = null;
+        foreach($works as $work) {
+            $work2 = $this->work->findOrFail($work->id);
+            $lastSig = optional($work2->sigs())->get()->last()->status;
+            $work->last_sig_status = $lastSig;
         }
 
         return view('layouts.work.search.step_two.index', compact(
@@ -267,7 +273,6 @@ class WorkSearchController extends Controller
         $oldCode = $request->old_code;
         $district = $request->district;
         $stateAcronym = $request->state_id;
-        $state = $request->state;
         $city = $request->city;
         // $initial_zip_code = $request->initial_zip_code;
         // $final_zip_code = $request->final_zip_code;
@@ -370,11 +375,6 @@ class WorkSearchController extends Controller
         /*State*/
         if ($stateAcronym) {
             $works = $works->where('works.state', '=', $stateAcronym);
-        }
-        
-        /*Cidade*/
-        if ($state) {
-            $works = $works->where('works.state', 'LIKE', '%'.$state.'%');
         }
         
         /*Cidade*/

@@ -194,7 +194,7 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
-                    <td></td>
+                    <td>{{ $work->last_sig_status }}</td>
                     <td>
                         <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
                             <i class="fa fa-check"></i>
