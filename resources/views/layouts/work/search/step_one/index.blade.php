@@ -386,7 +386,7 @@
                             
                             <!--Cidades-->
                             <div class="col-md-9">
-                                <label class="control-label">
+                                <label for="city_id" class="control-label">
                                     Cidade
                                 </label>
 
@@ -464,7 +464,7 @@
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label"> Bairro</label>
+                                <label class="control-label">Bairro</label>
                                 <input type="text" name="district" class="form-control"  id="district" value="" />
                             </div>
                         </div>

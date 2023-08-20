@@ -106,6 +106,10 @@ class CompanySearchController extends Controller
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
         }
 
+        $states = $this->state
+            ->select('state_acronym', 'description')
+            ->get()->pluck('description', 'state_acronym');
+
         return view('layouts.company.search.step_one.index', compact(
             'activityFields',
             'statesOne',
@@ -116,6 +120,7 @@ class CompanySearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'states'
         ));
     }
 
@@ -209,6 +214,7 @@ class CompanySearchController extends Controller
         $companyName = $request->company_name;
         $address = $request->address;
         $district = $request->district;
+        $stateAcronym = $request->state_id;
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
@@ -276,6 +282,10 @@ class CompanySearchController extends Controller
 
         if ($homePage) {
             $companies = $companies->where('companies.home_page', 'LIKE', '%'.$homePage.'%');
+        }
+
+        if ($stateAcronym) {
+            $companies = $companies->where('companies.state', '=', $stateAcronym);
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);
