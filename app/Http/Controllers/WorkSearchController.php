@@ -148,6 +148,7 @@ class WorkSearchController extends Controller
         $btnExistsInSession = session()->has('btnSelectAll');
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
+        $loggedUser = Auth::user();
 
         $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
             ? session('btnSelectAll')['clicked_in_page']
@@ -180,7 +181,9 @@ class WorkSearchController extends Controller
         $work2 = null;
         foreach($works as $work) {
             $work2 = $this->work->findOrFail($work->id);
-            $lastSig = optional($work2->sigs())->get()->last()->status;
+            $lastSig = optional($work2->sigs())
+                ->where('user_id', '=', $loggedUser->id)
+                ->get()->last()->status;
             $work->last_sig_status = $lastSig;
         }
 
