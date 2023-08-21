@@ -24,7 +24,6 @@ class WorkSearchController extends Controller
     protected $stage;
     protected $work;
     protected $state;
-    protected $state_city;
     protected $city;
     protected $segmentSubType;
     protected $workFeature;
@@ -186,10 +185,10 @@ class WorkSearchController extends Controller
         $work2 = null;
         foreach($works as $work) {
             $work2 = $this->work->findOrFail($work->id);
-            $lastSig = optional($work2->sigs())
+            $lastSigStatus = optional($work2->sigs()
                 ->where('user_id', '=', $loggedUser->id)
-                ->get()->last()->status;
-            $work->last_sig_status = $lastSig;
+                ->get()->last())->status;
+            $work->last_sig_status = $lastSigStatus;
         }
 
         return view('layouts.work.search.step_two.index', compact(
@@ -281,7 +280,7 @@ class WorkSearchController extends Controller
         $oldCode = $request->old_code;
         $district = $request->district;
         $stateAcronym = $request->state_id;
-        $city = $request->city;
+        $cityId = $request->city_id;
         // $initial_zip_code = $request->initial_zip_code;
         // $final_zip_code = $request->final_zip_code;
         // $notes = $request->notes;
@@ -385,9 +384,10 @@ class WorkSearchController extends Controller
             $works = $works->where('works.state', '=', $stateAcronym);
         }
         
-        /*Cidade*/
-        if ($city) {
-            $works = $works->where('works.city', 'LIKE', '%'.$city.'%');
+        /*City*/
+        if ($cityId) {
+            $city = $this->city->findOrFail($cityId);
+            $works = $works->where('works.city', 'LIKE', '%'.$city->description.'%');
         }
         
         // /*CEP*/

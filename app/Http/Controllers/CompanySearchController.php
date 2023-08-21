@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityField;
 use App\Models\Associate;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\SegmentSubType;
 use App\Models\State;
@@ -25,17 +26,20 @@ class CompanySearchController extends Controller
     protected $statesSessionName = 'states_checkboxes';
     protected $activityFieldsSessionName = 'activity_fields_checkboxes';
     protected $state;
+    protected $city;
     protected $segmentSubType;
 
     public function __construct(
         ActivityField $activityField,
         Company $company,
         State $state,
+        City $city,
         SegmentSubType $segmentSubType
     ) {
         $this->activityField = $activityField;
         $this->company = $company;
         $this->state = $state;
+        $this->city = $city;
         $this->segmentSubType = $segmentSubType;
     }
 
@@ -220,6 +224,7 @@ class CompanySearchController extends Controller
         $address = $request->address;
         $district = $request->district;
         $stateAcronym = $request->state_id;
+        $cityId = $request->city_id;
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
@@ -291,6 +296,11 @@ class CompanySearchController extends Controller
 
         if ($stateAcronym) {
             $companies = $companies->where('companies.state', '=', $stateAcronym);
+        }
+
+        if ($cityId) {
+            $city = $this->city->findOrFail($cityId);
+            $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);
