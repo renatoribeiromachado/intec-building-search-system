@@ -91,6 +91,11 @@ class CompanySearchController extends Controller
                 ->where('segment_id', 3)
                 ->whereIn('id', $segmentSubTypesVisible)
                 ->get();
+
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->whereIn('id', $statesVisible)
+                ->get()->pluck('description', 'state_acronym');
         }
 
         if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
@@ -104,11 +109,11 @@ class CompanySearchController extends Controller
             $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
             $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
-        }
 
-        $states = $this->state
-            ->select('state_acronym', 'description')
-            ->get()->pluck('description', 'state_acronym');
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->get()->pluck('description', 'state_acronym');
+        }
 
         return view('layouts.company.search.step_one.index', compact(
             'activityFields',
