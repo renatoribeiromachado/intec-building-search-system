@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Associate;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 if (! function_exists('convertPtBrDateToEnDate')) {
     function convertPtBrDateToEnDate($date)
@@ -63,6 +65,19 @@ if (! function_exists('applyDiscount')) {
 
         $result = round($value - $discountValue, 2);
         return number_format($result, 2, ',', '.');
+    }
+}
+
+if (! function_exists('authUserIsAnAssociate')) {
+
+    function authUserIsAnAssociate()
+    {
+        return in_array(
+            Auth::user()->role->slug, [
+                Associate::ASSOCIATE_MANAGER,
+                Associate::ASSOCIATE_USER
+            ]
+        );
     }
 }
 

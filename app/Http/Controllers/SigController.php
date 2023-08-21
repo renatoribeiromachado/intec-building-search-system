@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Associate;
 use Illuminate\Http\Request;
 use App\Models\Sig;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,11 +13,14 @@ use Illuminate\Support\Facades\DB;
 class SigController extends Controller
 {
     protected $sig;
+    protected $user;
 
     public function __construct(
-        Sig $sig
+        Sig $sig,
+        User $user
     ) {
         $this->sig = $sig;
+        $this->user = $user;
     }
 
     /**
@@ -31,7 +35,11 @@ class SigController extends Controller
         $authUser = Auth::user();
         $associates = [];
 
-        if ($this->userIsAssociate()) {
+        if (! authUserIsAnAssociate()) {
+            $associates = $this->user->where('id', $authUser->id)->get();
+        }
+
+        if (authUserIsAnAssociate()) {
             $associates = $authUser->contact->company->contacts();
 
             if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER) {
@@ -65,12 +73,6 @@ class SigController extends Controller
     public function store(Request $request)
     {
         $authUser = Auth::user();
-        $theUserCanRegistrySig = $this->userIsAssociate();
-
-        if (! $theUserCanRegistrySig) {
-            echo "<br><a href='javascript:void(0);' onclick='history.back()'>Voltar</a><br><br>";
-            die('Registro de SIG não permitido para usuários não associados.');
-        }
 
         try {
             DB::beginTransaction();
@@ -78,7 +80,9 @@ class SigController extends Controller
             $sig = $this->sig;
             $sig->user_id = $authUser->id;
             $sig->work_id = $request->work_id;
-            $sig->associate_id = $authUser->contact->company->associate->id;
+            $sig->associate_id = (authUserIsAnAssociate())
+                ? $authUser->contact->company->associate->id
+                : null;
             $sig->appointment_date = convertPtBrDateToEnDate($request->appointment_date);
             $sig->priority = $request->priority;
             $sig->status = $request->status;
@@ -117,7 +121,10 @@ class SigController extends Controller
             'created_at', 'priority', 'status'
         );
 
-        if ($authUser->role->slug == Associate::ASSOCIATE_USER) {
+        if (
+            $authUser->role->slug == Associate::ASSOCIATE_USER
+            || (! authUserIsAnAssociate())
+        ) {
             $query = $query->where('user_id', $authUser->id);
         }
 
@@ -164,15 +171,5 @@ class SigController extends Controller
         return view('layouts.sig_works.report.index', [
             'reports' => $reports,
         ]);
-    }
-
-    private function userIsAssociate()
-    {
-        return in_array(
-            Auth::user()->role->slug, [
-                Associate::ASSOCIATE_MANAGER,
-                Associate::ASSOCIATE_USER
-            ]
-        );
     }
 }

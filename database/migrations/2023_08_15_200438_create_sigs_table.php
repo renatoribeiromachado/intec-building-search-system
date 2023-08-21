@@ -16,7 +16,7 @@ class CreateSigsTable extends Migration
         Schema::create('sigs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('associate_id');
+            $table->foreignId('associate_id')->nullable();
             $table->foreignId('work_id');
             $table->timestamp('appointment_date')->nullable();
             $table->string('priority', 50)->nullable();

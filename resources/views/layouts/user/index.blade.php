@@ -75,7 +75,7 @@
                             @if((bool) $user->is_active)
                                 Ativo
                             @else
-                                Inativo
+                                <span class="text-danger">Inativo</span>
                             @endif
                         </td>
                         <td style="width:15%;">

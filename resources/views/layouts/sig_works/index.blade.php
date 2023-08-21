@@ -32,7 +32,13 @@
                                 <option value="">--Selecione--</option>
                                 @endif
 
+                                @if (authUserIsAnAssociate())
                                 <option value="{{ $contact->user->id }}">{{ $contact->user->name }}</option>
+                                @endif
+
+                                @if (! authUserIsAnAssociate())
+                                <option value="{{ $contact->id }}">{{ $contact->name }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

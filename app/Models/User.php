@@ -63,12 +63,6 @@ class User extends Authenticatable
             ->paginate(50);
     }
 
-    // Scopes
-    // public static function scopeUserIs($query, $role)
-    // {
-    //     return $query->where('name', $role);
-    // }
-
     // Eloquent relationship methods
     public function role()
     {
