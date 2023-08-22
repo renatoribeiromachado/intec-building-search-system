@@ -374,47 +374,53 @@
                 })
             })
         })
+        
+// Função para atualizar os checkboxes das regiões
+function updateRegiaoCheckboxes(regiaoCheckboxes, isChecked) {
+    regiaoCheckboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+    });
+}
 
-        /*REGIÃO NORDESTE*/
-        const nordesteCheckbox = document.querySelector('.nordeste');
-        const checkboxesNord = document.querySelectorAll('.checkNordeste');
-        nordesteCheckbox.addEventListener('click', function() {
-            const isChecked = nordesteCheckbox.checked;
-            checkboxesNord.forEach(checkbox => {
+@if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
+            $statesFour->count() + $statesFive->count()) > 0)
+        /*REGIÃO GERAL*/
+        const geralCheckbox = document.querySelector('.regiaoGeral');
+        const checkboxesGeral = document.querySelectorAll('.checkRegiaoGeral');
+        geralCheckbox.addEventListener('click', function() {
+            const isChecked = geralCheckbox.checked;
+            checkboxesGeral.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
-        /*REGIÃO SULDESTE*/
-        const sudesteCheckbox = document.querySelector('.sudeste');
-        const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
-        sudesteCheckbox.addEventListener('click', function() {
-            const isChecked = sudesteCheckbox.checked;
-            checkboxesSudeste.forEach(checkbox => {
-                checkbox.checked = isChecked;
-            });
-        });
-
-        /*REGIÃO SUL*/
-        const sulCheckbox = document.querySelector('.sul');
-        const checkboxesSul = document.querySelectorAll('.checkSul');
-        sulCheckbox.addEventListener('click', function() {
-            const isChecked = sulCheckbox.checked;
-            checkboxesSul.forEach(checkbox => {
-                checkbox.checked = isChecked;
-            });
-        });
-
+        @if ($statesOne->count() > 0)
         /*REGIÃO NORTE*/
         const norteCheckbox = document.querySelector('.norte');
         const checkboxesNor = document.querySelectorAll('.checkNorte');
         norteCheckbox.addEventListener('click', function() {
+            console.log('asdfasdfasdfa !!!!!')
             const isChecked = norteCheckbox.checked;
             checkboxesNor.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });
+        @endif
 
+        @if ($statesTwo->count() > 0)
+        /*REGIÃO NORDESTE*/
+        const nordesteCheckbox = document.querySelector('.nordeste');
+        const checkboxesNordeste = document.querySelectorAll('.checkNordeste');
+        nordesteCheckbox.addEventListener('click', function() {
+            const isChecked = nordesteCheckbox.checked;
+            checkboxesNordeste.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+        @endif
+
+        @if ($statesThree->count() > 0)
         /*REGIÃO CENTRO-OESTE*/
         const centroCheckbox = document.querySelector('.centro-oeste');
         const checkboxesCen = document.querySelectorAll('.checkCentroOeste');
@@ -424,6 +430,31 @@
                 checkbox.checked = isChecked;
             });
         });
+        @endif
+
+        @if ($statesFour->count() > 0)
+        /*REGIÃO SULDESTE*/
+        const sudesteCheckbox = document.querySelector('.sudeste');
+        const checkboxesSudeste = document.querySelectorAll('.checkSudeste');
+        sudesteCheckbox.addEventListener('click', function() {
+            const isChecked = sudesteCheckbox.checked;
+            checkboxesSudeste.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+        @endif
+
+        @if ($statesFive->count() > 0)
+        /*REGIÃO SUL*/
+        const sulCheckbox = document.querySelector('.sul');
+        const checkboxesSul = document.querySelectorAll('.checkSul');
+        sulCheckbox.addEventListener('click', function() {
+            const isChecked = sulCheckbox.checked;
+            checkboxesSul.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+        @endif
     </script>
 
 @endpush

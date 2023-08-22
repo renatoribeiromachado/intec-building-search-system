@@ -108,6 +108,7 @@
                     <tr>
                         <td style="width:78% !important;">
                             <strong>Razão Social:</strong>  {{ $company->company_name }}<br>
+                            <strong>Fantasia:</strong>  {{ $company->trading_name }}<br>
 
                             <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }}<br>
 
@@ -143,12 +144,12 @@
                             <td class="pt-2">
                                 <strong>Contato:</strong> ({{ $contact->name }})<br>
                                 <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
-                                <strong>Telefone 2:</strong> ({{ $contact->ddd }}) {{ $contact->phone_two }}<br>
+                                <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
                             </td>
                             <td class="pb-2">
-                                <strong>Telefone 3:</strong> ({{ $contact->ddd }}) {{ $contact->phone_three }}<br>
-                                <strong>Telefone 4:</strong> ({{ $contact->ddd }}) {{ $contact->phone_four }}<br>
-                                <strong>E-mail:</strong> {{ $contact->secondary_email }}<br>
+                                <strong>Telefone 3:</strong> ({{ $contact->ddd_three }}) {{ $contact->phone_three }}<br>
+                                <strong>Telefone 4:</strong> ({{ $contact->ddd_four }}) {{ $contact->phone_four }}<br>
+                                <strong>E-mail:</strong> <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a><br>
                             </td>
                         </tr>
                     @endforeach
