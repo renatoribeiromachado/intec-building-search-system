@@ -25,7 +25,6 @@ class StoreWorkSelected extends FormRequest
     {
         return [
             'emailDestination' => 'required',
-            'selectedWorks' => 'required',
         ];
     }          
    

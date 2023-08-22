@@ -21,13 +21,18 @@ class CronController extends Controller {
     
      public function cron() {
         // Buscar informações do banco de dados
-        $sql = "SELECT code,
-                appointment_date,
-                user_email,
-                priority,
-                status,
-                note  
-                FROM sigs
+        $sql = "SELECT 
+                s.appointment_date,
+                s.priority,
+                s.status,
+                s.notes,
+                u.email,
+                w.old_code
+                FROM sigs as s
+                INNER JOIN users as u
+                ON u.id = s.user_id
+                INNER JOIN works as w
+                ON w.id = s.work_id
                 WHERE DATE(appointment_date) = CURDATE()";
         $results = \DB::select($sql);
 
@@ -37,12 +42,13 @@ class CronController extends Controller {
                 'title' => 'INTEC BRASIL',
                 'body' => 'Você tem um agendamento de SIG',
                 'appointment_date' => $result->appointment_date,
+                'old_code' => $result->old_code,
                 'priority' => $result->priority,
                 'status' => $result->status,
-                'note' => $result->note
+                'notes' => $result->notes
             ];
 
-            Mail::to($result->user_email)->send(new SendEmail($mailData));
+            Mail::to($result->email)->send(new SendEmail($mailData));
         }
 
         dd("Emails enviados com sucesso.");

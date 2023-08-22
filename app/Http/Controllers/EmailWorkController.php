@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendSelectedWorksEmail;
 use App\Http\Requests\StoreWorkSelected;
@@ -16,14 +16,15 @@ class EmailWorkController extends Controller
         $data = [
             'senderName' => $request->input('senderName'),
             'senderEmail' => $request->input('senderEmail'),
-            'selectedWorks' => $request->input('selectedWorks'),
+            'link' => $request->input('link'),
+            'notes' => $request->input('notes'),
         ];
 
         foreach ($emailsArray as $email) {
             Mail::to(trim($email))->send(new SendSelectedWorksEmail($data)); 
         }
 
-        return redirect()->back()->with('success', 'Obras selecionada(s) enviada(s) com sucesso!');
+        return redirect()->back()->with('success', 'Link de obra(s) selecionada(s) enviada(s) com sucesso!');
     }
 }
 

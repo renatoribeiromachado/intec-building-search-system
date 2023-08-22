@@ -79,7 +79,168 @@
 </style>
 
 <div class="container pt-5">
+    @include('layouts.alerts.success')
+    <div class="row mt-2">
+        <div class="col-md-2">
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
+        </div>
+    </div>
     
+    <!--ENVIAR LINK DE OBRAS POR EMAIL-->
+    <div class="modal fade" id="sendEmail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enviar link de obra(s) por e-mail</h4>
+                </div>
+                <div class="modal-body">
+   
+                    <form id="emailForm" action="{{ route('send.email-obra') }}" method="post">
+                        @csrf
+                        <!-- Link de obras selecionadas-->
+                        <input type="hidden" name="link" class="form-control" value="" id="link" readonly="">
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-10">
+                                <label class="control-label"><i class="glyphicon glyphicon-user"></i> Usuário</label>
+                                <input type="text" name="senderName" class="form-control" id="senderName" value="{{ auth()->user()->name }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> E-mail</label>
+                                <input type="email" name="senderEmail" class="form-control" id="senderEmail" value="{{ auth()->user()->email }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Lista de E-Mail's (separar cada-mail por vírgula) <code>* Obrigatório</code></label>
+                                <input type="text" name="emailDestination" id="emailDestination" class="form-control" value="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Observação</label>
+                                <textarea name="notes" class="form-control" rows="5" ></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-primary btnSendEmail" id="btnSendEmail" value="Enviar" />
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        /*Enviar obras por email 17/08/2023 - Renato Machado*/
+//        const checkboxes = document.querySelectorAll('.work-checkbox');
+//        const selectedWorksTextarea = document.getElementById('selectedWorks');
+//        const toggleButton = document.getElementById('toggleButton');
+//        const emailForm = document.getElementById('emailForm');
+//        const searchButton = document.querySelector('.btn-success.submit');
+//        searchButton.addEventListener('click', function() {
+//            localStorage.removeItem('selectedWorkCodes');
+//        });
+//
+//        let selectedWorkCodes = JSON.parse(localStorage.getItem('selectedWorkCodes')) || [];
+//
+//        checkboxes.forEach(checkbox => {
+//            const workCode = checkbox.getAttribute('data-work-code');
+//            checkbox.checked = selectedWorkCodes.includes(workCode);
+//
+//            checkbox.addEventListener('change', function () {
+//                if (checkbox.checked && !selectedWorkCodes.includes(workCode)) {
+//                    selectedWorkCodes.push(workCode);
+//                } else if (!checkbox.checked && selectedWorkCodes.includes(workCode)) {
+//                    const index = selectedWorkCodes.indexOf(workCode);
+//                    selectedWorkCodes.splice(index, 1);
+//                }
+//
+//                localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
+//                updateSelectedWorksTextarea();
+//            });
+//        });
+//
+//        function updateSelectedWorksTextarea() {
+//            selectedWorksTextarea.value = selectedWorkCodes.join(', ');
+//        }
+//
+//        updateSelectedWorksTextarea();
+//
+//        toggleButton.addEventListener('click', function () {
+//            const toggleState = toggleButton.getAttribute('data-toggle-state');
+//            selectedWorkCodes = [];
+//
+//            checkboxes.forEach(checkbox => {
+//                checkbox.checked = toggleState === 'select';
+//                if (toggleState === 'select') {
+//                    const workCode = checkbox.getAttribute('data-work-code');
+//                    selectedWorkCodes.push(workCode);
+//                }
+//            });
+//
+//            localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
+//            updateSelectedWorksTextarea();
+//
+//            toggleButton.setAttribute('data-toggle-state', toggleState === 'select' ? 'deselect' : 'select');
+//        });
+//
+//        emailForm.addEventListener('submit', function () {
+//            const emailData = {
+//                selectedWorks: selectedWorkCodes,
+//            };
+//
+//            console.log('Dados enviados por e-mail:', emailData);
+//
+//            setTimeout(function () {
+//                selectedWorksTextarea.value = '';
+//                checkboxes.forEach(checkbox => {
+//                    checkbox.checked = false;
+//                });
+//                localStorage.removeItem('selectedWorkCodes');
+//            }, 0);
+//        });
+//
+//        function updateCheckboxes() {
+//            checkboxes.forEach(checkbox => {
+//                const workCode = checkbox.getAttribute('data-work-code');
+//                checkbox.checked = selectedWorkCodes.includes(workCode);
+//            });
+//        }
+//        
+//        /*SIG 17/08/2023 - Renato Machado*/
+//        document.addEventListener('DOMContentLoaded', function () {
+//            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+//            const modalCode = document.getElementById('modal-code');
+//            const modalWorkIdInput = document.getElementById('modal-work-id-input');
+//
+//            sigLinks.forEach(link => {
+//                link.addEventListener('click', function (event) {
+//                    event.preventDefault();
+//                    const workId = this.getAttribute('data-work-id');
+//                    const workOldCode = this.getAttribute('data-code');
+//                    modalCode.textContent = workOldCode;
+//                    modalWorkIdInput.value = workId;
+//                });
+//            });
+//        });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+        // Obtém a URL da página atual
+        var currentUrl = window.location.href;
+
+        // Preenche o campo com a URL da página atual
+        var link = document.getElementById("link");
+        if (link) {
+            link.value = currentUrl;
+        }
+    });
+        </script>
+
     @forelse ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
@@ -92,6 +253,7 @@
                         @endif
                     Revisão: <strong>{{ $work->revision }}</strong> -
                     Emitido em: <strong>{{ date('d/m/Y') }}</strong>
+                    
                 </p>
             </div>
         </div>

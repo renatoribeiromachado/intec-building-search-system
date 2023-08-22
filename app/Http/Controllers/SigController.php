@@ -147,13 +147,14 @@ class SigController extends Controller
         if ($status) {
             $query->where('status', $status);
         }
-
+        
+        /*Data de agendamento*/
         $appointmentDate = $request->appointment_date;
         if ($appointmentDate) {
-            $appointmentDateUTC = \Carbon\Carbon::parse($appointmentDate);
+            $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
             $query->where('appointment_date', $appointmentDateUTC);
         }
-
+        
        $reporters = $request->reporters;
        if ($reporters) {
            $query->whereIn('sigs.user_id', $reporters);

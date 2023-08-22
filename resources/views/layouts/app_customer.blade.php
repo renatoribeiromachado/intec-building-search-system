@@ -226,17 +226,15 @@
                                 >
                                 <i class="fa fa-archive"></i> RELATÓRIO
                             </a>
-
+                            
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="{{ route('sig_works.index') }}"
-                                        >
-                                        SIG / Obras
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Estamos em atualização
                                     </a>
                                 </li>
                             </ul>
+                            
                         </li>
 
                         <li class="nav-item dropdown">
@@ -251,9 +249,12 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Estamos em atualização
+                                 <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="{{ route('sig_works.index') }}"
+                                        >
+                                        SIG / Obras
                                     </a>
                                 </li>
                             </ul>
