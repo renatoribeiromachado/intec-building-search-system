@@ -21,4 +21,5 @@ yarn-error.log
 #### CUSTOM RULES
 /docs/*
 /public/.htaccess
-
+/public/.user.ini
+/public/php.ini

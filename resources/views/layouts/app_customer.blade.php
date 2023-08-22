@@ -183,178 +183,181 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav">
                         @can('ver-pesquisas')
-                        <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="dropdown07XL"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                <i class="fa fa-search"></i> PESQUISAS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                @can('ver-pesquisa-de-empresas')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-search"></i> PESQUISAS
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    @can('ver-pesquisa-de-empresas')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
+                                                Empresas
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('ver-pesquisa-de-obras')
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
-                                            Empresas
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('work.search.step_one.index') }}"
+                                            >
+                                            Obras
                                         </a>
                                     </li>
-                                @endcan
-
-                                @can('ver-pesquisa-de-obras')
-                                <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="{{ route('work.search.step_one.index') }}"
-                                        >
-                                        Obras
-                                    </a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
                         @endcan
 
-                        <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="dropdown07XL"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                <i class="fa fa-archive"></i> RELATÓRIO
-                            </a>
-                            
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Estamos em atualização
-                                    </a>
-                                </li>
-                            </ul>
-                            
-                        </li>
+                        @can('ver-relatorio')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-archive"></i> RELATÓRIO
+                                </a>
+                                
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Estamos em atualização
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="dropdown07XL"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                <i class="fa fa-calendar"></i> SIG
-                            </a>
+                        @can('ver-sig')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-calendar"></i> SIG
+                                </a>
 
-                            <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="{{ route('sig_works.index') }}"
-                                        >
-                                        SIG / Obras
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('sig_works.index') }}"
+                                            >
+                                            SIG / Obras
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
 
                         @can('ver-administrativo')
-                        <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="administrative"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                <i class="fa fa-check"></i> ADMINISTRATIVO
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="administrative">
-                                {{-- @can('ver-configuracoes') --}}
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('associate.index') }}">
-                                        Associados
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
-                                        Exportar Excel
-                                    </a>
-                                </li>
-                                {{-- @endcan --}}
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="administrative"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-check"></i> ADMINISTRATIVO
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="administrative">
+                                    {{-- @can('ver-configuracoes') --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('associate.index') }}">
+                                            Associados
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
+                                            Exportar Excel
+                                        </a>
+                                    </li>
+                                    {{-- @endcan --}}
 
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('activity_field.index') }}">
-                                        Atividades de Empresas
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('company.index') }}">Empresas</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('activity_field.index') }}">
+                                            Atividades de Empresas
+                                        </a>
+                                    </li>
 
-                                @can('ver-usuario')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('user.index') }}">
-                                        Usuários
-                                    </a>
-                                </li>
-                                @endcan
+                                    @can('ver-usuario')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('user.index') }}">
+                                            Usuários
+                                        </a>
+                                    </li>
+                                    @endcan
 
-                                @can('ver-funcao-administrativa')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('role.index') }}">
-                                        Perfis de Usuários
-                                    </a>
-                                </li>
-                                @endcan
+                                    @can('ver-funcao-administrativa')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('role.index') }}">
+                                            Perfis de Usuários
+                                        </a>
+                                    </li>
+                                    @endcan
 
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('researcher.index') }}">
-                                        Pesquisadores
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('work.index') }}">
-                                        Obras
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('segment.index') }}">
-                                        Segmentos de Atuação
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
-                                        Subtipos de Segmentos de Atuação
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('phase.index') }}">
-                                        Fases
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('stage.index') }}">
-                                        Estágios
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('position.index') }}">
-                                        Cargos
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('researcher.index') }}">
+                                            Pesquisadores
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('work.index') }}">
+                                            Obras
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('segment.index') }}">
+                                            Segmentos de Atuação
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
+                                            Subtipos de Segmentos de Atuação
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('phase.index') }}">
+                                            Fases
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('stage.index') }}">
+                                            Estágios
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('position.index') }}">
+                                            Cargos
+                                        </a>
+                                    </li>
 
-                                @can('ver-funcao-administrativa')
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('permission.index') }}">
-                                        Permissões
-                                    </a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
+                                    @can('ver-funcao-administrativa')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('permission.index') }}">
+                                            Permissões
+                                        </a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </li>
                         @endcan
 
                         <li class="nav-item dropdown">

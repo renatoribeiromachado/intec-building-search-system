@@ -56,7 +56,7 @@
             <tbody>
                 @forelse($roles as $role)
                     <tr>
-                        <th scope="row" style="width:5%;">{{ $role->id }}</th>
+                        <th scope="row" style="width:20px;">{{ $role->id }}</th>
                         <td>{{ $role->name }}</td>
                         <td style="width:15%;">
                             <a

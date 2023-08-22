@@ -142,8 +142,10 @@
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
+                    @can('ver-sig')
                     <th scope="col">Status</th>
                     <th scope="col">SIG</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -174,10 +176,6 @@
                                     >
                                     {{ $work->old_code }}
                                 </label>
-                                {{-- <input class="form-check-input" type="checkbox" name="works_selected[]" value="{{ $work->id }}" id="flexCheckDefault{{$loop->index}}">
-                                <label class="form-check-label" for="flexCheckDefault{{$loop->index}}">
-                                    {{ $work->old_code }}
-                                </label> --}}
                             </div>
                         </div>
                     </td>
@@ -191,12 +189,21 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
-                    <td>{{ $work->last_sig_status }}</td>
-                    <td>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#sig" data-work-id="{{ $work->id }}" data-code="{{ $work->old_code }}">
-                            <i class="fa fa-check"></i>
-                        </a>
-                    </td>
+
+                    @can('ver-sig')
+                        <td>{{ $work->last_sig_status }}</td>
+                        <td>
+                            <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#sig"
+                                data-work-id="{{ $work->id }}"
+                                data-code="{{ $work->old_code }}"
+                                >
+                                <i class="fa fa-check"></i>
+                            </a>
+                        </td>
+                    @endcan
                 </tr>
                 @empty
                 <tr>
@@ -211,72 +218,73 @@
         </table>
     </form>
 
-    <!-- The Modal -->
-    <div class="modal" id="sig">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Cadastro de SIG-Obra</h4>
-                </div>
+    @can('ver-sig')
+        <!-- The Modal -->
+        <div class="modal" id="sig">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cadastro de SIG-Obra</h4>
+                    </div>
 
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{{ route('sig.store') }}" method="post">
-                        @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{{ route('sig.store') }}" method="post">
+                            @csrf
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p>Código: <span id="modal-code"></span></p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Código: <span id="modal-code"></span></p>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <!--Inputs hidden -->
-                        <input type="hidden" name="work_id" value="" id="modal-work-id-input">
+                            
+                            <!--Inputs hidden -->
+                            <input type="hidden" name="work_id" value="" id="modal-work-id-input">
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Agendar para</label>
-                                <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Agendar para</label>
+                                    <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="priority">Prioridade</label>
+                                    <select id="priority" name="priority" class="form-select">
+                                        @foreach ($priorities as $priority)
+                                            <option value="{{ $priority }}">{{ $priority }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status" class="form-select">
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status }}">{{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="priority">Prioridade</label>
-                                <select id="priority" name="priority" class="form-select">
-                                    @foreach ($priorities as $priority)
-                                        <option value="{{ $priority }}">{{ $priority }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="notes">Descriçao</label>
+                                    <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                                </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <label for="status">Status</label>
-                                <select id="status" name="status" class="form-select">
-                                    @foreach ($statuses as $status)
-                                        <option value="{{ $status }}">{{ $status }}</option>
-                                    @endforeach
-                                </select>
+                            
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="notes">Descriçao</label>
-                                <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
-                        </div>
-                    </form>
-                </div> <!-- /.modal-body -->
-            </div> <!-- /.modal-content -->
+                        </form>
+                    </div> <!-- /.modal-body -->
+                </div> <!-- /.modal-content -->
+            </div>
         </div>
-    </div>
-    
+    @endcan
     
     <div>
         {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
