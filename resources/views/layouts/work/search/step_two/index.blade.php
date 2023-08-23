@@ -197,7 +197,7 @@
                     <td>{{ $work->segment_description }}</td>
                     <td>
                         @foreach($work->companies as $company)
-                            {{ $company->company_name }}@if(! $loop->last), @endif <br>
+                            {{ $company->trading_name }}@if(! $loop->last), @endif <br>
                         @endforeach
                     </td>
 
