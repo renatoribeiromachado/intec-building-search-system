@@ -145,6 +145,43 @@
             .label-font-bold {
                 font-weight: bold;
             }
+            
+           /* Estilo para o menu principal */
+            .navbar-nav .nav-link {
+                color: white; /* Cor do texto normal */
+                transition: color 0.3s; /* Transição suave de cor */
+            }
+
+            /* Estilo quando o mouse passa por cima do link */
+            .navbar-nav .nav-link:hover {
+                color: yellow; /* Cor que o texto vai ficar ao passar o mouse */
+            }
+
+            /* Estilo para o menu dropdown */
+            .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                background-color: #000d37; /* Cor de fundo do menu dropdown */
+            }
+
+            /* Estilo para os itens do menu dropdown */
+            .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
+                color: white; /* Cor do texto normal no menu dropdown */
+            }
+
+            /* Estilo quando o mouse passa por cima do item do menu dropdown */
+            .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+                color: black; /* Cor que o texto vai ficar ao passar o mouse */
+            }
+
+            /* Estilo para a <li> do menu dropdown */
+            .navbar-nav .nav-item.dropdown:hover {
+                background-color: #ff4600; /* Cor de fundo da <li> */
+            }
+
+            /* Estilo para o link dentro da <li> do menu dropdown */
+            .navbar-nav .nav-item.dropdown:hover .nav-link {
+                color: white; /* Cor do texto ao passar o mouse */
+            }
         </style>
 
         @stack('styles')
@@ -155,7 +192,7 @@
         <header class="bg-dark text-white py-3 parallax">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                         <img src='{{ asset('images/logomarca-header.png') }}' class="img-fluid" alt="Logomarca" width="280">
                     </a>
                 </div>
@@ -363,7 +400,7 @@
 
                         <li class="nav-item dropdown">
                             <a
-                                class="nav-link dropdown-toggle"
+                                class="nav-link dropdown-toggle text-white"
                                 href="#"
                                 id="dropdown07XL"
                                 data-bs-toggle="dropdown"
