@@ -112,7 +112,7 @@
                 margin: 10px 0;
             }
             .parallax {
-                background-image: url("{{ asset('images/header.png') }}");
+                background-image: url("{{ asset('images/header-dashboard-three.png') }}");
                 background-size: cover;
                 background-position: center;
                 height: 140px; /* Defina a altura desejada */
@@ -149,27 +149,28 @@
 
         @stack('styles')
     </head>
-    <body style="background: #f2f6fc">
+    <body style="background: #fff">
+
 
         <header class="bg-dark text-white py-3 parallax">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                        <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logomarca" width="280">
+                    <a class="navbar-brand" href="">
+                        <img src='{{ asset('images/logomarca-header.png') }}' class="img-fluid" alt="Logomarca" width="280">
                     </a>
                 </div>
 
                 <ul class="navbar-nav me-0 mb-2 mb-md-0">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown text-white">
                         <i class="fa fa-user"></i>
                         {{ auth()->user()->name }}
                         <small>({{ \Auth::guard('web')->user()->role->name }})</small>
                     </li>
                 </ul>
-            </div>
+            </div> 
         </header>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+         <nav class="navbar navbar-expand-lg navbar-light" style="background: #000d37;">
             <div class="container">
                 <button
                     class="navbar-toggler"
@@ -185,7 +186,7 @@
                         @can('ver-pesquisas')
                             <li class="nav-item dropdown">
                                 <a
-                                    class="nav-link dropdown-toggle"
+                                    class="nav-link dropdown-toggle text-white"
                                     href="#"
                                     id="dropdown07XL"
                                     data-bs-toggle="dropdown"
@@ -219,7 +220,7 @@
                         @can('ver-relatorio')
                             <li class="nav-item dropdown">
                                 <a
-                                    class="nav-link dropdown-toggle"
+                                    class="nav-link dropdown-toggle text-white"
                                     href="#"
                                     id="dropdown07XL"
                                     data-bs-toggle="dropdown"
@@ -241,7 +242,7 @@
                         @can('ver-sig')
                             <li class="nav-item dropdown">
                                 <a
-                                    class="nav-link dropdown-toggle"
+                                    class="nav-link dropdown-toggle text-white"
                                     href="#"
                                     id="dropdown07XL"
                                     data-bs-toggle="dropdown"
@@ -266,7 +267,7 @@
                         @can('ver-administrativo')
                             <li class="nav-item dropdown">
                                 <a
-                                    class="nav-link dropdown-toggle"
+                                    class="nav-link dropdown-toggle text-white"
                                     href="#"
                                     id="administrative"
                                     data-bs-toggle="dropdown"
@@ -394,7 +395,7 @@
             </div>
         </nav>
 
-        <main class="container-fluid mt-3" style="background: #f2f6fc">
+        <main class="container-fluid mt-3" style="background: #fff">
             @yield('content')
         </main>
         <a href="https://api.whatsapp.com/send?phone=5511988327074&text=&text=Ol%C3%A1%20tenho%20d%C3%BAvida%20sobre%20a%20plataforma%2C%20pode%20me%20ajudar%3F" class="whatsapp-button" target="_blank">
@@ -402,9 +403,53 @@
             Fale Conosco no WhatsApp
         </a>
 
-        <footer>
-            <p>Intec Brasil - Informações Técnicas da Construção - Todos os direitos reservados</p>
+        <style>
+            .footer {
+                text-align: center;
+                color:white;
+                padding: 20px;
+                background-color: #000d37;
+            }
+
+            .social-icons {
+                font-size: 24px;
+                margin: 0 10px;
+                color: #fff;
+            }
+        </style>
+
+        <footer class="footer mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Redes sociais:<br>
+                            <a href="https://www.facebook.com/" target="_blank" class="social-icons">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://www.instagram.com/" target="_blank" class="social-icons">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Entre em contato:<br>
+                            contato@intecbrasil.com.br<br>
+                            (11) 4659-0013<br>
+                            Rua Alencar Araripe, 985, Sacomã - São Paulo - SP</p>
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <p>Intec Brasil - Informações Técnicas da Construção - Todos os direitos reservados</p>
+                    </div>
+                </div>
+            </div>
+
         </footer>
+        
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

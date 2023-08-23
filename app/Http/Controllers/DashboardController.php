@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $worksInBrazil = number_format(
             $this->work->count(), 0, '', '.'
         );
+
         $residentialWorks = number_format(
             $this->segment
             ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
@@ -40,11 +41,172 @@ class DashboardController extends Controller
             ->first()->works()->count(), 0, '', '.'
         );
         
+
+        /*Região norte - total de obras */
+        $northWorksCount = number_format(
+            $this->work->where('zone','NORTE')
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northResidentialWorks = number_format(
+            $this->work->where('zone','NORTE')
+                ->where('segment_id',3)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northComercialWorks = number_format(
+            $this->work->where('zone', 'NORTE')
+                ->where('segment_id',2)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northIndustrialWorks = number_format(
+            $this->work->where('zone', '=', 'NORTE')
+                ->where('segment_id',1)
+                ->count(),
+            0, '', '.'
+        );
+        
+        /*Região nordeste - total de obras */
+        $northeastWorksCount = number_format(
+            $this->work->where('zone','NORDESTE')
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northeastResidentialWorks = number_format(
+            $this->work->where('zone','NORDESTE')
+                ->where('segment_id',3)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northeastComercialWorks = number_format(
+            $this->work->where('zone','NORDESTE')
+                ->where('segment_id',2)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $northeastIndustrialWorks = number_format(
+            $this->work->where('zone','NORDESTE')
+                ->where('segment_id',1)
+                ->count(),
+            0, '', '.'
+        );
+        
+        /*Região sul - total de obras */
+        $southWorksCount = number_format(
+            $this->work->where('zone','SUL')
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southResidentialWorks = number_format(
+            $this->work->where('zone','SUL')
+                ->where('segment_id',3)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southComercialWorks = number_format(
+            $this->work->where('zone','SUL')
+                ->where('segment_id',2)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southIndustrialWorks = number_format(
+            $this->work->where('zone','SUL')
+                ->where('segment_id',1)
+                ->count(),
+            0, '', '.'
+        );
+        
+        /*Região sudeste - total de obras */
+        $southeastWorksCount = number_format(
+            $this->work->where('zone','SUDESTE')
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southeastResidentialWorks = number_format(
+            $this->work->where('zone','SUDESTE')
+                ->where('segment_id',3)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southeastComercialWorks = number_format(
+            $this->work->where('zone','SUDESTE')
+                ->where('segment_id',2)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $southeastIndustrialWorks = number_format(
+            $this->work->where('zone','SUDESTE')
+                ->where('segment_id',1)
+                ->count(),
+            0, '', '.'
+        );
+        
+         /*Região centro-oeste - total de obras */
+        $midwestWorksCount = number_format(
+            $this->work->where('zone','CENTRO-OESTE') 
+                ->count(),
+            0, '', '.'
+        );
+        
+        $midwestResidentialWorks = number_format(
+            $this->work->where('zone','CENTRO-OESTE')
+                ->where('segment_id',3)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $midwestComercialWorks = number_format(
+            $this->work->where('zone','CENTRO-OESTE')
+                ->where('segment_id',2)
+                ->count(),
+            0, '', '.'
+        );
+        
+        $midwestIndustrialWorks = number_format(
+            $this->work->where('zone','CENTRO-OESTE')
+                ->where('segment_id',1)
+                ->count(),
+            0, '', '.'
+        );
+        
         return view('layouts.dashboard.index', compact(
             'worksInBrazil',
             'residentialWorks',
             'industrialWorks',
             'businessWorks',
+            'northeastWorksCount',
+            'northWorksCount',
+            'southWorksCount',
+            'southeastWorksCount',
+            'midwestWorksCount',
+            'northResidentialWorks',
+            'northComercialWorks',
+            'northIndustrialWorks',
+            'northeastResidentialWorks',
+            'northeastComercialWorks',
+            'northeastIndustrialWorks',
+            'southResidentialWorks',
+            'southComercialWorks',
+            'southIndustrialWorks',
+            'southeastResidentialWorks',
+            'southeastComercialWorks',
+            'southeastIndustrialWorks', 
+            'midwestResidentialWorks',
+            'midwestComercialWorks',
+            'midwestIndustrialWorks',
         ));
     }
 }

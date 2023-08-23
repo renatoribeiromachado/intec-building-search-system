@@ -2,141 +2,121 @@
 
 @section('content')
 
-<div class="container pt-2 pb-4 bg-light border">
-        <div class="row mt-3">
-            <h2 class="text-center" style="color:#ff3b00">Bem vindo a Intec - Informações Técnicas da Construção</h2>
-            <p class="text-center">A empresa pioneira no ramo de informações online de obras do Brasil</p>
-        </div>
+<style>
+            .no-border {
+                border: 1px solid white;
+                background: white;
+            }
+            .parallax {
+                background-image: url("../images/header-dashboard-three.png");
+                background-size: cover;
+                background-position: center;
+                height: 140px; /* Defina a altura desejada */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item bg-danger text-white"><i class="fa fa-check"></i> Resultado mensal</li>
-                    <li class="list-group-item text-center"><strong>OBRAS NOVAS E ATUALIZADAS</strong></li>
-                    <li class="list-group-item text-warning text-center"><strong>EM JULHO 2023</strong></li>
-                    <li class="list-group-item text-center">
-                        {{ $worksInBrazil }} <strong>obras em todo Brasil</strong>
-                    </li>
-                    <li class="list-group-item text-center">
-                        Residencial:  {{ $residentialWorks }}
-                    </li>
-                    <li class="list-group-item text-center">
-                        Comercial: {{ $businessWorks }}
-                    </li>
-                    <li class="list-group-item text-center">
-                        Industrial: {{ $industrialWorks }}
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item bg-primary text-white"><i class="fa fa-check"></i> Saiba mais</li>
-                    <li class="list-group-item text-center">Quem somos nós?</li>
-                    <li class="list-group-item">Empresa de inteligência comercial especialidada em criação de leads no mercado nacional da construção civil.</li>
-                    <li class="list-group-item">Prospecção</li>
-                    <li class="list-group-item">Contato de Construtoras</li>
-                    <li class="list-group-item">Análise de Mercado</li>
-                </ul>
-            </div>
-
-            <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item bg-warning text-white">
-                        <i class="fa fa-check"></i> Analise trimestral
-                    </li>
-                    <li class="list-group-item text-center">
-                        Relatório trimestral de obras <br>
-                        <img
-                            src="{{ asset('images/dashboard-trimestral.png') }}"
-                            alt="Imagem Relatório Trimestral"
-                            class="img-fluid"
-                            >
-                    </li>
-
-                </ul>
-            </div>
-
-        </div>
+        </style>
         
-        <div class="row mt-3">
-            <p><i class="fa fa-check"></i> <strong>Estatística de obra(s) cadastrada(s) até o momento</strong></p>
-        </div>
-
-        <div class="container mt-1 border shadow">
-            <div class="row">
-
-
-                <div class="col-md-4 pt-4">
-                    <p><strong>Segmentos</strong></p>
-                    <hr>
-                    <table class="table table-condensed">
-                        <tr>
-                            <th style="background: #acc4d0;color:black">Industrial</th>
-                            <td class="text-end" style="background: #acc4d0;color:black"><span class="badge bg-secondary">1591</span></td>
-                        </tr>
-                        <tr>
-                            <th style="background: #b5b253;color:black">Comercial</th>
-                            <td class="text-end" style="background: #b5b253;color:black"><span class="badge bg-secondary">3495</span></td>
-                        </tr>
-                        <tr>
-                            <th style="background: #ccb364;color:black">Residencial</th>
-                            <td class="text-end" style="background: #ccb364;color:black"><span class="badge bg-secondary">5847</span></td>
-                        </tr>
-                    </table>
+<div class="container-fluid">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-md-12 text-center">
+                        <h2 style="color: #000d37;">Bem vindo a INTEC</h2>
+                        <h3 style="color: #f64004;">A principal ferramenta de prospecção de obras do pais</h3>
+                    </div>
                 </div>
 
-                <div class="col-md-8 pt-4">
-                    <p><strong>Regiões e Segmentos</strong></p>
-                    <hr>
-                    <table class="table table-condensed">
-                        <tr>
-                            <th style="background: #235877;color:white">Região</th>
-                            <th style="background: #235877;color:white">Total</th>
-                            <th style="background: #acc4d0;color:black">Industrial</th>
-                            <th style="background: #b5b253;color:black">Comercial</th>
-                            <th style="background: #ccb364;color:black">Residencial</th>
-                        </tr>
-                        <tr>
-                            <td style="background: #235877;color:white">Norte</td>
-                            <td style="background: #235877;color:white"><span class="badge bg-secondary">750</span></td>
-                            <td style="background: #acc4d0;color:black">250</td>
-                            <td style="background: #b5b253;color:black">120</td>
-                            <td style="background: #ccb364;color:black">380</td>
-                        </tr>
-                        <tr>
-                            <td style="background: #235877;color:white">Nordeste</td>
-                            <td style="background: #235877;color:white"><span class="badge bg-secondary">452</span></td>
-                            <td style="background: #acc4d0;color:black">140</td>
-                            <td style="background: #b5b253;color:black">125</td>
-                            <td style="background: #ccb364;color:black">300</td>
-                        </tr>
-                        <tr>
-                            <td style="background: #235877;color:white">Sul</td>
-                            <td style="background: #235877;color:white"><span class="badge bg-secondary">7.200</span></td>
-                            <td style="background: #acc4d0;color:black">2.500</td>
-                            <td style="background: #b5b253;color:black">1.950</td>
-                            <td style="background: #ccb364;color:black">3.730</td>
-                        </tr>
-                        <tr>
-                            <td style="background: #235877;color:white">Sudeste</td>
-                            <td style="background: #235877;color:white"><span class="badge bg-secondary">10.040</span></td>
-                            <td style="background: #acc4d0;color:black">5.850</td>
-                            <td style="background: #b5b253;color:black">3.245</td>
-                            <td style="background: #ccb364;color:black">945</td>
-                        </tr>
-                        <tr>
-                            <td style="background: #235877;color:white">Centro-Oeste</td>
-                            <td style="background: #235877;color:white"><span class="badge bg-secondary">542</span></td>
-                            <td style="background: #acc4d0;color:black">152</td>
-                            <td style="background: #b5b253;color:black">115</td>
-                            <td style="background: #ccb364;color:black">275</td>
-                        </tr>
-                    </table>
+                <div class="row mt-5">
+                    <div class="col-md-4 pt-5">
+                        <h3 class="text-center" style="color: #000d37;"><strong>Dominando a <br>Prospecção em Obras</strong></h3>
+                        <p class="text-center" style="font-size:18px;">Gerando leads de alta qualidade, nosso compromisso é elevar o seu sucesso com parceria e inovação. Para quem sabe o que quer, 
+                            a INTEC é a chave para uma prospecção inteligente no mercado da construção civil. </p>
+
+                        <p class="text-center" style="color: #f64004;"><strong>Enquanto alguns esperam, nós te colocamos à frente.</strong></p>
+
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="text-center">Obras no Sistema</h3>
+                        <table class="table table-bordered">
+
+                            <thead class="text-center" style="border: 1px solid #000d37;">
+
+                                <tr class="text-white" style="background: #000d37;">
+                                    <th style="border: 1px solid white;background: white; border-right: 1px solid #001143;"></th>
+                                    <th>TOTAL DE OBRAS</th>
+                                    <th>RESIDENCIAL</th>
+                                    <th>COMERCIAL</th>
+                                    <th>INDUSTRIAL</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="text-center" style="border: 1px solid #000d37;">
+                                <tr>
+                                    <td class="no-border" style="border-bottom:1px solid #fff; border-right: 1px solid #001143;"></td>
+                                    <td>{{ $worksInBrazil }}</td>
+                                    <td>{{ $residentialWorks }}</td>
+                                    <td>{{ $businessWorks }}</td>
+                                    <td>{{ $industrialWorks }}</td>
+                                </tr>
+                            </tbody>
+
+                            <thead>
+                                <tr class="text-white text-end" style="background: #f64004;border: 1px solid #000d37;">
+                                    <th class="no-border" style="border-right: 1px solid #000d37;background: white;"></th>
+                                    <th>Total</th>
+                                    <th>Residencial</th>
+                                    <th>Comercial</th>
+                                    <th>Industrial</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="text-end" style="border: 1px solid #000d37;">
+                                <tr>
+                                    <td style="background: #f64004;color:white;">Sudeste</td>
+                                    <td>{{ $southeastWorksCount }}</td>
+                                    <td>{{ $southeastIndustrialWorks }}</td>
+                                    <td>{{ $southeastComercialWorks }}</td>
+                                    <td>{{ $southeastResidentialWorks }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background: #f64004;color:white;">Sul</td>
+                                    <td>{{ $southWorksCount }}</td>
+                                    <td>{{ $southIndustrialWorks }}</td>
+                                    <td>{{ $southComercialWorks }}</td>
+                                    <td>{{ $southResidentialWorks }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background: #f64004;color:white;">Norte</td>
+                                    <td>{{ $northWorksCount }}</td>
+                                    <td>{{ $northIndustrialWorks }}</td>
+                                    <td>{{ $northComercialWorks }}</td>
+                                    <td>{{ $northResidentialWorks }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background: #f64004;color:white;">Nordeste</td>
+                                    <td>{{ $northeastWorksCount }}</td>
+                                    <td>{{ $northeastIndustrialWorks }}</td>
+                                    <td>{{ $northeastComercialWorks }}</td>
+                                    <td>{{ $northeastResidentialWorks }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background: #f64004;color:white;">Centro-Oeste</td>
+                                    <td>{{ $midwestWorksCount }}</td>
+                                    <td>{{ $midwestIndustrialWorks }}</td>
+                                    <td>{{ $midwestComercialWorks }}</td>
+                                    <td>{{ $midwestResidentialWorks }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
+
             </div>
+
         </div>
-    </div>
 
 @endsection
 
