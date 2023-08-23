@@ -341,31 +341,31 @@
                                 </select>
                             </div>
                             <div class="col-md-9">
-                                <label class="control-label">
-                                    Nome da Obra
-                                </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    class="form-control"
-                                    id="busca-obra"
-                                    value="{{ old('name') }}"
-                                    >
+                                <x-intec-input
+                                    label-input-id="name"
+                                    label-text="Nome da Obra"
+                                    input-type="text"
+                                    input-name="name"
+                                    class-one=""
+                                    label-class=""
+                                    input-value="{{ old('name') }}"
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">
-                                    Endereço
-                                </label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    class="form-control"
-                                    id="busca-adress"
-                                    value="{{ old('address') }}"
-                                    >
+                                <x-intec-input
+                                    label-input-id="address"
+                                    label-text="Endereço"
+                                    input-type="text"
+                                    input-name="address"
+                                    class-one=""
+                                    label-class=""
+                                    input-value="{{ old('address') }}"
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
 
@@ -406,7 +406,7 @@
                         --}}
 
                         <div class="row mt-2">
-                            <label class="control-label"> Área Construída(m²)*</label>
+                            <label class="control-label">Área Construída(m²)</label>
                             <div class="col-md-6">
                                 <select name="qa" class="form-select">
                                     <option value="0">-- Selecione --</option>
@@ -418,15 +418,22 @@
                                 <input type="text" name="total_area" class="form-control" value=""/>
                             </div>
                         </div>
-                        {{--
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label"> Empresa Participante*</label>
-                                <input type="text" name="company" class="form-control" id="company" value="" />
+                                <x-intec-input
+                                    label-input-id="participating_company"
+                                    label-text="Empresa Participante"
+                                    input-type="text"
+                                    input-name="participating_company"
+                                    class-one=""
+                                    label-class=""
+                                    input-value="{{ old('participating_company') }}"
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
 
-                        <div class="row mt-2">
+                        {{--<div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> Descrição</label>
                                 <input type="text" name="notes" class="form-control" id="notes" value="" />
@@ -464,8 +471,16 @@
 
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Bairro</label>
-                                <input type="text" name="district" class="form-control"  id="district" value="" />
+                                <x-intec-input
+                                    label-input-id="district"
+                                    label-text="Bairro"
+                                    input-type="text"
+                                    input-name="district"
+                                    class-one=""
+                                    label-class=""
+                                    input-value="{{ old('district') }}"
+                                    :input-readonly="false"
+                                />
                             </div>
                         </div>
                         {{--

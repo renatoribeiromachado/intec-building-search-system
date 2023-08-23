@@ -94,6 +94,11 @@
             id="revision"
             name="revision"
             value="{{ request()->revision }}">
+        <input
+            type="hidden"
+            id="participating_company"
+            name="participating_company"
+            value="{{ request()->participating_company }}">
         @foreach ($statesChecked as $stateChecked)
         <input type="hidden" name="states[]" value="{{ $stateChecked }}">
         @endforeach
@@ -142,6 +147,7 @@
                     <th scope="col">Fase</th>
                     <th scope="col">Estágio</th>
                     <th scope="col">Segmento</th>
+                    <th scope="col">Fantasia</th>
                     @can('ver-sig')
                     <th scope="col">Status</th>
                     <th scope="col">SIG</th>
@@ -189,6 +195,11 @@
                     <td>{{ $work->phase_description }}</td>
                     <td>{{ $work->stage_description }}</td>
                     <td>{{ $work->segment_description }}</td>
+                    <td>
+                        @foreach($work->companies as $company)
+                            {{ $company->company_name }}@if(! $loop->last), @endif <br>
+                        @endforeach
+                    </td>
 
                     @can('ver-sig')
                         <td>{{ $work->last_sig_status }}</td>

@@ -42,57 +42,59 @@
             </div>
         </form>
 
-        <div class="row mx-2">
-            <div id="activity-field-wrapper">
-                <div class="col-md-4 mb-2">
-                    <label for="activity_field_for_search">Atividade</label>
-                    <select
-                        id="activity_field_for_search" name="activity_field_for_search"
-                        class="form-select @error('activity_field_for_search') is-invalid @enderror"
-                        >
-                        @foreach ($activityFieldsForSearch as $activityFieldForSearch)
-                            @if ($loop->index == 0)
-                            <option value="">-- Selecione --</option>
-                            @endif
+        <div class="container">
+            <div class="row">
+                <div id="activity-field-wrapper">
+                    <div class="col-md-4 mb-2">
+                        <label for="activity_field_for_search">Atividade</label>
+                        <select
+                            id="activity_field_for_search" name="activity_field_for_search"
+                            class="form-select @error('activity_field_for_search') is-invalid @enderror"
+                            >
+                            @foreach ($activityFieldsForSearch as $activityFieldForSearch)
+                                @if ($loop->index == 0)
+                                <option value="">-- Selecione --</option>
+                                @endif
 
-                            <option value="{{ $activityFieldForSearch->id }}">
-                                {{ $activityFieldForSearch->description }}
-                            </option>
-                        @endforeach
-                    </select>
+                                <option value="{{ $activityFieldForSearch->id }}">
+                                    {{ $activityFieldForSearch->description }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                    @error('activity_field_for_search')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('activity_field_for_search') }}
-                        </div>
-                    @enderror
-                </div>
+                        @error('activity_field_for_search')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('activity_field_for_search') }}
+                            </div>
+                        @enderror
+                    </div>
 
-                <div class="col-md-4 mb-2">
-                    <label for="trading_name">Nome Fantasia</label>
-                    <input
-                        type="text"
-                        id="trading_name"
-                        name="trading_name"
-                        class="form-control @error('trading_name') is-invalid @enderror"
-                        value="{{ old('trading_name', optional($work->trading_name)->format('d/m/Y')) }}"
-                        placeholder="">
-                    @error('trading_name')
-                        <div class="invalid-feedback">
-                            {{ $errors->first('trading_name') }}
-                        </div>
-                    @enderror
-                </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="trading_name">Nome Fantasia</label>
+                        <input
+                            type="text"
+                            id="trading_name"
+                            name="trading_name"
+                            class="form-control @error('trading_name') is-invalid @enderror"
+                            value="{{ old('trading_name', optional($work->trading_name)->format('d/m/Y')) }}"
+                            placeholder="">
+                        @error('trading_name')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('trading_name') }}
+                            </div>
+                        @enderror
+                    </div>
 
-                <div class="col-md-8 mt-4">
-                    <button
-                        type="button"
-                        class="btn btn-warning"
-                        title="ADD Empresa(s) Participante(s)"
-                        id="showCompaniesListModal"
-                        >
-                        Pesquisar
-                    </button>
+                    <div class="col-md-8 mt-4">
+                        <button
+                            type="button"
+                            class="btn btn-warning"
+                            title="ADD Empresa(s) Participante(s)"
+                            id="showCompaniesListModal"
+                            >
+                            Pesquisar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,7 +104,7 @@
         <a name="companies-list-section"></a>
 
         <div class="container">
-            <div class="row mx-2">
+            <div class="row">
                 <h2 class="my-4">Empresa(s) Vinculada(s)</h2>
 
                 <table class="table mx-2">

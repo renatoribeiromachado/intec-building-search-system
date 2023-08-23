@@ -281,18 +281,13 @@ class WorkSearchController extends Controller
         $district = $request->district;
         $stateAcronym = $request->state_id;
         $cityId = $request->city_id;
-        // $initial_zip_code = $request->initial_zip_code;
-        // $final_zip_code = $request->final_zip_code;
-        // $notes = $request->notes;
-        
+        $participatingCompany = $request->participating_company;
         $qi = $request->qi;
         $price = $request->price;
-        
         $qr = $request->qr;
         $revision = $request->revision;
-        
         $qa = $request->qa;
-         
+        $totalArea = $request->total_area;
 
         $allStateIds = null;
         $allStatesAcronym = null;
@@ -309,7 +304,7 @@ class WorkSearchController extends Controller
             $allStatesAcronym = $states->pluck('state_acronym');
         }
 
-        $works = DB::table('works')
+        $works = $this->work
             ->select(
                 'works.*',
                 'phases.description AS phase_description',
@@ -321,6 +316,14 @@ class WorkSearchController extends Controller
             ->join('stages', 'works.stage_id', '=', 'stages.id')
             ->join('segments', 'works.segment_id', '=', 'segments.id')
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
+
+        if ($participatingCompany) {
+            $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
+                return $q->where(
+                    'companies.company_name', 'LIKE', '%'.$participatingCompany.'%'
+                );
+            });
+        }
 
         $allWorkIds = null;
         if (
@@ -401,9 +404,6 @@ class WorkSearchController extends Controller
         // }
         
         /* Investimento */
-        $qi = $request->input('qi');
-        $price = $request->input('price');
-
         if ($qi && $price !== null) {
             // Convertendo valor monetário do formato brasileiro para numérico
             $price = str_replace(['.', ','], ['', '.'], $price);
@@ -418,9 +418,6 @@ class WorkSearchController extends Controller
         }
 
         /* Revision */
-        $qr = $request->input('qr');
-        $revision = $request->input('revision');
-
         if ($qr && $revision !== null) {
             $works = $works->where(function($query) use ($qr, $revision) {
                 if ($qr == '>') {
@@ -432,9 +429,6 @@ class WorkSearchController extends Controller
         }
         
         /* Área Construída */
-        $qa = $request->input('qa');
-        $totalArea = $request->input('total_area');
-
         if ($qa && $totalArea !== null) {
             $works = $works->where(function($query) use ($qa, $totalArea) {
                 if ($qa == '>') {
@@ -453,9 +447,7 @@ class WorkSearchController extends Controller
          */
         $dataFilterStartsAtFinal = $startedAt;
         $dataFilterEndsAtFinal = $endsAt;
-        if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER ||
-            $loggedUser->role->slug == Associate::ASSOCIATE_USER) {
-
+        if (authUserIsAnAssociate()) {
             $dataFilterStartsAt1 = $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d');
             $dataFilterEndsAt1 = $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d');
 

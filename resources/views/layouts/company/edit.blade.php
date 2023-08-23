@@ -47,9 +47,9 @@
                             <div class="card rounded-3" style="width: 18rem;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $contact->name }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{ optional($contact->position)->description }}</h6>
-                                    {{-- <p class="card-text">
-                                            Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        {{ optional($contact->position)->description }}
+                                    </h6>
                                     <p class="card-text">
                                         <small class="text-muted">
                                             Atualizado {{ optional($contact->updated_at)->diffForHumans() }}
