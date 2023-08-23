@@ -8,6 +8,7 @@
     </div>
 
     @include('layouts.alerts.success')
+    @include('layouts.alerts.all-errors')
 
     <form id="checkboxForm" action="{{ route('work.search.step_three.index') }}" method="get">
         @csrf
@@ -435,7 +436,21 @@
                 pesquisarButton.disabled = !peloMenosUmMarcado;
             });
         }
-       
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalCode = document.getElementById('modal-code');
+            const modalWorkIdInput = document.getElementById('modal-work-id-input');
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const workId = this.getAttribute('data-work-id');
+                    const workOldCode = this.getAttribute('data-code');
+                    modalCode.textContent = workOldCode;
+                    modalWorkIdInput.value = workId;
+                });
+            });
+        });
         
         /*Desabilita o botão pesquisar somente qdo um check ou mais estiver checado - 17/08/2023 - Renato Machado*/
         const checkboxSearch = document.querySelectorAll('input[type="checkbox"]');
