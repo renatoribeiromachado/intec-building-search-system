@@ -117,22 +117,49 @@
             </div>
 
             <div class="col-md-2 mt-2 mb-3 clearfix">
-                <button type="submit" class="btn btn-success submit float-end" title="Pesquisar" id="pesquisarButton" disabled>
+                <button
+                    type="submit"
+                    class="btn btn-success submit float-end"
+                    title="Pesquisar"
+                    id="pesquisarButton"
+                    disabled
+                    >
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
             </div>
         </div>
 
-        <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
-        <button
-            type="button"
-            id="toggleButton"
-            class="btn btn-primary mb-4"
-            onclick="toggleCheckboxes()"
-            data-toggle-state="select"
-            >
-            Selecionar Todos
-        </button>
+        <div class="row">
+            <div class="col mt-3 mb-3">
+                <!-- Botão para alternar entre selecionar e desmarcar todos os checkboxes -->
+                <button
+                    type="button"
+                    id="toggleButton"
+                    class="btn btn-primary mb-4"
+                    onclick="toggleCheckboxes()"
+                    data-toggle-state="select"
+                    >
+                    Selecionar Todos
+                </button>
+            </div>
+
+            <div class="col-md-2 mt-2 mb-3 clearfix">
+                {{-- <button
+                    type="button"
+                    class="btn btn-success"
+                    >
+                    Exportar para Excel
+                </button> --}}
+
+                <a
+                    href="{{ route('work.search.export') }}"
+                    target="_blank"
+                    class="btn btn-success"
+                    >
+                    Exportar para Excel
+                </a>
+            </div>
+        </div>
 
         <div>
             {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}

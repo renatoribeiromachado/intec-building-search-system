@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\WorkSearchesExport;
 use App\Http\Requests\WorkSearchStepTwoRequest;
 use App\Models\Associate;
 use App\Models\SegmentSubType;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkSearchController extends Controller
@@ -525,6 +527,15 @@ class WorkSearchController extends Controller
         return response()->json(
             ['works' => session($this->worksSessionName)],
             Response::HTTP_OK
+        );
+    }
+
+    public function export(Request $request)
+    {
+        $searchParams = $request->query();
+        return Excel::download(
+            new WorkSearchesExport($searchParams),
+            'pesquisa-de-obras.xlsx'
         );
     }
 }

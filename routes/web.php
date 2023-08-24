@@ -263,6 +263,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('export', [WorkController::class, 'export'])->name('work.export');
 
+
+
         Route::put('bind-companies/{work}', [WorkController::class, 'bindCompanies'])->name('work.bind.companies');
         Route::delete(
             'unbind-companies/{work}/{company}',
@@ -293,6 +295,11 @@ Route::middleware(['auth'])->group(function () {
             'search/step-3',
             [WorkSearchController::class, 'showWorkSearchStepThree']
         )->name('work.search.step_three.index');
+
+
+        
+        Route::get('export-works', [WorkSearchController::class, 'export'])->name('work.search.export');
+
     });
 
     Route::prefix('associates')->group(function() {
