@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
+    const DATE_FORMAT = 'd/m/Y';
     protected $searchParams;
 
     public function __construct($searchParams)
@@ -33,7 +34,6 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 WHERE afw.work_id = $data";
 
         $results = \DB::select($sql);
-        // ->get();
 
         return $results;
     }
@@ -110,13 +110,15 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             ->get()
             ->map(function ($work) {
                 $contacts = $this->returnContacts($work->id);
-                $companies = $this->returnCompanies($work->id);
+                // $companies = $this->returnCompanies($work->id);
+                $companies = $work->companies;
 
                 $contactColumns = [];
                 $index = 0;
                 foreach ($contacts as $contact) {
                     $index++;
                     $contactColumns["contact_{$index}_name"] = $contact->name;
+                    $contactColumns["contact_{$index}_position"] = $contact->position;
                     $contactColumns["contact_{$index}_email"] = $contact->email;
                     $contactColumns["contact_{$index}_ddd"] = $contact->ddd;
                     $contactColumns["contact_{$index}_main_phone"] = $contact->main_phone;
@@ -125,6 +127,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 $contactData = [];
                 for ($i = 1; $i <= 3; $i++) {
                     $contactData["contact_name_{$i}"] = $contactColumns["contact_{$i}_name"] ?? null;
+                    $contactData["contact_position_{$i}"] = $contactColumns["contact_{$i}_position"] ?? null;
                     $contactData["contact_email_{$i}"] = $contactColumns["contact_{$i}_email"] ?? null;
                     $contactData["contact_ddd_{$i}"] = $contactColumns["contact_{$i}_ddd"] ?? null;
                     $contactData["contact_main_phone_{$i}"] = $contactColumns["contact_{$i}_main_phone"] ?? null;
@@ -135,83 +138,99 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 foreach ($companies as $company) {
                     $index++;
                     $companyColumns["company_{$index}_company_name"] = $company->company_name;
-                    $companyColumns["company_{$index}_modalidadde"] = $company->modalidadde;
+                    $companyColumns["company_{$index}_activity_field"]
+                        = optional($company->activityField)->description;
+                    $companyColumns["company_{$index}_cnpj"] = $company->cnpj;
                 }
 
                 $companyData = [];
                 for ($i = 1; $i <= 3; $i++) {
-                    $companyData["company_company_name_{$i}"] = $companyColumns["company_{$i}_company_name"] ?? null;
-                    $companyData["company_modalidadde_{$i}"] = $companyColumns["company_{$i}_modalidadde"] ?? null;
+                    $companyData["company_company_name_{$i}"] = $companyColumns["company_{$i}_company_name"]
+                        ?? null;
+                    $companyData["company_activity_field_{$i}"] = $companyColumns["company_{$i}_activity_field"]
+                        ?? null; // Modalidade
+                    $companyData["company_cnpj_{$i}"] = $companyColumns["company_{$i}_cnpj"]
+                        ?? null;
                 }
 
                 return [
-                    $work->old_code,
-                    optional($work->last_review)->format('d/m/Y'),
-                    $work->revision,
-                    $work->name,
-                    $work->price,
-                    $work->investment_standard,
-                    $work->total_project_area,
-                    $work->address,
-                    $work->district,
-                    $work->zip_code,
-                    $work->city,
-                    $work->state,
-                    optional($work->started_at)->format('d/m/Y'),
-                    optional($work->ends_at)->format('d/m/Y'),
-                    $work->start_and_end,
-                    optional($work->stage)->description,
-                    optional($work->phase)->description,
-                    optional($work->segment)->description,
-                    optional($work->segmentSubType)->description,
-                    $work->tower,
-                    $work->house,
-                    $work->condominium,
-                    $work->floor,
-                    $work->apartment_per_floor,
-                    // conferido até aqui
-                    
-                    $work->bedroom,
-                    $work->suite,
-                    $work->bathroom,
-                    $work->washbasin,
-                    $work->living_room,
-                    $work->service_area_terrace_balcony,
-                    $work->cup_and_kitchen,
-                    $work->maid_dependency,
-                    $work->total_unities,
-                    $work->useful_area,
-                    $work->total_area,
-                    $work->elevator,
-                    $work->garage,
-                    $work->air_conditioner,
-                    $work->heating,
-                    $work->foundry,
-                    $work->frame,
-                    $work->completion,
-                    $work->facade,
-                    $work->other_leisure,
-                    // ... (outros campos da Obra)
-                    // Adicione aqui os campos do contato usando $contactData
+                    $work->old_code, // Código
+                    optional($work->last_review)->format(self::DATE_FORMAT), // Data da última atualização
+                    $work->revision, // Nº de revisão
+                    $work->name, // Nome da Obra
+                    $work->price, // Valor do Investimento R$
+                    $work->investment_standard, // Padrão de investimento
+                    $work->total_project_area, // Área Total do Projeto
+                    $work->address, // Endereço
+                    $work->district, // Bairro
+                    $work->zip_code, // Cep
+                    $work->city, // Cidade
+                    $work->state, // Estado
+                    optional($work->started_at)->format(self::DATE_FORMAT), // Início da Obra
+                    optional($work->ends_at)->format(self::DATE_FORMAT), // Término da Obra
+                    $work->start_and_end, // Início / Término
+                    optional($work->stage)->description, // Estágio Atual
+                    optional($work->phase)->description, // Fase
+                    optional($work->segment)->description, // Segmento de Atuação
+                    optional($work->segmentSubType)->description, // Subtipo
+                    $work->tower, // N° de Edifícios
+                    $work->house, // Casas
+                    $work->condominium, // Cond. de Casas
+                    $work->floor, // Nº de Pavimentos
+                    $work->apartment_per_floor, // Apart./Salas por Andar
+                    $work->bedroom, // Dormitórios
+                    $work->suite, // Suítes
+                    $work->bathroom, // Banheiros
+                    $work->washbasin, // Lavabos
+                    $work->living_room, // Sala de Jantar/Estar
+                    $work->service_area_terrace_balcony, // Área de Serviço/Terraço/Varanda
+                    $work->cup_and_kitchen, // Copas/Cozinhas
+                    $work->maid_dependency, // Dependência de Empregada
+                    $work->total_unities, // Total de Unidades
+                    $work->useful_area, // Área Útil (m²)
+                    $work->total_area, // Área do Terreno (m²)
+                    $work->elevator, // Elevador
+                    $work->garage, // Vagas
+                    $work->air_conditioner, // Ar Condicionado
+                    $work->heating, // Aquecimento
+                    $work->foundry, // Fundações
+                    $work->frame, // Estrutura
+                    $work->completion, // Acabamento
+                    $work->facade, // Fachada
+                    $work->other_leisure, // Outros Lazer
+                    $work->notes, // Descrições Complementares
+
                     $contactData["contact_name_1"],
+                    $contactData["contact_position_1"],
                     $contactData["contact_email_1"],
                     $contactData["contact_ddd_1"],
                     $contactData["contact_main_phone_1"],
 
                     $contactData["contact_name_2"],
+                    $contactData["contact_position_2"],
                     $contactData["contact_email_2"],
                     $contactData["contact_ddd_2"],
                     $contactData["contact_main_phone_2"],
 
                     $contactData["contact_name_3"],
+                    $contactData["contact_position_3"],
                     $contactData["contact_email_3"],
                     $contactData["contact_ddd_3"],
                     $contactData["contact_main_phone_3"],
-                    
+
                     // ... (campos de contato restantes)
                     // Adicione aqui os campos da empresa usando $companyData
                     $companyData["company_company_name_1"],
-                    $companyData["company_modalidadde_1"],
+                    $companyData["company_activity_field_1"], // Modalidade / Atividade
+                    $companyData["company_cnpj_1"],
+
+                    $companyData["company_company_name_2"],
+                    $companyData["company_activity_field_2"], // Modalidade / Atividade
+                    $companyData["company_cnpj_2"],
+
+                    $companyData["company_company_name_3"],
+                    $companyData["company_activity_field_3"], // Modalidade / Atividade
+                    $companyData["company_cnpj_3"],
                     // ... (campos de empresa restantes)
                 ];
             });
@@ -259,7 +278,6 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Área do Terreno (m²)',
             'Elevador',
             'Vagas',
-            // 'Cobertura (m²)', // DOESN'T HAVE
             'Ar Condicionado',
             'Aquecimento',
             'Fundações',
@@ -268,32 +286,38 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Fachada',
             // 'Área de lazer', // HOW WE'LL MUST SHOW IT
             'Outros Lazer',
-            // 'Detalhes', // WHAT'S IT?
-
-
-
+            'Detalhes', // Descrições Complementares
 
 
             /* Contatos */
             'Nome do Contato 1',
+            'Cargo 1',
             'Email do Contato 1',
             'DDD 1',
             'Telefone do Contato 1',
+
             'Nome do Contato 2',
+            'Cargo 2',
             'Email do Contato 2',
             'DDD 2',
             'Telefone do Contato 2',
+
             'Nome do Contato 3',
+            'Cargo 3',
             'Email do Contato 3',
             'DDD 3',
             'Telefone do Contato 3',
+
             /* Empresas participantes */
             'Nome Fantasia da Empresa Participante 1',
             'Modalidade 1',
+            'CNPJ 1',
             'Nome Fantasia da Empresa Participante 2',
             'Modalidade 2',
+            'CNPJ 2',
             'Nome Fantasia da Empresa Participante 3',
             'Modalidade 3',
+            'CNPJ 3',
         ];
     }
 }
