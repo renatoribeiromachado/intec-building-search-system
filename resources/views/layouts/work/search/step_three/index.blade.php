@@ -136,110 +136,17 @@
         </div>
     </div>
     <script>
-        /*Enviar obras por email 17/08/2023 - Renato Machado*/
-//        const checkboxes = document.querySelectorAll('.work-checkbox');
-//        const selectedWorksTextarea = document.getElementById('selectedWorks');
-//        const toggleButton = document.getElementById('toggleButton');
-//        const emailForm = document.getElementById('emailForm');
-//        const searchButton = document.querySelector('.btn-success.submit');
-//        searchButton.addEventListener('click', function() {
-//            localStorage.removeItem('selectedWorkCodes');
-//        });
-//
-//        let selectedWorkCodes = JSON.parse(localStorage.getItem('selectedWorkCodes')) || [];
-//
-//        checkboxes.forEach(checkbox => {
-//            const workCode = checkbox.getAttribute('data-work-code');
-//            checkbox.checked = selectedWorkCodes.includes(workCode);
-//
-//            checkbox.addEventListener('change', function () {
-//                if (checkbox.checked && !selectedWorkCodes.includes(workCode)) {
-//                    selectedWorkCodes.push(workCode);
-//                } else if (!checkbox.checked && selectedWorkCodes.includes(workCode)) {
-//                    const index = selectedWorkCodes.indexOf(workCode);
-//                    selectedWorkCodes.splice(index, 1);
-//                }
-//
-//                localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
-//                updateSelectedWorksTextarea();
-//            });
-//        });
-//
-//        function updateSelectedWorksTextarea() {
-//            selectedWorksTextarea.value = selectedWorkCodes.join(', ');
-//        }
-//
-//        updateSelectedWorksTextarea();
-//
-//        toggleButton.addEventListener('click', function () {
-//            const toggleState = toggleButton.getAttribute('data-toggle-state');
-//            selectedWorkCodes = [];
-//
-//            checkboxes.forEach(checkbox => {
-//                checkbox.checked = toggleState === 'select';
-//                if (toggleState === 'select') {
-//                    const workCode = checkbox.getAttribute('data-work-code');
-//                    selectedWorkCodes.push(workCode);
-//                }
-//            });
-//
-//            localStorage.setItem('selectedWorkCodes', JSON.stringify(selectedWorkCodes));
-//            updateSelectedWorksTextarea();
-//
-//            toggleButton.setAttribute('data-toggle-state', toggleState === 'select' ? 'deselect' : 'select');
-//        });
-//
-//        emailForm.addEventListener('submit', function () {
-//            const emailData = {
-//                selectedWorks: selectedWorkCodes,
-//            };
-//
-//            console.log('Dados enviados por e-mail:', emailData);
-//
-//            setTimeout(function () {
-//                selectedWorksTextarea.value = '';
-//                checkboxes.forEach(checkbox => {
-//                    checkbox.checked = false;
-//                });
-//                localStorage.removeItem('selectedWorkCodes');
-//            }, 0);
-//        });
-//
-//        function updateCheckboxes() {
-//            checkboxes.forEach(checkbox => {
-//                const workCode = checkbox.getAttribute('data-work-code');
-//                checkbox.checked = selectedWorkCodes.includes(workCode);
-//            });
-//        }
-//        
-//        /*SIG 17/08/2023 - Renato Machado*/
-//        document.addEventListener('DOMContentLoaded', function () {
-//            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
-//            const modalCode = document.getElementById('modal-code');
-//            const modalWorkIdInput = document.getElementById('modal-work-id-input');
-//
-//            sigLinks.forEach(link => {
-//                link.addEventListener('click', function (event) {
-//                    event.preventDefault();
-//                    const workId = this.getAttribute('data-work-id');
-//                    const workOldCode = this.getAttribute('data-code');
-//                    modalCode.textContent = workOldCode;
-//                    modalWorkIdInput.value = workId;
-//                });
-//            });
-//        });
-        
         document.addEventListener("DOMContentLoaded", function () {
-        // Obtém a URL da página atual
-        var currentUrl = window.location.href;
+            // Obtém a URL da página atual
+            var currentUrl = window.location.href;
 
-        // Preenche o campo com a URL da página atual
-        var link = document.getElementById("link");
-        if (link) {
-            link.value = currentUrl;
-        }
-    });
-        </script>
+            // Preenche o campo com a URL da página atual
+            var link = document.getElementById("link");
+            if (link) {
+                link.value = currentUrl;
+            }
+        });
+    </script>
 
     @forelse ($works as $work)
         <div class="row mt-2">
@@ -265,6 +172,107 @@
                 <a class="btn btn-default" title="Cadastrar SIG" onclick=""> NOVO SIG</a>
             </div>
         </div> --}}
+        
+        @can('ver-sig')
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <a class="btn btn-primary" title="Cadastrar SIG"
+                        href="javascript:void(0)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#sig"
+                        data-work-id="{{ $work->id }}"
+                        data-code="{{ $work->old_code }}"
+                        >
+                        <i class="fa fa-check"></i> NOVO SIG
+                    </a>
+                </div>
+            </div>
+
+        @endcan
+        
+        @can('ver-sig')
+        <!-- The Modal -->
+        <div class="modal" id="sig">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cadastro de SIG-Obra</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{{ route('sig.store') }}" method="post">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Código: <span id="modal-code"></span></p>
+                                </div>
+                            </div>
+                            
+                            <!--Inputs hidden -->
+                            <input type="hidden" name="work_id" value="" id="modal-work-id-input">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Agendar para</label>
+                                    <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="priority">Prioridade</label>
+                                    <select id="priority" name="priority" class="form-select">
+                                        @foreach ($priorities as $priority)
+                                            <option value="{{ $priority }}">{{ $priority }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status" class="form-select">
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status }}">{{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="notes">Descriçao</label>
+                                    <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div> <!-- /.modal-body -->
+                </div> <!-- /.modal-content -->
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+                const modalCode = document.getElementById('modal-code');
+                const modalWorkIdInput = document.getElementById('modal-work-id-input');
+                sigLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const workId = this.getAttribute('data-work-id');
+                        const workOldCode = this.getAttribute('data-code');
+                        modalCode.textContent = workOldCode;
+                        modalWorkIdInput.value = workId;
+                    });
+                });
+            });
+        </script>
+    @endcan
     
         <div class="row mt-2">
             <div class="col-md-12">

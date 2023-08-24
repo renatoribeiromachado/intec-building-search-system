@@ -208,6 +208,8 @@ class WorkSearchController extends Controller
     public function showWorkSearchStepThree(Request $request)
     {
         $this->authorize('ver-pesquisa-de-obras');
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
         
         $works = $this->getFilteredWorks($request);
         $workFeatures = $this->workFeature
@@ -216,7 +218,9 @@ class WorkSearchController extends Controller
 
         return view('layouts.work.search.step_three.index', compact(
             'works',
-            'workFeatures'
+            'workFeatures',
+            'statuses',
+            'priorities'
         ));
     }
 
