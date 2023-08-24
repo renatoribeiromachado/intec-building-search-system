@@ -6,6 +6,8 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 
 //use Maatwebsite\Excel\Concerns\WithTitle;
 
@@ -20,27 +22,39 @@ class WorksExport implements FromCollection, WithHeadings {
         $this->endDate = $endDate;
     }
     
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function(AfterSheet $event) {
-            
-                $event->sheet->getStyle('A1:AK1')->applyFromArray([
-                    
-                    'font' => [
-                        'bold' => true,
-                        'color' => ['rgb' => '#FFFFFF'], // Cor branca para o texto
+public function registerEvents(): array
+{
+    return [
+        AfterSheet::class => function(AfterSheet $event) {
+            $styleArray = [
+                'font' => [
+                    'bold' => true,
+                    'color' => ['rgb' => '#FFFFFF'],
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'startColor' => [
+                        'rgb' => '#0070C0',
                     ],
-                    'fill' => [
-                        'fillType' => Fill::FILL_SOLID,
-                        'startColor' => [
-                            'rgb' => '#0070C0', // Código da cor de fundo (por exemplo, azul)
-                        ],
-                    ],
-                ]);
-            },
-        ];
-    }
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                ],
+            ];
+
+            $event->sheet->getStyle('A1:AK1')->applyFromArray($styleArray);
+            $event->sheet->getStyle('A1:AK1')->getAlignment()->setWrapText(true);
+            $event->sheet->getStyle('A1:AK1')->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
+            $event->sheet->getStyle('A1:AK1')->getFont()->setSize(10);
+
+            // Ajuste automático da largura da coluna B com base no conteúdo
+            $event->sheet->getColumnDimension('B')->setAutoSize(true);
+
+            $event->sheet->getRowDimension(1)->setRowHeight(30);
+        },
+    ];
+}
+
 
     /**
      * @return \Illuminate\Support\Collection
@@ -155,7 +169,7 @@ class WorksExport implements FromCollection, WithHeadings {
 
                         return [
                             $work->old_code,
-                            date('d/m/Y', strtotime($work->last_review)),
+                            date('Y-m-d', strtotime($work->last_review)),
                             $work->revision,
                             $work->name,
                             number_format($work->price, 2, ',', '.'),
