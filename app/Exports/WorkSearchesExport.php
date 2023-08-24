@@ -108,9 +108,9 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             // Adicione mais condições aqui para os outros parâmetros
 
             ->get()
-            ->map(function ($obra) {
-                $contacts = $this->returnContacts($obra->id);
-                $companies = $this->returnCompanies($obra->id);
+            ->map(function ($work) {
+                $contacts = $this->returnContacts($work->id);
+                $companies = $this->returnCompanies($work->id);
 
                 $contactColumns = [];
                 $index = 0;
@@ -145,17 +145,69 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 }
 
                 return [
-                    $obra->old_code,
-                    optional($obra->last_review)->format('d/m/Y'),
-                    date('d/m/Y', strtotime($obra->last_review)),
-                    $obra->revision,
-                    $obra->name,
+                    $work->old_code,
+                    optional($work->last_review)->format('d/m/Y'),
+                    $work->revision,
+                    $work->name,
+                    $work->price,
+                    $work->investment_standard,
+                    $work->total_project_area,
+                    $work->address,
+                    $work->district,
+                    $work->zip_code,
+                    $work->city,
+                    $work->state,
+                    optional($work->started_at)->format('d/m/Y'),
+                    optional($work->ends_at)->format('d/m/Y'),
+                    $work->start_and_end,
+                    optional($work->stage)->description,
+                    optional($work->phase)->description,
+                    optional($work->segment)->description,
+                    optional($work->segmentSubType)->description,
+                    $work->tower,
+                    $work->house,
+                    $work->condominium,
+                    $work->floor,
+                    $work->apartment_per_floor,
+                    // conferido até aqui
+                    
+                    $work->bedroom,
+                    $work->suite,
+                    $work->bathroom,
+                    $work->washbasin,
+                    $work->living_room,
+                    $work->service_area_terrace_balcony,
+                    $work->cup_and_kitchen,
+                    $work->maid_dependency,
+                    $work->total_unities,
+                    $work->useful_area,
+                    $work->total_area,
+                    $work->elevator,
+                    $work->garage,
+                    $work->air_conditioner,
+                    $work->heating,
+                    $work->foundry,
+                    $work->frame,
+                    $work->completion,
+                    $work->facade,
+                    $work->other_leisure,
                     // ... (outros campos da Obra)
                     // Adicione aqui os campos do contato usando $contactData
                     $contactData["contact_name_1"],
                     $contactData["contact_email_1"],
                     $contactData["contact_ddd_1"],
                     $contactData["contact_main_phone_1"],
+
+                    $contactData["contact_name_2"],
+                    $contactData["contact_email_2"],
+                    $contactData["contact_ddd_2"],
+                    $contactData["contact_main_phone_2"],
+
+                    $contactData["contact_name_3"],
+                    $contactData["contact_email_3"],
+                    $contactData["contact_ddd_3"],
+                    $contactData["contact_main_phone_3"],
+                    
                     // ... (campos de contato restantes)
                     // Adicione aqui os campos da empresa usando $companyData
                     $companyData["company_company_name_1"],
@@ -168,11 +220,11 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function headings(): array {
         return [
             /* Dados da obra */
-            'Codigo',
+            'Código',
             'Data da última atualização',
             'Nº de revisão',
             'Nome da Obra',
-            'Valor do Investimeto R$',
+            'Valor do Investimento R$',
             'Padrão de investimento',
             'Área Total do Projeto',
             'Endereço',
@@ -192,6 +244,8 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Cond. de Casas',
             'Nº de Pavimentos',
             'Apart./Salas por Andar',
+            // conferido até aqui
+
             'Dormitórios',
             'Suítes',
             'Banheiros',
@@ -205,16 +259,21 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Área do Terreno (m²)',
             'Elevador',
             'Vagas',
-            'Cobertura (m²)',
+            // 'Cobertura (m²)', // DOESN'T HAVE
             'Ar Condicionado',
             'Aquecimento',
             'Fundações',
             'Estrutura',
             'Acabamento',
             'Fachada',
-            'Área de lazer',
+            // 'Área de lazer', // HOW WE'LL MUST SHOW IT
             'Outros Lazer',
-            'Detalhes',
+            // 'Detalhes', // WHAT'S IT?
+
+
+
+
+
             /* Contatos */
             'Nome do Contato 1',
             'Email do Contato 1',
