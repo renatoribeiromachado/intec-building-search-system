@@ -233,10 +233,10 @@
     @can('ver-sig')
         <!-- The Modal -->
         <div class="modal" id="sig">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <!-- Modal Header -->
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary text-white">
                         <h4 class="modal-title">Cadastro de SIG-Obra</h4>
                     </div>
 
@@ -257,7 +257,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>Agendar para</label>
-                                    <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                                    <input type="text" name="appointment_date" class="form-control datepicker" value="" required="">
                                 </div>
 
                                 <div class="col-md-4">
@@ -292,6 +292,57 @@
                                 <button type="submit" class="btn btn-primary">Cadastrar</button>
                             </div>
                         </form>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="form-label"><strong>Sig(s) cadastrados</strong></label>
+                                <div class="table-responsive" style="overflow: auto; height: 300px;">
+                                    <table class="table table-condensed">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Criado</th>
+                                                <th>Agendado</th>
+                                                <th>Codigo</th>
+                                                <th>Relator</th>
+                                                <th>Prioridade</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @forelse($reports as $report)
+                                                <tr>
+                                                    <td>
+                                                        {{ $report->created_at->format('d/m/Y') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ optional($report->appointment_date)->format('d/m/Y') }}
+                                                    </td>
+                                                    <td>{{ $report->work->old_code }}</td>
+                                                    <td>{{ $report->user->name }}</td>
+                                                    <td>{{ $report->priority }}</td>
+                                                    <td>{{ $report->status }}</td>
+                                                </tr>
+
+                                                @if ($report->notes)
+                                                <tr>
+                                                    <td colspan="6">{{ $report->notes }}</td>
+                                                </tr>
+                                                @endif
+
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center py-4">
+                                                        Nenhum SIG de obras encontrado.
+                                                    </td>
+                                                </tr>
+
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                            
+                        </div>
                     </div> <!-- /.modal-body -->
                 </div> <!-- /.modal-content -->
             </div>

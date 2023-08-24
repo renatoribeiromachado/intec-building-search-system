@@ -27,6 +27,7 @@ class WorkSearchController extends Controller
     protected $city;
     protected $segmentSubType;
     protected $workFeature;
+    protected $sig;
     protected $worksSessionName = 'works_checkboxes';
     protected $stagesSessionName = 'stages_checkboxes';
     protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
@@ -39,6 +40,7 @@ class WorkSearchController extends Controller
         City $city,
         SegmentSubType $segmentSubType,
         WorkFeature $workFeature,
+        Sig $sig  
     ) {
         $this->stage = $stage;
         $this->work = $work;
@@ -46,6 +48,7 @@ class WorkSearchController extends Controller
         $this->city = $city;
         $this->segmentSubType = $segmentSubType;
         $this->workFeature = $workFeature;
+        $this->sig = $sig;
     }
 
     public function showWorkSearchStepOne()
@@ -144,8 +147,9 @@ class WorkSearchController extends Controller
 
     public function showWorkSearchStepTwo(WorkSearchStepTwoRequest $request)
     {
+        $authUser = Auth::user();
         $this->authorize('ver-pesquisa-de-obras');
-
+        $reports = $this->sig->where('user_id',$authUser->id)->get();
         $works = $this->getFilteredWorks($request);
         $worksChecked = session($this->worksSessionName);
         $currentPage = is_null($request->page) ? 1 : $request->page;
@@ -202,6 +206,7 @@ class WorkSearchController extends Controller
             'inputSelectAll',
             'statuses',
             'priorities',
+            'reports'
         ));
     }
 
