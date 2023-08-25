@@ -118,7 +118,7 @@ class SigController extends Controller
         $authUser = Auth::user();
         $query = $this->sig->select(
             'id', 'user_id', 'work_id', 'appointment_date',
-            'created_at', 'priority', 'status'
+            'created_at', 'priority', 'status','notes'
         );
 
         if (

@@ -19,7 +19,7 @@
 
         </style>
         
-<div class="container-fluid">
+        <div class="container-fluid">
             <div class="container">
                 <div class="row mt-5">
                     <div class="col-md-12 text-center">
@@ -39,77 +39,79 @@
                     </div>
                     <div class="col-md-8">
                         <h3 class="text-center">Obras no Sistema</h3>
-                        <table class="table table-bordered">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
 
-                            <thead class="text-center" style="border: 1px solid #000d37;">
+                                <thead class="text-center" style="border: 1px solid #000d37;">
 
-                                <tr class="text-white" style="background: #000d37;">
-                                    <th style="border: 1px solid white;background: white; border-right: 1px solid #001143;"></th>
-                                    <th>TOTAL DE OBRAS</th>
-                                    <th>RESIDENCIAL</th>
-                                    <th>COMERCIAL</th>
-                                    <th>INDUSTRIAL</th>
-                                </tr>
-                            </thead>
+                                    <tr class="text-white" style="background: #000d37;">
+                                        <th style="border: 1px solid white;background: white; border-right: 1px solid #001143;"></th>
+                                        <th>TOTAL DE OBRAS</th>
+                                        <th>RESIDENCIAL</th>
+                                        <th>COMERCIAL</th>
+                                        <th>INDUSTRIAL</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody class="text-center" style="border: 1px solid #000d37;">
-                                <tr>
-                                    <td class="no-border" style="border-bottom:1px solid #fff; border-right: 1px solid #001143;"></td>
-                                    <td>{{ $worksInBrazil }}</td>
-                                    <td>{{ $residentialWorks }}</td>
-                                    <td>{{ $businessWorks }}</td>
-                                    <td>{{ $industrialWorks }}</td>
-                                </tr>
-                            </tbody>
+                                <tbody class="text-center" style="border: 1px solid #000d37;">
+                                    <tr>
+                                        <td class="no-border" style="border-bottom:1px solid #fff; border-right: 1px solid #001143;"></td>
+                                        <td>{{ $worksInBrazil }}</td>
+                                        <td>{{ $residentialWorks }}</td>
+                                        <td>{{ $businessWorks }}</td>
+                                        <td>{{ $industrialWorks }}</td>
+                                    </tr>
+                                </tbody>
 
-                            <thead>
-                                <tr class="text-white text-end" style="background: #f64004;border: 1px solid #000d37;">
-                                    <th class="no-border" style="border-right: 1px solid #000d37;background: white;"></th>
-                                    <th>Total</th>
-                                    <th>Residencial</th>
-                                    <th>Comercial</th>
-                                    <th>Industrial</th>
-                                </tr>
-                            </thead>
+                                <thead>
+                                    <tr class="text-white text-end" style="background: #f64004;border: 1px solid #000d37;">
+                                        <th class="no-border" style="border-right: 1px solid #000d37;background: white;"></th>
+                                        <th>Total</th>
+                                        <th>Residencial</th>
+                                        <th>Comercial</th>
+                                        <th>Industrial</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody class="text-end" style="border: 1px solid #000d37;">
-                                <tr>
-                                    <td style="background: #f64004;color:white;">Sudeste</td>
-                                    <td>{{ $southeastWorksCount }}</td>
-                                    <td>{{ $southeastIndustrialWorks }}</td>
-                                    <td>{{ $southeastComercialWorks }}</td>
-                                    <td>{{ $southeastResidentialWorks }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background: #f64004;color:white;">Sul</td>
-                                    <td>{{ $southWorksCount }}</td>
-                                    <td>{{ $southIndustrialWorks }}</td>
-                                    <td>{{ $southComercialWorks }}</td>
-                                    <td>{{ $southResidentialWorks }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background: #f64004;color:white;">Norte</td>
-                                    <td>{{ $northWorksCount }}</td>
-                                    <td>{{ $northIndustrialWorks }}</td>
-                                    <td>{{ $northComercialWorks }}</td>
-                                    <td>{{ $northResidentialWorks }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background: #f64004;color:white;">Nordeste</td>
-                                    <td>{{ $northeastWorksCount }}</td>
-                                    <td>{{ $northeastIndustrialWorks }}</td>
-                                    <td>{{ $northeastComercialWorks }}</td>
-                                    <td>{{ $northeastResidentialWorks }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background: #f64004;color:white;">Centro-Oeste</td>
-                                    <td>{{ $midwestWorksCount }}</td>
-                                    <td>{{ $midwestIndustrialWorks }}</td>
-                                    <td>{{ $midwestComercialWorks }}</td>
-                                    <td>{{ $midwestResidentialWorks }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                <tbody class="text-end" style="border: 1px solid #000d37;">
+                                    <tr>
+                                        <td style="background: #f64004;color:white;">Sudeste</td>
+                                        <td>{{ $southeastWorksCount }}</td>
+                                        <td>{{ $southeastIndustrialWorks }}</td>
+                                        <td>{{ $southeastComercialWorks }}</td>
+                                        <td>{{ $southeastResidentialWorks }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background: #f64004;color:white;">Sul</td>
+                                        <td>{{ $southWorksCount }}</td>
+                                        <td>{{ $southIndustrialWorks }}</td>
+                                        <td>{{ $southComercialWorks }}</td>
+                                        <td>{{ $southResidentialWorks }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background: #f64004;color:white;">Norte</td>
+                                        <td>{{ $northWorksCount }}</td>
+                                        <td>{{ $northIndustrialWorks }}</td>
+                                        <td>{{ $northComercialWorks }}</td>
+                                        <td>{{ $northResidentialWorks }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background: #f64004;color:white;">Nordeste</td>
+                                        <td>{{ $northeastWorksCount }}</td>
+                                        <td>{{ $northeastIndustrialWorks }}</td>
+                                        <td>{{ $northeastComercialWorks }}</td>
+                                        <td>{{ $northeastResidentialWorks }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background: #f64004;color:white;">Centro-Oeste</td>
+                                        <td>{{ $midwestWorksCount }}</td>
+                                        <td>{{ $midwestIndustrialWorks }}</td>
+                                        <td>{{ $midwestComercialWorks }}</td>
+                                        <td>{{ $midwestResidentialWorks }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
@@ -119,22 +121,3 @@
         </div>
 
 @endsection
-
-
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout> --}}

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="table">
+            <div class="table-responsive">
                 <table class="table table-condensed">
                     <thead class="table-dark">
                         <tr>
@@ -25,15 +25,23 @@
                                 <td>
                                     {{ optional($report->appointment_date)->format('d/m/Y') }}
                                 </td>
-                                <td>{{ $report->work->old_code }}</td>
+                                <td class="text-primary">{{ $report->work->old_code }}</td>
                                 <td>{{ $report->user->name }}</td>
                                 <td>{{ $report->priority }}</td>
                                 <td>{{ $report->status }}</td>
                             </tr>
-                            
+                                                     
                             @if ($report->notes)
                             <tr>
+                                 <th>Descrição</th>
+                            </tr>
+                            
+                            <tr>
                                 <td colspan="6">{{ $report->notes }}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="6" class="text-center pt-1" style="background: #000d37;"></td>
                             </tr>
                             @endif
 
@@ -43,7 +51,7 @@
                                     Nenhum SIG de obras encontrado.
                                 </td>
                             </tr>
-
+                            
                         @endforelse
                     </tbody>
                 </table>

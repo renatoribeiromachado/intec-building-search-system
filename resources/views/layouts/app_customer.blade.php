@@ -210,7 +210,7 @@
          <nav class="navbar navbar-expand-lg navbar-light" style="background: #000d37;">
             <div class="container">
                 <button
-                    class="navbar-toggler"
+                    class="navbar-toggler" style="background: #fff;"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse"
@@ -219,89 +219,10 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
+                    
                     <ul class="navbar-nav">
-                        @can('ver-pesquisas')
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle text-white"
-                                    href="#"
-                                    id="dropdown07XL"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    >
-                                    <i class="fa fa-search"></i> PESQUISAS
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                    @can('ver-pesquisa-de-empresas')
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
-                                                Empresas
-                                            </a>
-                                        </li>
-                                    @endcan
-
-                                    @can('ver-pesquisa-de-obras')
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ route('work.search.step_one.index') }}"
-                                            >
-                                            Obras
-                                        </a>
-                                    </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endcan
-
-                        @can('ver-relatorio')
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle text-white"
-                                    href="#"
-                                    id="dropdown07XL"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    >
-                                    <i class="fa fa-archive"></i> RELATÓRIO
-                                </a>
-                                
-                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            Estamos em atualização
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-
-                        @can('ver-sig')
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle text-white"
-                                    href="#"
-                                    id="dropdown07XL"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    >
-                                    <i class="fa fa-calendar"></i> SIG
-                                </a>
-
-                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ route('sig_works.index') }}"
-                                            >
-                                            SIG / Obras
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-
-                        @can('ver-administrativo')
+                        
+                         @can('ver-administrativo')
                             <li class="nav-item dropdown">
                                 <a
                                     class="nav-link dropdown-toggle text-white"
@@ -394,6 +315,88 @@
                                         </a>
                                     </li>
                                     @endcan
+                                </ul>
+                            </li>
+                        @endcan
+                        
+                        @can('ver-pesquisas')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-white"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-search"></i> PESQUISAS
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    @can('ver-pesquisa-de-empresas')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('company.search.step_one.index') }}">
+                                                Empresas
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('ver-pesquisa-de-obras')
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('work.search.step_one.index') }}"
+                                            >
+                                            Obras
+                                        </a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endcan
+
+                        @can('ver-relatorio')
+                           {{-- <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-white"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-archive"></i> RELATÓRIO
+                                </a>
+                                
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Estamos em atualização
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            --}}
+                        @endcan
+
+                        @can('ver-sig')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-white"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-calendar"></i> RELATÓRIO SIG
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('sig_works.index') }}"
+                                            >
+                                            SIG / Obras
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endcan
