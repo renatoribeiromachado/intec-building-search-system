@@ -193,6 +193,8 @@ class WorkSearchController extends Controller
             $work->last_sig_status = $lastSigStatus;
         }
 
+        $searchParams = $request->query();
+
         return view('layouts.work.search.step_two.index', compact(
             'works',
             'worksChecked',
@@ -204,6 +206,7 @@ class WorkSearchController extends Controller
             'inputSelectAll',
             'statuses',
             'priorities',
+            'searchParams',
         ));
     }
 
@@ -534,7 +537,12 @@ class WorkSearchController extends Controller
     {
         $searchParams = $request->query();
         return Excel::download(
-            new WorkSearchesExport($searchParams),
+            new WorkSearchesExport(
+                $searchParams,
+                $this->work,
+                $this->state,
+                $this->city
+            ),
             'pesquisa-de-obras.xlsx'
         );
     }

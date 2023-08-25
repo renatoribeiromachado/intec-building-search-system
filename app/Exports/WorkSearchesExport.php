@@ -2,7 +2,12 @@
 
 namespace App\Exports;
 
+use App\Models\City;
+use App\Models\State;
 use App\Models\Work;
+use App\Models\WorkFeature;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,30 +17,26 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     const DATE_FORMAT = 'd/m/Y';
+
     protected $searchParams;
+    protected $work;
+    protected $state;
+    protected $city;
+    protected $worksSessionName = 'works_checkboxes';
+    protected $stagesSessionName = 'stages_checkboxes';
+    protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
+    protected $statesSessionName = 'states_checkboxes';
 
-    public function __construct($searchParams)
-    {
+    public function __construct(
+        $searchParams,
+        Work $work,
+        State $state,
+        City $city
+    ) {
         $this->searchParams = $searchParams;
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function returnCompanies($data) {
-        $sql = "SELECT DISTINCT
-                cp.company_name,
-                af.description AS modalidadde
-                FROM companies cp
-                JOIN company_work cw ON cw.company_id = cp.id
-                JOIN works w ON w.id = cw.work_id
-                JOIN activity_field_work afw ON afw.company_id = cp.id
-                JOIN activity_fields af ON af.id = afw.activity_field_id
-                WHERE afw.work_id = $data";
-
-        $results = \DB::select($sql);
-
-        return $results;
+        $this->work = $work;
+        $this->state = $state;
+        $this->city = $city;
     }
 
     /**
@@ -74,43 +75,208 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
     */
     public function collection()
     {
-        return Work::query()
-            // ->when(isset($this->searchParams['_token']), function ($query) {
-            //     return $query->where('_token', $this->searchParams['_token']);
-            // })
-            // ->when(isset($this->searchParams['_method']), function ($query) {
-            //     return $query->where('_method', $this->searchParams['_method']);
-            // })
-            // ->when(isset($this->searchParams['last_review_from']), function ($query) {
-            //     return $query->where('last_review_from', $this->searchParams['last_review_from']);
-            // })
-            // ->when(isset($this->searchParams['last_review_to']), function ($query) {
-            //     return $query->where('last_review_to', $this->searchParams['last_review_to']);
-            // })
-            // ->when(isset($this->searchParams['phases'][0]), function ($query) {
-            //     return $query->where('phase', $this->searchParams['phases'][0]);
-            // })
-            // ->when(isset($this->searchParams['stages']), function ($query) {
-            //     foreach ($this->searchParams['stages'] as $stage) {
-            //         $query->where('stage', $stage);
-            //     }
-            //     return $query;
-            // })
-            // ->when(isset($this->searchParams['investment_standard']), function ($query) {
-            //     return $query->where('investment_standard', $this->searchParams['investment_standard']);
-            // })
-            // ->when(isset($this->searchParams['name']), function ($query) {
-            //     return $query->where('name', $this->searchParams['name']);
-            // })
-            // ->when(isset($this->searchParams['address']), function ($query) {
-            //     return $query->where('address', $this->searchParams['address']);
-            // })
-            // Adicione mais condições aqui para os outros parâmetros
+        $loggedUser = Auth::user();
+        $startedAt = $this->searchParams['last_review_from_1'];
+        $endsAt = $this->searchParams['last_review_to_1'];
+        $name = $this->searchParams['name_1'];
+        $investmentStandard = $this->searchParams['investment_standard_1'];
+        $address = $this->searchParams['address_1'];
+        $oldCode = $this->searchParams['old_code_1'];
+        $district = $this->searchParams['district_1'];
+        $stateAcronym = isset($this->searchParams['state_id'])
+            ? $this->searchParams['state_id']
+            : null;
+        $cityId = isset($this->searchParams['city_id'])
+            ? $this->searchParams['city_id']
+            : null;
+        $participatingCompany = $this->searchParams['participating_company_1'];
+        $qi = $this->searchParams['qi_1'];
+        $price = $this->searchParams['price_1'];
+        $qr = $this->searchParams['qr_1'];
+        $revision = $this->searchParams['revision_1'];
+        $qa = $this->searchParams['qa_1'];
+        $totalArea = $this->searchParams['total_area_1'];
 
-            ->get()
+        $allStateIds = null;
+        $allStatesAcronym = null;
+        if (session()->has($this->statesSessionName) || isset($this->searchParams['states'])) {
+            $allStateIds = session()->has($this->statesSessionName)
+                ? session($this->statesSessionName)
+                : $this->searchParams['states'];
+
+            $states = $this->state
+                ->select('state_acronym')
+                ->whereIn('id', $allStateIds)
+                ->get();
+
+            $allStatesAcronym = $states->pluck('state_acronym');
+        }
+
+        $works = $this->work
+            ->select(
+                'works.*',
+                'phases.description AS phase_description',
+                'stages.description AS stage_description',
+                'segments.description AS segment_description',
+                'segment_sub_types.description AS segment_sub_type_description',
+            )
+            ->join('phases', 'works.phase_id', '=', 'phases.id')
+            ->join('stages', 'works.stage_id', '=', 'stages.id')
+            ->join('segments', 'works.segment_id', '=', 'segments.id')
+            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
+
+        if ($participatingCompany) {
+            $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
+                return $q->where(
+                    'companies.company_name', 'LIKE', '%'.$participatingCompany.'%'
+                );
+            });
+        }
+
+        $allWorkIds = null;
+        if (
+            (session()->has($this->worksSessionName) || isset($this->searchParams['works_selected']))
+            && (! Route::is('work.search.step_two.index'))
+        ) {
+            $allWorkIds = session()->has($this->worksSessionName)
+                ? session($this->worksSessionName)
+                : $this->searchParams['works_selected'];
+            $works = $works->whereIn('works.id', $allWorkIds);
+        }
+
+        if ($allStatesAcronym) {
+            $works = $works->whereIn('works.state', $allStatesAcronym);
+        }
+
+        $allStageIds = null;
+        if (session()->has($this->stagesSessionName) || isset($this->searchParams['stages'])) {
+            $allStageIds = session()->has($this->stagesSessionName)
+                ? session($this->stagesSessionName)
+                : $this->searchParams['stages'];
+            $works = $works->whereIn('stages.id', $allStageIds);
+        }
+
+        $allSegmentSubTypeIds = null;
+        if (session()->has($this->segmentSubTypesSessionName) || isset($this->searchParams['segment_sub_types'])) {
+            $allSegmentSubTypeIds = session()->has($this->segmentSubTypesSessionName)
+                ? session($this->segmentSubTypesSessionName)
+                : $this->searchParams['segment_sub_types'];
+            $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
+        }
+
+        /*Nome da Obra*/
+        if ($name) {
+            $works = $works->where('works.name', 'LIKE', '%'.$name.'%');
+        }
+        
+        /*Padrão investimento*/
+        if ($investmentStandard) {
+            $works = $works->where('works.investment_standard', $investmentStandard);
+        }
+        
+        /*Endereço*/
+        if ($address) {
+            $works = $works->where('works.address', 'LIKE', '%'.$address.'%');
+        }
+        
+        /*Código da obra*/
+        if ($oldCode) {
+            $oldCodes = explode(',', $oldCode); // Transforma a string de códigos em um array
+            $works = $works->whereIn('works.old_code', $oldCodes);
+        }
+        
+        /*Bairro*/
+        if ($district) {
+            $works = $works->where('works.district', 'LIKE', '%'.$district.'%');
+        }
+
+        /*State*/
+        if ($stateAcronym) {
+            $works = $works->where('works.state', '=', $stateAcronym);
+        }
+        
+        /*City*/
+        if ($cityId) {
+            $city = $this->city->findOrFail($cityId);
+            $works = $works->where('works.city', 'LIKE', '%'.$city->description.'%');
+        }
+        
+        /* Investimento */
+        if ($qi && $price !== null) {
+            // Convertendo valor monetário do formato brasileiro para numérico
+            $price = str_replace(['.', ','], ['', '.'], $price);
+
+            $works = $works->where(function($query) use ($qi, $price) {
+                if ($qi == '>') {
+                    $query->where('works.price', '>', $price);
+                } elseif ($qi == '<') {
+                    $query->where('works.price', '<', $price);
+                }
+            });
+        }
+
+        /* Revision */
+        if ($qr && $revision !== null) {
+            $works = $works->where(function($query) use ($qr, $revision) {
+                if ($qr == '>') {
+                    $query->where('works.revision', '>=', $revision);
+                } elseif ($qr == '<') {
+                    $query->where('works.revision', '<=', $revision);
+                }
+            });
+        }
+        
+        /* Área Construída */
+        if ($qa && $totalArea !== null) {
+            $works = $works->where(function($query) use ($qa, $totalArea) {
+                if ($qa == '>') {
+                    $query->where('works.total_area', '>', $totalArea);
+                } elseif ($qa == '<') {
+                    $query->where('works.total_area', '<', $totalArea);
+                }
+            });
+        }
+
+        /**
+         * The associate user only can search works based in the associate period fields:
+         *
+         *  - data_filter_starts_at and;
+         *  - data_filter_ends_at.
+         */
+        $dataFilterStartsAtFinal = $startedAt;
+        $dataFilterEndsAtFinal = $endsAt;
+        if (authUserIsAnAssociate()) {
+            $dataFilterStartsAt1 = $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d');
+            $dataFilterEndsAt1 = $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d');
+
+            // Final criteria initialization.
+            $dataFilterStartsAtFinal = $dataFilterStartsAt1;
+            $dataFilterEndsAtFinal = $dataFilterEndsAt1;
+
+            // Date verification informed by associate members
+            if ($startedAt && $endsAt) {
+
+                // Filter dt ini >= $dataFilterStartsAt1? yes, so it is on the associate period range
+                $dataFilterStartsAtFinal = ($startedAt >= $dataFilterStartsAt1)
+                    ? $startedAt
+                    : $dataFilterStartsAt1;
+
+                // Filter dt end <= $dataFilterEndsAt1? yes, so it is on the associate period range
+                $dataFilterEndsAtFinal = ($endsAt <= $dataFilterEndsAt1)
+                    ? $endsAt
+                    : $dataFilterEndsAt1;
+            }
+        }
+
+        if ($dataFilterStartsAtFinal || $dataFilterEndsAtFinal) {
+            $works = $works->whereBetween(
+                'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
+            );
+        }
+
+        return $works->get()
             ->map(function ($work) {
                 $contacts = $this->returnContacts($work->id);
-                // $companies = $this->returnCompanies($work->id);
                 $companies = $work->companies;
 
                 $contactColumns = [];
@@ -153,6 +319,23 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                         ?? null;
                 }
 
+                // Área de Lazer
+                $workFeatures = (new WorkFeature)
+                    ->orderBy('description', 'asc')
+                    ->get();
+
+                $workFeaturesForSpreadsheet = [];
+                foreach ($workFeatures as $workFeature) {
+                    if ($work->features->contains($workFeature)) {
+                        array_push(
+                            $workFeaturesForSpreadsheet,
+                            $workFeature->description
+                        );
+                    }
+                }
+                $workFeaturesSpliced = implode(', ', $workFeaturesForSpreadsheet);
+                // Fim Área de Lazer
+
                 return [
                     $work->old_code, // Código
                     optional($work->last_review)->format(self::DATE_FORMAT), // Data da última atualização
@@ -162,6 +345,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                     $work->investment_standard, // Padrão de investimento
                     $work->total_project_area, // Área Total do Projeto
                     $work->address, // Endereço
+                    $work->number, // Nº
                     $work->district, // Bairro
                     $work->zip_code, // Cep
                     $work->city, // Cidade
@@ -197,6 +381,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                     $work->frame, // Estrutura
                     $work->completion, // Acabamento
                     $work->facade, // Fachada
+                    $workFeaturesSpliced, // Área de Lazer
                     $work->other_leisure, // Outros Lazer
                     $work->notes, // Descrições Complementares
 
@@ -218,20 +403,17 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                     $contactData["contact_ddd_3"],
                     $contactData["contact_main_phone_3"],
 
-                    // ... (campos de contato restantes)
-                    // Adicione aqui os campos da empresa usando $companyData
                     $companyData["company_company_name_1"],
                     $companyData["company_activity_field_1"], // Modalidade / Atividade
                     $companyData["company_cnpj_1"],
 
                     $companyData["company_company_name_2"],
-                    $companyData["company_activity_field_2"], // Modalidade / Atividade
+                    $companyData["company_activity_field_2"],
                     $companyData["company_cnpj_2"],
 
                     $companyData["company_company_name_3"],
-                    $companyData["company_activity_field_3"], // Modalidade / Atividade
+                    $companyData["company_activity_field_3"],
                     $companyData["company_cnpj_3"],
-                    // ... (campos de empresa restantes)
                 ];
             });
     }
@@ -247,6 +429,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Padrão de investimento',
             'Área Total do Projeto',
             'Endereço',
+            'Nº',
             'Bairro',
             'Cep',
             'Cidade',
@@ -263,8 +446,6 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Cond. de Casas',
             'Nº de Pavimentos',
             'Apart./Salas por Andar',
-            // conferido até aqui
-
             'Dormitórios',
             'Suítes',
             'Banheiros',
@@ -284,10 +465,9 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Estrutura',
             'Acabamento',
             'Fachada',
-            // 'Área de lazer', // HOW WE'LL MUST SHOW IT
+            'Área de lazer',
             'Outros Lazer',
             'Detalhes', // Descrições Complementares
-
 
             /* Contatos */
             'Nome do Contato 1',
