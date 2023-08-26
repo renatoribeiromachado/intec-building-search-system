@@ -247,6 +247,9 @@ Route::middleware(['auth'])->group(function () {
     /*SIG*/
     Route::get('sig-works', [SigController::class, 'index'])->name('sig_works.index');
     Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
+    Route::get('sig/{id}/edit', [SigController::class, 'edit'])->name('sig.edit');
+    Route::put('sig', [SigController::class, 'update'])->name('sig.update');
+    Route::delete('sig/{id}', [SigController::class, 'destroy'])->name('sig.destroy');
     Route::get('sig-works/report', [SigController::class, 'report'])->name('sig_works.report');
     /*Enviar email obras*/
     Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');

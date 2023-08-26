@@ -420,7 +420,7 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="form-label"><strong>Sig(s) cadastrados</strong></label>
-                                <div class="table-responsive" style="overflow: auto; height: 300px;">
+                                <div class="table-responsive" style="overflow: auto; height: 200px;">
                                     <table class="table table-condensed">
                                         <thead class="table-dark">
                                             <tr>
@@ -432,36 +432,39 @@
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
-
+                            
                                         <tbody>
                                             @forelse($reports as $report)
-                                                <tr>
+                                                
+                                                <tr class="report-row" data-work-id="{{ $report->work_id }}">
                                                     <td>
                                                         {{ $report->created_at->format('d/m/Y') }}
                                                     </td>
                                                     <td>
                                                         {{ optional($report->appointment_date)->format('d/m/Y') }}
                                                     </td>
-                                                    <td>{{ $report->work->old_code }}</td>
+                                                    <td class="text-primary"><strong>{{ $report->work->old_code }}</strong></td>
                                                     <td>{{ $report->user->name }}</td>
                                                     <td>{{ $report->priority }}</td>
-                                                    <td>{{ $report->status }}</td>
+                                                    <td class="text-primary"><strong>{{ $report->status }}</strong></td>
                                                 </tr>
 
                                                 @if ($report->notes)
-                                                <tr>
-                                                    <td colspan="6">{{ $report->notes }}</td>
+                                                <tr class="report-row" data-work-id="{{ $report->work_id }}">
+                                                    <td colspan="6"><strong>Descrição:</strong> *{{ $report->notes }}</td>
                                                 </tr>
+                                                
+                                                
                                                 @endif
 
-                                            @empty
+                                                @empty
                                                 <tr>
                                                     <td colspan="6" class="text-center py-4">
                                                         Nenhum SIG de obras encontrado.
                                                     </td>
                                                 </tr>
-
                                             @endforelse
+                                  
                                         </tbody>
                                     </table>
                                 </div>
@@ -617,11 +620,13 @@
                 pesquisarButton.disabled = !peloMenosUmMarcado;
             });
         }
-
+        
+        /*Botão Sig*/
         document.addEventListener('DOMContentLoaded', function () {
             const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
             const modalCode = document.getElementById('modal-code');
             const modalWorkIdInput = document.getElementById('modal-work-id-input');
+
             sigLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -629,9 +634,21 @@
                     const workOldCode = this.getAttribute('data-code');
                     modalCode.textContent = workOldCode;
                     modalWorkIdInput.value = workId;
+
+                    // Filtra as linhas da tabela
+                    const reportRows = document.querySelectorAll('.report-row');
+                    reportRows.forEach(row => {
+                        const reportWorkId = row.getAttribute('data-work-id');
+                        if (reportWorkId === workId) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
                 });
             });
         });
+
         
         /*Desabilita o botão pesquisar somente qdo um check ou mais estiver checado - 17/08/2023 - Renato Machado*/
         const checkboxSearch = document.querySelectorAll('input[type="checkbox"]');

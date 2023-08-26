@@ -9,6 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SigController extends Controller
 {
@@ -115,6 +116,8 @@ class SigController extends Controller
      */
     public function report(Request $request)
     {
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
         $query = $this->sig->select(
             'id', 'user_id', 'work_id', 'appointment_date',
@@ -171,6 +174,56 @@ class SigController extends Controller
 
         return view('layouts.sig_works.report.index', [
             'reports' => $reports,
+            'statuses' => $statuses,
+            'priorities' => $priorities
         ]);
+    }
+    
+    /**
+     * Update register by id
+     *
+     * @param  \App\Http\Requests\StoreUpdateProduct  $request
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $formattedAppointmentDate = \Carbon\Carbon::createFromFormat('d/m/Y', $request->appointment_date)->format('Y-m-d');
+
+        $data = $request->all();
+        
+        //dd($data);
+        $data['appointment_date'] = $formattedAppointmentDate;
+
+        if (!$sig = $this->sig->find($request->id)) {
+            return redirect()->back();
+        }
+
+        $sig->update($data);
+
+        session()->flash('success', 'Editado com sucesso.');
+
+        return redirect()->back();
+    }
+
+    
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //dd($id);
+        if (!$sig = $this->sig->find($id)) {
+            return redirect()->back();
+        }
+
+        $sig->delete();
+        session()->flash('success', 'Deletado com sucesso.');
+
+        return redirect()->back();
     }
 }

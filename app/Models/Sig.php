@@ -30,7 +30,7 @@ class Sig extends Model
         'appointment_date',
         'priority',
         'status',
-        'note',
+        'notes',
         'created_by',
         'updated_by',
     ];
