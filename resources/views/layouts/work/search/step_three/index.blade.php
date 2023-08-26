@@ -480,7 +480,7 @@
                                 {{ optional($contact->position)->description }}
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
-                                {{ optional($contact->company)->company_name }}
+                                {{ optional($contact->company)->trading_name }}
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 @if ($contact->ddd && $contact->main_phone)

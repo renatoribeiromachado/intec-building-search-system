@@ -427,6 +427,7 @@
                                     input-name="participating_company"
                                     class-one=""
                                     label-class=""
+                                    placeholder="Digite a Fantasia da Empresa"
                                     input-value="{{ old('participating_company') }}"
                                     :input-readonly="false"
                                 />

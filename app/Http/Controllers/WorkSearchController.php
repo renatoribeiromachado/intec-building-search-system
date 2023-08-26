@@ -285,6 +285,7 @@ class WorkSearchController extends Controller
 
     private function getFilteredWorks(Request $request)
     {
+        
         $loggedUser = Auth::user();
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
@@ -332,9 +333,10 @@ class WorkSearchController extends Controller
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         if ($participatingCompany) {
+            //dd($participatingCompany);
             $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
                 return $q->where(
-                    'companies.company_name', 'LIKE', '%'.$participatingCompany.'%'
+                    'companies.trading_name', 'LIKE', '%'.$participatingCompany.'%'
                 );
             });
         }

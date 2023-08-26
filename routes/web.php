@@ -263,10 +263,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
         /*12/058/2023 - Renato Machado*/
         Route::get('excel', [WorkController::class, 'exportExcel'])->name('work.exportExcel');
-
         Route::post('export', [WorkController::class, 'export'])->name('work.export');
-
-
 
         Route::put('bind-companies/{work}', [WorkController::class, 'bindCompanies'])->name('work.bind.companies');
         Route::delete(
