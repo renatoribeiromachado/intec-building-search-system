@@ -336,7 +336,7 @@ class WorkSearchController extends Controller
             //dd($participatingCompany);
             $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
                 return $q->where(
-                    'companies.trading_name', 'LIKE', '%'.$participatingCompany.'%'
+                    'companies.trading_name', $participatingCompany
                 );
             });
         }
