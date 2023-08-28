@@ -285,7 +285,9 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             );
         }
 
-        return $works->get()
+        return $works
+            ->limit(500)
+            ->get()
             ->map(function ($work) {
                 $contacts = $this->returnContacts($work->id);
                 $companies = $work->companies;
