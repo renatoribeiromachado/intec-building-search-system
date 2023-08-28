@@ -54,13 +54,10 @@ class CompanySearchController extends Controller
 
         $authUser = Auth::user();
 
-        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER ||
-            $authUser->role->slug == Associate::ASSOCIATE_USER) {
+        if (authUserIsAnAssociate()) {
 
-            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
-            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+            $statesVisible = session('statesVisible');
+            $segmentSubTypesVisible = session('segmentSubTypesVisible');
 
             $statesOne = $this->state
                 ->where('zone_id', 1)
@@ -218,6 +215,8 @@ class CompanySearchController extends Controller
     public function getFilteredCompanies(Request $request)
     {
         $loggedUser = Auth::user();
+        $startedAt = $request->last_review_from;
+        $endsAt = $request->last_review_to;
         $activityFields = $request->activity_fields;
         $tradingName = $request->trading_name;
         $companyName = $request->company_name;
@@ -301,6 +300,43 @@ class CompanySearchController extends Controller
         if ($cityId) {
             $city = $this->city->findOrFail($cityId);
             $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
+        }
+        
+        /**
+         * The associate user only can search works based in the associate period fields:
+         *
+         *  - data_filter_starts_at and;
+         *  - data_filter_ends_at.
+         */
+        $dataFilterStartsAtFinal = $startedAt;
+        $dataFilterEndsAtFinal = $endsAt;
+        if (authUserIsAnAssociate()) {
+            $dataFilterStartsAt1 = $loggedUser->contact->company->associate->data_filter_starts_at->format('Y-m-d');
+            $dataFilterEndsAt1 = $loggedUser->contact->company->associate->data_filter_ends_at->format('Y-m-d');
+
+            // Final criteria initialization.
+            $dataFilterStartsAtFinal = $dataFilterStartsAt1;
+            $dataFilterEndsAtFinal = $dataFilterEndsAt1;
+
+            // Date verification informed by associate members
+            if ($startedAt && $endsAt) {
+
+                // Filter dt ini >= $dataFilterStartsAt1? yes, so it is on the associate period range
+                $dataFilterStartsAtFinal = ($startedAt >= $dataFilterStartsAt1)
+                    ? $startedAt
+                    : $dataFilterStartsAt1;
+
+                // Filter dt end <= $dataFilterEndsAt1? yes, so it is on the associate period range
+                $dataFilterEndsAtFinal = ($endsAt <= $dataFilterEndsAt1)
+                    ? $endsAt
+                    : $dataFilterEndsAt1;
+            }
+        }
+
+        if ($dataFilterStartsAtFinal || $dataFilterEndsAtFinal) {
+            $companies = $companies->whereBetween(
+                'companies.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
+            );
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);

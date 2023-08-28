@@ -15,6 +15,28 @@
             <form action="{{ route('company.search.step_two.index') }}" id="formulario" method="get">
                 @csrf
                 @method('GET')
+                
+                <div class="row mt-2 bg-light border">
+                    <div class="col-md-12 pt-3">
+                        <p class="text-uppercase">
+                            <i class="fa fa-search"></i> <strong>Busca por Período</strong> <code>* entre Datas</code>
+                        </p>
+                        <hr>
+                    </div>
+                    <div class="col-md-6 pb-5">
+                        <label for="last_review_from" class="control-label">
+                            <strong>Data Inicial</strong>
+                        </label>
+                        <input type="text" name="last_review_from" class="date form-control datepicker " value placeholder="Data Inicial..." />
+                    </div>
+                    <div class="col-md-6 pb-5">
+                        <label for="last_review_to" class="control-label">
+                            <strong>Data Final</strong>
+                        </label>
+                        <input type="text" name="last_review_to" class="date form-control datepicker " value placeholder="Data Final..." />
+                    </div>
+                </div>
+                
 
                 @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
                     $statesFour->count() + $statesFive->count()) > 0)

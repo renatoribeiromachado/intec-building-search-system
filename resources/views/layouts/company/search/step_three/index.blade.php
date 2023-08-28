@@ -142,7 +142,7 @@
                     @foreach($company->contacts as $contact)
                         <tr>
                             <td class="pt-2">
-                                <strong>Contato:</strong> ({{ $contact->name }})<br>
+                                <strong>Contato:</strong> {{ $contact->name }}<br>
                                 <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
                                 <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
                             </td>
