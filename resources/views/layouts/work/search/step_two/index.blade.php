@@ -343,7 +343,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8">
+                    <td colspan="@can('ver-sig') 10 @else 8 @endcan">
                         <p class="text-center mb-0 py-4">
                             Nenhum registro de obra encontrado.
                         </p>

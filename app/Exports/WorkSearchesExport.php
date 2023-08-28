@@ -76,6 +76,9 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         $loggedUser = Auth::user();
+        $statesVisible = session('statesVisible');
+        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
+
         $startedAt = $this->searchParams['last_review_from_1'];
         $endsAt = $this->searchParams['last_review_to_1'];
         $name = $this->searchParams['name_1'];
@@ -97,20 +100,28 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         $qa = $this->searchParams['qa_1'];
         $totalArea = $this->searchParams['total_area_1'];
 
+        // Region filters
         $allStateIds = null;
         $allStatesAcronym = null;
+        $states = $this->state->select('state_acronym');
+
         if (session()->has($this->statesSessionName) || isset($this->searchParams['states'])) {
             $allStateIds = session()->has($this->statesSessionName)
                 ? session($this->statesSessionName)
                 : $this->searchParams['states'];
-
-            $states = $this->state
-                ->select('state_acronym')
-                ->whereIn('id', $allStateIds)
-                ->get();
-
-            $allStatesAcronym = $states->pluck('state_acronym');
         }
+
+        // this session exists only for associate manager or associate user
+        if (session()->has('statesVisible') && isset($allStateIds)) {
+            $states = $states->whereIn('id', $allStateIds);
+        }
+
+        if (session()->has('statesVisible') && (! isset($allStateIds))) {
+            $states = $states->whereIn('id', $statesVisible);
+        }
+
+        $allStatesAcronym = $states->get()->pluck('state_acronym');
+        // Ends Region filters
 
         $works = $this->work
             ->select(

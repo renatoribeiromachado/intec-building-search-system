@@ -34,14 +34,14 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-        $user = Auth::user();
+        $authUser = Auth::user();
 
-        if ($user->is_active == self::IT_IS_ACTIVE) {
+        if ($authUser->is_active == self::IT_IS_ACTIVE) {
 
             if (
-                $user->contact()->exists() &&
-                $user->contact->company()->exists() &&
-                ($user->contact->company->is_active == self::IT_IS_NOT_ACTIVE)
+                $authUser->contact()->exists() &&
+                $authUser->contact->company()->exists() &&
+                ($authUser->contact->company->is_active == self::IT_IS_NOT_ACTIVE)
             ) {
                 Auth::guard('web')->logout();
             
@@ -56,10 +56,10 @@ class AuthenticatedSessionController extends Controller
 
             // // valid for associate managers and common associate users
             // if (
-            //     $user->contact()->exists() &&
-            //     $user->contact->company()->exists() &&
-            //     $user->contact->company->associate()->exists() &&
-            //     ($user->is_active == self::IT_IS_NOT_ACTIVE)
+            //     $authUser->contact()->exists() &&
+            //     $authUser->contact->company()->exists() &&
+            //     $authUser->contact->company->associate()->exists() &&
+            //     ($authUser->is_active == self::IT_IS_NOT_ACTIVE)
             // ) {
             //     Auth::guard('web')->logout();
             
@@ -72,21 +72,31 @@ class AuthenticatedSessionController extends Controller
             //     return redirect()->route('login');
             // }
 
+            // Check user plan and set his restrictions
+            if (authUserIsAnAssociate()) {
+                $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
+                $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+
+                request()->session()->put('statesVisible', $statesVisible);
+                request()->session()->put('segmentSubTypesVisible', $segmentSubTypesVisible);
+            }
+
+            $theUserIsActiveAndIsAnAssociate = (
+                $authUser->contact()->exists() &&
+                $authUser->contact->company()->exists() &&
+                $authUser->contact->company->associate()->exists() &&
+                ($authUser->is_active == self::IT_IS_ACTIVE)
+            );
+
             if (
-                $user->contact()->exists() &&
-                $user->contact->company()->exists() &&
-                $user->contact->company->associate()->exists() &&
-                ($user->is_active == self::IT_IS_ACTIVE) &&
+                $theUserIsActiveAndIsAnAssociate &&
                 (Auth::user()->role->slug == Associate::ASSOCIATE_MANAGER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
 
             if (
-                $user->contact()->exists() &&
-                $user->contact->company()->exists() &&
-                $user->contact->company->associate()->exists() &&
-                ($user->is_active == self::IT_IS_ACTIVE) &&
+                $theUserIsActiveAndIsAnAssociate &&
                 (Auth::user()->role->slug == Associate::ASSOCIATE_USER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);

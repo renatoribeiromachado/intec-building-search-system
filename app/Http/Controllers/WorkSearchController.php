@@ -64,13 +64,10 @@ class WorkSearchController extends Controller
 
         $authUser = Auth::user();
 
-        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER ||
-            $authUser->role->slug == Associate::ASSOCIATE_USER) {
+        if (authUserIsAnAssociate()) {
 
-            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
-            $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
-            $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+            $statesVisible = session('statesVisible');
+            $segmentSubTypesVisible = session('segmentSubTypesVisible');
             
             $statesOne = $this->state
                 ->where('zone_id', 1)
@@ -285,8 +282,10 @@ class WorkSearchController extends Controller
 
     private function getFilteredWorks(Request $request)
     {
-        
         $loggedUser = Auth::user();
+        $statesVisible = session('statesVisible');
+        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
+
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
         $name = $request->name;
@@ -306,18 +305,24 @@ class WorkSearchController extends Controller
 
         $allStateIds = null;
         $allStatesAcronym = null;
+        $states = $this->state->select('state_acronym');
+
         if (session()->has($this->statesSessionName) || $request->states) {
             $allStateIds = session()->has($this->statesSessionName)
                 ? session($this->statesSessionName)
                 : $request->states;
-
-            $states = $this->state
-                ->select('state_acronym')
-                ->whereIn('id', $allStateIds)
-                ->get();
-
-            $allStatesAcronym = $states->pluck('state_acronym');
         }
+
+        // this session exists only for associate manager or associate user
+        if (session()->has('statesVisible') && isset($allStateIds)) {
+            $states = $states->whereIn('id', $allStateIds);
+        }
+
+        if (session()->has('statesVisible') && (! isset($allStateIds))) {
+            $states = $states->whereIn('id', $statesVisible);
+        }
+
+        $allStatesAcronym = $states->get()->pluck('state_acronym');
 
         $works = $this->work
             ->select(
@@ -333,7 +338,6 @@ class WorkSearchController extends Controller
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
         if ($participatingCompany) {
-            //dd($participatingCompany);
             $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
                 return $q->where(
                     'companies.trading_name', $participatingCompany
