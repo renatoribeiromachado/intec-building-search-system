@@ -215,6 +215,8 @@ class CompanySearchController extends Controller
     public function getFilteredCompanies(Request $request)
     {
         $loggedUser = Auth::user();
+        $statesVisible = session('statesVisible');
+        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
         $activityFields = $request->activity_fields;
@@ -228,20 +230,31 @@ class CompanySearchController extends Controller
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
 
+        // State filter
         $allStateIds = null;
         $allStatesAcronym = null;
+        $states = $this->state->select('state_acronym');
+
         if (session()->has($this->statesSessionName) || $request->states) {
             $allStateIds = session()->has($this->statesSessionName)
                 ? session($this->statesSessionName)
                 : $request->states;
-
-            $states = $this->state
-                ->select('state_acronym')
-                ->whereIn('id', $allStateIds)
-                ->get();
-
-            $allStatesAcronym = $states->pluck('state_acronym');
         }
+
+        // this session exists only for associate manager or associate user
+        if (session()->has('statesVisible') && isset($allStateIds)) {
+            dump('Aqui');
+            $states = $states->whereIn('id', $allStateIds);
+        }
+
+        if (session()->has('statesVisible') && (! isset($allStateIds))) {
+            dump('Aqui 2');
+            dump($statesVisible);
+            $states = $states->whereIn('id', $statesVisible->toArray());
+        }
+
+        $allStatesAcronym = $states->pluck('state_acronym');
+        // Ends State filter
 
         $companies = $this->company;
 
