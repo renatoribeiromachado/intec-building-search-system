@@ -284,8 +284,7 @@ class WorkSearchController extends Controller
     {
         $loggedUser = Auth::user();
         $statesVisible = session('statesVisible');
-        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
-
+        $segmentSubTypesVisible = session('segmentSubTypesVisible');
         $startedAt = $request->last_review_from;
         $endsAt = $request->last_review_to;
         $name = $request->name;
@@ -368,13 +367,24 @@ class WorkSearchController extends Controller
             $works = $works->whereIn('stages.id', $allStageIds);
         }
 
+        // Segment Sub Types filters
         $allSegmentSubTypeIds = null;
         if (session()->has($this->segmentSubTypesSessionName) || $request->segment_sub_types) {
             $allSegmentSubTypeIds = session()->has($this->segmentSubTypesSessionName)
                 ? session($this->segmentSubTypesSessionName)
                 : $request->segment_sub_types;
-            $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
+
+        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
+            $works = $works
+                ->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
+        }
+        
+        if (session()->has('segmentSubTypesVisible') && (! isset($allSegmentSubTypeIds))) {
+            $works = $works
+                ->whereIn('segment_sub_types.id', $segmentSubTypesVisible->toArray());
+        }
+        // Ends Segment Sub Types filters
 
         /*Nome da Obra*/
         if ($name) {

@@ -77,8 +77,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
     {
         $loggedUser = Auth::user();
         $statesVisible = session('statesVisible');
-        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
-
+        $segmentSubTypesVisible = session('segmentSubTypesVisible');
         $startedAt = $this->searchParams['last_review_from_1'];
         $endsAt = $this->searchParams['last_review_to_1'];
         $name = $this->searchParams['name_1'];
@@ -167,13 +166,23 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             $works = $works->whereIn('stages.id', $allStageIds);
         }
 
+        // Segment Sub Types filters
         $allSegmentSubTypeIds = null;
         if (session()->has($this->segmentSubTypesSessionName) || isset($this->searchParams['segment_sub_types'])) {
             $allSegmentSubTypeIds = session()->has($this->segmentSubTypesSessionName)
                 ? session($this->segmentSubTypesSessionName)
                 : $this->searchParams['segment_sub_types'];
+        }
+
+        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
+        
+        if (session()->has('segmentSubTypesVisible') && (! isset($allSegmentSubTypeIds))) {
+            $works = $works
+                ->whereIn('segment_sub_types.id', $segmentSubTypesVisible->toArray());
+        }
+        // Ends Segment Sub Types filters
 
         /*Nome da Obra*/
         if ($name) {
