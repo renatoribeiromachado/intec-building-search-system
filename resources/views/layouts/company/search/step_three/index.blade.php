@@ -143,6 +143,7 @@
                         <tr>
                             <td class="pt-2">
                                 <strong>Contato:</strong> {{ $contact->name }}<br>
+                                <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
                                 <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
                                 <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
                             </td>
