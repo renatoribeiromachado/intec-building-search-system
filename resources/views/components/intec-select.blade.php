@@ -7,7 +7,7 @@
         @endif
         @if(! \Route::is('work.search.step_one.index')
             && ! \Route::is('company.search.step_one.index'))
-        <strong>{{ $selectLabel }} 2</strong>
+        <strong>{{ $selectLabel }}</strong>
         @endif
         {{-- @if(isset($required) && ($required == true))
         <span class="required-field">*</span>

@@ -144,7 +144,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             <p class="text-center mb-0 py-4">
                                 Nenhum registro de empresa encontrado.
                             </p>
