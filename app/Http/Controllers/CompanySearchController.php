@@ -216,9 +216,8 @@ class CompanySearchController extends Controller
     {
         $loggedUser = Auth::user();
         $statesVisible = session('statesVisible');
-        // $segmentSubTypesVisible = session('segmentSubTypesVisible');
-        $startedAt = $request->last_review_from;
-        $endsAt = $request->last_review_to;
+        $startedAt = convertPtBrDateToEnDate($request->last_review_from);
+        $endsAt = convertPtBrDateToEnDate($request->last_review_to);
         $activityFields = $request->activity_fields;
         $tradingName = $request->trading_name;
         $companyName = $request->company_name;
@@ -253,7 +252,7 @@ class CompanySearchController extends Controller
         $allStatesAcronym = $states->pluck('state_acronym');
         // Ends State filter
 
-        $companies = $this->company;
+        $companies = $this->company->select('companies.*');
 
         $allCompanyIds = null;
         if (
@@ -263,7 +262,7 @@ class CompanySearchController extends Controller
             $allCompanyIds = session()->has($this->companiesSessionName)
                 ? session($this->companiesSessionName)
                 : $request->companies_selected;
-            // $allCompanyIds = $request->companies_selected;
+
             $companies = $companies->whereIn('companies.id', $allCompanyIds);
         }
 
