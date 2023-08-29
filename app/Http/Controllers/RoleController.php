@@ -103,7 +103,6 @@ class RoleController extends Controller
 
     public function permissions(Request $request, Role $role)
     {
-        // dd($role);
         $role = $this->role->findOrFail($request->id);
         $permissions = $this->permission->orderBy('id', 'desc')->get();
 

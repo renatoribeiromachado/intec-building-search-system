@@ -193,7 +193,6 @@ class SigController extends Controller
 
         $data = $request->all();
         
-        //dd($data);
         $data['appointment_date'] = $formattedAppointmentDate;
 
         if (!$sig = $this->sig->find($request->id)) {
@@ -216,7 +215,6 @@ class SigController extends Controller
      */
     public function destroy($id)
     {
-        //dd($id);
         if (!$sig = $this->sig->find($id)) {
             return redirect()->back();
         }

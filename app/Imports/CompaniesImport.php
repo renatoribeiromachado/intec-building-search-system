@@ -15,11 +15,6 @@ class CompaniesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        // dd(
-        //     $row['atualizacao'],
-        //     \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['atualizacao']))
-        // );
-        // exit;
         return new Company([
             'researcher_id' => null,
             'activity_field_id' => $this->findActivityFieldId($row['descricaoatividade']),

@@ -243,13 +243,10 @@ class CompanySearchController extends Controller
 
         // this session exists only for associate manager or associate user
         if (session()->has('statesVisible') && isset($allStateIds)) {
-            dump('Aqui');
             $states = $states->whereIn('id', $allStateIds);
         }
 
         if (session()->has('statesVisible') && (! isset($allStateIds))) {
-            dump('Aqui 2');
-            dump($statesVisible);
             $states = $states->whereIn('id', $statesVisible->toArray());
         }
 

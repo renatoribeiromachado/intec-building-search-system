@@ -94,7 +94,6 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        // dd($request->all());
         $work = $this->work;
         $work->old_code = $request->old_code;
         $work->last_review = convertPtBrDateToEnDate($request->last_review);
