@@ -108,28 +108,27 @@
                     <tr>
                         <td style="width:78% !important;">
                             <strong>Razão Social:</strong>  {{ $company->company_name }}<br>
-                            <strong>Fantasia:</strong>  {{ $company->trading_name }}<br>
-
+                          
                             <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }}<br>
 
                             <strong>Cidade:</strong> {{ $company->city }}<br>
 
-                            <strong>CEP:</strong> {{ $company->zip_code }}<br>
-
                             <strong>Segmento:</strong> {{ optional($company->activityField)->description }}<br>
-
-                            <strong>E-mail:</strong> {{ $company->primary_email }} <br>
+                            
+                            <strong>CNPJ:</strong> {{ $company->cnpj }}<br>
                         </td>
                         <td>
+                            <strong>Fantasia:</strong>  {{ $company->trading_name }}<br>
+                            
                             <strong>Bairro</strong>: {{ $company->district }}<br>
 
-                            <strong>Estado:</strong> {{ $company->state }}<br>
-
-                            <strong>CNPJ:</strong> {{ $company->cnpj }}<br>
+                            <strong>Estado:</strong> {{ $company->state }} <strong>CEP:</strong> {{ $company->zip_code }}<br>
 
                             <strong>Site:</strong> {{ $company->home_page }}<br>
+                            
+                            <strong>E-mail 1:</strong> <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a><br>
 
-                            <strong>E-mail Secundário:</strong> {{ $company->secondary_email }}<br>
+                            <strong>E-mail 2:</strong> <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a><br>
                         </td>
                     </tr>
 
@@ -141,16 +140,18 @@
 
                     @foreach($company->contacts as $contact)
                         <tr>
-                            <td class="pt-2">
+                            <td class="pt-3">
                                 <strong>Contato:</strong> {{ $contact->name }}<br>
                                 <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
                                 <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
                                 <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
-                            </td>
-                            <td class="pb-2">
                                 <strong>Telefone 3:</strong> ({{ $contact->ddd_three }}) {{ $contact->phone_three }}<br>
                                 <strong>Telefone 4:</strong> ({{ $contact->ddd_four }}) {{ $contact->phone_four }}<br>
-                                <strong>E-mail:</strong> <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a><br>
+                            </td>
+                            <td class="pt-3">
+                                <strong>E-mail 1:</strong> <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a><br>
+                                <strong>E-mail 2:</strong> <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a><br>
+                                <strong>E-mail 3:</strong> <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a><br>
                             </td>
                         </tr>
                     @endforeach
