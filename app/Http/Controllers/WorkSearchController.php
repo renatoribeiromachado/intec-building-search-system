@@ -390,7 +390,7 @@ class WorkSearchController extends Controller
                 : $request->segment_sub_types;
         }
 
-        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
+        if ((! session()->has('segmentSubTypesVisible')) && isset($allSegmentSubTypeIds)) {
             $works = $works
                 ->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
@@ -398,6 +398,18 @@ class WorkSearchController extends Controller
         if (session()->has('segmentSubTypesVisible') && (! isset($allSegmentSubTypeIds))) {
             $works = $works
                 ->whereIn('segment_sub_types.id', $segmentSubTypesVisible->toArray());
+        }
+
+        // this filter covers the situation where the associate manager or associate user
+        // has selected at least one segment subtype
+        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
+            $segmentSubTypeToSearch = [];
+            foreach ($segmentSubTypesVisible as $segmentSubTypeVisible) {
+                if (in_array($segmentSubTypeVisible, $allSegmentSubTypeIds)) {
+                    array_push($segmentSubTypeToSearch, $segmentSubTypeVisible);
+                }
+            }
+            $works = $works->whereIn('segment_sub_types.id', $segmentSubTypeToSearch);
         }
         // Ends Segment Sub Types filters
 
