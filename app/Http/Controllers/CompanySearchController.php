@@ -240,13 +240,26 @@ class CompanySearchController extends Controller
                 : $request->states;
         }
 
-        // this session exists only for associate manager or associate user
-        if (session()->has('statesVisible') && isset($allStateIds)) {
+        if ((! session()->has('statesVisible')) && isset($allStateIds)) {
             $states = $states->whereIn('id', $allStateIds);
         }
 
+        // the session 'statesVisible' exists only for associate manager or associate user,
+        // this filter covers the situation where the user hasn't selected any states
         if (session()->has('statesVisible') && (! isset($allStateIds))) {
-            $states = $states->whereIn('id', $statesVisible->toArray());
+            $states = $states->whereIn('id', $statesVisible);
+        }
+
+        // this filter covers the situation where the associate manager or associate user
+        // has selected at least one state
+        if (session()->has('statesVisible') && isset($allStateIds)) {
+            $statesToSearch = [];
+            foreach (session('statesVisible') as $stateVisible) {
+                if (in_array($stateVisible, $allStateIds)) {
+                    array_push($statesToSearch, $stateVisible);
+                }
+            }
+            $states = $states->whereIn('id', $statesToSearch);
         }
 
         $allStatesAcronym = $states->pluck('state_acronym');
