@@ -32,6 +32,7 @@ class Contact extends Model
         'phone_type_two',
         'phone_type_three',
         'is_active',
+        'archived',
         'created_by',
         'updated_by',
     ];

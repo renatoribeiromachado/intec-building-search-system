@@ -133,4 +133,34 @@ trait ContactActionsTrait
 
         return redirect()->back();
     }
+
+    public function archiveContact(Request $request, Contact $contact)
+    {
+        try {
+            DB::beginTransaction();
+
+            if (! is_null($contact->user)) {
+                $user = $contact->user;
+                $user->is_active = false;
+                $user->save();
+            }
+
+            $contact->archived = true;
+            $contact->save();
+
+            DB::commit();
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors(['message' => $ex->getMessage()]);
+        }
+
+        session()->flash('success', 'Contato arquivado.');
+
+        return redirect()->back();
+    }
 }

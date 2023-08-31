@@ -42,7 +42,7 @@
                 <h2 class="mb-4">Contatos</h2>
                 <div class="row">
                     <a class="invisible" name="contacts-section"></a>
-                    @foreach ($company->contacts()->get() as $contact)
+                    @foreach ($company->contacts()->where('contacts.archived', false)->get() as $contact)
                         <div class="col-3 mb-3">
                             <div class="card rounded-3" style="width: 18rem;">
                                 <div class="card-body">
@@ -122,6 +122,14 @@
                                             class="btn btn-outline-danger d-inline-block"
                                             >Excluir
                                         </button>
+                                        
+                                        <button
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#archiveContact{{$loop->index}}"
+                                            class="btn btn-outline-dark d-inline-block"
+                                            >
+                                            Arquivar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -130,6 +138,8 @@
                         @include('layouts.position.modals.edit_contact_modal')
 
                         @include('layouts.position.modals.delete_contact_modal')
+
+                        @include('layouts.position.modals.archive_contact_modal')
                     @endforeach
                 </div>
             </div>

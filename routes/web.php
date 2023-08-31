@@ -64,6 +64,10 @@ Route::middleware(['auth'])->group(function () {
             'destroy/{contact}',
             [CompanyController::class, 'destroyContact']
         )->name('company.contact.destroy');
+        Route::delete(
+            'archive/{contact}',
+            [CompanyController::class, 'archiveContact']
+        )->name('company.contact.archive');
 
         Route::post('import-companies', [CompanyController::class, 'importCompanies'])->name('company.import');
         // Route::post('import-companies', function () {
