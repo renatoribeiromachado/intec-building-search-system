@@ -167,16 +167,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <x-intec-input
-                                    label-input-id="trading_name"
+                                    label-input-id="autocomplete-input"
                                     label-text="Nome Fantasia"
                                     input-type="text"
-                                    input-name="trading_name"
+                                    input-name="search"
                                     class-one=""
                                     label-class=""
                                     input-value=""
                                     :input-readonly="false"
-                                    placeholder=""
+                                    placeholder="Digite a Fantasia da Empresa"
                                 />
+                                <ul id="autocomplete-list" class="autocomplete-list"></ul>
                             </div>
                         </div>
 
@@ -239,15 +240,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <x-intec-input
-                                    label-input-id="company_name"
+                                    label-input-id="autocomplete-input-rz"
                                     label-text="Razão Social"
                                     input-type="text"
-                                    input-name="company_name"
+                                    input-name="searchCompany"
                                     class-one=""
                                     label-class=""
                                     input-value=""
                                     :input-readonly="false"
+                                    placeholder="Digite a Razão Social da Empresa"
                                 />
+                                <ul id="autocomplete-list-rz" class="autocomplete-list"></ul>
                             </div>
                         </div>
                         <div class="row mt-2">

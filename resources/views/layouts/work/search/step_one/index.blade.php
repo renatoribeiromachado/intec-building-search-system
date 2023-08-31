@@ -435,37 +435,6 @@
                             </div>
                         </div>
                         
-                        <style>
-                            /*auto complete clientes*/
-                             .autocomplete-list {
-                                    position: absolute;
-                                    z-index: 1000;
-                                    background-color: #fff;
-                                    border: 1px solid #ccc;
-                                    width: auto;
-                                    max-height: 200px;
-                                    overflow-y: auto;
-                                    list-style: none;
-                                    padding: 0;
-                                    margin: 0;
-                                }
-
-                                .autocomplete-list li {
-                                    padding: 8px;
-                                    cursor: pointer;
-                                    transition: background-color 0.2s;
-                                }
-
-                                .autocomplete-list li:hover {
-                                    background-color: #f5f5f5;
-                                }
-
-                                #autocomplete-input {
-                                    position: relative;
-                                }
-                            </style>
-
-
                         {{--<div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label"> Descrição</label>

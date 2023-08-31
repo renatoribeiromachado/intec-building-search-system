@@ -20,7 +20,6 @@
 
         <style>
             /* Show it is fixed to the top 123 */
-
             .menu_bg{
                 background:#000742;
             }
@@ -182,12 +181,52 @@
             .navbar-nav .nav-item.dropdown:hover .nav-link {
                 color: white; /* Cor do texto ao passar o mouse */
             }
+     
+            /*Auto-complete Obras/empresas*/
+             .autocomplete-list {
+                position: absolute;
+                z-index: 1000;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                width: auto;
+                max-height: 200px;
+                overflow-y: auto;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .autocomplete-list li {
+                padding: 8px;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            .autocomplete-list li:hover {
+                background-color: #f5f5f5;
+            }
+
+            #autocomplete-input {
+                position: relative;
+            }
+            
+            .footer {
+                text-align: center;
+                color:white;
+                padding: 20px;
+                background-color: #000d37;
+            }
+
+            .social-icons {
+                font-size: 24px;
+                margin: 0 10px;
+                color: #fff;
+            }
         </style>
 
         @stack('styles')
     </head>
     <body style="background: #fff">
-
 
         <header class="bg-dark text-white py-3 parallax">
             <div class="container d-flex justify-content-between align-items-center">
@@ -443,21 +482,6 @@
             Fale Conosco no WhatsApp
         </a>
 
-        <style>
-            .footer {
-                text-align: center;
-                color:white;
-                padding: 20px;
-                background-color: #000d37;
-            }
-
-            .social-icons {
-                font-size: 24px;
-                margin: 0 10px;
-                color: #fff;
-            }
-        </style>
-
         <footer class="footer mt-5">
             <div class="container">
                 <div class="row">
@@ -476,7 +500,7 @@
                         <p>Entre em contato:<br>
                             contato@intecbrasil.com.br<br>
                             (11) 4659-0013<br>
-                            Rua Alencar Araripe, 985, Sacomã - São Paulo - SP</p>
+                            Rua Alencar Araripe, 985 - Sacomã - São Paulo - SP</p>
                     </div>
 
                 </div>
@@ -576,7 +600,7 @@
                 return url;
             };
             
-            /*Aut-complete empresa participante obras - Renato Machado 30/08/2023*/
+            /*Auto-complete Obras/Empresas - Renato Machado 31/08/2023*/
             const autocompleteInput = document.getElementById('autocomplete-input');
             const autocompleteList = document.getElementById('autocomplete-list');
 
@@ -622,8 +646,56 @@
                 autocompleteList.innerHTML = '';
                 autocompleteList.style.display = 'none';
             }
-        </script>
+            
+            /*Auto-complete Empresas (Razão social) - Renato Machado 31/08/2023*/
+            const autocompleteInputRz = document.getElementById('autocomplete-input-rz');
+            const autocompleteListRz = document.getElementById('autocomplete-list-rz');
 
+                autocompleteInputRz.addEventListener('input', async (event) => {
+                    const query = event.target.value;
+                    if (query.length >= 1) {
+                        const companies = await fetchCompaniesRz(query);
+                        updateAutocompleteRz(companies);
+                    } else {
+                        clearAutocompleteListRz();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!autocompleteInputRz.contains(event.target)) {
+                        clearAutocompleteListRz();
+                    }
+                });
+
+                async function fetchCompaniesRz(query) {
+                    const response = await fetch(`/works/works/getCompanyName?searchCompany=${query}`);
+                    const data = await response.json();
+                    return data;
+                }
+
+                function updateAutocompleteRz(results) {
+                clearAutocompleteListRz();
+
+                results.forEach(company => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = company.company_name;
+                    listItem.addEventListener('click', () => {
+                        autocompleteInputRz.value = company.company_name;
+                        clearAutocompleteListRz();
+                    });
+                    autocompleteListRz.appendChild(listItem);
+                });
+
+                autocompleteListRz.style.display = 'block';
+            }
+
+            function clearAutocompleteListRz() {
+                autocompleteListRz.innerHTML = '';
+                autocompleteListRz.style.display = 'none';
+            }
+            
+        </script>
+        
         @stack('scripts')
 
     </body>

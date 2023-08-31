@@ -219,8 +219,8 @@ class CompanySearchController extends Controller
         $startedAt = convertPtBrDateToEnDate($request->last_review_from);
         $endsAt = convertPtBrDateToEnDate($request->last_review_to);
         $activityFields = $request->activity_fields;
-        $tradingName = $request->trading_name;
-        $companyName = $request->company_name;
+        $searchTrading = $request->search;
+        $searchCompany = $request->searchCompany;
         $address = $request->address;
         $district = $request->district;
         $stateAcronym = $request->state_id;
@@ -287,12 +287,12 @@ class CompanySearchController extends Controller
             $companies = $companies->whereIn('companies.activity_field_id', $activityFields);
         }
 
-        if ($tradingName) {
-            $companies = $companies->where('companies.trading_name', 'LIKE', '%'.$tradingName.'%');
+        if ($searchTrading) {
+            $companies = $companies->where('companies.trading_name', $searchTrading);
         }
 
-        if ($companyName) {
-            $companies = $companies->where('companies.company_name', 'LIKE', '%'.$companyName.'%');
+        if ($searchCompany) {
+            $companies = $companies->where('companies.company_name', $searchCompany);
         }
 
         if ($address) {

@@ -297,8 +297,11 @@ Route::middleware(['auth'])->group(function () {
         )->name('work.search.step_three.index');
 
         Route::get('export-works', [WorkSearchController::class, 'export'])->name('work.search.export');
-        /*auto-com plete empresa participante - Renato machado 30/08/2023*/
+        /*auto-complete Obras/empresa (Fantasia) - Renato machado 30/08/2023*/
         Route::get('/works/getCompany', [WorkSearchController::class, 'getCompany'])->name('works.getCompany');
+        
+        /*auto-complete Empresa (Razaão social) - Renato machado 31/08/2023*/
+        Route::get('/works/getCompanyName', [WorkSearchController::class, 'getCompanyName'])->name('works.getCompanyName');
 
     });
 
