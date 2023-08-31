@@ -74,8 +74,26 @@ class AuthenticatedSessionController extends Controller
 
             // Check user plan and set his restrictions
             if (authUserIsAnAssociate()) {
-                $statesVisible = $authUser->contact->company->associate->states()->get()->pluck('id');
-                $segmentSubTypesVisible = $authUser->contact->company->associate->segmentSubTypes()->get()->pluck('id');
+
+                $associateModel = $authUser->contact->company->associate;
+                $associateSignInDueDate = optional($associateModel->data_filter_ends_at)
+                    ->format('Y-m-d');
+                $today = today()->format('Y-m-d');
+
+                if ($today > $associateSignInDueDate) {
+                    Auth::guard('web')->logout();
+                    
+                    $request->session()->invalidate();
+                    
+                    $request->session()->regenerateToken();
+        
+                    session()->flash('message', 'Acesso não permitido, entre em contato com a INTEC.');
+        
+                    return redirect()->route('login');
+                }
+
+                $statesVisible = $associateModel->states()->get()->pluck('id');
+                $segmentSubTypesVisible = $associateModel->segmentSubTypes()->get()->pluck('id');
 
                 request()->session()->put('statesVisible', $statesVisible);
                 request()->session()->put('segmentSubTypesVisible', $segmentSubTypesVisible);
@@ -90,14 +108,14 @@ class AuthenticatedSessionController extends Controller
 
             if (
                 $theUserIsActiveAndIsAnAssociate &&
-                (Auth::user()->role->slug == Associate::ASSOCIATE_MANAGER)
+                ($authUser->role->slug == Associate::ASSOCIATE_MANAGER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
 
             if (
                 $theUserIsActiveAndIsAnAssociate &&
-                (Auth::user()->role->slug == Associate::ASSOCIATE_USER)
+                ($authUser->role->slug == Associate::ASSOCIATE_USER)
             ) {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
@@ -132,6 +150,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        session()->flash('message', 'Acesso não permitido, entre em contato com a INTEC.');
+
+        return redirect()->route('login');
     }
 }
