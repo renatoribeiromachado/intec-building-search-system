@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
 use App\Http\Controllers\SigController;
+use App\Http\Controllers\SigCompanyController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\EmailWorkController;
 use Illuminate\Http\Request;
@@ -253,6 +254,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sig-works/report', [SigController::class, 'report'])->name('sig_works.report');
     /*Enviar email obras*/
     Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');
+    
+    /*SIG Empresa - Renato Macchado 31/08/2023 */
+    Route::post('sig-company/store', [SigCompanyController::class, 'store'])->name('sig-company.store');
       
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');

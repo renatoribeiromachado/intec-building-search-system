@@ -5,6 +5,9 @@
         <div class="alert alert-primary">
             <h4>PESQUISA DE EMPRESAS</h4>
         </div>
+        
+        @include('layouts.alerts.success')
+        @include('layouts.alerts.all-errors')
 
         <form action="{{ route('company.search.step_three.index') }}" method="get">
             @csrf
@@ -111,6 +114,10 @@
                         <th scope="col">Razão Social</th>
                         <th scope="col">Nome Fantasia</th>
                         <th scope="col">Segmento</th>
+                        @can('ver-sig-empresa')
+                            <th scope="col">Status</th>
+                            <th scope="col">SIG</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -141,6 +148,22 @@
                         <td style="width: 430px;">{{ $company->company_name }}</td>
                         <td>{{ $company->trading_name }}</td>
                         <td>{{ optional($company->activityField)->description }}</td>
+                        
+                        @can('ver-sig-empresa')
+                            <td>{{ $company->last_sig_status }}</td>
+                            <td>
+                                <a
+                                    href="javascript:void(0)"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sig"
+                                    data-company-id="{{ $company->id }}"
+                                    data-name="{{ $company->trading_name }}"
+                                    >
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            </td>
+                        @endcan
+                        
                     </tr>
                     @empty
                     <tr>
@@ -154,6 +177,98 @@
                 </tbody>
             </table>
         </form>
+        
+        @can('ver-sig-empresa')
+        <!-- The Modal -->
+        <div class="modal" id="sig">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-primary text-white">
+                        <h4 class="modal-title">Cadastro de SIG-Empresa</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{{ route('sig-company.store') }}" method="post">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><strong>Empresa:</strong> <span id="modal-name"></span></p>
+                                </div>
+                            </div>
+                            
+                            <!--Inputs hidden -->
+                            <input type="text" name="company_id" value="" id="modal-company-id-input">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Agendar para</label>
+                                    <input type="text" name="appointment_date" class="form-control datepicker" value="" required="">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="priority">Prioridade</label>
+                                    <select id="priority" name="priority" class="form-select">
+                                        @foreach ($priorities as $priority)
+                                            <option value="{{ $priority }}">{{ $priority }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status" class="form-select">
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status }}">{{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="notes">Descriçao</label>
+                                    <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </div>
+                        </form>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="form-label"><strong>Sig(s) cadastrados</strong></label>
+                                <div class="table-responsive" style="overflow: auto; height: 200px;">
+                                    <table class="table table-condensed">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Criado</th>
+                                                <th>Agendado</th>
+                                                <th>Empresa</th>
+                                                <th>Relator</th>
+                                                <th>Prioridade</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                            
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div> <!-- /.modal-body -->
+                </div> <!-- /.modal-content -->
+            </div>
+        </div>
+    @endcan
 
         <div>
             {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
@@ -288,6 +403,34 @@
                 event.preventDefault()
             });
         }
+        
+        /*Botão Sig*/
+        document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalName = document.getElementById('modal-name');
+            const modalCompanyIdInput = document.getElementById('modal-company-id-input');
+
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const companyId = this.getAttribute('data-company-id');
+                    const comapnyName = this.getAttribute('data-name');
+                    modalName.textContent = comapnyName;
+                    modalCompanyIdInput.value = companyId;
+
+                    // Filtra as linhas da tabela
+                    const reportRows = document.querySelectorAll('.report-row');
+                    reportRows.forEach(row => {
+                        const reportCompanyId = row.getAttribute('data-company-id');
+                        if (reportCompanyId === workId) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
     </script>
 
 @endpush

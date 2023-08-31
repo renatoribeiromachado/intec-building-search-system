@@ -8,6 +8,8 @@ use App\Models\City;
 use App\Models\Company;
 use App\Models\SegmentSubType;
 use App\Models\State;
+use App\Models\Sig;
+use App\Models\SigCompany;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,8 @@ class CompanySearchController extends Controller
     protected $activityFieldsSessionName = 'activity_fields_checkboxes';
     protected $state;
     protected $city;
-    protected $segmentSubType;
+    protected $segmentSubType
+    protected $sigCompany;
 
     public function __construct(
         ActivityField $activityField,
@@ -41,6 +44,7 @@ class CompanySearchController extends Controller
         $this->state = $state;
         $this->city = $city;
         $this->segmentSubType = $segmentSubType;
+        $this->sigCompany = $sigCompany;
     }
 
     public function showCompanySearchStepOne()
@@ -136,6 +140,9 @@ class CompanySearchController extends Controller
         $companiesChecked = session($this->companiesSessionName);
         $currentPage = is_null($request->page) ? 1 : $request->page;
         $btnExistsInSession = session()->has('btnSelectAll');
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
+        $loggedUser = Auth::user();
 
         $clickedInPage = $btnExistsInSession
             && (session('btnSelectAll')['btn_clicked'] == 1)
@@ -170,6 +177,15 @@ class CompanySearchController extends Controller
             request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
             $activityFieldsChecked = session($this->activityFieldsSessionName);
         }
+        
+         $company2 = null;
+        foreach($$companies as $company) {
+            $company2 = $this->sigCompany->findOrFail($company->id);
+            $lastSigStatus = optional($company2->sigs()
+                ->where('user_id', '=', $loggedUser->id)
+                ->get()->last())->status;
+            $company->last_sig_status = $lastSigStatus;
+        }
 
         return view('layouts.company.search.step_two.index', compact(
             'companies',
@@ -181,6 +197,8 @@ class CompanySearchController extends Controller
             'inputPageOfPagination',
             'inputSelectAll',
             'atLeastOneCheckboxWasClicked',
+            'statuses',
+            'priorities',
         ));
     }
 

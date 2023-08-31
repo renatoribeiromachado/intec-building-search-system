@@ -116,4 +116,9 @@ class Company extends Model
     {
         return $this->hasMany(Order::class);
     }
+    
+    public function sigs()
+    {
+        return $this->hasMany(SigCompany::class); 
+    }
 }
