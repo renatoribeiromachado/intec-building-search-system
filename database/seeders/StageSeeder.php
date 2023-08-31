@@ -18,7 +18,6 @@ class StageSeeder extends Seeder
             ['phase_id' => 1, 'description' => 'CONTENÇÃO'],
             ['phase_id' => 1, 'description' => 'FUNDAÇÕES'],
             ['phase_id' => 1, 'description' => 'SERVIÇOS PRELIMINARES'],
-            ['phase_id' => 1, 'description' => 'FUNDAÇÕES'],
             ['phase_id' => 1, 'description' => 'DEMOLIÇÃO'],
             ['phase_id' => 1, 'description' => 'LANÇAMENTO'],
             ['phase_id' => 1, 'description' => 'SONDAGEM'],
