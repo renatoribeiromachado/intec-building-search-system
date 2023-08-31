@@ -567,14 +567,61 @@
                 // end alerts
             });
 
-base_url = function () {
-    if (document.location.hostname === "localhost") {
-        var url = "{!! config('app.url') !!}/";
-    } else {
-        var url = "{!! config('app.url') !!}";
-    }
-    return url;
-};
+            base_url = function () {
+                if (document.location.hostname === "localhost") {
+                    var url = "{!! config('app.url') !!}/";
+                } else {
+                    var url = "{!! config('app.url') !!}";
+                }
+                return url;
+            };
+            
+            /*Aut-complete empresa participante obras - Renato Machado 30/08/2023*/
+            const autocompleteInput = document.getElementById('autocomplete-input');
+            const autocompleteList = document.getElementById('autocomplete-list');
+
+                autocompleteInput.addEventListener('input', async (event) => {
+                    const query = event.target.value;
+                    if (query.length >= 1) {
+                        const companies = await fetchCompanies(query);
+                        updateAutocomplete(companies);
+                    } else {
+                        clearAutocompleteList();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!autocompleteInput.contains(event.target)) {
+                        clearAutocompleteList();
+                    }
+                });
+
+                async function fetchCompanies(query) {
+                    const response = await fetch(`/works/works/getCompany?search=${query}`);
+                    const data = await response.json();
+                    return data;
+                }
+
+                function updateAutocomplete(results) {
+                clearAutocompleteList();
+
+                results.forEach(company => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = company.trading_name;
+                    listItem.addEventListener('click', () => {
+                        autocompleteInput.value = company.trading_name;
+                        clearAutocompleteList();
+                    });
+                    autocompleteList.appendChild(listItem);
+                });
+
+                autocompleteList.style.display = 'block';
+            }
+
+            function clearAutocompleteList() {
+                autocompleteList.innerHTML = '';
+                autocompleteList.style.display = 'none';
+            }
         </script>
 
         @stack('scripts')

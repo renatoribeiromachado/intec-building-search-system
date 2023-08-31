@@ -369,7 +369,6 @@
                             </div>
                         </div>
 
-                    
                         <!--Estado-->
                         <div class="row mt-2">
                             <div class="col-md-3">
@@ -421,18 +420,51 @@
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <x-intec-input
-                                    label-input-id="participating_company"
-                                    label-text="Empresa Participante"
+                                    label-input-id="autocomplete-input"
+                                    label-text="Empresa participante"
                                     input-type="text"
-                                    input-name="participating_company"
+                                    input-name="search"
                                     class-one=""
                                     label-class=""
                                     placeholder="Digite a Fantasia da Empresa"
-                                    input-value="{{ old('participating_company') }}"
+                                    input-value="{{ old('search') }}"
                                     :input-readonly="false"
                                 />
+                                <ul id="autocomplete-list" class="autocomplete-list"></ul>
+                                
                             </div>
                         </div>
+                        
+                        <style>
+                            /*auto complete clientes*/
+                             .autocomplete-list {
+                                    position: absolute;
+                                    z-index: 1000;
+                                    background-color: #fff;
+                                    border: 1px solid #ccc;
+                                    width: auto;
+                                    max-height: 200px;
+                                    overflow-y: auto;
+                                    list-style: none;
+                                    padding: 0;
+                                    margin: 0;
+                                }
+
+                                .autocomplete-list li {
+                                    padding: 8px;
+                                    cursor: pointer;
+                                    transition: background-color 0.2s;
+                                }
+
+                                .autocomplete-list li:hover {
+                                    background-color: #f5f5f5;
+                                }
+
+                                #autocomplete-input {
+                                    position: relative;
+                                }
+                            </style>
+
 
                         {{--<div class="row mt-2">
                             <div class="col-md-12">
