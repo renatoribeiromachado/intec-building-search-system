@@ -248,7 +248,7 @@ Route::middleware(['auth'])->group(function () {
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
     });
     
-    /*SIG*/
+    /*SIG obras - Renato Macchado 14/08/2023 */
     Route::get('sig-works', [SigController::class, 'index'])->name('sig_works.index');
     Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
     Route::get('sig/{id}/edit', [SigController::class, 'edit'])->name('sig.edit');
@@ -265,7 +265,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit/{work}', [WorkController::class, 'edit'])->name('work.edit');
         Route::put('update/{work}', [WorkController::class, 'update'])->name('work.update');
         Route::delete('{work}', [WorkController::class, 'destroy'])->name('work.destroy');
-        /*12/058/2023 - Renato Machado*/
+        /* Excel Geral -12/058/2023 - Renato Machado*/
         Route::get('excel', [WorkController::class, 'exportExcel'])->name('work.exportExcel');
         Route::post('export', [WorkController::class, 'export'])->name('work.export');
 
@@ -300,9 +300,12 @@ Route::middleware(['auth'])->group(function () {
             [WorkSearchController::class, 'showWorkSearchStepThree']
         )->name('work.search.step_three.index');
 
-
-        
         Route::get('export-works', [WorkSearchController::class, 'export'])->name('work.search.export');
+        /*auto-complete Obras/empresa (Fantasia) - Renato machado 30/08/2023*/
+        Route::get('/works/getCompany', [WorkSearchController::class, 'getCompany'])->name('works.getCompany');
+        
+        /*auto-complete Empresa (Razaão social) - Renato machado 31/08/2023*/
+        Route::get('/works/getCompanyName', [WorkSearchController::class, 'getCompanyName'])->name('works.getCompanyName');
 
     });
 

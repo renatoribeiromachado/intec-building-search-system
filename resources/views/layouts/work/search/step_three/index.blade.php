@@ -465,11 +465,13 @@
                         <td><strong>Nome</strong></td>
                         <td><strong>Cargo</strong></td>
                         <td><strong>Empresa</strong></td>
-                        <td><strong>Telefone</strong></td>
-                        <td><strong>Telefone2</strong></td>
-                        <td><strong>Celular</strong></td>
-                        <td><strong>Celular 2</strong></td>
-                        <td><strong>E-mail</strong></td>
+                        <td><strong>Telefone 1</strong></td>
+                        <td><strong>Telefone 2</strong></td>
+                        <td><strong>Telefone 3</strong></td>
+                        <td><strong>Telefone 4</strong></td>
+                        <td><strong>E-mail 1</strong></td>
+                        <td><strong>E-mail 2</strong></td>
+                        <td><strong>E-mail 3</strong></td>
                     </tr>
                     @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
                         <tr>
@@ -504,11 +506,18 @@
                             </td>
                             <td style="padding: 5px 0 5px 0 !important;">
                                 @if ($contact->email)
-                                {{ $contact->email }}
+                                <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>
                                 @endif
-
-                                <a href="mailto:" class="no-print"></a>
-                                <span class="print" style="display:none;"></span>
+                            </td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                @if ($contact->email)
+                                 <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a>
+                                @endif
+                            </td>
+                            <td style="padding: 5px 0 5px 0 !important;">
+                                @if ($contact->email)
+                                 <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -525,7 +534,7 @@
                     <tbody>
                         @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
                             <tr>
-                                <td colspan="4">
+                                <td class="pt-2" colspan="4">
                                     <strong>Modalidade(s):</strong>
                                     @foreach (
                                         (new \App\Models\Work)->find($work->id)
@@ -547,7 +556,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Endereço:</strong> {{ $company->address }}
+                                    <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }} - {{ $company->district }}
                                 </td>
                                 <td colspan="3">
                                     <strong>Site:</strong> {{ $company->home_page }}
@@ -555,42 +564,80 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Cidade:</strong> {{ $company->city }}
+                                    <strong>Cidade:</strong> {{ $company->city }} - {{ $company->state }} - <strong>CEP:</strong> {{ $company->zip_code }}
                                 </td>
                                 <td>
-                                    <strong>E-mail:</strong> {{ $company->primary_email }}
+                                    <strong>E-mail 1:</strong> <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a>
                                 </td>
                                 <td colspan="2">
-                                    <strong>E-mail Secundário:</strong> {{ $company->secondary_email }}
+                                    <strong>E-mail 2:</strong> <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a>
                                 </td>
                             </tr>
+                            </tbody>
+                    </table>
+                        
+                    <table class="table">
+                        <thead> 
+                            <tr>
+                                <td><strong>Contato(s):</strong></td>
+                            </tr>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cargo</th>
+                                <th>Telefone 1</th>
+                                <th>Telefone 2</th>
+                                <th>Telefone 3</th>
+                                <th>Telefone 4</th>
+                                <th>E-mail 1</th>
+                                <th>E-mail 2</th>
+                                <th>E-mail 3</th>
+                             </tr>
+                        </thead>
 
+                        <tbody>
                             @foreach (
                                 (new \App\Models\Work)->find($work->id)->companyContacts()
                                     ->where('contact_work.company_id', $company->id)
                                     ->get() as $workCompanyContact
                                 )
                                 <!--CONTATOS-->
+                                
+                                @if($workCompanyContact)
                                 <tr>
                                     <td>
-                                        <strong>Nome</strong>:
                                         {{ $workCompanyContact->name }}
                                     </td>
                                     <td>
-                                        <strong>Cargo</strong>:
                                         {{ optional($workCompanyContact->position)->description }}
                                     </td>
                                     <td>
-                                        <strong>Celular</strong>:
                                         ({{ $workCompanyContact->ddd }})
                                         {{ $workCompanyContact->main_phone }}
                                     </td>
                                     <td>
-                                        <strong>Telefone</strong>:
                                         ({{ $workCompanyContact->ddd_two }})
                                         {{ $workCompanyContact->phone_two }}
                                     </td>
+                                    <td>
+                                        ({{ $workCompanyContact->ddd_three }})
+                                        {{ $workCompanyContact->phone_three }}
+                                    </td>
+                                    <td>
+                                        ({{ $workCompanyContact->ddd_four }})
+                                        {{ $workCompanyContact->phone_four }}
+                                    </td>
+                            
+                                    <td>
+                                        <a href="mailto:{{ $workCompanyContact->email }}">{{ $workCompanyContact->email }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ $workCompanyContact->secondary_email }}">{{ $workCompanyContact->secondary_email }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ $workCompanyContact->tertiary_email }}">{{ $workCompanyContact->tertiary_email }}</a>
+                                    </td>
                                 </tr>
+                                @endif
                             @endforeach
                         @endforeach
                     </tbody>
