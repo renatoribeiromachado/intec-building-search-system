@@ -436,6 +436,16 @@
                                             SIG / Obras
                                         </a>
                                     </li>
+                                    @can('ver-sig-empresa')
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{{ route('sig_companies.index') }}"
+                                            >
+                                            SIG / Empresa
+                                        </a>
+                                    </li>
+                                    @endcan
                                 </ul>
                             </li>
                         @endcan

@@ -80,6 +80,75 @@
 
 <div class="container pt-3">
     
+    @include('layouts.alerts.success')
+    <div class="row mt-2">
+        <div class="col-md-2">
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
+        </div>
+    </div>
+    
+    <!--ENVIAR LINK DE OBRAS POR EMAIL-->
+    <div class="modal fade" id="sendEmail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enviar link de empresa(s) por e-mail</h4>
+                </div>
+                <div class="modal-body">
+   
+                    <form id="emailForm" action="{{ route('send.email-company') }}" method="post">
+                        @csrf
+                        <!-- Link de obras selecionadas-->
+                        <input type="hidden" name="link" class="form-control" value="" id="link" readonly="">
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-10">
+                                <label class="control-label"><i class="glyphicon glyphicon-user"></i> Usuário</label>
+                                <input type="text" name="senderName" class="form-control" id="senderName" value="{{ auth()->user()->name }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> E-mail</label>
+                                <input type="email" name="senderEmail" class="form-control" id="senderEmail" value="{{ auth()->user()->email }}" readonly="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Lista de E-Mail's (separar cada-mail por vírgula) <code>* Obrigatório</code></label>
+                                <input type="text" name="emailDestination" id="emailDestination" class="form-control" value="" required=""/>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="control-label"> Observação</label>
+                                <textarea name="notes" class="form-control" rows="5" ></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-primary btnSendEmail" id="btnSendEmail" value="Enviar" />
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtém a URL da página atual
+            var currentUrl = window.location.href;
+
+            // Preenche o campo com a URL da página atual
+            var link = document.getElementById("link");
+            if (link) {
+                link.value = currentUrl;
+            }
+        });
+    </script>
+    
     @forelse ($companies as $company)
         <div class="row mt-2">
             <div class="col-md-12">
@@ -100,6 +169,120 @@
                 </p>
             </div>
         </div>
+    
+      @can('ver-sig-empresa')
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <a class="btn btn-primary" title="Cadastrar SIG"
+                    href="javascript:void(0)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#sig"
+                    data-company-id="{{ $company->id }}"
+                    data-name="{{ $company->name }}"
+                    >
+                    <i class="fa fa-check"></i> NOVO SIG
+                </a>
+            </div>
+        </div>
+
+    @endcan
+    
+    @can('ver-sig-empresa')
+        <!-- The Modal -->
+        <div class="modal" id="sig">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-primary text-white">
+                        <h4 class="modal-title">Cadastro de SIG-Empresa</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{{ route('sig-company.store') }}" method="post">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><strong>Empresa:</strong> <span id="modal-name"></span></p>
+                                </div>
+                            </div>
+                            
+                            <!--Inputs hidden -->
+                            <input type="text" name="company_id" value="" id="modal-company-id-input">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Agendar para</label>
+                                    <input type="text" name="appointment_date" class="form-control datepicker" value="" required="">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="priority">Prioridade</label>
+                                    <select id="priority" name="priority" class="form-select">
+                                        @foreach ($priorities as $priority)
+                                            <option value="{{ $priority }}">{{ $priority }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status" class="form-select">
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status }}">{{ $status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="notes">Descriçao</label>
+                                    <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div> <!-- /.modal-body -->
+                </div> <!-- /.modal-content -->
+            </div>
+        </div>
+        <script>
+            /*Botão Sig*/
+            document.addEventListener('DOMContentLoaded', function () {
+                const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+                const modalName = document.getElementById('modal-name');
+                const modalCompanyIdInput = document.getElementById('modal-company-id-input');
+
+                sigLinks.forEach(link => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const companyId = this.getAttribute('data-company-id');
+                        const comapnyName = this.getAttribute('data-name');
+                        modalName.textContent = comapnyName;
+                        modalCompanyIdInput.value = companyId;
+
+                        // Filtra as linhas da tabela
+                        const reportRows = document.querySelectorAll('.report-row');
+                        reportRows.forEach(row => {
+                            const reportCompanyId = row.getAttribute('data-company-id');
+                            if (reportCompanyId === companyId) {
+                                row.style.display = 'table-row';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    @endcan
     
         <div class="row mt-2 mb-3">
             <div class="col-md-12">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Associate;
 use Illuminate\Http\Request;
 use App\Models\Sig;
+use App\Models\SigCompany;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -14,14 +15,15 @@ use Carbon\Carbon;
 class SigController extends Controller
 {
     protected $sig;
+    protected $sigCompany;
     protected $user;
 
-    public function __construct(
-        Sig $sig,
-        User $user
-    ) {
+    public function __construct(Sig $sig, SigCompany $sigCompany, User $user) 
+    {
         $this->sig = $sig;
+        $this->sigCompany = $sigCompany;
         $this->user = $user;
+
     }
 
     /**

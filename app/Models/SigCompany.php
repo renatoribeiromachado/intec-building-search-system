@@ -53,8 +53,10 @@ class SigCompany extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function work()
+    public function company()
     {
-        return $this->belongsTo(Work::class);
+        return $this->belongsTo(Company::class);
     }
+
+    
 }

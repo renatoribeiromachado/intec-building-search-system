@@ -200,7 +200,7 @@
                             </div>
                             
                             <!--Inputs hidden -->
-                            <input type="text" name="company_id" value="" id="modal-company-id-input">
+                            <input type="hidden" name="company_id" value="" id="modal-company-id-input">
 
                             <div class="row">
                                 <div class="col-md-4">
@@ -258,7 +258,37 @@
                                         </thead>
                             
                                         <tbody>
-                                            
+                                            @forelse($reports as $report)
+                                                
+                                                <tr class="report-row" data-company-id="{{ $report->company_id }}">
+                                                    <td>
+                                                        {{ $report->created_at->format('d/m/Y') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ optional($report->appointment_date)->format('d/m/Y') }}
+                                                    </td>
+                                                    <td class="text-primary"><strong></strong></td>
+                                                    <td>{{ $report->user->name }}</td>
+                                                    <td>{{ $report->priority }}</td>
+                                                    <td class="text-primary"><strong>{{ $report->status }}</strong></td>
+                                                </tr>
+
+                                                @if ($report->notes)
+                                                <tr class="report-row" data-company-id="{{ $report->company_id }}">
+                                                    <td colspan="6"><strong>Descrição:</strong> *{{ $report->notes }}</td>
+                                                </tr>
+                                                
+                                                
+                                                @endif
+
+                                                @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center py-4">
+                                                        Nenhum SIG de empresa encontrado.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                  
                                         </tbody>
                                     </table>
                                 </div>
@@ -422,7 +452,7 @@
                     const reportRows = document.querySelectorAll('.report-row');
                     reportRows.forEach(row => {
                         const reportCompanyId = row.getAttribute('data-company-id');
-                        if (reportCompanyId === workId) {
+                        if (reportCompanyId === companyId) {
                             row.style.display = 'table-row';
                         } else {
                             row.style.display = 'none';

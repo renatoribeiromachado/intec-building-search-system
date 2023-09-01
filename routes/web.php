@@ -25,6 +25,7 @@ use App\Http\Controllers\SigController;
 use App\Http\Controllers\SigCompanyController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\EmailWorkController;
+use App\Http\Controllers\EmailCompanyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -256,7 +257,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');
     
     /*SIG Empresa - Renato Macchado 31/08/2023 */
+    Route::get('sig-companies', [SigCompanyController::class, 'index'])->name('sig_companies.index');
     Route::post('sig-company/store', [SigCompanyController::class, 'store'])->name('sig-company.store');
+    Route::get('sig-company/{id}/edit', [SigCompanyController::class, 'edit'])->name('sig-company.edit');
+    Route::put('sig-company', [SigCompanyController::class, 'update'])->name('sig-company.update');
+    Route::get('sig-companies/report', [SigCompanyController::class, 'report'])->name('sig_companies.report');
+    Route::delete('sig-company/{id}', [SigCompanyController::class, 'destroy'])->name('sig-company.destroy');
+    /*Enviar email empresa - Renato machado 01/09/2023*/
+    Route::post('/send-email-empresa', [EmailCompanyController::class, 'sendEmailCompany'])->name('send.email-company');
       
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');
