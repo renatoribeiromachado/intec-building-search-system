@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sig::class, 'user_id');
     }
+    
+    public function sigCompanies()
+    {
+        return $this->hasMany(SigCompany::class, 'user_id');
+    }
 }

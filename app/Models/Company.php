@@ -116,4 +116,16 @@ class Company extends Model
     {
         return $this->hasMany(Order::class);
     }
+    
+    /*Faz o relacionamento*/
+//    public function sigCompanies()
+//    {
+//        return $this->hasMany(SigCompany::class);
+//    }
+    
+    public function sigCompanies()
+{
+    return $this->hasMany(SigCompany::class, 'company_id', 'id');
+}
+
 }

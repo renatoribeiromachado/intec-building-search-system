@@ -8,6 +8,8 @@ use App\Models\City;
 use App\Models\Company;
 use App\Models\SegmentSubType;
 use App\Models\State;
+use App\Models\Sig;
+use App\Models\SigCompany;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,19 +30,22 @@ class CompanySearchController extends Controller
     protected $state;
     protected $city;
     protected $segmentSubType;
+    protected $sigCompany;
 
     public function __construct(
         ActivityField $activityField,
         Company $company,
         State $state,
         City $city,
-        SegmentSubType $segmentSubType
+        SegmentSubType $segmentSubType,
+        SigCompany $sigCompany
     ) {
         $this->activityField = $activityField;
         $this->company = $company;
         $this->state = $state;
         $this->city = $city;
         $this->segmentSubType = $segmentSubType;
+        $this->sigCompany = $sigCompany;
     }
 
     public function showCompanySearchStepOne()
@@ -136,6 +141,10 @@ class CompanySearchController extends Controller
         $companiesChecked = session($this->companiesSessionName);
         $currentPage = is_null($request->page) ? 1 : $request->page;
         $btnExistsInSession = session()->has('btnSelectAll');
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
+        $loggedUser = Auth::user();
+        $reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
 
         $clickedInPage = $btnExistsInSession
             && (session('btnSelectAll')['btn_clicked'] == 1)
@@ -170,6 +179,16 @@ class CompanySearchController extends Controller
             request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
             $activityFieldsChecked = session($this->activityFieldsSessionName);
         }
+        
+        /*Para pegar o ultimo satatus do Sig - 01/09/2023 - Renato Machado*/
+        $company = null;
+        foreach ($companies as $company) {
+            $lastSigStatus = optional($company->sigCompanies()
+                ->where('user_id', '=', $loggedUser->id)
+                ->latest('created_at')
+                ->first())->status;
+            $company->last_sig_status = $lastSigStatus;
+        }
 
         return view('layouts.company.search.step_two.index', compact(
             'companies',
@@ -181,13 +200,17 @@ class CompanySearchController extends Controller
             'inputPageOfPagination',
             'inputSelectAll',
             'atLeastOneCheckboxWasClicked',
+            'statuses',
+            'priorities',
+            'reports',
         ));
     }
 
     public function showWorkSearchStepThree(Request $request)
     {
         // $this->authorize('ver-pesquisa-de-empresas');
-        
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
         $companies = $this->getFilteredCompanies($request);
         // $workFeatures = $this->workFeature
         //     ->orderBy('description', 'asc')
@@ -195,7 +218,8 @@ class CompanySearchController extends Controller
 
         return view('layouts.company.search.step_three.index', compact(
             'companies',
-            // 'workFeatures'
+            'statuses',
+            'priorities',
         ));
     }
 

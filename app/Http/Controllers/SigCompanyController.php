@@ -12,18 +12,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class SigController extends Controller
+class SigCompanyController extends Controller
 {
     protected $sig;
     protected $sigCompany;
     protected $user;
 
-    public function __construct(Sig $sig, SigCompany $sigCompany, User $user) 
-    {
+    public function __construct(
+        Sig $sig, SigCompany $sigCompany,
+        User $user
+    ) {
         $this->sig = $sig;
         $this->sigCompany = $sigCompany;
         $this->user = $user;
-
     }
 
     /**
@@ -60,7 +61,7 @@ class SigController extends Controller
                 ->get();
         }
 
-        return view('layouts.sig_works.index', compact(
+        return view('layouts.sig_companies.index', compact(
             'statuses',
             'priorities',
             'associates',
@@ -75,24 +76,26 @@ class SigController extends Controller
      */
     public function store(Request $request)
     {
+        
+        //dd($request->all());
         $authUser = Auth::user();
 
         try {
             DB::beginTransaction();
 
-            $sig = $this->sig;
-            $sig->user_id = $authUser->id;
-            $sig->work_id = $request->work_id;
-            $sig->associate_id = (authUserIsAnAssociate())
+            $sigCompany = $this->sigCompany;
+            $sigCompany->user_id = $authUser->id;
+            $sigCompany->company_id = $request->company_id;
+            $sigCompany->associate_id = (authUserIsAnAssociate())
                 ? $authUser->contact->company->associate->id
                 : null;
-            $sig->appointment_date = convertPtBrDateToEnDate($request->appointment_date);
-            $sig->priority = $request->priority;
-            $sig->status = $request->status;
-            $sig->notes = $request->notes;
-            $sig->created_by = auth()->guard('web')->user()->id;
-            $sig->updated_by = auth()->guard('web')->user()->id;
-            $sig->save();
+            $sigCompany->appointment_date = convertPtBrDateToEnDate($request->appointment_date);
+            $sigCompany->priority = $request->priority;
+            $sigCompany->status = $request->status;
+            $sigCompany->notes = $request->notes;
+            $sigCompany->created_by = auth()->guard('web')->user()->id;
+            $sigCompany->updated_by = auth()->guard('web')->user()->id;
+            $sigCompany->save();
 
             DB::commit();
 
@@ -118,63 +121,79 @@ class SigController extends Controller
      */
     public function report(Request $request)
     {
+
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
-        $query = $this->sig->select(
-            'id', 'user_id', 'work_id', 'appointment_date',
+        $query = $this->sigCompany->select(
+            'id', 'user_id', 'company_id', 'appointment_date',
             'created_at', 'priority', 'status','notes'
         );
 
-        if (
-            $authUser->role->slug == Associate::ASSOCIATE_USER
-            || (! authUserIsAnAssociate())
-        ) {
+        if ($authUser->role->slug == Associate::ASSOCIATE_USER || (!authUserIsAnAssociate())) 
+        {
             $query = $query->where('user_id', $authUser->id);
         }
 
-        /*Obra*/
-        $oldCode = $request->code;
-        if ($oldCode) {
-            $query->whereHas('work', function ($q) use ($oldCode) {
-                return $q->where('works.old_code', 'like', '%'.$oldCode.'%');
+        /*Empresa*/
+        $trading_name = $request->trading_name;
+        if ($trading_name) {
+            $query->whereHas('company', function ($query) use ($trading_name, $authUser) {
+                $query->where('companies.trading_name', 'like', '%'.$trading_name.'%')
+                        ->where('user_id', $authUser->id);
             });
         }
         
         /*Prioridade*/
         $priority = $request->priority;
         if ($priority) {
-            $query->where('priority', $priority);
+            $query->where(function ($query) use ($priority, $authUser) {
+                $query->where('priority', $priority)
+                      ->where('user_id', $authUser->id);
+            });
         }
         
         /*Status*/
         $status = $request->status;
         if ($status) {
-            $query->where('status', $status);
+            $query->where(function ($query) use ($status, $authUser) {
+                $query->where('status', $status)
+                      ->where('user_id', $authUser->id);
+            });
         }
         
         /*Data de agendamento*/
         $appointmentDate = $request->appointment_date;
         if ($appointmentDate) {
             $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
-            $query->where('appointment_date', $appointmentDateUTC);
+            $query->where(function ($query) use ($appointmentDateUTC, $authUser) {
+                $query->where('appointment_date', $appointmentDateUTC)
+                      ->where('user_id', $authUser->id);
+            });
         }
         
-       $reporters = $request->reporters;
-       if ($reporters) {
-           $query->whereIn('sigs.user_id', $reporters);
-       }
+        /*Usuarios*/
+        $reporters = $request->reporters;
+        if ($reporters) {
+            $query->whereIn('user_id', $reporters)->where('user_id', $authUser->id);
+        }
         
-        /*Datas de cadastro*/
+        /*Data de cadastro*/
         $startDate = $request->start_date;
         $endDate = $request->end_date;
+
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [$startDate, $endDate]);
+            $startDateFormatted = date('Y-m-d', strtotime($startDate));
+            $endDateFormatted = date('Y-m-d', strtotime($endDate));
+
+            $query->where('user_id', $authUser->id) // Filtra pelo ID do usuário autenticado
+                  ->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
 
-        $reports = $query->get();
 
-        return view('layouts.sig_works.report.index', [
+        $reports = $query->where('user_id', $authUser->id)->get();
+
+        return view('layouts.sig_companies.report.index', [
             'reports' => $reports,
             'statuses' => $statuses,
             'priorities' => $priorities
@@ -197,7 +216,7 @@ class SigController extends Controller
         
         $data['appointment_date'] = $formattedAppointmentDate;
 
-        if (!$sig = $this->sig->find($request->id)) {
+        if (!$sig = $this->sigCompany->find($request->id)) {
             return redirect()->back();
         }
 
@@ -217,7 +236,7 @@ class SigController extends Controller
      */
     public function destroy($id)
     {
-        if (!$sig = $this->sig->find($id)) {
+        if (!$sig = $this->sigCompany->find($id)) {
             return redirect()->back();
         }
 
