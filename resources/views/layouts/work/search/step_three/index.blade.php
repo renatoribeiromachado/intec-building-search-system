@@ -41,30 +41,6 @@
         border: none !important;
         padding: 0 !important;
     }
-    /* input[type=checkbox] {
-        -moz-appearance:none !important;
-        -webkit-appearance:none !important;
-        -o-appearance:none !important;
-        outline: none !important;
-        content: none !important;
-    }
-    input[type=checkbox]:before {
-        font-family: "FontAwesome" !important;
-        content: "\f00c" !important;
-        font-size: 10px !important;
-        color: transparent !important;
-        background: #fef2e0 !important;
-        display: block !important;
-        width: 12px !important;
-        height: 12px !important;
-        border: 1px solid black !important;
-        margin-right: 1px !important;
-    }
-
-    input[type=checkbox]:checked:before {
-        color: black !important;
-    } */
-
     .alinhadoDireita {
         text-align:right;
     }
@@ -79,7 +55,9 @@
 </style>
 
 <div class="container pt-5">
+    
     @include('layouts.alerts.success')
+    
     <div class="row mt-2">
         <div class="col-md-2">
             <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
@@ -151,8 +129,7 @@
     @forelse ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
-                <img src="{{ asset('images/relatorio-obras.png') }}" class="img-fluid" alt="Descrição da Imagem" />
-                <p class="pt-1">
+                <p>
                     <strong>Código</strong>: {{ $work->old_code }} -
                     Última Atualização:
                         @if (isset($work->last_review))
@@ -160,7 +137,6 @@
                         @endif
                     Revisão: <strong>{{ $work->revision }}</strong> -
                     Emitido em: <strong>{{ date('d/m/Y') }}</strong>
-                    
                 </p>
             </div>
         </div>
@@ -187,7 +163,6 @@
                     </a>
                 </div>
             </div>
-
         @endcan
         
         @can('ver-sig')
@@ -272,23 +247,20 @@
                 });
             });
         </script>
-    @endcan
+        @endcan
     
         <div class="row mt-2">
             <div class="col-md-12">
                 <p class="text-success"><b>DADOS DA OBRA {{ $loop->iteration }}:</b></p>
                 <table class="table table-condensed mt-2">
                     <tr>
-                        <td style="width:85% !important;"><strong>Nome da Obra</strong>:  {{ $work->name }}<br>
-                            <strong>Endereço</strong>:
-                                {{ $work->address }}, {{ $work->number }}<br>
-                            <strong>Bairro</strong>:
-                                {{ $work->district }}<br>
-                            <strong>Cidade</strong>:
-                                {{ $work->city }} <strong>Estado:</strong> {{ $work->state }}-
+                        <td style="width:85% !important;">
+                            <strong>Nome da Obra</strong>:  {{ $work->name }}<br>
+                            <strong>Endereço</strong>: {{ $work->address }}, {{ $work->number }}<br>
+                            <strong>Bairro</strong>: {{ $work->district }}<br>
+                            <strong>Cidade</strong>: {{ $work->city }} <strong>Estado:</strong> {{ $work->state }}-
                             <strong>CEP:</strong> {{ $work->zip_code }}<br>
-                            <strong>Segmento</strong>:
-                            <span class="text-uppercase">{{ $work->segment_description }}</span> -
+                            <strong>Segmento</strong>: <span class="text-uppercase">{{ $work->segment_description }}</span> -
                             <b>Subtipo</b>: {{ $work->segment_sub_type_description }}<br>
 
                             <strong>Início da obra</strong>
@@ -301,21 +273,27 @@
                             {{ \Carbon\Carbon::parse($work->ends_at)->format('d/m/Y') }}
                             @endif -
 
-                            <strong>Início / Término</strong>:
-                            {{ $work->start_and_end }}<br>
+                            <strong>Início / Término</strong>: {{ $work->start_and_end }}<br>
                             <strong>Fase</strong>: {{ $work->phase_description }}
                             <strong>Estágio</strong>: {{ $work->stage_description }}<br>
                             <strong>Área total construída (m<sup>2</sup>)</strong>: {{ $work->total_project_area }}<br>
                             <strong>Padrão</strong>: {{ $work->investment_standard }}<br>
                             <strong>Valor do investimento</strong>: R$ {{ convertDecimalToBRL($work->price) }}<br>
                         </td>
+                        
+                        <!-- Foto da obra -->
                         <td style="width:15% !important;">
                             <picture>
-                                <img src="" class="img-fluid" alt=""/>
+                                @if (!empty($work->storage_image_link))
+                                    <img src="{{ asset($work->public_image_link) }}" class="img-fluid img-thumbnail"  alt="Imagem da Obra" />
+                                @else
+                                    <img src="{{ asset('images/intec_default_mini.png') }}" class="img-fluid" width="250" alt="Imagem da Obra" />
+                                @endif
                             </picture>
                         </td>
                     </tr>
                 </table>
+
                 <table class="table table-condensed">
                     <tr>
                         <td>
@@ -326,9 +304,9 @@
                 </table>
             </div>
         </div>
-
+        
+         <!--INFORMAÇÕES ADICIONAIS-->
         @if ($work->segment_description == \App\Models\Work::RESIDENTIAL_SEGMENT)
-            <!--INFORMAÇÕES ADICIONAIS-->
             <div class="row mt-2">
                 <div class="col-md-12">
                     <p class="text-success"><b>DESCRIÇÃO:</b></p>
@@ -353,7 +331,6 @@
                                 <br>
                                 <strong>Sala(s) de jantar / estar</strong>: {{ $work->living_room }}
                             </td>
-
                             <td>
                                 <strong>Área(s) de Serv. / Terraço(s) / Varanda(s)</strong>: {{ $work->tower }}
                                 <br>
@@ -456,72 +433,53 @@
             </div>
         </div>
 
-        <!--CONTATOS-->
+        <!-- CONTATOS -->
         <div class="row mt-2">
             <div class="col-md-12">
                 <p class="boxtitle text-success"><strong>CONTATO(s) DA OBRA</strong></p>
-                <table class="table table-condensed">
-                    <tr>
-                        <td><strong>Nome</strong></td>
-                        <td><strong>Cargo</strong></td>
-                        <td><strong>Empresa</strong></td>
-                        <td><strong>Telefone 1</strong></td>
-                        <td><strong>Telefone 2</strong></td>
-                        <td><strong>Telefone 3</strong></td>
-                        <td><strong>Telefone 4</strong></td>
-                        <td><strong>E-mail 1</strong></td>
-                        <td><strong>E-mail 2</strong></td>
-                        <td><strong>E-mail 3</strong></td>
-                    </tr>
-                    @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
-                        <tr>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                {{ $contact->name }}
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                {{ optional($contact->position)->description }}
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                {{ optional($contact->company)->trading_name }}
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->ddd && $contact->main_phone)
-                                ({{ $contact->ddd }}) {{ $contact->main_phone }}
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->ddd_two && $contact->phone_two)
-                                ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->ddd_three && $contact->phone_three)
-                                ({{ $contact->ddd_three }}) {{ $contact->phone_three }}
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->ddd_four && $contact->phone_four)
-                                ({{ $contact->ddd_four }}) {{ $contact->phone_four }}
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->email)
-                                <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->email)
-                                 <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a>
-                                @endif
-                            </td>
-                            <td style="padding: 5px 0 5px 0 !important;">
-                                @if ($contact->email)
-                                 <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+            </div>
+            <div class="row mb-2">
+                @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
+                <div class="col-md-3"> <!-- Cada card terá uma coluna de tamanho 3 em telas médias e maiores -->
+                    <div class="card p-2">
+                        <strong>Nome:</strong> {{ $contact->name }}<br>
+                        <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
+                        <strong>Telefone(s): </strong> 
+                        @if ($contact->ddd && $contact->main_phone)
+                            ({{ $contact->ddd }}) {{ $contact->main_phone }}
+                        @endif
+                        
+                        @if ($contact->ddd_two && $contact->phone_two)
+                            <br>
+                            ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
+                        @endif
+                        
+                        @if ($contact->ddd_three && $contact->phone_three)
+                            <br>
+                            ({{ $contact->ddd_three }}) {{ $contact->phone_three }}
+                        @endif
+              
+                        @if ($contact->ddd_four && $contact->phone_four)
+                            <br>
+                            ({{ $contact->ddd_four }}) {{ $contact->phone_four }}
+                        @endif 
+                        <br>
+                        
+                        <strong>E-mail(s):</strong> 
+                        @if ($contact->email)
+                            <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>
+                        @endif
+
+                        @if ($contact->secondary_email)
+                            <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a>
+                        @endif
+
+                        @if ($contact->tertiary_email)
+                            <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a>
+                        @endif<br>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
 
@@ -529,10 +487,9 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <p class="boxtitle text-success"><strong>EMPRESA(s) PARTICIPANTE(s)</strong></p>
-                <table class="table table-condensed">
-
-                    <tbody>
-                        @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
+                @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
+                    <table class="table table-condensed">
+                        <tbody>
                             <tr>
                                 <td class="pt-2" colspan="4">
                                     <strong>Modalidade(s):</strong>
@@ -556,7 +513,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }} - {{ $company->district }}
+                                    @if($company->address || $company->number || $company->district)
+                                        <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }} - {{ $company->district }}
+                                    @else
+                                        <strong>Endereço</strong>:
+                                    @endif
                                 </td>
                                 <td colspan="3">
                                     <strong>Site:</strong> {{ $company->home_page }}
@@ -567,83 +528,77 @@
                                     <strong>Cidade:</strong> {{ $company->city }} - {{ $company->state }} - <strong>CEP:</strong> {{ $company->zip_code }}
                                 </td>
                                 <td>
-                                    <strong>E-mail 1:</strong> <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a>
-                                </td>
-                                <td colspan="2">
-                                    <strong>E-mail 2:</strong> <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                    </table>
-                        
-                    <table class="table">
-                        <thead> 
-                            <tr>
-                                <td><strong>Contato(s):</strong></td>
-                            </tr>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Cargo</th>
-                                <th>Telefone 1</th>
-                                <th>Telefone 2</th>
-                                <th>Telefone 3</th>
-                                <th>Telefone 4</th>
-                                <th>E-mail 1</th>
-                                <th>E-mail 2</th>
-                                <th>E-mail 3</th>
-                             </tr>
-                        </thead>
+                                    <strong>Email(s):</strong>
+                                    @if ($company->primary_email)
+                                        <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a>
+                                    @endif
 
-                        <tbody>
-                            @foreach (
-                                (new \App\Models\Work)->find($work->id)->companyContacts()
-                                    ->where('contact_work.company_id', $company->id)
-                                    ->get() as $workCompanyContact
-                                )
-                                <!--CONTATOS-->
-                                
-                                @if($workCompanyContact)
-                                <tr>
-                                    <td>
-                                        {{ $workCompanyContact->name }}
-                                    </td>
-                                    <td>
-                                        {{ optional($workCompanyContact->position)->description }}
-                                    </td>
-                                    <td>
-                                        ({{ $workCompanyContact->ddd }})
-                                        {{ $workCompanyContact->main_phone }}
-                                    </td>
-                                    <td>
-                                        ({{ $workCompanyContact->ddd_two }})
-                                        {{ $workCompanyContact->phone_two }}
-                                    </td>
-                                    <td>
-                                        ({{ $workCompanyContact->ddd_three }})
-                                        {{ $workCompanyContact->phone_three }}
-                                    </td>
-                                    <td>
-                                        ({{ $workCompanyContact->ddd_four }})
-                                        {{ $workCompanyContact->phone_four }}
-                                    </td>
-                            
-                                    <td>
-                                        <a href="mailto:{{ $workCompanyContact->email }}">{{ $workCompanyContact->email }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="mailto:{{ $workCompanyContact->secondary_email }}">{{ $workCompanyContact->secondary_email }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="mailto:{{ $workCompanyContact->tertiary_email }}">{{ $workCompanyContact->tertiary_email }}</a>
-                                    </td>
-                                </tr>
-                                @endif
-                            @endforeach
+                                    @if ($company->secondary_email)
+                                        /
+                                        <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!--CONTATOS-->
+                    <div class="row mb-3">
+                        <div class='col-md-12'>
+                            <p><strong>Contato(s)</strong></p>
+                        </div>
+                        @foreach ($company->contacts()->where('contacts.archived', false)->get() as $workCompanyContact)
+                            @if($workCompanyContact)
+                                <div class="col-md-3">
+                                    <div class="card p-2">
+                                        <strong>Nome:</strong> {{ $workCompanyContact->name }} <br>
+                                        <strong>Cargo:</strong> {{ optional($workCompanyContact->position)->description }} <br>
+                                        <strong>Telefone(s):</strong>
+                                        @if ($workCompanyContact->main_phone)
+                                            ({{ $workCompanyContact->ddd }})
+                                            {{ $workCompanyContact->main_phone }}
+                                        @endif
+
+                                        @if ($workCompanyContact->phone_two)
+                                            <br>
+                                            ({{ $workCompanyContact->ddd_two }})
+                                            {{ $workCompanyContact->phone_two }}
+                                        @endif
+
+                                        @if ($workCompanyContact->phone_three)
+                                            <br>
+                                            ({{ $workCompanyContact->ddd_three }})
+                                            {{ $workCompanyContact->phone_three }}
+                                        @endif
+
+                                        @if ($workCompanyContact->phone_four)
+                                            <br>
+                                            ({{ $workCompanyContact->ddd_four }})
+                                            {{ $workCompanyContact->phone_four }}
+                                        @endif
+                                        <br>
+                                        
+                                        <strong>E-mail(s):</strong>
+                                        @if ($workCompanyContact->email)
+                                            <a href="mailto:{{ $workCompanyContact->email }}">{{ $workCompanyContact->email }}</a>
+                                        @endif
+
+                                        @if ($workCompanyContact->secondary_email)
+                                            <a href="mailto:{{ $workCompanyContact->secondary_email }}">{{ $workCompanyContact->secondary_email }}</a>
+                                        @endif
+
+                                        @if ($workCompanyContact->tertiary_email)
+                                            <a href="mailto:{{ $workCompanyContact->tertiary_email }}">{{ $workCompanyContact->tertiary_email }}</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
-                    </tbody>
-                </table> 
+                    </div>
+                @endforeach
             </div>
         </div>
+
         @empty
         <div class="row mt-2">
             <div class="col-md-12">

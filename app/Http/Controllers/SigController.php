@@ -136,43 +136,58 @@ class SigController extends Controller
         /*Obra*/
         $oldCode = $request->code;
         if ($oldCode) {
-            $query->whereHas('work', function ($q) use ($oldCode) {
-                return $q->where('works.old_code', 'like', '%'.$oldCode.'%');
+            $query->whereHas('work', function ($q) use ($oldCode, $authUser) {
+                return $q->where('works.old_code', 'like', '%'.$oldCode.'%')
+                        ->where('user_id', $authUser->id);
             });
         }
         
         /*Prioridade*/
         $priority = $request->priority;
         if ($priority) {
-            $query->where('priority', $priority);
+            $query->where(function ($query) use ($priority, $authUser) {
+                $query->where('priority', $priority)
+                        ->where('user_id', $authUser->id);
+            });
         }
         
         /*Status*/
         $status = $request->status;
         if ($status) {
-            $query->where('status', $status);
+             $query->where(function ($query) use ($status, $authUser) {
+                $query->where('status', $status)
+                        ->where('user_id', $authUser->id);
+            });
         }
         
         /*Data de agendamento*/
         $appointmentDate = $request->appointment_date;
         if ($appointmentDate) {
             $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
-            $query->where('appointment_date', $appointmentDateUTC);
+            $query->where(function ($query) use ($appointmentDateUTC, $authUser) {
+                $query->where('appointment_date', $appointmentDateUTC)
+                      ->where('user_id', $authUser->id);
+            });
         }
         
-       $reporters = $request->reporters;
-       if ($reporters) {
-           $query->whereIn('sigs.user_id', $reporters);
-       }
-        
-        /*Datas de cadastro*/
+        $reporters = $request->reporters;
+        if ($reporters) {
+            $query->whereIn('sigs.user_id', $reporters);
+        }
+       
+        /*Data de cadastro*/
         $startDate = $request->start_date;
         $endDate = $request->end_date;
+
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [$startDate, $endDate]);
+            $startDateFormatted = date('Y-m-d', strtotime($startDate));
+            $endDateFormatted = date('Y-m-d', strtotime($endDate));
+
+            $query->where('user_id', $authUser->id) // Filtra pelo ID do usuário autenticado
+                  ->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
         }
 
-        $reports = $query->get();
+        $reports = $query->where('user_id', $authUser->id)->get();
 
         return view('layouts.sig_works.report.index', [
             'reports' => $reports,
