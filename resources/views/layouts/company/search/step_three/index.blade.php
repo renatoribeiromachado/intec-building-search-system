@@ -209,7 +209,7 @@
                             </div>
                             
                             <!--Inputs hidden -->
-                            <input type="text" name="company_id" value="" id="modal-company-id-input">
+                            <input type="hidden" name="company_id" value="" id="modal-company-id-input">
 
                             <div class="row">
                                 <div class="col-md-4">
