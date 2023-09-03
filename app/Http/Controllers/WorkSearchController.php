@@ -393,8 +393,7 @@ class WorkSearchController extends Controller
         }
 
         if ((! session()->has('segmentSubTypesVisible')) && isset($allSegmentSubTypeIds)) {
-            $works = $works
-                ->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
+            $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
         
         if (session()->has('segmentSubTypesVisible') && (! isset($allSegmentSubTypeIds))) {

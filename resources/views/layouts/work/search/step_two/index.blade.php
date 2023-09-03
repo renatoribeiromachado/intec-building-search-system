@@ -97,11 +97,12 @@
                 id="revision_1"
                 name="revision_1"
                 value="{{ request()->revision }}">
+            <!-- participating_company -->
             <input
                 type="hidden"
-                id="participating_company_1"
-                name="participating_company_1"
-                value="{{ request()->participating_company }}">
+                id="search_1"
+                name="search_1"
+                value="{{ request()->search }}">
             @foreach ($statesChecked as $stateChecked)
             <input type="hidden" name="states[]" value="{{ $stateChecked }}">
             @endforeach
@@ -199,11 +200,12 @@
             id="revision"
             name="revision"
             value="{{ request()->revision }}">
+        <!-- participating_company -->
         <input
             type="hidden"
-            id="participating_company"
-            name="participating_company"
-            value="{{ request()->participating_company }}">
+            id="search"
+            name="search"
+            value="{{ request()->search }}">
         @foreach ($statesChecked as $stateChecked)
         <input type="hidden" name="states[]" value="{{ $stateChecked }}">
         @endforeach

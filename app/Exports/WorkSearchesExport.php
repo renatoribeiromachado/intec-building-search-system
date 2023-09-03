@@ -91,7 +91,10 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         $cityId = isset($this->searchParams['city_id'])
             ? $this->searchParams['city_id']
             : null;
-        $participatingCompany = $this->searchParams['participating_company_1'];
+        // participating_company
+        $search = isset($this->searchParams['search_1'])
+            ? $this->searchParams['search_1']
+            : null;
         $qi = $this->searchParams['qi_1'];
         $price = $this->searchParams['price_1'];
         $qr = $this->searchParams['qr_1'];
@@ -110,13 +113,26 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 : $this->searchParams['states'];
         }
 
-        // this session exists only for associate manager or associate user
-        if (session()->has('statesVisible') && isset($allStateIds)) {
+        if ((! session()->has('statesVisible')) && isset($allStateIds)) {
             $states = $states->whereIn('id', $allStateIds);
         }
 
+        // the session 'statesVisible' exists only for associate manager or associate user,
+        // this filter covers the situation where the user hasn't selected any states
         if (session()->has('statesVisible') && (! isset($allStateIds))) {
             $states = $states->whereIn('id', $statesVisible);
+        }
+
+        // this filter covers the situation where the associate manager or associate user
+        // has selected at least one state
+        if (session()->has('statesVisible') && isset($allStateIds)) {
+            $statesToSearch = [];
+            foreach (session('statesVisible') as $stateVisible) {
+                if (in_array($stateVisible, $allStateIds)) {
+                    array_push($statesToSearch, $stateVisible);
+                }
+            }
+            $states = $states->whereIn('id', $statesToSearch);
         }
 
         $allStatesAcronym = $states->get()->pluck('state_acronym');
@@ -135,10 +151,10 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             ->join('segments', 'works.segment_id', '=', 'segments.id')
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
 
-        if ($participatingCompany) {
-            $works = $works->whereHas('companies', function ($q) use ($participatingCompany) {
+        if ($search) {
+            $works = $works->whereHas('companies', function ($q) use ($search) {
                 return $q->where(
-                    'companies.company_name', 'LIKE', '%'.$participatingCompany.'%'
+                    'companies.trading_name', $search
                 );
             });
         }
@@ -174,13 +190,25 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 : $this->searchParams['segment_sub_types'];
         }
 
-        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
+        if ((! session()->has('segmentSubTypesVisible')) && isset($allSegmentSubTypeIds)) {
             $works = $works->whereIn('segment_sub_types.id', $allSegmentSubTypeIds);
         }
         
         if (session()->has('segmentSubTypesVisible') && (! isset($allSegmentSubTypeIds))) {
             $works = $works
                 ->whereIn('segment_sub_types.id', $segmentSubTypesVisible->toArray());
+        }
+
+        // this filter covers the situation where the associate manager or associate user
+        // has selected at least one segment subtype
+        if (session()->has('segmentSubTypesVisible') && isset($allSegmentSubTypeIds)) {
+            $segmentSubTypeToSearch = [];
+            foreach ($segmentSubTypesVisible as $segmentSubTypeVisible) {
+                if (in_array($segmentSubTypeVisible, $allSegmentSubTypeIds)) {
+                    array_push($segmentSubTypeToSearch, $segmentSubTypeVisible);
+                }
+            }
+            $works = $works->whereIn('segment_sub_types.id', $segmentSubTypeToSearch);
         }
         // Ends Segment Sub Types filters
 
