@@ -175,17 +175,18 @@ class SigController extends Controller
             $query->whereIn('sigs.user_id', $reporters);
         }
        
-        /*Data de cadastro*/
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        /* Data de cadastro */
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
 
-        if ($startDate && $endDate) {
-            $startDateFormatted = date('Y-m-d', strtotime($startDate));
-            $endDateFormatted = date('Y-m-d', strtotime($endDate));
+        if ($start_date && $end_date) {
+            $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d');
+            $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d');
 
-            $query->where('user_id', $authUser->id) // Filtra pelo ID do usuário autenticado
-                  ->whereBetween('created_at', [$startDateFormatted, $endDateFormatted]);
+            $query->whereBetween('created_at', [$start_date, $end_date])
+                   ->where('user_id', $authUser->id);
         }
+
 
         $reports = $query->where('user_id', $authUser->id)->get();
 
