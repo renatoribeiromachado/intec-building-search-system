@@ -24,6 +24,7 @@ use App\Http\Controllers\WorkSearchController;
 use App\Http\Controllers\SigController;
 use App\Http\Controllers\SigCompanyController;
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\CronCompanyController;
 use App\Http\Controllers\EmailWorkController;
 use App\Http\Controllers\EmailCompanyController;
 use Illuminate\Http\Request;
@@ -47,6 +48,9 @@ Route::get('/', function () {
 
 /*Cron*/
 Route::get('cron', [CronController::class, 'cron'])->name('crom');
+
+/*Cron empresas*/
+Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCompany');
 
 Route::middleware(['auth'])->group(function () {
 

@@ -39,7 +39,7 @@ class CronController extends Controller {
         // Iterar sobre os resultados e enviar emails
         foreach ($results as $result) {
             $mailData = [
-                'title' => 'INTEC BRASIL',
+                'title' => 'INTEC Brasil - SIG obra',
                 'body' => 'Você tem um agendamento de SIG',
                 'appointment_date' => $result->appointment_date,
                 'old_code' => $result->old_code,

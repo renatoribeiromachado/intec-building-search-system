@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
-        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Bootstrap CSS -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -415,7 +413,7 @@
                             --}}
                         @endcan
 
-                        @can('ver-sig')
+                        
                             <li class="nav-item dropdown">
                                 <a
                                     class="nav-link dropdown-toggle text-white"
@@ -428,28 +426,30 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ route('sig_works.index') }}"
-                                            >
-                                            SIG / Obras
-                                        </a>
-                                    </li>
+                                    @can('ver-sig')
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('sig_works.index') }}"
+                                                >
+                                                SIG / Obras
+                                            </a>
+                                        </li>
+                                    @endcan
+
                                     @can('ver-sig-empresa')
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ route('sig_companies.index') }}"
-                                            >
-                                            SIG / Empresa
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('sig_companies.index') }}"
+                                                >
+                                                SIG / Empresa
+                                            </a>
+                                        </li>
                                     @endcan
                                 </ul>
                             </li>
-                        @endcan
-
+                      
                         <li class="nav-item dropdown">
                             <a
                                 class="nav-link dropdown-toggle text-white"

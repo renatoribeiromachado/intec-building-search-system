@@ -129,6 +129,7 @@
     @forelse ($works as $work)
         <div class="row mt-2">
             <div class="col-md-12">
+                <img src="https://homolocacao.intecbrasil.com.br/images/relatorio-obras.png" class="img-fluid" alt="Descrição da Imagem">
                 <p>
                     <strong>Código</strong>: {{ $work->old_code }} -
                     Última Atualização:
@@ -282,12 +283,12 @@
                         </td>
                         
                         <!-- Foto da obra -->
-                        <td style="width:15% !important;">
+                        <td style="width:150% !important;">
                             <picture>
                                 @if (!empty($work->storage_image_link))
-                                    <img src="{{ asset($work->public_image_link) }}" class="img-fluid img-thumbnail"  alt="Imagem da Obra" />
+                                <img src="{{ asset($work->public_image_link) }}" class="" width="310"  alt="Imagem da Obra" />
                                 @else
-                                    <img src="{{ asset('images/intec_default_mini.png') }}" class="img-fluid" width="250" alt="Imagem da Obra" />
+                                    <img src="{{ asset('images/intec_default_mini.png') }}" class="img-fluid" width="310" alt="Imagem da Obra" />
                                 @endif
                             </picture>
                         </td>
@@ -440,8 +441,16 @@
             </div>
             <div class="row mb-2">
                 @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
-                <div class="col-md-3"> <!-- Cada card terá uma coluna de tamanho 3 em telas médias e maiores -->
+                <div class="col-md-3"> 
                     <div class="card p-2">
+                        @php
+                            $workCompanies = (new \App\Models\Work)->find($work->id)->companies;
+                        @endphp
+                        @foreach ($workCompanies as $company)
+                            @if ($contact->company_id === $company->id)
+                                <strong>Empresa: {{ $company->trading_name }}</strong>
+                            @endif
+                        @endforeach 
                         <strong>Nome:</strong> {{ $contact->name }}<br>
                         <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
                         <strong>Telefone(s): </strong> 
