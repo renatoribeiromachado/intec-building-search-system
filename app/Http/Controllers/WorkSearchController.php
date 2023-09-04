@@ -13,6 +13,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Work;
 use App\Models\WorkFeature;
+use App\Models\Researcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,7 @@ class WorkSearchController extends Controller
     protected $city;
     protected $segmentSubType;
     protected $workFeature;
+    protected $researcher;
     protected $sig;
     protected $worksSessionName = 'works_checkboxes';
     protected $stagesSessionName = 'stages_checkboxes';
@@ -43,6 +45,7 @@ class WorkSearchController extends Controller
         City $city,
         SegmentSubType $segmentSubType,
         WorkFeature $workFeature,
+        Researcher $researcher,
         Sig $sig  
     ) {
         $this->stage = $stage;
@@ -51,6 +54,7 @@ class WorkSearchController extends Controller
         $this->city = $city;
         $this->segmentSubType = $segmentSubType;
         $this->workFeature = $workFeature;
+        $this->researcher = $researcher;
         $this->sig = $sig;
     }
 
@@ -62,6 +66,7 @@ class WorkSearchController extends Controller
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
+        $researchers = $this->researcher->get();//Renato machado 04/09/2023
 
         $authUser = Auth::user();
 
@@ -142,6 +147,7 @@ class WorkSearchController extends Controller
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
             'states',
+            'researchers'
         ));
     }
 
@@ -307,6 +313,7 @@ class WorkSearchController extends Controller
         $allStateIds = null;
         $allStatesAcronym = null;
         $states = $this->state->select('state_acronym');
+        $researcher = $request->researcher_id;
 
         if (session()->has($this->statesSessionName) || $request->states) {
             $allStateIds = session()->has($this->statesSessionName)
@@ -533,6 +540,12 @@ class WorkSearchController extends Controller
                 'works.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
             );
         }
+        
+        /*Pesquisador*/
+        if ($researcher) {
+            $works = $works->where('works.created_by', '=', $researcher);
+        }
+        
 
         if (Route::is('work.search.step_three.index')) {
             return $works->get();

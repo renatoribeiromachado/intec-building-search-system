@@ -442,14 +442,9 @@
                             </div>
                         </div>
                         --}}
+                        
+                        
                         {{--
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label class="control-label"> Pesquisador *Associado não verá</label>
-                                <select name="name" class="form-select form-group">
-                                    <option value="0">-- Selecione --</option>
-                                </select>
-                            </div>
                             <div class="col-md-6">
                                 <label class="control-label"> Status atual do SIG</label>
                                 <select name="sig_id" class="form-select">
@@ -457,7 +452,7 @@
 
                                 </select>
                             </div>
-                        </div>
+                        
                         --}}
 
                     </div><!--fim lado direito-->
@@ -546,6 +541,20 @@
                                 <input type="text" name="revision" class="form-control" value=""/>
                             </div>
                         </div>
+                        
+                        @can('ver-filtro-pesquisador-obras')
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label class="control-label"> Pesquisador</label>
+                                    <select name="researcher_id" class="form-select form-group">
+                                        <option value="0">-- Selecione --</option>
+                                        @foreach($researchers as $researcher)
+                                            <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
                         {{--
                         <div class="row mt-2">
                             <div class="col-md-6">
