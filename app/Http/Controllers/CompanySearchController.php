@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CompanySearchesExport;
 use App\Models\ActivityField;
 use App\Models\Associate;
 use App\Models\City;
@@ -15,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompanySearchController extends Controller
 {
@@ -413,6 +416,20 @@ class CompanySearchController extends Controller
             $request->company,
             $this->companiesSessionName,
             'companies_selected'
+        );
+    }
+    
+    public function export(Request $request)
+    {
+        $searchParams = $request->query();
+        return Excel::download(
+            new CompanySearchesExport(
+                $searchParams,
+                $this->company,
+                $this->state,
+                $this->city
+            ),
+            'pesquisa-de-oempresas.xlsx'
         );
     }
 }

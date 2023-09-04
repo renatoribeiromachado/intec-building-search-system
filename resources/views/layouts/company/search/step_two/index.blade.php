@@ -8,6 +8,104 @@
         
         @include('layouts.alerts.success')
         @include('layouts.alerts.all-errors')
+        
+        <form name="export_form" action="{{ route('company.search.export') }}" method="get">
+            @csrf
+
+            <input
+                type="hidden"
+                id="input_select_all_1"
+                name="input_select_all_1"
+                value="{{ $inputSelectAll }}">
+            <input
+                type="hidden"
+                id="input_page_of_pagination_1"
+                name="input_page_of_pagination_1"
+                value="{{ $inputPageOfPagination }}">
+            <input
+                type="hidden"
+                id="clicked_in_page_1"
+                name="clicked_in_page_1"
+                value="{{ $clickedInPage }}">
+
+            <input
+                type="hidden"
+                id="last_review_from_1"
+                name="last_review_from_1"
+                value="{{ convertPtBrDateToEnDate(request()->last_review_from) }}">
+            <input
+                type="hidden"
+                id="last_review_to_1"
+                name="last_review_to_1"
+                value="{{ convertPtBrDateToEnDate(request()->last_review_to) }}">
+            <input
+                type="hidden"
+                id="investment_standard_1"
+                name="investment_standard_1"
+                value="{{ request()->investment_standard }}">
+            <input
+                type="hidden"
+                id="name_1"
+                name="name_1"
+                value="{{ request()->name }}">
+            <input
+                type="hidden"
+                id="old_code_1"
+                name="old_code_1"
+                value="{{ request()->old_code }}">
+            <input
+                type="hidden"
+                id="address_1"
+                name="address_1"
+                value="{{ request()->address }}">
+            <input
+                type="hidden"
+                id="district_1"
+                name="district_1"
+                value="{{ request()->district }}">
+            <input
+                type="hidden"
+                id="qa_1"
+                name="qa_1"
+                value="{{ request()->qa }}">
+            <input
+                type="hidden"
+                id="total_area_1"
+                name="total_area_1"
+                value="{{ request()->total_area }}">
+            <input
+                type="hidden"
+                id="qi_1"
+                name="qi_1"
+                value="{{ request()->qi }}">
+            <input
+                type="hidden"
+                id="price_1"
+                name="price_1"
+                value="{{ request()->price }}">
+            <input
+                type="hidden"
+                id="qr_1"
+                name="qr_1"
+                value="{{ request()->qr }}">
+            <input
+                type="hidden"
+                id="revision_1"
+                name="revision_1"
+                value="{{ request()->revision }}">
+            <!-- participating_company -->
+            <input
+                type="hidden"
+                id="search_1"
+                name="search_1"
+                value="{{ request()->search }}">
+            @foreach ($statesChecked as $stateChecked)
+            <input type="hidden" name="states[]" value="{{ $stateChecked }}">
+            @endforeach
+            
+        
+
+        </form>
 
         <form action="{{ route('company.search.step_three.index') }}" method="get">
             @csrf
@@ -92,16 +190,32 @@
                         Pesquisar
                     </button>
                 </div>
+
             </div>
 
-            <button
-                type="button"
-                id="toggleButton"
-                class="btn btn-primary mb-4"
-                onclick="toggleCheckboxes()"
-                >
-                Selecionar Todos
-            </button>
+            <div class="row">
+                <div class="col mt-3 mb-3">
+                    <button
+                        type="button"
+                        id="toggleButton"
+                        class="btn btn-primary mb-4"
+                        onclick="toggleCheckboxes()"
+                        >
+                        Selecionar Todos
+                    </button>
+                </div>
+
+                <!--Excel-->
+                <div class="col-md-2 mt-2 mb-3 clearfix">
+                    <button
+                        id="btn-export-spreadsheet"
+                        type="button"
+                        class="btn btn-success"
+                        >
+                        Exportar para Excel
+                    </button>
+                </div>
+            </div>
 
             <div>
                 {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
@@ -309,6 +423,51 @@
 @push('scripts')
 
     <script>
+        $(document).ready(function () {
+            $('#btn-export-spreadsheet').click(function (event) {
+                event.preventDefault();
+                let $form = $('form[name="export_form"]');
+                $form.submit();
+            });
+
+            $('.work-checkbox').click(function () {
+                let $checkbox = $(this);
+                let isChecked = $checkbox.is(':checked')
+
+                if (isChecked) {
+                    $.ajax({
+                        type: "POST",
+                        url: base_url() + 'v1/check-work',
+                        data: {
+                            work: $checkbox.val(),
+                        },
+                        success: function (return_data) {
+                            // console.log(return_data)
+                        },
+                        error: function (event) {
+                            console.log(event)
+                        }
+                    });
+                }
+
+                if (! isChecked) {
+                    $.ajax({
+                        type: "POST",
+                        url: base_url() + 'v1/remove-check-work',
+                        data: {
+                            work: $checkbox.val(),
+                        },
+                        success: function (return_data) {
+                            // console.log(return_data)
+                        },
+                        error: function (event) {
+                            console.log(event)
+                        }
+                    });
+                }
+            })
+        });
+        
         let btnSelectAll = document.getElementById('toggleButton');
 
         $(document).ready(function () {

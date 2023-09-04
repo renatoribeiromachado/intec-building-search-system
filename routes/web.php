@@ -83,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
 
         //     return $activityFound;
         // })->name('company.import');
+        
+        Route::get('export-companies', [CompanySearchController::class, 'export'])->name('company.search.export');
 
         Route::get(
             'search/step-1',
