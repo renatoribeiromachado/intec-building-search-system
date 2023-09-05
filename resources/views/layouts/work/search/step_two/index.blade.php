@@ -92,6 +92,23 @@
                 value="{{ request()->qr }}">
             <input
                 type="hidden"
+                id="state_id_1"
+                name="state_id_1"
+                value="{{ request()->state_id }}">
+            
+            <input
+                type="hidden"
+                id="cities_ids_1"
+                name="cities_ids_1"
+                value="{{ request()->cities_ids }}">
+            
+            <input
+                type="hidden"
+                id="researcher_id_1"
+                name="researcher_id_1"
+                value="{{ request()->researcher_id }}">
+            <input
+                type="hidden"
                 id="revision_1"
                 name="revision_1"
                 value="{{ request()->revision }}">

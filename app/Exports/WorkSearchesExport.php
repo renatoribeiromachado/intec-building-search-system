@@ -85,16 +85,21 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         $address = $this->searchParams['address_1'];
         $oldCode = $this->searchParams['old_code_1'];
         $district = $this->searchParams['district_1'];
-        $stateAcronym = isset($this->searchParams['state_id'])
-            ? $this->searchParams['state_id']
+        $researcher = $this->searchParams['researcher_id_1'];
+        $stateAcronym = isset($this->searchParams['state_id_1'])
+            ? $this->searchParams['state_id_1']
             : null;
-        $cityId = isset($this->searchParams['city_id'])
-            ? $this->searchParams['city_id']
-            : null;
+        
+        /*Cidades - Renato Machado 05/09/2023*/
+        $cityIds = isset($this->searchParams['cities_ids_1']) 
+                ? explode(',', $this->searchParams['cities_ids_1']) 
+                : [];
+        
         // participating_company
         $search = isset($this->searchParams['search_1'])
             ? $this->searchParams['search_1']
             : null;
+        
         $qi = $this->searchParams['qi_1'];
         $price = $this->searchParams['price_1'];
         $qr = $this->searchParams['qr_1'];
@@ -244,10 +249,22 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         }
         
         /*City*/
-        if ($cityId) {
-            $city = $this->city->findOrFail($cityId);
-            $works = $works->where('works.city', 'LIKE', '%'.$city->description.'%');
+        if (!empty($cityIds)) {
+            // Busque as cidades com base nos IDs
+            $cities = $this->city->findOrFail($cityIds);
+
+            // Extraia as descrições das cidades para filtragem
+            $cityDescriptions = $cities->pluck('description')->toArray();
+
+            // Use as descrições das cidades para filtrar os trabalhos
+            $works = $works->whereIn('works.city', $cityDescriptions);
         }
+        
+        /*Pesquisador*/
+        if ($researcher) {
+            $works = $works->where('works.created_by', $researcher);
+        }
+        
         
         /* Investimento */
         if ($qi && $price !== null) {
