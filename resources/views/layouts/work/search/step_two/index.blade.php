@@ -234,7 +234,7 @@
         <div class="row">
             <div class="col mt-3 mb-3">
                 Resultados encontrados: &nbsp;
-                <span class="fs-3">{{ $works->total() }}</span>
+                <span class="fs-3">{{ $worksTotal }}</span>
             </div>
 
             <div class="col-md-2 mt-2 mb-3 clearfix">
@@ -301,75 +301,77 @@
                 </thead>
                 <tbody>
                     @forelse($works as $work)
-                    <tr class="
-                        @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
-                        @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
-                        @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
-                    ">
-                        <td style="cursor: pointer;">
-                            <div style="cursor: pointer;">
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input work-checkbox"
-                                        type="checkbox"
-                                        name="works_selected[]"
-                                        value="{{ $work->id }}"
-                                        id="flexCheckDefault{{$loop->index}}"
-                                        data-work-id="{{ $work->id }}"
-                                        data-work-code="{{ $work->old_code }}"
-                                        @if(collect($worksChecked)->contains($work->id))
-                                        checked
-                                        @endif
-                                        >
-                                    <label
-                                        class="form-check-label"
-                                        for="flexCheckDefault{{$loop->index}}"
-                                        >
-                                        {{ $work->old_code }}
-                                    </label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>{{ $work->name }}</td>
-                        <td>
-                            @if(isset($work->last_review))
-                            {{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}
-                            @endif
-                        </td>
-                        <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
-                        <td>{{ $work->phase_description }}</td>
-                        <td>{{ $work->stage_description }}</td>
-                        <td>{{ $work->segment_description }}</td>
-                        <td>
-                            @foreach($work->companies as $company)
-                                {{ $company->trading_name }}@if(! $loop->last), @endif <br>
-                            @endforeach
-                        </td>
+                        @if (in_array($work->phase_id, [1, 2]) && is_null($work->deleted_at))
+                            <tr class="
+                                @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
+                                @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
+                                @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
+                            ">
+                                <td style="cursor: pointer;">
+                                    <div style="cursor: pointer;">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input work-checkbox"
+                                                type="checkbox"
+                                                name="works_selected[]"
+                                                value="{{ $work->id }}"
+                                                id="flexCheckDefault{{$loop->index}}"
+                                                data-work-id="{{ $work->id }}"
+                                                data-work-code="{{ $work->old_code }}"
+                                                @if(collect($worksChecked)->contains($work->id))
+                                                checked
+                                                @endif
+                                                >
+                                            <label
+                                                class="form-check-label"
+                                                for="flexCheckDefault{{$loop->index}}"
+                                                >
+                                                {{ $work->old_code }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ $work->name }}</td>
+                                <td>
+                                    @if(isset($work->last_review))
+                                    {{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}
+                                    @endif
+                                </td>
+                                <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
+                                <td>{{ $work->phase_description }}</td>
+                                <td>{{ $work->stage_description }}</td>
+                                <td>{{ $work->segment_description }}</td>
+                                <td>
+                                    @foreach($work->companies as $company)
+                                        {{ $company->trading_name }}@if(! $loop->last), @endif <br>
+                                    @endforeach
+                                </td>
 
-                        @can('ver-sig')
-                            <td>{{ $work->last_sig_status }}</td>
-                            <td>
-                                <a
-                                    href="javascript:void(0)"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#sig"
-                                    data-work-id="{{ $work->id }}"
-                                    data-code="{{ $work->old_code }}"
-                                    >
-                                    <i class="fa fa-check"></i>
-                                </a>
+                                @can('ver-sig')
+                                    <td>{{ $work->last_sig_status }}</td>
+                                    <td>
+                                        <a
+                                            href="javascript:void(0)"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#sig"
+                                            data-work-id="{{ $work->id }}"
+                                            data-code="{{ $work->old_code }}"
+                                            >
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    </td>
+                                @endcan
+                            </tr>
+                        @endif
+                        @empty
+                        <tr>
+                            <td colspan="@can('ver-sig') 10 @else 8 @endcan">
+                                <p class="text-center mb-0 py-4">
+                                    Nenhum registro de obra encontrado.
+                                </p>
                             </td>
-                        @endcan
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="@can('ver-sig') 10 @else 8 @endcan">
-                            <p class="text-center mb-0 py-4">
-                                Nenhum registro de obra encontrado.
-                            </p>
-                        </td>
-                    </tr>
-                    @endforelse
+                        </tr>
+                        @endforelse
                 </tbody>
             </table>
         </div>

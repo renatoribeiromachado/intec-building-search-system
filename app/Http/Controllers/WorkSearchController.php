@@ -202,6 +202,11 @@ class WorkSearchController extends Controller
         }
 
         $searchParams = $request->query();
+        
+        $worksTotal = number_format(
+            $this->work->whereIn('phase_id', [1, 2])
+               ->whereNull('deleted_at') // Adiciona a condição deleted_at IS NULL
+               ->count(),0,'','.');
 
         return view('layouts.work.search.step_two.index', compact(
             'works',
@@ -216,6 +221,7 @@ class WorkSearchController extends Controller
             'priorities',
             'reports',
             'searchParams',
+            'worksTotal'
         ));
     }
 
