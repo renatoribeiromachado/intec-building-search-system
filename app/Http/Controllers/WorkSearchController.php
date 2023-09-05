@@ -300,7 +300,7 @@ class WorkSearchController extends Controller
         $oldCode = $request->old_code;
         $district = $request->district;
         $stateAcronym = $request->state_id;
-        $cityId = $request->city_id;
+        $cityId = $request->cities_ids;
         $search = $request->search;
         $qi = $request->qi;
         $price = $request->price;
@@ -453,21 +453,17 @@ class WorkSearchController extends Controller
         }
         
         /*City*/
-        if ($cityId) {
-            $city = $this->city->findOrFail($cityId);
-            $works = $works->where('works.city', 'LIKE', '%'.$city->description.'%');
+//        if ($cityId) {
+//            $city = $this->city->findOrFail($cityId);
+//            $works = $works->where('works.city', 'LIKE', '%'.$city->description.'%');
+//        }
+        
+        if ($cityId && $stateAcronym) {
+            $cityIds = explode(',', $cityId);
+            $cityDescriptions = $this->city->whereIn('id', $cityIds)->pluck('description')->toArray();
+            $works = $works->whereIn('works.city', $cityDescriptions);
         }
-        
-        // /*CEP*/
-        // if ($initial_zip_code && $final_zip_code) {
-        //     $works = $works->whereBetween('works.zip_code', [$initial_zip_code, $final_zip_code]);
-        // }
-        
-        // /*Codigo da obra*/
-        // if ($notes) {
-        //     $notes = $works->where('works.notes', $notes);
-        // }
-        
+
         /* Investimento */
         if ($qi && $price !== null) {
             // Convertendo valor monetário do formato brasileiro para numérico

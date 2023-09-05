@@ -24,12 +24,14 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
     protected $CompaniesSessionName = 'companies_checkboxes';
     protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
     protected $statesSessionName = 'states_checkboxes';
+    protected $stateSessionName = 'state_selected';
+    
 
     public function __construct(
         $searchParams,
         Company $company,
         State $state,
-        City $city
+        City $city,
     ) {
         $this->searchParams = $searchParams;
         $this->company = $company;
@@ -83,21 +85,38 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         $endsAt = $this->searchParams['last_review_to_1'];
         $address = $this->searchParams['address_1'];
         $district = $this->searchParams['district_1'];
-        $stateAcronym = isset($this->searchParams['state_id'])
-            ? $this->searchParams['state_id']
-            : null;
-        $cityId = isset($this->searchParams['city_id'])
-            ? $this->searchParams['city_id']
+        
+        $stateAcronym = isset($this->searchParams['state_id_1'])
+        ? $this->searchParams['state_id_1']
+        : null;
+       
+        $cityId = isset($this->searchParams['city_id_1'])
+            ? $this->searchParams['city_id_1']
             : null;
         
         // Razão social
-        $searchCompanyName = isset($searchParams['company_name'])
-            ? $searchCompanyName['company_name']
+        $searchCompanyName = isset($this->searchParams['searchCompany_1'])
+            ? $this->searchParams['searchCompany_1']
             : null;
-
+        
         // Fantasia
-        $searchTrading = isset($searchParams['trading_name'])
-            ? $searchTrading['trading_name']
+        $searchTradingName = isset($this->searchParams['search_1'])
+            ? $this->searchParams['search_1']
+            : null;
+        
+        // Email principal
+        $searchEmail = isset($this->searchParams['primary_email_1'])
+            ? $this->searchParams['primary_email_1']
+            : null;
+        
+        // CNPJ
+        $searchCnpj = isset($this->searchParams['cnpj_1'])
+            ? $this->searchParams['cnpj_1']
+            : null;
+        
+        // Site
+        $searchSite = isset($this->searchParams['home_page_1'])
+            ? $this->searchParams['home_page_1']
             : null;
 
         // Region filters
@@ -152,6 +171,7 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         
         /*Todos os estados*/
         if ($allStatesAcronym) {
+            
             $companies = $companies->whereIn('companies.state', $allStatesAcronym);
         }
 
@@ -165,9 +185,9 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             $companies = $companies->where('companies.district', 'LIKE', '%'.$district.'%');
         }
 
-        /*Estado*/
-        if ($stateAcronym) {
-            $companies = $companies->where('companies.state', '=', $stateAcronym);
+       /*Estado*/
+        if ($stateAcronym) {   
+            $companies = $companies->where('companies.state', $stateAcronym);
         }
         
         /*Cidade*/
@@ -175,9 +195,34 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             $city = $this->city->findOrFail($cityId);
             $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
         }
+        
+        /*Razão social*/
+        if ($searchCompanyName) {   
+            $companies = $companies->where('companies.company_name', $searchCompanyName);
+        }
+        
+        /*Fantasia*/
+        if ($searchTradingName) {   
+            $companies = $companies->where('companies.trading_name', $searchTradingName);
+        }
+        
+        /*CNPJ*/
+        if ($searchCnpj) {   
+            $companies = $companies->where('companies.cnpj', $searchCnpj);
+        }
+       
+        /*Email principal*/
+        if ($searchEmail) {   
+            $companies = $companies->where('companies.primary_email', $searchEmail);
+        }
+
+        /*Site*/
+        if ($searchSite) {   
+            $companies = $companies->where('companies.home_page', $searchSite);
+        }
 
         /**
-         * The associate user only can search works based in the associate period fields:
+         * The associate user only can search company based in the associate period fields:
          *
          *  - data_filter_starts_at and;
          *  - data_filter_ends_at.

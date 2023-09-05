@@ -394,15 +394,6 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        {{--
-                        <div class="row mt-2">
-                            <div class="col-md-12">
-                                <label class="control-label"> CEP Inicial</label>
-                                <input type="text" name="initial_zip_code" class="form-control cep" value="" />
-                            </div>
-                        </div>
-                        --}}
 
                         <div class="row mt-2">
                             <label class="control-label">Área Construída(m²)</label>
@@ -434,6 +425,20 @@
                                 
                             </div>
                         </div>
+                        
+                        @can('ver-filtro-pesquisador-obras')
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label class="control-label"> Pesquisador</label>
+                                    <select name="researcher_id" class="form-select form-group">
+                                        <option value="0">-- Selecione --</option>
+                                        @foreach($researchers as $researcher)
+                                            <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
                         
                         {{--<div class="row mt-2">
                             <div class="col-md-12">
@@ -480,22 +485,63 @@
                                 />
                             </div>
                         </div>
-                        {{--
-                        <!--Cidades selecioandas-->
+                       
+                        <!-- Cidades selecionadas -->
                         <div class="row mt-2">
                             <div class="col-md-12">
-                                <label class="control-label">Cidades Selecionadas - <a class="clear">Limpar selecionada(s)</a> *</label>
-                                <input type="text" name="cities" class="form-control viewSelect" style="color:blue;" placeholder="Selecione independente do Estado, mas será consultado até 4 Cidade(s) ..." readonly="">
+                                <label class="control-label">Cidades Selecionadas - <a class="clear" onclick="limparSelecionadas()">Limpar selecionada(s)</a> *</label>
+                                <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mas será consultado até 4 Cidade(s) ..." readonly>
+                                <input type="hidden" name="cities_ids" id="citiesIdsInput" value="">
                             </div>
                         </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-12">
-                                <label class="control-label"> CEP final</label>
-                                <input type="text" name="final_zip_code" class="form-control cep" value="" />
-                            </div>
-                        </div>
-                      --}}
+
+                        <script>
+                            let selectCidade = document.getElementById("city_id");
+                            let selectEstado = document.getElementById("state_id");
+                            let inputSelectedCities = document.getElementById("selectedCitiesInput");
+                            let inputCitiesIds = document.getElementById("citiesIdsInput");
+
+                            selectCidade.addEventListener("change", function () {
+                                if (inputSelectedCities.value.split(",").length <= 3) {
+                                    if (selectCidade.selectedIndex > 0) {
+                                        let cidadeSelecionada = selectCidade.options[selectCidade.selectedIndex].text;
+                                        let cidadeId = selectCidade.options[selectCidade.selectedIndex].value;
+                                        let inputText = inputSelectedCities.value;
+                                        let inputIds = inputCitiesIds.value;
+
+                                        if (inputText.length > 0) {
+                                            inputText += ", ";
+                                            inputIds += ",";
+                                        }
+
+                                        inputText += cidadeSelecionada;
+                                        inputIds += cidadeId;
+
+                                        inputSelectedCities.value = inputText;
+                                        inputCitiesIds.value = inputIds;
+
+                                        selectCidade.selectedIndex = 0;
+                                    }
+                                } else {
+                                    alert("Limite de 4 cidades selecionadas atingido.");
+                                }
+                            });
+
+                            // Adiciona um evento de escuta para o elemento de seleção de estado
+                            selectEstado.addEventListener("change", function () {
+                                // Limpa os campos quando o estado é alterado
+                                inputSelectedCities.value = "";
+                                inputCitiesIds.value = "";
+                            });
+
+                            // Função para limpar as cidades selecionadas
+                            function limparSelecionadas() {
+                                inputSelectedCities.value = "";
+                                inputCitiesIds.value = "";
+                                selectCidade.selectedIndex = 0;
+                            }
+                        </script>
+
 
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -542,19 +588,7 @@
                             </div>
                         </div>
                         
-                        @can('ver-filtro-pesquisador-obras')
-                            <div class="row mt-2">
-                                <div class="col-md-12">
-                                    <label class="control-label"> Pesquisador</label>
-                                    <select name="researcher_id" class="form-select form-group">
-                                        <option value="0">-- Selecione --</option>
-                                        @foreach($researchers as $researcher)
-                                            <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        @endcan
+                        
                         {{--
                         <div class="row mt-2">
                             <div class="col-md-6">

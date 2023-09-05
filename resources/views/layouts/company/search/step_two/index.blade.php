@@ -50,9 +50,9 @@
                 value="{{ request()->name }}">
             <input
                 type="hidden"
-                id="old_code_1"
-                name="old_code_1"
-                value="{{ request()->old_code }}">
+                id="home_page_1"
+                name="home_page_1"
+                value="{{ request()->home_page }}">
             <input
                 type="hidden"
                 id="address_1"
@@ -65,34 +65,34 @@
                 value="{{ request()->district }}">
             <input
                 type="hidden"
-                id="qa_1"
-                name="qa_1"
-                value="{{ request()->qa }}">
+                id="primary_email_1"
+                name="primary_email_1"
+                value="{{ request()->primary_email }}">
             <input
                 type="hidden"
-                id="total_area_1"
-                name="total_area_1"
-                value="{{ request()->total_area }}">
+                id="cnpj_1"
+                name="cnpj_1"
+                value="{{ request()->cnpj }}">
             <input
                 type="hidden"
-                id="qi_1"
-                name="qi_1"
-                value="{{ request()->qi }}">
+                id="search_1"
+                name="search_1"
+                value="{{ request()->search }}">
             <input
                 type="hidden"
-                id="price_1"
-                name="price_1"
-                value="{{ request()->price }}">
+                id="searchCompany_1"
+                name="searchCompany_1"
+                value="{{ request()->searchCompany }}">
             <input
                 type="hidden"
-                id="qr_1"
-                name="qr_1"
-                value="{{ request()->qr }}">
+                id="city_id_1"
+                name="city_id_1"
+                value="{{ request()->city_id }}">
             <input
                 type="hidden"
-                id="revision_1"
-                name="revision_1"
-                value="{{ request()->revision }}">
+                id="state_id"
+                name="state_id_1"
+                value="{{ request()->state_id }}">
             <!-- participating_company -->
             <input
                 type="hidden"
