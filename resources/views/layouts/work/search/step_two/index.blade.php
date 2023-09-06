@@ -234,7 +234,7 @@
         <div class="row">
             <div class="col mt-3 mb-3">
                 Resultados encontrados: &nbsp;
-                <span class="fs-3">{{ $worksTotal }}</span>
+                <span class="fs-3">{{ $works->total() }}</span>
             </div>
 
             <div class="col-md-2 mt-2 mb-3 clearfix">
@@ -301,7 +301,7 @@
                 </thead>
                 <tbody>
                     @forelse($works as $work)
-                        @if (in_array($work->phase_id, [1, 2]) && is_null($work->deleted_at))
+                        
                             <tr class="
                                 @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
                                 @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
@@ -362,7 +362,7 @@
                                     </td>
                                 @endcan
                             </tr>
-                        @endif
+                        
                         @empty
                         <tr>
                             <td colspan="@can('ver-sig') 10 @else 8 @endcan">
