@@ -77,37 +77,37 @@
                                     <tr>
                                         <td style="background: #f64004;color:white;">Sudeste</td>
                                         <td>{{ $southeastWorksCount }}</td>
-                                        <td>{{ $southeastIndustrialWorks }}</td>
-                                        <td>{{ $southeastComercialWorks }}</td>
                                         <td>{{ $southeastResidentialWorks }}</td>
+                                        <td>{{ $southeastComercialWorks }}</td>
+                                        <td>{{ $southeastIndustrialWorks }}</td>
                                     </tr>
                                     <tr>
                                         <td style="background: #f64004;color:white;">Sul</td>
                                         <td>{{ $southWorksCount }}</td>
-                                        <td>{{ $southIndustrialWorks }}</td>
-                                        <td>{{ $southComercialWorks }}</td>
                                         <td>{{ $southResidentialWorks }}</td>
+                                        <td>{{ $southComercialWorks }}</td>
+                                        <td>{{ $southIndustrialWorks }}</td>
                                     </tr>
                                     <tr>
                                         <td style="background: #f64004;color:white;">Norte</td>
                                         <td>{{ $northWorksCount }}</td>
-                                        <td>{{ $northIndustrialWorks }}</td>
-                                        <td>{{ $northComercialWorks }}</td>
                                         <td>{{ $northResidentialWorks }}</td>
+                                        <td>{{ $northComercialWorks }}</td>
+                                        <td>{{ $northIndustrialWorks }}</td>
                                     </tr>
                                     <tr>
                                         <td style="background: #f64004;color:white;">Nordeste</td>
                                         <td>{{ $northeastWorksCount }}</td>
-                                        <td>{{ $northeastIndustrialWorks }}</td>
-                                        <td>{{ $northeastComercialWorks }}</td>
                                         <td>{{ $northeastResidentialWorks }}</td>
+                                        <td>{{ $northeastComercialWorks }}</td>
+                                        <td>{{ $northeastIndustrialWorks }}</td>
                                     </tr>
                                     <tr>
                                         <td style="background: #f64004;color:white;">Centro-Oeste</td>
                                         <td>{{ $midwestWorksCount }}</td>
-                                        <td>{{ $midwestIndustrialWorks }}</td>
-                                        <td>{{ $midwestComercialWorks }}</td>
                                         <td>{{ $midwestResidentialWorks }}</td>
+                                        <td>{{ $midwestComercialWorks }}</td>
+                                        <td>{{ $midwestIndustrialWorks }}</td>
                                     </tr>
                                 </tbody>
                             </table>
