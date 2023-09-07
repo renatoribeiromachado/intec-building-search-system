@@ -200,7 +200,11 @@ class SigCompanyController extends Controller
         }
 
         /*Associdao pode ver todos da empresa*/
-        $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
+        if($this->sigCompany->associate_id == null){
+          $reports = $query->where('user_id', $authUser->id)->get();  
+        }else{
+            $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
+        }
 
         return view('layouts.sig_companies.report.index', [
             'reports' => $reports,
