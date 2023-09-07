@@ -585,7 +585,7 @@
 
         btnSelectAll.textContent =
             ((inputClickedInPage == pageOfPagination) && (inputSelectAllWasClicked == 1))
-            ? 'Deselecionar Todos' : 'Selecionar Todos';
+            ? 'Desselecionar Todos' : 'Selecionar Todos';
 
         function toggleCheckboxes() {
 
@@ -637,7 +637,7 @@
             });
 
             var button = document.getElementById('toggleButton');
-            button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            button.textContent = allChecked ? 'Selecionar Todos' : 'Desselecionar Todos';
             const pesquisarButton = document.getElementById('pesquisarButton');
             // avoid the error maximum call stack size exceeded
             button.addEventListener("click", function(event){

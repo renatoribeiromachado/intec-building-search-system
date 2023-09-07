@@ -586,7 +586,7 @@
             });
 
             var button = document.getElementById('toggleButton');
-            button.textContent = allChecked ? 'Selecionar Todos' : 'Deselecionar Todos';
+            button.textContent = allChecked ? 'Selecionar Todos' : 'Desselecionar Todos';
             // avoid the error maximum call stack size exceeded
             button.addEventListener("click", function(event){
                 event.preventDefault()

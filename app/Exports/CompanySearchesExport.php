@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
@@ -70,7 +71,23 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
     public function styles(Worksheet $sheet)
     {
         return [
-            1 => ['font' => ['bold' => true, 'size' => 12]],
+
+            1 => [
+                'font' => [
+                    'bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 12, 
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => '1f497d'],
+                ],
+
+                'padding' => [
+                    'top' => 80, // Padding superior de 40 pixels
+                    'bottom' => 80, // Padding inferior de 40 pixels
+                    'left' => 80, // Padding esquerdo de 40 pixels
+                    'right' => 80, // Padding direito de 40 pixels
+                ],
+            ],
         ];
     }
 
@@ -254,91 +271,58 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             );
         }
 
-        return $companies
-            ->limit(500)
-            ->get()
-            ->map(function ($company) {
-                $contacts = $this->returnContacts($company->id);
-                
-                $contactColumns = [];
-                $index = 0;
-                foreach ($contacts as $contact) {
-                    $index++;
-                    $contactColumns["contact_{$index}_name"] = $contact->name;
-                    $contactColumns["contact_{$index}_position"] = $contact->position;
-                    $contactColumns["contact_{$index}_email"] = $contact->email;
-                    $contactColumns["contact_{$index}_ddd"] = $contact->ddd;
-                    $contactColumns["contact_{$index}_main_phone"] = $contact->main_phone;
-                }
+        return $companies->limit(500)->get()->map(function ($company) {
+        $contacts = $this->returnContacts($company->id);
 
-                $contactData = [];
-                for ($i = 1; $i <= 3; $i++) {
-                    $contactData["contact_name_{$i}"] = $contactColumns["contact_{$i}_name"] ?? null;
-                    $contactData["contact_position_{$i}"] = $contactColumns["contact_{$i}_position"] ?? null;
-                    $contactData["contact_email_{$i}"] = $contactColumns["contact_{$i}_email"] ?? null;
-                    $contactData["contact_ddd_{$i}"] = $contactColumns["contact_{$i}_ddd"] ?? null;
-                    $contactData["contact_main_phone_{$i}"] = $contactColumns["contact_{$i}_main_phone"] ?? null;
-                }
+        $contactData = [];
 
-                $companyData = [];
-                for ($i = 1; $i <= 3; $i++) {
-                    $companyData["company_company_name_{$i}"] = $companyColumns["company_{$i}_company_name"]
-                        ?? null;
-                    $companyData["company_activity_field_{$i}"] = $companyColumns["company_{$i}_activity_field"]
-                        ?? null; // Modalidade
-                    $companyData["company_cnpj_{$i}"] = $companyColumns["company_{$i}_cnpj"]
-                        ?? null;
-                }
+        for ($i = 1; $i <= 30; $i++) {
+            $contactData["contact_name_{$i}"] = null;
+            $contactData["contact_position_{$i}"] = null;
+            $contactData["contact_email_{$i}"] = null;
+            $contactData["contact_main_phone_{$i}"] = null;
+        }
+        
+        foreach ($contacts as $index => $contact) {
+            $contactData["contact_name_" . ($index + 1)] = $contact->name;
+            $contactData["contact_position_" . ($index + 1)] = $contact->position;
+            $contactData["contact_email_" . ($index + 1)] = (!empty($contact->email) ? "{$contact->email}" : '' ) .(!empty($contact->secondary_email) ? " / {$contact->secondary_email}" : '' ) .(!empty($contact->tertiary_email) ? " / {$contact->tertiary_email}" : '' );
+            $contactData["contact_main_phone_" . ($index + 1)] = (!empty($contact->ddd) && !empty($contact->main_phone) ? "({$contact->ddd}) {$contact->main_phone}" : '' )
+                                                                    .(!empty($contact->ddd_two) && !empty($contact->phone_two) ? " / ($contact->ddd_two) $contact->phone_two" : '' )
+                                                                    . (!empty($contact->ddd_three) && !empty($contact->phone_three) ? " / ($contact->ddd_three) $contact->phone_three" : '' )
+                                                                    . (!empty($contact->ddd_four) && !empty($contact->phone_four) ? " / ($contact->ddd_four) $contact->phone_four" : '' );
+        }
 
-                return [
-                    $company->id, 
-                    $company->description, 
-                    optional($company->last_review)->format(self::DATE_FORMAT),
-                    $company->revision,
-                    $company->company_name, 
-                    $company->trading_name,
-                    $company->zip_code,
-                    $company->address,
-                    $company->number, 
-                    $company->complement,
-                    $company->district,
-                    $company->city,
-                    $company->state,
-                    $company->cnpj,
-                    $company->phone_one,
-                    $company->primary_email,
-                    $company->secondary_email,
-                    $company->home_page,
-                    $company->notes,
-                    
-                    /*Contatos*/
-                    $contactData["contact_name_1"],
-                    $contactData["contact_position_1"],
-                    $contactData["contact_email_1"],
-                    $contactData["contact_ddd_1"],
-                    $contactData["contact_main_phone_1"],
-
-                    $contactData["contact_name_2"],
-                    $contactData["contact_position_2"],
-                    $contactData["contact_email_2"],
-                    $contactData["contact_ddd_2"],
-                    $contactData["contact_main_phone_2"],
-
-                    $contactData["contact_name_3"],
-                    $contactData["contact_position_3"],
-                    $contactData["contact_email_3"],
-                    $contactData["contact_ddd_3"],
-                    $contactData["contact_main_phone_3"],
-                    
-                ];
-            });
+        return array_merge([
+                $company->id, 
+                $company->description, 
+                optional($company->last_review)->format(self::DATE_FORMAT),
+                $company->revision,
+                $company->company_name, 
+                $company->trading_name,
+                $company->zip_code,
+                $company->address,
+                $company->number, 
+                $company->complement,
+                $company->district,
+                $company->city,
+                $company->state,
+                $company->cnpj,
+               (!empty($company->phone_one) ? $company->phone_one : ''),
+                $company->primary_email,
+                $company->secondary_email,
+                $company->home_page,
+                $company->notes,
+            ], $contactData);
+        });
     }
 
     public function headings(): array {
-        return [
+       
+        $header = [
             /* Dados da empresa */
             'Código',
-            'Segmento',
+            'Atividade',
             'Data da última atualização',
             'Nº de revisão',
             'Razão social',
@@ -354,28 +338,20 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             'Telefone',
             'E-mail 1',
             'E-mail 2',
-            'site',
-            'Detalhes',
-
-            /* Contatos */
-            'Nome do Contato 1',
-            'Cargo 1',
-            'Email do Contato 1',
-            'DDD 1',
-            'Telefone do Contato 1',
-
-            'Nome do Contato 2',
-            'Cargo 2',
-            'Email do Contato 2',
-            'DDD 2',
-            'Telefone do Contato 2',
-
-            'Nome do Contato 3',
-            'Cargo 3',
-            'Email do Contato 3',
-            'DDD 3',
-            'Telefone do Contato 3',
-
+            'Site',
+            'Detalhes',      
         ];
+        
+        /* Contatos */
+        $contactsCount = 30;
+        for ($i = 1; $i <= $contactsCount; $i++) {
+            $header[] = "Nome do Contato $i";
+            $header[] = "Cargo $i";
+            $header[] = "Email do Contato $i";
+            //$header[] = "DDD $i";
+            $header[] = "Telefone do Contato $i";
+        }
+
+        return $header;
     }
 }
