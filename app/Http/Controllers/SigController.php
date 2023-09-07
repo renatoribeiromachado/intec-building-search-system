@@ -59,11 +59,13 @@ class SigController extends Controller
                 ->orderBy('contacts.name', 'asc')
                 ->get();
         }
+        $associated = $authUser->contact->company->associate->id;
 
         return view('layouts.sig_works.index', compact(
             'statuses',
             'priorities',
             'associates',
+            'associated'
         ));
     }
     
@@ -122,7 +124,7 @@ class SigController extends Controller
         $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
         $query = $this->sig->select(
-            'id', 'user_id', 'work_id', 'appointment_date',
+            'id','associate_id','user_id', 'work_id', 'appointment_date',
             'created_at', 'priority', 'status','notes'
         );
 
@@ -196,8 +198,8 @@ class SigController extends Controller
             });
         }
 
-        /*Associado gestor pode ver todos os usuarios*/
-        $reports = $query->get();
+        /*Associdao pode ver todos da empresa*/
+        $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
 
         return view('layouts.sig_works.report.index', [
             'reports' => $reports,

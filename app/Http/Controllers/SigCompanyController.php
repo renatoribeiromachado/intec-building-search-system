@@ -14,15 +14,15 @@ use Carbon\Carbon;
 
 class SigCompanyController extends Controller
 {
-    protected $sig;
+    //protected $sig;
     protected $sigCompany;
     protected $user;
 
     public function __construct(
-        Sig $sig, SigCompany $sigCompany,
+        SigCompany $sigCompany,
         User $user
     ) {
-        $this->sig = $sig;
+        //$this->sig = $sig;
         $this->sigCompany = $sigCompany;
         $this->user = $user;
     }
@@ -199,8 +199,8 @@ class SigCompanyController extends Controller
             });
         }
 
-
-        $reports = $query->where('user_id', $authUser->id)->get();
+        /*Associdao pode ver todos da empresa*/
+        $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
 
         return view('layouts.sig_companies.report.index', [
             'reports' => $reports,
