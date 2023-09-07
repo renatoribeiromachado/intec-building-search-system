@@ -189,6 +189,15 @@ class SigCompanyController extends Controller
             $query->whereBetween('created_at', [$start_date, $end_date])
                    ->where('user_id', $authUser->id);
         }
+        
+        /*Descrição*/
+        $notes = $request->notes;
+        if ($notes) {
+            $query->where(function ($q) use ($notes, $authUser) {
+                return $q->where('notes', 'like', '%'.$notes.'%')
+                        ->where('user_id', $authUser->id);
+            });
+        }
 
 
         $reports = $query->where('user_id', $authUser->id)->get();
