@@ -356,6 +356,28 @@
                             </li>
                         @endcan
                         
+                        @can('login-associado')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-white"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-users"></i> MONITORAMENTO
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('monitoring.index') }}">
+                                            Associado
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        
+                        
                         @can('ver-pesquisas')
                             <li class="nav-item dropdown">
                                 <a

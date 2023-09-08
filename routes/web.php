@@ -27,6 +27,7 @@ use App\Http\Controllers\CronController;
 use App\Http\Controllers\CronCompanyController;
 use App\Http\Controllers\EmailWorkController;
 use App\Http\Controllers\EmailCompanyController;
+use App\Http\Controllers\MonitoringController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,6 +56,10 @@ Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCom
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
+    
+    /*Monitoramento - Renato Machado 08/09/2023*/
+    Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
+    Route::post('/monitoring/search', [MonitoringController::class, 'search'])->name('monitoring.search');
 
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');

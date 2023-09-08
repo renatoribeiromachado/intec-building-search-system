@@ -21,8 +21,8 @@ class LoginHistory extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function empresa()
+    public function associate()
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo(Associate::class);
     }
 }
