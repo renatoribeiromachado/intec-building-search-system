@@ -490,7 +490,7 @@
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label">Cidades Selecionadas - <a class="clear" onclick="limparSelecionadas()">Limpar selecionada(s)</a> *</label>
-                                <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mas será consultado até 4 Cidade(s) ..." readonly>
+                                <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
                                 <input type="hidden" name="cities_ids" id="citiesIdsInput" value="">
                             </div>
                         </div>
@@ -558,21 +558,25 @@
                                 <input type="text" name="price" class="form-control money" value=""/>
                             </div>
                         </div>
-                        {{--
+                        
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label class="control-label"> Modalidade</label>
-                                <select name="modality_description" class="form-select modalidade">
+                                <select name="modality_id" class="form-select">
                                     <option value="">-- Selecione --</option>
+                                    @foreach($activityFields as $activityField)
+                                        <option value="{{ $activityField->id }}">{{ $activityField->description}}</option>
+                                    @endforeach
                                 </select> 
                             </div>
+                           
                             <div class="col-md-6">
                                 <label class="control-label"> Pavimentos</label>
                                 <input type="text" name="floor" class="form-control" value=""/>
                             </div>
 
                         </div> 
-                        --}}
+                     
 
                         <div class="row mt-2">
                             <label class="control-label"> Número de Revisão</label>

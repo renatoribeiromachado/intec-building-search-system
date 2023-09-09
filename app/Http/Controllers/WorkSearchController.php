@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\WorkSearchesExport;
 use App\Http\Requests\WorkSearchStepTwoRequest;
+use App\Models\ActivityField;
 use App\Models\Company;
 use App\Models\Associate;
 use App\Models\SegmentSubType;
@@ -25,6 +26,7 @@ class WorkSearchController extends Controller
 {
     const REGISTRIES_PER_PAGE = 50;
 
+    protected $activityField;
     protected $stage;
     protected $work;
     protected $state;
@@ -39,6 +41,7 @@ class WorkSearchController extends Controller
     protected $statesSessionName = 'states_checkboxes';
 
     public function __construct(
+        ActivityField $activityField,
         Stage $stage,
         Work $work,
         State $state,
@@ -48,6 +51,7 @@ class WorkSearchController extends Controller
         Researcher $researcher,
         Sig $sig  
     ) {
+        $this->activityField = $activityField;
         $this->stage = $stage;
         $this->work = $work;
         $this->state = $state;
@@ -63,6 +67,7 @@ class WorkSearchController extends Controller
         $this->authorize('ver-pesquisa-de-obras');
 
         $this->resetWorksSession();
+        $activityFields = $this->activityField->get();//Renato machado 09/09/2023
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
@@ -147,7 +152,8 @@ class WorkSearchController extends Controller
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
             'states',
-            'researchers'
+            'researchers',
+            'activityFields'
         ));
     }
 
@@ -319,7 +325,9 @@ class WorkSearchController extends Controller
         $allStateIds = null;
         $allStatesAcronym = null;
         $states = $this->state->select('state_acronym');
-        $researcher = $request->researcher_id;
+        $researcher = $request->researcher_id;//Renato Machado 04/09/2023
+        $modality = $request->modality_id;//Renato Machado 09/09/2023
+        $floor = $request->floor;//Renato Machado 09/09/2023
 
         if (session()->has($this->statesSessionName) || $request->states) {
             $allStateIds = session()->has($this->statesSessionName)
@@ -373,6 +381,21 @@ class WorkSearchController extends Controller
                 );
             });
         }
+        
+         /*Modalidade*/
+        if ($modality) {
+            $works = $works->whereHas('companies', function ($q) use ($modality) {
+                return $q->where(
+                    'companies.activity_field_id', $modality
+                );
+            });
+        }
+        
+        /*Pavimento*/
+        if ($floor) {
+            $works = $works->where('works.floor', $floor);
+        }
+        
 
         $allWorkIds = null;
         if (
