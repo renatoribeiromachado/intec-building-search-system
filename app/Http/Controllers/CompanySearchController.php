@@ -251,7 +251,7 @@ class CompanySearchController extends Controller
         $address = $request->address;
         $district = $request->district;
         $stateAcronym = $request->state_id;
-        $cityId = $request->city_id;
+        $cityId = $request->cities_ids;//Renato Machado 09/09/2023
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
@@ -346,9 +346,16 @@ class CompanySearchController extends Controller
             $companies = $companies->where('companies.state', '=', $stateAcronym);
         }
 
-        if ($cityId) {
-            $city = $this->city->findOrFail($cityId);
-            $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
+//        if ($cityId) {
+//            $city = $this->city->findOrFail($cityId);
+//            $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
+//        }
+        
+        /*filtro por até 4 cidades - Renato Machado - 09/06/2023*/
+        if ($cityId && $stateAcronym) {
+            $cityIds = explode(',', $cityId);
+            $cityDescriptions = $this->city->whereIn('id', $cityIds)->pluck('description')->toArray();
+            $companies = $companies->whereIn('companies.city', $cityDescriptions);
         }
         
         /**
@@ -429,7 +436,7 @@ class CompanySearchController extends Controller
                 $this->state,
                 $this->city
             ),
-            'pesquisa-de-oempresas.xlsx'
+            'pesquisa-de-empresas.xlsx'
         );
     }
 }
