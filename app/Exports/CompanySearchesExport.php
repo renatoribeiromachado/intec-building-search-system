@@ -107,9 +107,10 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         ? $this->searchParams['state_id_1']
         : null;
        
-        $cityId = isset($this->searchParams['city_id_1'])
-            ? $this->searchParams['city_id_1']
-            : null;
+        /*Cidades - Renato Machado 05/09/2023*/
+        $cityIds = isset($this->searchParams['cities_ids_1']) 
+                ? explode(',', $this->searchParams['cities_ids_1']) 
+                : [];
         
         // Razão social
         $searchCompanyName = isset($this->searchParams['searchCompany_1'])
@@ -207,10 +208,16 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             $companies = $companies->where('companies.state', $stateAcronym);
         }
         
-        /*Cidade*/
-        if ($cityId) {
-            $city = $this->city->findOrFail($cityId);
-            $companies = $companies->where('companies.city', 'LIKE', '%'.$city->description.'%');
+        /*City*/
+        if (!empty($cityIds)) {
+            // Busque as cidades com base nos IDs
+            $cities = $this->city->findOrFail($cityIds);
+
+            // Extraia as descrições das cidades para filtragem
+            $cityDescriptions = $cities->pluck('description')->toArray();
+
+            // Use as descrições das cidades para filtrar os trabalhos
+            $companies = $companies->whereIn('companies.city', $cityDescriptions);
         }
         
         /*Razão social*/

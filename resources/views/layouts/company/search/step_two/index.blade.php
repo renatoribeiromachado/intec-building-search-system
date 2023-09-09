@@ -85,9 +85,9 @@
                 value="{{ request()->searchCompany }}">
             <input
                 type="hidden"
-                id="city_id_1"
-                name="city_id_1"
-                value="{{ request()->city_id }}">
+                id="cities_ids_1"
+                name="cities_ids_1"
+                value="{{ request()->cities_ids }}">
             <input
                 type="hidden"
                 id="state_id"

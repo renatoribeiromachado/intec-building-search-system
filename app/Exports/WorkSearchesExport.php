@@ -86,6 +86,8 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         $oldCode = $this->searchParams['old_code_1'];
         $district = $this->searchParams['district_1'];
         $researcher = $this->searchParams['researcher_id_1'];
+        $modality = $this->searchParams['modality_id_1'];//Renato Machado 09/09/2023
+        $floor = $this->searchParams['floor_1'];//Renato Machado 09/09/2023
         $stateAcronym = isset($this->searchParams['state_id_1'])
             ? $this->searchParams['state_id_1']
             : null;
@@ -263,6 +265,20 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         /*Pesquisador*/
         if ($researcher) {
             $works = $works->where('works.created_by', $researcher);
+        }
+        
+         /*Modalidade*/
+        if ($modality) {
+            $works = $works->whereHas('companies', function ($q) use ($modality) {
+                return $q->where(
+                    'companies.activity_field_id', $modality
+                );
+            });
+        }
+        
+        /*Pavimento*/
+        if ($floor) {
+            $works = $works->where('works.floor', $floor);
         }
         
         

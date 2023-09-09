@@ -118,6 +118,19 @@
                 id="search_1"
                 name="search_1"
                 value="{{ request()->search }}">
+            <!-- Modalidade -->
+            <input
+                type="hidden"
+                id="modality_id_1"
+                name="modality_id_1"
+                value="{{ request()->modality_id }}">
+            <!-- Pavimento -->
+            <input
+                type="hidden"
+                id="floor_1"
+                name="floor_1"
+                value="{{ request()->floor }}">
+            
             @foreach ($statesChecked as $stateChecked)
             <input type="hidden" name="states[]" value="{{ $stateChecked }}">
             @endforeach
