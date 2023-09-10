@@ -190,7 +190,10 @@ Route::middleware(['auth'])->group(function () {
             'companies-by-activity-field/{activity_field}',
             [WorkController::class, 'getCompaniesByItsActivityField']
         )->name('company.by.activity.field');
-
+        
+        /*Plano do associado - Renato Machado - 09/09/2023*/
+        Route::get('index', [OrderController::class, 'index'])->name('associate.order.index');
+        
         Route::post('apply-discount',
             [OrderController::class, 'getFinalPrice']
         )->name('associate.order.apply.discount');

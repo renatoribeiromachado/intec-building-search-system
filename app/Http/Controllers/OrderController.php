@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Associate;
 use App\Models\Company;
 use App\Models\Order;
 use App\Models\Plan;
@@ -16,14 +17,41 @@ class OrderController extends Controller
 {
     protected $plan;
     protected $order;
+    protected $company;
+    protected $associate;
 
     public function __construct(
         Plan $plan,
         Order $order,
+        Company $company,
+        Associate $associate,
     ) {
         $this->plan = $plan;
         $this->order = $order;
+        $this->company = $company;
+        $this->associate = $associate;
     }
+    
+    /*
+     * Mostra somente o plano do associado pelo 
+     * usuario autenticado e pelo id da empresa - Renato Machado - 09/09/2023
+     */
+    public function index()
+    {
+        $user = auth()->user();
+        // Verifica se o usuário tem um contato associado na tabela "contacts"
+        $contact = $user->contact;
+
+        if ($contact) {
+            // Se o usuário tiver um contato, obtém a "company_id" associada a ele
+            $companyId = $contact->company_id;
+            $orders = $this->order->where('company_id', $companyId)->get();
+
+            return view('layouts.associate.order.index', compact('orders'));
+        }
+        return redirect()->back();
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -377,6 +377,27 @@
                             </li>
                         @endcan
                         
+                        @can('plano-do-associado')
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-white"
+                                    href="#"
+                                    id="dropdown07XL"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-check"></i> DADOS DO PLANO
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('associate.order.index') }}">
+                                            Plano
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        
                         
                         @can('ver-pesquisas')
                             <li class="nav-item dropdown">
