@@ -291,8 +291,15 @@ class CompanySearchController extends Controller
 
         $allStatesAcronym = $states->pluck('state_acronym');
         // Ends State filter
+        
+        //Diferencia empresas participantes de associados,
+        // pois na tabela associates não existe compny_id da 
+        // tabela companies - Renato machado - 11/09/2023
+        $companies = $this->company
+            ->leftJoin('associates', 'companies.id', '=', 'associates.company_id')
+            ->whereNull('associates.company_id')
+            ->select('companies.*');
 
-        $companies = $this->company->select('companies.*');
 
         $allCompanyIds = null;
         if (
