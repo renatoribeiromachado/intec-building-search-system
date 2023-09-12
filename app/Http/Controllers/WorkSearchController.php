@@ -366,6 +366,7 @@ class WorkSearchController extends Controller
                 'phases.description AS phase_description',
                 'stages.description AS stage_description',
                 'segments.description AS segment_description',
+                'segments.background AS segment_background',
                 'segment_sub_types.description AS segment_sub_type_description',
             )
             ->join('phases', 'works.phase_id', '=', 'phases.id')
@@ -510,14 +511,14 @@ class WorkSearchController extends Controller
         /* Revision */
         if ($qr && $revision !== null) {
             $works = $works->where(function($query) use ($qr, $revision) {
-                if ($qr == '>') {
-                    $query->where('works.revision', '>=', $revision);
-                } elseif ($qr == '<') {
-                    $query->where('works.revision', '<=', $revision);
+                if ($qr === '<') { // Verifica se $qr é igual a "<"
+                    $query->where('works.revision', '<=', $revision); // Usei "<=" para "Menor ou igual a"
+                } elseif ($qr === '>') { // Verifica se $qr é igual a ">"
+                    $query->where('works.revision', '>', $revision); // Usei ">=" para "Maior ou igual a"
                 }
             });
         }
-        
+
         /* Área Construída */
         if ($qa && $totalArea !== null) {
             $works = $works->where(function($query) use ($qa, $totalArea) {

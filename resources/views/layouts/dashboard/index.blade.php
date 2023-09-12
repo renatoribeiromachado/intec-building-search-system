@@ -24,7 +24,7 @@
                 <div class="row mt-5">
                     <div class="col-md-12 text-center">
                         <h2 style="color: #000d37;">Bem vindo a INTEC</h2>
-                        <h3 style="color: #f64004;">A principal ferramenta de prospecção de obras do pais</h3>
+                        <h3 style="color: #f64004;">A principal ferramenta de prospecção de obras do País</h3>
                     </div>
                 </div>
 

@@ -549,8 +549,8 @@
 
                                 <select name="qi" class="form-select">
                                     <option value="0">-- Selecione --</option>
-                                    <option value=">">Maior que</option>
-                                    <option value="<">Menor que</option>
+                                    <option value=">=">Maior que</option>
+                                    <option value="<=">Menor que</option>
                                 </select>
                             </div>
                             <div class="col-md-6">

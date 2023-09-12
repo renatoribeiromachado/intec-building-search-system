@@ -313,13 +313,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($works as $work)
-                        
-                            <tr class="
-                                @if($work && $work->segment_description == 'INDUSTRIAL') industrial @endif
-                                @if($work && $work->segment_description == 'RESIDENCIAL') residencial @endif
-                                @if($work && $work->segment_description == 'COMERCIAL') comercial @endif
-                            ">
+                    @forelse($works as $work) 
+                            <tr style="background:{{ $work->segment_background }};">
                                 <td style="cursor: pointer;">
                                     <div style="cursor: pointer;">
                                         <div class="form-check">
@@ -353,7 +348,7 @@
                                 <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
                                 <td>{{ $work->phase_description }}</td>
                                 <td>{{ $work->stage_description }}</td>
-                                <td>{{ $work->segment_description }}</td>
+                                <td>{{ $work->segment_description }} </td>
                                 <td>
                                     @foreach($work->companies as $company)
                                         {{ $company->trading_name }}@if(! $loop->last), @endif <br>
@@ -519,20 +514,6 @@
     </div>
 </div>
 @endsection
-
-@push('styles')
-    <style>
-        .industrial {
-            background: #acc4d0;
-        }
-        .comercial {
-            background: #b5b253;
-        }
-        .residencial {
-            background: #ccb364;
-        }
-    </style>
-@endpush
 
 @push('scripts')
 

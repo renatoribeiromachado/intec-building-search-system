@@ -12,6 +12,7 @@ class Segment extends Model
 
     protected $fillable = [
         'description',
+        'background'
     ];
 
     // App methods
