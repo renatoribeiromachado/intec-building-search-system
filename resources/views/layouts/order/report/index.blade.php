@@ -2,47 +2,58 @@
 
 @section('content')
 
-<style>
-    /* Estilo para remover a margem inferior das tabelas */
-    .remove-margin-bottom {
-        margin-bottom: 0;
-    }
-    .table-bordered {
-        border-color: #ff3b00 !important;
-    }
-    .small-font {
-        font-size: 13px; /* Ajuste o tamanho da fonte conforme necessário */
-    }
-    
-    body {
-        font-size: 13px; /* Defina o tamanho de fonte desejado, por exemplo, 12px */
-    }
-    /*print*/
-    @@media print {
-        body {
-            font-size: 75% !important; /* Reduza o tamanho da fonte para 75% do tamanho original */
+    <style>
+        /* Estilo para remover a margem inferior das tabelas */
+        .remove-margin-bottom {
+            margin-bottom: 0;
         }
-        /* Ajuste o tamanho da fonte para elementos específicos, se necessário */
-        h1 {
-            font-size: 120% !important; /* Por exemplo, aumente o tamanho do título em 150% */
+        .table-bordered {
+            border-color: #ff3b00 !important;
         }
-        /* Defina as margens da página para ajustar o conteúdo na impressão */
-        @page {
-            size: A4; /* Escolha o tamanho de página desejado, como A4 */
-            margin: 1cm; /* Defina as margens da página conforme necessário */
+        .small-font {
+            font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
         }
-        .image-for-print {
-            max-width: 30% !important; /* Reduzirá a largura da imagem para ajustar à largura da página impressa */
-            height: auto; /* Mantém a proporção de aspecto da imagem */
-        }
-    }
 
-        </style>
+        body {
+            font-size: 14px; /* Defina o tamanho de fonte desejado, por exemplo, 12px */
+        }
+
+        .h1 {
+            font-size: 18px !important; /* Por exemplo, aumente o tamanho do título em 150% */
+        }
+        /*print*/
+        @@media print {
+            body {
+                font-size: 40% !important; /* Reduza o tamanho da fonte para 75% do tamanho original */
+            }
+
+            /* Defina as margens da página para ajustar o conteúdo na impressão */
+            @page {
+                size: A4; /* Escolha o tamanho de página desejado, como A4 */
+                margin: 1cm; /* Defina as margens da página conforme necessário */
+            }
+            .image-for-print {
+                max-width: 10% !important; /* Reduzirá a largura da imagem para ajustar à largura da página impressa */
+                height: auto; /* Mantém a proporção de aspecto da imagem */
+            }
+            .minuta{
+                 margin-top:400px;
+            }
+            .h1 {
+                font-size: 60% !important; /* Por exemplo, aumente o tamanho do título em 150% */
+            }
+            p{
+                line-height: 1.2 !important; 
+                margin-bottom: 1px;
+            }
+        }
+    </style>
+    
     <div class="container">
         <div class="row mt-4">
             <table class="table table-bordered remove-margin-bottom small-font">
                 <tr>
-                    <th class="text-center">
+                    <th class="text-center h1">
                         INSTRUMENTO DE CONTRATO DE SERVIÇOS AO BANCO DE DADOS INTEC
                     </th>
                 </tr>
@@ -57,13 +68,13 @@
                     </th>
                 </tr>
                 <tr>
-                    <td class="text-center">
+                    <td class="text-center h1">
                         <strong>Informações Técnicas da Construção EIRELI CNPJ:</strong>
                         {{ $order->company->associate->linked_company }}
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-center">
+                    <th class="text-center h1">
                         PEDIDO DE FORNECIMENTO DE INFORMAÇÕES / DADOS CADASTRAIS
                     </th>
                 </tr>
@@ -300,8 +311,8 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row my-10">  
+        <div class="container minuta">
+        <div class="row">  
             <p class="c57">
                 <span class="c0">INSTRUMENTO DE CONTRATO DE SERVI&Ccedil;OS AO BANCO DE DADOS INTEC </span></p>
             <p class="c58"><span class="c0 c12">CONTRATO DE PRESTA&Ccedil;&Atilde;O DE SERVI&Ccedil;OS</span><span class="c0">&nbsp;</span></p>
