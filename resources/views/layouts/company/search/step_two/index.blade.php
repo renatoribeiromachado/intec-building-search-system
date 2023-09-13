@@ -99,12 +99,15 @@
                 id="search_1"
                 name="search_1"
                 value="{{ request()->search }}">
+            
             @foreach ($statesChecked as $stateChecked)
             <input type="hidden" name="states[]" value="{{ $stateChecked }}">
             @endforeach
             
-        
-
+            @foreach ($activityFieldsChecked as $activityFieldChecked)
+            <input type="hidden" name="activity_fields[]" value="{{ $activityFieldChecked }}">
+            @endforeach
+            
         </form>
 
         <form action="{{ route('company.search.step_three.index') }}" method="get">
@@ -163,7 +166,7 @@
                 name="primary_email"
                 value="{{ request()->primary_email }}">
             <input
-                type="hidden"
+                type="hidden" 
                 id="home_page"
                 name="home_page"
                 value="{{ request()->home_page }}">

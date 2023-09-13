@@ -138,7 +138,7 @@ class CompanySearchController extends Controller
         ));
     }
 
-    public function showWorkSearchStepTwo(Request $request)
+    public function showCompanySearchStepTwo(Request $request)
     {
         $companies = $this->getFilteredCompanies($request);
         $companiesChecked = session($this->companiesSessionName);
@@ -183,6 +183,8 @@ class CompanySearchController extends Controller
             $activityFieldsChecked = session($this->activityFieldsSessionName);
         }
         
+        $searchParams = $request->query();
+
         /*Para pegar o ultimo satatus do Sig - 01/09/2023 - Renato Machado*/
         $company = null;
         foreach ($companies as $company) {
@@ -206,10 +208,11 @@ class CompanySearchController extends Controller
             'statuses',
             'priorities',
             'reports',
+            'searchParams',
         ));
     }
 
-    public function showWorkSearchStepThree(Request $request)
+    public function showCompanySearchStepThree(Request $request)
     {
         // $this->authorize('ver-pesquisa-de-empresas');
         $statuses = Sig::STATUSES;
@@ -363,6 +366,14 @@ class CompanySearchController extends Controller
             $cityIds = explode(',', $cityId);
             $cityDescriptions = $this->city->whereIn('id', $cityIds)->pluck('description')->toArray();
             $companies = $companies->whereIn('companies.city', $cityDescriptions);
+        }
+        
+        // Atividades da empresa
+        $allActviypeIds = null;
+        if (session()->has($this->activityFieldsSessionName) || $request->activity_fields) {
+            $allActviypeIds = session()->has($this->activityFieldsSessionName)
+                ? session($this->activityFieldsSessionName)
+                : $request->activity_fields;
         }
         
         /**

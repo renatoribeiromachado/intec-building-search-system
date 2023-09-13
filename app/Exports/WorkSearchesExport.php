@@ -314,7 +314,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         
         /*Pesquisador*/
         if ($researcher) {
-            $works = $works->where('works.created_by', $researcher);
+            $works = $works->where('works.updated_by', $researcher);
         }
         
          /*Modalidade*/

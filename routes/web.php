@@ -98,12 +98,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get(
             'search/step-2',
-            [CompanySearchController::class, 'showWorkSearchStepTwo']
+            [CompanySearchController::class, 'showCompanySearchStepTwo']
         )->name('company.search.step_two.index');
 
         Route::get(
             'search/step-3',
-            [CompanySearchController::class, 'showWorkSearchStepThree']
+            [CompanySearchController::class, 'showCompanySearchStepThree']
         )->name('company.search.step_three.index');
     });
 

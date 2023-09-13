@@ -23,8 +23,8 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
     protected $state;
     protected $city;
     protected $CompaniesSessionName = 'companies_checkboxes';
-    protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
     protected $statesSessionName = 'states_checkboxes';
+    protected $activityFieldsSessionName = 'activity_fields_checkboxes';
     protected $stateSessionName = 'state_selected';
     
 
@@ -98,6 +98,7 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
     {
         $loggedUser = Auth::user();
         $statesVisible = session('statesVisible');
+        $activityVisible = session('activityVisible');
         $startedAt = $this->searchParams['last_review_from_1'];
         $endsAt = $this->searchParams['last_review_to_1'];
         $address = $this->searchParams['address_1'];
@@ -165,15 +166,44 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             }
             $states = $states->whereIn('id', $statesToSearch);
         }
-
-        $allStatesAcronym = $states->get()->pluck('state_acronym');
-
+        
         $companies = $this->company
             ->select(
                 'companies.*',
                 'activity_fields.description AS description',
             )
             ->join('activity_fields', 'companies.activity_field_id', '=', 'activity_fields.id');
+        
+        
+        //Atividades da emrpesa
+        $activityFieldsChecked = [];
+        if (! is_null(request()->activity_fields)) {
+            request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
+            $activityFieldsChecked = session($this->activityFieldsSessionName);
+        }
+        
+         if ((! session()->has('segmentSubTypesVisible')) && isset($activityFieldsChecked)) {
+            $companies = $companies->whereIn('activity_fields.id', $activityFieldsChecked);
+        }
+        
+        if (session()->has('segmentSubTypesVisible') && (! isset($activityFieldsChecked))) {
+            $companies = $companies
+                ->whereIn('activity_fields.id', $activityVisible->toArray());
+        }
+
+        // pega sessão das atividades da empresa
+        if (session()->has('segmentSubTypesVisible') && isset($activityFieldsChecked)) {
+            $activityToSearch = [];
+            foreach ($activityVisible as $activityVisible) {
+                if (in_array($activityVisible, $activityFieldsChecked)) {
+                    array_push($activityToSearch, $activityVisible);
+                }
+            }
+            $companies = $companies->whereIn('activity_fields.id', $activityToSearch);
+        }
+ 
+        $allStatesAcronym = $states->get()->pluck('state_acronym');
+
         
         
         $allComapanyIds = null;
