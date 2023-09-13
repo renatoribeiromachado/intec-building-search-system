@@ -161,7 +161,14 @@ class WorkSearchController extends Controller
     {
         $authUser = Auth::user();
         $this->authorize('ver-pesquisa-de-obras');
-        $reports = $this->sig->where('user_id',$authUser->id)->get();
+        
+        /*Se for o Gestor vai ver todos os sigs dos usuarios de sua empresa no Modal*/
+        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+            $reports = $this->sig->where('associate_id', $authUser->contact->company->associate->id)->get();
+        }else{
+            $reports = $this->sig->where('user_id',$authUser->id)->get();
+        }
+        
         $works = $this->getFilteredWorks($request);
         $worksChecked = session($this->worksSessionName);
         $currentPage = is_null($request->page) ? 1 : $request->page;
@@ -201,10 +208,17 @@ class WorkSearchController extends Controller
         $work2 = null;
         foreach($works as $work) {
             $work2 = $this->work->findOrFail($work->id);
-            $lastSigStatus = optional($work2->sigs()
-                ->where('user_id', '=', $loggedUser->id)
-                ->get()->last())->status;
-            $work->last_sig_status = $lastSigStatus;
+            if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+                $lastSigStatus = optional($work2->sigs()
+                    ->where('associate_id', $authUser->contact->company->associate->id)
+                    ->get()->last())->status;
+                $work->last_sig_status = $lastSigStatus;
+            }else{
+                $lastSigStatus = optional($work2->sigs()
+                    ->where('user_id', '=', $loggedUser->id)
+                    ->get()->last())->status;
+                $work->last_sig_status = $lastSigStatus;
+            }
         }
 
         $searchParams = $request->query();
