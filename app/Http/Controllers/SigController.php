@@ -126,10 +126,7 @@ class SigController extends Controller
             'created_at', 'priority', 'status','notes'
         );
 
-        if (
-            $authUser->role->slug == Associate::ASSOCIATE_USER
-            || (! authUserIsAnAssociate())
-        ) {
+        if ($authUser->role->slug == Associate::ASSOCIATE_USER|| (! authUserIsAnAssociate())) {
             $query = $query->where('user_id', $authUser->id);
         }
 
@@ -196,9 +193,9 @@ class SigController extends Controller
             });
         }
 
-        /*Associdao pode ver todos da empresa*/
-        if($this->sig->associate_id == null){
-          $reports = $query->where('user_id', $authUser->id)->get();  
+        /*Associado Gestor pode ver todos usuarios da empresa a que pertence*/
+        if($authUser->role->slug == Associate::ASSOCIATE_USER || (! authUserIsAnAssociate())){
+          $reports = $query->get();  
         }else{
             $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
         }

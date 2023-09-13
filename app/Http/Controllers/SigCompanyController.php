@@ -126,7 +126,7 @@ class SigCompanyController extends Controller
         $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
         $query = $this->sigCompany->select(
-            'id', 'user_id', 'company_id', 'appointment_date',
+            'id','associate_id', 'user_id', 'company_id', 'appointment_date',
             'created_at', 'priority', 'status','notes'
         );
 
@@ -175,9 +175,9 @@ class SigCompanyController extends Controller
         /*Usuarios*/
         $reporters = $request->reporters;
         if ($reporters) {
-            $query->whereIn('user_id', $reporters)->where('user_id', $authUser->id);
+            $query->whereIn('user_id', $reporters);
         }
-        
+
         /* Data de cadastro */
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
@@ -200,8 +200,15 @@ class SigCompanyController extends Controller
         }
 
         /*Associdao pode ver todos da empresa*/
-        if($this->sigCompany->associate_id == null){
-          $reports = $query->where('user_id', $authUser->id)->get();  
+//        if($this->sigCompany->associate_id == null){
+//          $reports = $query->where('user_id', $authUser->id)->get();  
+//        }else{
+//            $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
+//        }
+        
+        /*Associado Gestor pode ver todos usuarios da empresa a que pertence*/
+        if($authUser->role->slug == Associate::ASSOCIATE_USER || (! authUserIsAnAssociate())){
+          $reports = $query->get();  
         }else{
             $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
         }
