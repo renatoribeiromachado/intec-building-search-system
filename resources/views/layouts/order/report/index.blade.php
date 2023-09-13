@@ -24,7 +24,7 @@
         /*print*/
         @@media print {
             body {
-                font-size: 40% !important; /* Reduza o tamanho da fonte para 75% do tamanho original */
+                font-size: 60% !important; /* Reduza o tamanho da fonte para 75% do tamanho original */
             }
 
             /* Defina as margens da página para ajustar o conteúdo na impressão */
@@ -40,7 +40,7 @@
                  margin-top:400px;
             }
             .h1 {
-                font-size: 60% !important; /* Por exemplo, aumente o tamanho do título em 150% */
+                font-size: 70% !important; /* Por exemplo, aumente o tamanho do título em 150% */
             }
             p{
                 line-height: 1.2 !important; 
