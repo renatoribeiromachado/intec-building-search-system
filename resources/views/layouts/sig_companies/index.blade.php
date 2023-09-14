@@ -114,13 +114,14 @@
                         </div>
                     </div>
                 </div>
-
+                {{--
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <label class="form-label"><strong>Descrição</strong></label>
                         <textarea name="notes" class="form-control" rows="5"></textarea>
                     </div>
                 </div>
+                --}}
                 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Gerar relatório</button>

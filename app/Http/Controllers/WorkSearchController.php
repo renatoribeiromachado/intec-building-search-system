@@ -582,9 +582,17 @@ class WorkSearchController extends Controller
         }
         
         /*Pesquisador*/
+//        if ($researcher) {
+//            $works = $works->where('works.updated_by', '=', $researcher);
+//        }
+        
         if ($researcher) {
-            $works = $works->where('works.updated_by', '=', $researcher);
+            $works = $works
+            ->join('researcher_work as rw', 'rw.work_id', '=', 'works.id')
+            ->join('researchers as r', 'r.id', '=', 'rw.researcher_id')
+            ->where('rw.researcher_id', '=', $researcher);
         }
+
         
 
         if (Route::is('work.search.step_three.index')) {
