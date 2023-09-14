@@ -147,7 +147,14 @@ class CompanySearchController extends Controller
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $loggedUser = Auth::user();
-        $reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
+        //$reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
+        
+        /*Se for o Gestor vai ver todos os sigs dos usuarios de sua empresa no Modal*/
+        if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+            $reports = $this->sigCompany->where('associate_id', $loggedUser->contact->company->associate->id)->get();
+        }else{
+            $reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
+        }
 
         $clickedInPage = $btnExistsInSession
             && (session('btnSelectAll')['btn_clicked'] == 1)
@@ -187,14 +194,28 @@ class CompanySearchController extends Controller
 
         /*Para pegar o ultimo satatus do Sig - 01/09/2023 - Renato Machado*/
         $company = null;
+//        foreach ($companies as $company) {
+//            $lastSigStatus = optional($company->sigCompanies()
+//                ->where('user_id', '=', $loggedUser->id)
+//                ->latest('created_at')
+//                ->first())->status;
+//            $company->last_sig_status = $lastSigStatus;
+//        }
+        
         foreach ($companies as $company) {
-            $lastSigStatus = optional($company->sigCompanies()
-                ->where('user_id', '=', $loggedUser->id)
-                ->latest('created_at')
-                ->first())->status;
-            $company->last_sig_status = $lastSigStatus;
+            if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+                    $lastSigStatus = optional($company->sigCompanies()
+                        ->where('associate_id', $loggedUser->contact->company->associate->id)
+                        ->get()->last())->status;
+                    $company->last_sig_status = $lastSigStatus;
+            }else{
+                $lastSigStatus = optional($company->sigCompanies()
+                    ->where('user_id', '=', $loggedUser->id)
+                    ->get()->last())->status;
+                $company->last_sig_status = $lastSigStatus;
+            }
         }
-
+        
         return view('layouts.company.search.step_two.index', compact(
             'companies',
             'companiesChecked',
