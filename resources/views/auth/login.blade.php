@@ -4,10 +4,10 @@
 <section class="h-100 gradient-form" style="background-color: #eee;">
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-xl-10">
+            <div class="col-xl-12">
                 <div class="card rounded-3 text-black shadow">
                     <div class="row g-0">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="card-body p-md-5 mx-md-4">
 
                                 <div class="text-center">
@@ -75,13 +75,7 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2" style="background-color: #ff3b00;">
-                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                <h4 class="mb-4">Intec Brasil</h4>
-                                <p class="small mb-0">O sistema INTEC de pesquisa de obras é o sistema totalmente online, para pesquisa de oportunidadesde negócios na construção civil de grande porte. A INTEC cataloga diariamente obras em projeto e construção, alimentando nossa base de dados com um verdadeiro Raio-X de cada uma, informando a construtora com os seus dados completos, estágio, prazos e previsões, empresas já contratadas, e contatos de responsáveis pela contratação da mão de obra ou compra de material.
-Nosso sistema de pesquisa de obras não limita informações por clicks, dando assim ao nosso assinante, total acesso aos leads que estejam dentro de seu plano.</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
