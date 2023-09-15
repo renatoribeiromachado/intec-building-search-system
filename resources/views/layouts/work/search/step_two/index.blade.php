@@ -297,15 +297,16 @@
         <div class="table table-responsive">  
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="bg-primary text-white">
                         <th scope="col">Código</th>
-                        <th scope="col">Projeto</th>
-                        <th scope="col">Revisado</th>
-                        <th scope="col">Valor</th>
-                        <th scope="col">Fase</th>
-                        <th scope="col">Estágio</th>
-                        <th scope="col">Segmento</th>
+                        <th scope="col">Obra</th>
+                        <th scope="col">Endereço</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col">UF</th>
                         <th scope="col">Fantasia</th>
+                        <th scope="col">Estágio</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Atualização</th>
                         @can('ver-sig')
                         <th scope="col">Status</th>
                         <th scope="col">SIG</th>
@@ -340,21 +341,23 @@
                                     </div>
                                 </td>
                                 <td>{{ $work->name }}</td>
-                                <td>
-                                    @if(isset($work->last_review))
-                                    {{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}
-                                    @endif
-                                </td>
-                                <td>R$ {{ convertDecimalToBRL($work->price )}}</td>
-                                <td>{{ $work->phase_description }}</td>
-                                <td>{{ $work->stage_description }}</td>
-                                <td>{{ $work->segment_description }} </td>
+                                {{--<td>R$ {{ convertDecimalToBRL($work->price )}}</td>--}}
+                                <td>{{ $work->address }}, {{ $work->number }}</td>
+                                <td>{{ $work->city }}</td>
+                                <td><span class="badge bg-secondary">{{ $work->state }}</span></td>
                                 <td>
                                     @foreach($work->companies as $company)
                                         {{ $company->trading_name }}@if(! $loop->last), @endif <br>
                                     @endforeach
                                 </td>
-
+                                {{--<td>{{ $work->phase_description }}</td>--}}
+                                <td>{{ $work->stage_description }}</td>
+                                <td>{{ $work->segmentSubType->description }}</td>
+                                <td>
+                                    @if(isset($work->last_review))
+                                    {{ \Carbon\Carbon::parse($work->last_review)->format('d/m/Y') }}
+                                    @endif
+                                </td>
                                 @can('ver-sig')
                                     <td>{{ $work->last_sig_status }}</td>
                                     <td>

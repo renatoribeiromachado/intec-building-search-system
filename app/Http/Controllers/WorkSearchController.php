@@ -386,7 +386,9 @@ class WorkSearchController extends Controller
             ->join('phases', 'works.phase_id', '=', 'phases.id')
             ->join('stages', 'works.stage_id', '=', 'stages.id')
             ->join('segments', 'works.segment_id', '=', 'segments.id')
-            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
+            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id')
+            ->orderBy('last_review', 'desc');
+
         
         /*Empresa participante*/
         if ($search) {

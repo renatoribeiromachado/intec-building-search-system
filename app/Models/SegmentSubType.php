@@ -34,6 +34,12 @@ class SegmentSubType extends Model
     {
         return $this->belongsTo(Segment::class);
     }
+    // Eloquent relationship methods
+    public function works()
+    {
+        return $this->hasMany(Work::class);
+    }
+    
 
     public function associates()
     {
