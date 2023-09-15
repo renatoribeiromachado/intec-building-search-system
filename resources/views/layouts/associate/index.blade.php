@@ -115,8 +115,8 @@
                 <th scope="col">CNPJ</th>
                 <th scope="col">Razão Social</th>
                 <th scope="col">Nome Fantasia</th>
-                <th scope="col">Atividade</th>
-                <th scope="col">Cidade</th>
+                <th scope="col">Status</th>
+                <th scope="col">Pedido</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -127,8 +127,28 @@
                     <td>{{ $associate->company->cnpj }}</td>
                     <td>{{ $associate->company->company_name }}</td>
                     <td>{{ $associate->company->trading_name }}</td>
-                    <td>{{ optional($associate->company->activityField)->description }}</td>
-                    <td>{{ $associate->company->city }}</td>
+                    {{--<td>{{ optional($associate->company->activityField)->description }}</td>--}}
+                    @if($associate->company->is_active != 1 )
+                        <td class='text-danger'><strong>Inativo</strong></td>
+                        @else
+                        <td class='text-success'><strong>Ativo</strong></td>
+                    @endif
+                    
+                    <!--Numero do pedido, mostrar sempre o ultimo-->
+                    @php
+                        $lastOrderId = $associate->company->orders->isNotEmpty() ? $associate->company->orders->last()->old_code : null;
+                        $lastOrderIdDisplayed = false;
+                    @endphp
+
+                    @foreach ($associate->company->orders as $order)
+                        @if ($lastOrderId !== null && !$lastOrderIdDisplayed)
+                        <td><span class="badge bg-secondary">{{ $lastOrderId }}</span></td>
+                            @php
+                                $lastOrderIdDisplayed = true; 
+                            @endphp
+                        @endif
+                    @endforeach
+
                     <td style="width: 15%;">
                         <a
                             href="{{ route('associate.edit', $associate->id) }}"

@@ -7,7 +7,7 @@
 
         <table class="table table-condensed">
             <tr>
-                <th class="bg-dark text-white">Cód.</th>
+                <th class="bg-dark text-white">Pedido</th>
                 <th class="bg-dark text-white">Posição</th>
                 <th class="bg-dark text-white">Plano</th>
                 <th class="bg-dark text-white">Início</th>
