@@ -143,7 +143,7 @@
         </form>
     </div>
 
-    <form id="checkboxForm" action="{{ route('work.search.step_three.index') }}" method="get">
+    <form id="checkboxForm" action="{{ route('work.search.step_three.index') }}" method="get" target="_blank">
         @csrf
         @method('get')
 
