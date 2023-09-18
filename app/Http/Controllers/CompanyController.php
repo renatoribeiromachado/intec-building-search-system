@@ -105,6 +105,7 @@ class CompanyController extends Controller
             $company->sponsor_slug = $request->sponsor_slug;
             $company->company_segment_id = $request->company_segment_id;
             $company->is_active = $request->is_active;
+            $company->reason = $request->reason;
             $company->is_project_owner = false;
             $company->image_storage_link = $request->image_storage_link;
             $company->image_public_link = $request->image_public_link;
@@ -191,6 +192,7 @@ class CompanyController extends Controller
             $company->sponsor_slug = $request->sponsor_slug;
             $company->company_segment_id = $request->company_segment_id;
             $company->is_active = $request->is_active;
+            $company->reason = $request->reason;
             $company->is_project_owner = false;
             $company->image_storage_link = $request->image_storage_link;
             $company->image_public_link = $request->image_public_link;

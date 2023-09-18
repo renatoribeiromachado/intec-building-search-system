@@ -37,6 +37,7 @@ class Company extends Model
         'sponsor_slug',
         'company_segment_id',
         'is_active',
+        'reason',
         'is_project_owner',
         'image_storage_link',
         'image_public_link',

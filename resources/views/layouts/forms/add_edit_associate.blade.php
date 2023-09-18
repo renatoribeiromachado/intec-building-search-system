@@ -30,16 +30,48 @@
     </div>
     
     <div class="col-md-2 mb-2">
-        <x-intec-select
-            select-name="is_active"
-            select-label="Status:"
-            select-class="form-select"
-            required=""
-            placeholder="-- Selecione --"
-            :collection="$isActive"
-            value="{{ $company->is_active }}"
-        />
+        <label><strong>Status:</strong></label>
+        <select name="is_active" class="form-select" id="is_active_select">
+            @if($company->is_active == 1)
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+            @else
+                <option value="0">Inativo</option>
+                <option value="1">Ativo</option>
+            @endif
+        </select>
     </div>
+    
+    <div class="col-md-2 mb-2" style="display: none;">
+        <label class="text-danger"><strong>Motivo:</strong></label>
+        <select name="reason" class="form-select">
+            @if($company->reason === null)
+                <option value=''>--Informe o motivo--</option>
+            @else
+                <option value="{{ $company->reason }}">{{ $company->reason }}</option>
+            @endif
+            <option value="Ex-cliente">Ex-cliente</option>
+            <option value="Suspenso">Suspenso</option>
+        </select>
+    </div>
+    
+    <script>
+        function toggleReasonInput() {
+            let is_activeSelect = document.getElementById('is_active_select');
+            let reasonInput = document.querySelector('select[name="reason"]');
+
+            if (is_activeSelect.value === '0') {
+                reasonInput.parentElement.style.display = 'block';
+            } else {
+                reasonInput.parentElement.style.display = 'none';
+            }
+        }
+        
+        let is_activeSelect = document.getElementById('is_active_select');
+        is_activeSelect.addEventListener('change', toggleReasonInput);
+
+        toggleReasonInput();
+    </script>
 
     <div class="col-md-2">
         <x-intec-input
