@@ -2,8 +2,9 @@
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
-        <h1>CADASTRO DE OBRA</h1>
+<div class="container">
+    <div class="row bg-light p-5 rounded">
+        <h3>CADASTRO DE OBRA</h3>
 
         <form action="{{ route('work.store') }}" method="POST" role="form">
             @csrf
@@ -23,6 +24,7 @@
             </div>
         </form>
     </div>
+</div>
 
     @push('scripts')
         <script>

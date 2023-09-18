@@ -342,7 +342,7 @@
 
     <div class="col-md-2">
         <label><strong>Estado:</strong></label>
-        <select name="state" class="form-select" id="uf">
+        <select name="state" class="form-select" id="state">
             <option value="">--Selecione--</option>
             @foreach($states as $state)
             <option value='{{ $state }}' @if($state == $company->state) selected @endif>{{ $state }}</option>

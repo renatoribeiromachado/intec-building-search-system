@@ -1,9 +1,9 @@
 @extends('layouts.app_customer')
 
 @section('content')
-
-    <div class="bg-light p-5 rounded">
-        <h1>CADASTRO DE EMPRESA</h1>
+<div class="container">
+    <div class="row bg-light p-5 rounded">
+        <h3>CADASTRO DE EMPRESA</h3>
 
         <form action="{{ route('company.store') }}" method="POST" role="form" class="needs-validation">
             @csrf
@@ -23,4 +23,5 @@
             </div>
         </form>
     </div>
+</div>
 @endsection

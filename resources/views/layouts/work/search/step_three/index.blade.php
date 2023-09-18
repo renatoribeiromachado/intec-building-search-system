@@ -1,4 +1,4 @@
-@extends('layouts.app_customer')
+@extends('layouts.app')
 
 @section('content')
 
@@ -58,6 +58,9 @@
 <div class="container pt-5">
     
     @include('layouts.alerts.success')
+    <div id="flash-message" class="alert alert-success" style="display:none;">
+        {{ session('success') }}
+    </div>
     
     <div class="row mt-2">
         <div class="col-md-2">
@@ -171,7 +174,7 @@
                     </div>
                 </div>
             @endcan
-           
+
             <div class="row mt-2">
                 <div class="col-md-12">
                     <p class="text-success"><strong>DADOS DA OBRA {{ $loop->iteration }}:</strong></p>
@@ -555,89 +558,139 @@
 
     @endforelse
     
-     @can('ver-sig')
-            <!-- The Modal -->
-            <div class="modal" id="sig">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <!-- Modal Header -->
-                        <div class="modal-header bg-secondary text-white">
-                            <h4 class="modal-title">Cadastro de SIG-Obra</h4>
+    @can('ver-sig')
+    <!-- The Modal -->
+    <div class="modal" id="sig">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-secondary text-white">
+                    <h4 class="modal-title">Cadastro de SIG-Obra</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="{{ route('sig.store') }}" method="post" id="sig-form">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Código: <span id="modal-code"></span></p>
+                            </div>
                         </div>
 
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <form action="{{ route('sig.store') }}" method="post">
-                                @csrf
+                        <!--Inputs hidden -->
+                        <input type="hidden" name="work_id" value="" id="modal-work-id-input">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <p>Código: <span id="modal-code"></span></p>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Agendar para</label>
+                                <input type="text" name="appointment_date" class="form-control datepicker" value="">
+                            </div>
 
-                                <!--Inputs hidden -->
-                                <input type="hidden" name="work_id" value="" id="modal-work-id-input">
+                            <div class="col-md-4">
+                                <label for="priority">Prioridade</label>
+                                <select id="priority" name="priority" class="form-select">
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority }}">{{ $priority }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label>Agendar para</label>
-                                        <input type="text" name="appointment_date" class="form-control datepicker" value="">
-                                    </div>
+                            <div class="col-md-4">
+                                <label for="status">Status</label>
+                                <select id="status" name="status" class="form-select">
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status }}">{{ $status }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="col-md-4">
-                                        <label for="priority">Prioridade</label>
-                                        <select id="priority" name="priority" class="form-select">
-                                            @foreach ($priorities as $priority)
-                                                <option value="{{ $priority }}">{{ $priority }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="notes">Descriçao</label>
+                                <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
 
-                                    <div class="col-md-4">
-                                        <label for="status">Status</label>
-                                        <select id="status" name="status" class="form-select">
-                                            @foreach ($statuses as $status)
-                                                <option value="{{ $status }}">{{ $status }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary" id="submit-button">Cadastrar</button>
+                        </div>
+                    </form>
+                </div> <!-- /.modal-body -->
+            </div> <!-- /.modal-content -->
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalCode = document.getElementById('modal-code');
+            const modalWorkIdInput = document.getElementById('modal-work-id-input');
+            const submitButton = document.getElementById('submit-button'); // Adicione um ID ao botão
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="notes">Descriçao</label>
-                                        <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                                </div>
-                            </form>
-                        </div> <!-- /.modal-body -->
-                    </div> <!-- /.modal-content -->
-                </div>
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
-                    const modalCode = document.getElementById('modal-code');
-                    const modalWorkIdInput = document.getElementById('modal-work-id-input');
-                    sigLinks.forEach(link => {
-                        link.addEventListener('click', function (event) {
-                            event.preventDefault();
-                            const workId = this.getAttribute('data-work-id');
-                            const workOldCode = this.getAttribute('data-code');
-                            modalCode.textContent = workOldCode;
-                            modalWorkIdInput.value = workId;
-                        });
-                    });
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const workId = this.getAttribute('data-work-id');
+                    const workOldCode = this.getAttribute('data-code');
+                    modalCode.textContent = workOldCode;
+                    modalWorkIdInput.value = workId;
                 });
-            </script>
-            @endcan
+            });
 
+            // Intercepta o envio do formulário
+            $('#sig-form').submit(function (e) {
+                e.preventDefault(); // Evita o envio padrão do formulário
+
+                // Obtém os dados do formulário
+                const formData = $(this).serialize();
+
+                // Desativa o botão de envio e define o texto "Cadastrando, Aguarde..."
+                submitButton.disabled = true;
+                submitButton.textContent = 'Cadastrando, aguarde...';
+
+                // Envia os dados por AJAX
+                $.ajax({
+    type: 'POST',
+    url: $(this).attr('action'),
+    data: formData,
+    success: function (response) {
+        // Fecha o modal
+        $('#sig').modal('hide');
+
+        // Limpa o formulário
+        $('#sig-form')[0].reset();
+
+        // Reativa o botão de envio e redefine o texto "Cadastrar"
+        submitButton.disabled = false;
+        submitButton.textContent = 'Cadastrar';
+
+        // Verifica se a operação foi bem-sucedida
+        if (response.success) {
+            const flashMessage = document.getElementById('flash-message');
+            flashMessage.textContent = response.message;
+            flashMessage.style.display = 'block';
+        }
+    },
+    error: function (error) {
+        // Manipule os erros aqui, se necessário
+        console.log(error.responseText);
+
+        // Reativa o botão de envio e redefine o texto "Cadastrar"
+        submitButton.disabled = false;
+        submitButton.textContent = 'Cadastrar';
+    }
+});
+
+
+            });
+        });
+        
+    </script>
+    @endcan
 </div>
 @endsection

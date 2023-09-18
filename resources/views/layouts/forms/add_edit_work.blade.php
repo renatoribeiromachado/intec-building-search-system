@@ -1,6 +1,4 @@
-<div class="container-fluid">
-    
-    <div class="container">
+
 
         @include('layouts.alerts.all-errors')
         @include('layouts.alerts.success')
@@ -10,7 +8,7 @@
             <div class="col-md-9 mt-2">
                 <div class="row">
                     <div class="col-md-2 mb-2">
-                        <label for="old_code">Código Antigo</label>
+                        <label for="old_code">Código</label>
                         <input type="text" id="old_code" name="old_code" class="form-control @error('old_code') is-invalid @enderror" value="{{ old('old_code', $work->old_code) }}" placeholder="">
                         @error('old_code')
                             <div class="invalid-feedback">
@@ -21,7 +19,7 @@
 
                     <div class="col-md-3 mb-2">
                         <label for="inputPassword4">Data de Atualização</label>
-                        <input type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
+                        <input type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
                         @error('last_review')
                             <div class="invalid-feedback">
                                 {{ $errors->first('last_review') }}
@@ -315,7 +313,7 @@
         <div class="row mt-2">
             <div class="form-group col-md-2 mb-2">
                 <label for="started_at">Início da Obra</label>
-                <input type="text" id="started_at" name="started_at" class="form-control date @error('started_at') is-invalid @enderror" value="{{ old('started_at', optional($work->started_at)->format('d/m/Y')) }}" placeholder="">
+                <input type="text" id="started_at" name="started_at" class="form-control datepicker date @error('started_at') is-invalid @enderror" value="{{ old('started_at', optional($work->started_at)->format('d/m/Y')) }}" placeholder="">
                 @error('started_at')
                     <div class="invalid-feedback">
                         {{ $errors->first('started_at') }}
@@ -325,7 +323,7 @@
 
             <div class="form-group col-md-2 mb-2">
                 <label for="ends_at">Término da Obra</label>
-                <input type="text" id="ends_at" name="ends_at" class="form-control date @error('ends_at') is-invalid @enderror" value="{{ old('ends_at', optional($work->ends_at)->format('d/m/Y')) }}" placeholder="">
+                <input type="text" id="ends_at" name="ends_at" class="form-control datepicker date @error('ends_at') is-invalid @enderror" value="{{ old('ends_at', optional($work->ends_at)->format('d/m/Y')) }}" placeholder="">
                 @error('ends_at')
                     <div class="invalid-feedback">
                         {{ $errors->first('ends_at') }}
@@ -807,5 +805,3 @@
         </div>
 
         <hr class="my-4">
-    </div>
-</div>

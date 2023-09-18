@@ -593,7 +593,7 @@
     //                                $("#city option").filter(function() {
     //                                    return this.text == resposta.localidade; 
     //                                }).attr('selected', true);
-                                    $("#uf option").filter(function() {
+                                    $("#state option").filter(function() {
                                         return this.text == resposta.uf; 
                                     }).attr('selected', true);
                             $("#number").focus();

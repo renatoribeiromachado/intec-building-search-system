@@ -1,6 +1,3 @@
-<div class="container-fluid">
-     
-    <div class="container">
 
         @include('layouts.alerts.all-errors')
         @include('layouts.alerts.success')
@@ -271,7 +268,7 @@
                 <div class="form-group col-md-2 mb-2">
                     <label for="last_review">Atualização</label>
                     <input
-                        type="text" id="last_review" name="last_review" class="form-control date @error('last_review') is-invalid @enderror"
+                        type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror"
                         value="{{ old('last_review', optional($company->last_review)->format('d/m/Y')) }}"
                         placeholder="">
                     @error('last_review')
@@ -324,5 +321,3 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
