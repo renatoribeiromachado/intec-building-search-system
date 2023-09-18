@@ -579,6 +579,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
              $(function(){
+                
                 $("#zip_code").on("keyup",function(){
                     $.ajax({
                         url: 'https://viacep.com.br/ws/'+ $(this).val() +'/json/',
@@ -600,6 +601,14 @@
                         }
                     });
                 });
+                
+                /*Importante para o excel*/
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                
             
                 $(".datepicker").datepicker({
                     // dateFormat: 'yy-mm-dd' // Define o formato da data
@@ -632,13 +641,10 @@
                     $('.alert-success').trigger('click');
                 }, 3000);
                 // end alerts
+                
             });
             
-//            $.ajaxSetup({
-//                headers: {
-//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//                }
-//            });
+            
 
             base_url = function () {
                 if (document.location.hostname === "localhost") {
