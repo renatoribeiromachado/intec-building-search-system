@@ -2,7 +2,7 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="old_code"
-            label-text="Cód. Antigo"
+            label-text="Cód:"
             input-type="text"
             input-name="old_code"
             class-one=""
@@ -266,7 +266,7 @@
             label-text="CEP:"
             input-type="text"
             input-name="zip_code"
-            class-one=""
+            class-one="cep"
             label-class="label-font-bold"
             input-value="{{ $company->zip_code }}"
             :input-readonly="false"
@@ -341,15 +341,13 @@
     </div>
 
     <div class="col-md-2">
-        <x-intec-select
-            select-name="state"
-            select-label="Estado:"
-            select-class="form-select"
-            required=""
-            placeholder="-- Selecione --"
-            :collection="$states"
-            value="{{ $company->state }}"
-        />
+        <label><strong>Estado:</strong></label>
+        <select name="state" class="form-select" id="uf">
+            <option value="">--Selecione--</option>
+            @foreach($states as $state)
+            <option value='{{ $state }}' @if($state == $company->state) selected @endif>{{ $state }}</option>
+        @endforeach
+        </select>
     </div>
 </div>
 

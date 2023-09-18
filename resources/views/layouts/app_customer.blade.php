@@ -13,7 +13,8 @@
             crossorigin="anonymous"
             >
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        
         <title>SISTEMA INTEC | ACESSO RESTRITO</title>
 
         <style>
@@ -577,13 +578,29 @@
 
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $(document).ready(function () {
+             $(function(){
+                $("#zip_code").on("keyup",function(){
+                    $.ajax({
+                        url: 'https://viacep.com.br/ws/'+ $(this).val() +'/json/',
+                        dataType: 'json',
+                        success: function(resposta){
+                            $("#address").val(resposta.logradouro);
+                            //$("#complemento").val(resposta.complemento);
+                            $("#district").val(resposta.bairro);
+                            $("#city").val(resposta.localidade);
+                            //$("#uf").val(resposta.uf);
+    //                        $("#city").val(resposta.localidade);
+    //                                $("#city option").filter(function() {
+    //                                    return this.text == resposta.localidade; 
+    //                                }).attr('selected', true);
+                                    $("#uf option").filter(function() {
+                                        return this.text == resposta.uf; 
+                                    }).attr('selected', true);
+                            $("#number").focus();
+                        }
+                    });
+                });
+            
                 $(".datepicker").datepicker({
                     // dateFormat: 'yy-mm-dd' // Define o formato da data
                     dateFormat: 'dd/mm/yy' // Define o formato da data
@@ -605,33 +622,6 @@
 
                 $('.phone').mask(SPMaskBehavior, spOptions);
 
-    // $(".cpfcnpj").keydown(function() {
-    //     try {
-    //         $(".cpfcnpj").unmask();
-    //     } catch (e) {
-    //         // console.log(e)
-    //     }
-
-    //     var tamanho = $(".cpfcnpj").val().length;
-
-    //     if(tamanho < 11){
-    //         $(".cpfcnpj").mask("999.999.999-99");
-    //     } else {
-    //         $(".cpfcnpj").mask("99.999.999/9999-99");
-    //     }
-
-    //     // adjusting the focus
-    //     var elem = this;
-    //     setTimeout(function(){
-    //         // change the selector position
-    //         elem.selectionStart = elem.selectionEnd = 10000;
-    //     }, 0);
-    //     // clone value to change the focus
-    //     var currentValue = $(this).val();
-    //     $(this).val('');
-    //     $(this).val(currentValue);
-    // });
-    // end jquery mask
 
                 // alerts
                 $('.alert-success').on('click', function () {
@@ -643,6 +633,12 @@
                 }, 3000);
                 // end alerts
             });
+            
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
 
             base_url = function () {
                 if (document.location.hostname === "localhost") {

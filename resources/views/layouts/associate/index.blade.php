@@ -20,14 +20,14 @@
             <div class="col-md-2">
                 <x-intec-input
                     label-input-id="search_old_code"
-                    label-text="Codigo"
+                    label-text="Código"
                     input-type="text"
                     input-name="search_old_code"
                     class-one=""
                     label-class="label-font-bold"
                     input-value="{{ request()->search_old_code }}"
                     :input-readonly="false"
-                    placeholder="Digite o Codigo..."
+                    placeholder="Digite o Código..."
                 />
             </div>
 
@@ -111,7 +111,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Cód. Antigo</th>
+                <th scope="col">Cód</th>
                 <th scope="col">CNPJ</th>
                 <th scope="col">Razão Social</th>
                 <th scope="col">Nome Fantasia</th>
