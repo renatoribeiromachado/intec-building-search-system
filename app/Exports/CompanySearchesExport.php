@@ -22,7 +22,7 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
     protected $company;
     protected $state;
     protected $city;
-    protected $CompaniesSessionName = 'companies_checkboxes';
+    protected $companiesSessionName = 'companies_checkboxes';
     protected $statesSessionName = 'states_checkboxes';
     protected $activityFieldsSessionName = 'activity_fields_checkboxes';
     protected $stateSessionName = 'state_selected';
@@ -40,7 +40,31 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         $this->city = $city;
     }
 
-    /**
+   
+    public function styles(Worksheet $sheet)
+    {
+        return [
+
+            1 => [
+                'font' => [
+                    'bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 12, 
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => '1f497d'],
+                ],
+
+                'padding' => [
+                    'top' => 80, // Padding superior de 40 pixels
+                    'bottom' => 80, // Padding inferior de 40 pixels
+                    'left' => 80, // Padding esquerdo de 40 pixels
+                    'right' => 80, // Padding direito de 40 pixels
+                ],
+            ],
+        ];
+    }
+    
+     /**
      * @return \Illuminate\Support\Collection
      */
     public function returnContacts($data) {
@@ -64,31 +88,8 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
                     JOIN positions p ON p.id = ct.position_id
                     WHERE c.id = $data";
         $results = \DB::select($sql);
-
+        
         return $results;
-    }
-
-    public function styles(Worksheet $sheet)
-    {
-        return [
-
-            1 => [
-                'font' => [
-                    'bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 12, 
-                ],
-                'fill' => [
-                    'fillType' => Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => '1f497d'],
-                ],
-
-                'padding' => [
-                    'top' => 80, // Padding superior de 40 pixels
-                    'bottom' => 80, // Padding inferior de 40 pixels
-                    'left' => 80, // Padding esquerdo de 40 pixels
-                    'right' => 80, // Padding direito de 40 pixels
-                ],
-            ],
-        ];
     }
 
     /**
@@ -167,6 +168,8 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             $states = $states->whereIn('id', $statesToSearch);
         }
         
+        $allStatesAcronym = $states->get()->pluck('state_acronym');
+
         $companies = $this->company
             ->select(
                 'companies.*',
@@ -174,19 +177,19 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             )
             ->join('activity_fields', 'companies.activity_field_id', '=', 'activity_fields.id');
         
-        
-        //Atividades da emrpesa
-        $activityFieldsChecked = [];
-        if (! is_null(request()->activity_fields)) {
-            request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
-            $activityFieldsChecked = session($this->activityFieldsSessionName);
+        //Atividades da empresa
+        $activityFieldsChecked = null;
+        if (session()->has($this->activityFieldsSessionName) || isset($this->searchParams['activity_fields'])) {
+            $activityFieldsChecked = session()->has($this->activityFieldsSessionName)
+                ? session($this->activityFieldsSessionName)
+                : $this->searchParams['activity_fields'];
         }
         
-         if ((! session()->has('segmentSubTypesVisible')) && isset($activityFieldsChecked)) {
+         if ((! session()->has('activityVisible')) && isset($activityFieldsChecked)) {
             $companies = $companies->whereIn('activity_fields.id', $activityFieldsChecked);
         }
         
-        if (session()->has('segmentSubTypesVisible') && (! isset($activityFieldsChecked))) {
+        if (session()->has('activityVisible') && (! isset($activityFieldsChecked))) {
             $companies = $companies
                 ->whereIn('activity_fields.id', $activityVisible->toArray());
         }
@@ -201,20 +204,17 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
             }
             $companies = $companies->whereIn('activity_fields.id', $activityToSearch);
         }
- 
-        $allStatesAcronym = $states->get()->pluck('state_acronym');
-
         
-        
-        $allComapanyIds = null;
+        /*Seleção de todas as empresas*/
+        $allCompanyIds = null;
         if (
-            (session()->has($this->CompaniesSessionName) || isset($this->searchParams['works_selected']))
+            (session()->has($this->companiesSessionName) || isset($this->searchParams['companies_selected']))
             && (! Route::is('company.search.step_two.index'))
         ) {
-            $allComapanyIds = session()->has($this->CompaniesSessionName)
-                ? session($this->CompaniesSessionName)
+            $allCompanyIds = session()->has($this->companiesSessionName)
+                ? session($this->companiesSessionName)
                 : $this->searchParams['companies_selected'];
-            $companies = $companies->whereIn('companies.id', $allComapanyIds);
+            $companies = $companies->whereIn('companies.id', $allCompanyIds);
         }
         
         /*Todos os estados*/
@@ -307,28 +307,30 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
                 'companies.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
             );
         }
+        
+        
 
         return $companies->limit(500)->get()->map(function ($company) {
-        $contacts = $this->returnContacts($company->id);
+            $contacts = $this->returnContacts($company->id);
 
-        $contactData = [];
+            $contactData = [];
 
-        for ($i = 1; $i <= 30; $i++) {
-            $contactData["contact_name_{$i}"] = null;
-            $contactData["contact_position_{$i}"] = null;
-            $contactData["contact_email_{$i}"] = null;
-            $contactData["contact_main_phone_{$i}"] = null;
-        }
-        
-        foreach ($contacts as $index => $contact) {
-            $contactData["contact_name_" . ($index + 1)] = $contact->name;
-            $contactData["contact_position_" . ($index + 1)] = $contact->position;
-            $contactData["contact_email_" . ($index + 1)] = (!empty($contact->email) ? "{$contact->email}" : '' ) .(!empty($contact->secondary_email) ? " / {$contact->secondary_email}" : '' ) .(!empty($contact->tertiary_email) ? " / {$contact->tertiary_email}" : '' );
-            $contactData["contact_main_phone_" . ($index + 1)] = (!empty($contact->ddd) && !empty($contact->main_phone) ? "({$contact->ddd}) {$contact->main_phone}" : '' )
-                                                                    .(!empty($contact->ddd_two) && !empty($contact->phone_two) ? " / ($contact->ddd_two) $contact->phone_two" : '' )
-                                                                    . (!empty($contact->ddd_three) && !empty($contact->phone_three) ? " / ($contact->ddd_three) $contact->phone_three" : '' )
-                                                                    . (!empty($contact->ddd_four) && !empty($contact->phone_four) ? " / ($contact->ddd_four) $contact->phone_four" : '' );
-        }
+            for ($i = 1; $i <= 30; $i++) {
+                $contactData["contact_name_{$i}"] = null;
+                $contactData["contact_position_{$i}"] = null;
+                $contactData["contact_email_{$i}"] = null;
+                $contactData["contact_main_phone_{$i}"] = null;
+            }
+
+            foreach ($contacts as $index => $contact) {
+                $contactData["contact_name_" . ($index + 1)] = $contact->name;
+                $contactData["contact_position_" . ($index + 1)] = $contact->position;
+                $contactData["contact_email_" . ($index + 1)] = (!empty($contact->email) ? "{$contact->email}" : '' ) .(!empty($contact->secondary_email) ? " / {$contact->secondary_email}" : '' ) .(!empty($contact->tertiary_email) ? " / {$contact->tertiary_email}" : '' );
+                $contactData["contact_main_phone_" . ($index + 1)] = (!empty($contact->ddd) && !empty($contact->main_phone) ? "({$contact->ddd}) {$contact->main_phone}" : '' )
+                                                                        .(!empty($contact->ddd_two) && !empty($contact->phone_two) ? " / ($contact->ddd_two) $contact->phone_two" : '' )
+                                                                        . (!empty($contact->ddd_three) && !empty($contact->phone_three) ? " / ($contact->ddd_three) $contact->phone_three" : '' )
+                                                                        . (!empty($contact->ddd_four) && !empty($contact->phone_four) ? " / ($contact->ddd_four) $contact->phone_four" : '' );
+            }
 
         return array_merge([
                 $company->id, 

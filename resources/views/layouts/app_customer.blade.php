@@ -578,43 +578,47 @@
 
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
+            
              $(function(){
-                
-                $("#zip_code").on("keyup",function(){
-                    $.ajax({
-                        url: 'https://viacep.com.br/ws/'+ $(this).val() +'/json/',
-                        dataType: 'json',
-                        success: function(resposta){
-                            $("#address").val(resposta.logradouro);
-                            //$("#complemento").val(resposta.complemento);
-                            $("#district").val(resposta.bairro);
-                            $("#city").val(resposta.localidade);
-                            //$("#uf").val(resposta.uf);
-    //                        $("#city").val(resposta.localidade);
-    //                                $("#city option").filter(function() {
-    //                                    return this.text == resposta.localidade; 
-    //                                }).attr('selected', true);
-                                    $("#state option").filter(function() {
-                                        return this.text == resposta.uf; 
-                                    }).attr('selected', true);
-                            $("#number").focus();
-                        }
-                    });
-                });
-                
-                /*Importante para o excel*/
+                 
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 
-            
+                /*CEP automático - Reanto Machado 19/09/2023*/
+                document.getElementById('zip_code').addEventListener('keyup', function () {
+                    const zipCode = this.value;
+                    const url = `https://viacep.com.br/ws/${zipCode}/json/`;
+
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na solicitação');
+                            }
+                            return response.json();
+                        })
+                        .then(resposta => {
+                            document.getElementById('address').value = resposta.logradouro;
+                            document.getElementById('district').value = resposta.bairro;
+                            document.getElementById('city').value = resposta.localidade;
+                            document.querySelector('#state option[value="' + resposta.uf + '"]').selected = true;
+                            document.getElementById('number').focus();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // Lide com erros aqui
+                        });
+                });
+
+                /*Calendario automatico*/
                 $(".datepicker").datepicker({
                     // dateFormat: 'yy-mm-dd' // Define o formato da data
                     dateFormat: 'dd/mm/yy' // Define o formato da data
                 });
-                // jquery mask
+                
+                /*Mascaras*/
                 $('.cep').mask('00000-000');
                 $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
                 $('.date').mask('00/00/0000');
@@ -641,11 +645,9 @@
                     $('.alert-success').trigger('click');
                 }, 3000);
                 // end alerts
-                
             });
             
-            
-
+        
             base_url = function () {
                 if (document.location.hostname === "localhost") {
                     var url = "{!! config('app.url') !!}/";

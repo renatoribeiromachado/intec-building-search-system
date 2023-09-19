@@ -73,11 +73,7 @@
                 id="cnpj_1"
                 name="cnpj_1"
                 value="{{ request()->cnpj }}">
-            <input
-                type="hidden"
-                id="search_1"
-                name="search_1"
-                value="{{ request()->search }}">
+      
             <input
                 type="hidden"
                 id="searchCompany_1"
@@ -220,79 +216,83 @@
                 </div>
             </div>
 
-            <div>
-                {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+            <div class="row">
+                <div class="table table-responsive">
+                    {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+                </div>
             </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">CNPJ</th>
-                        <th scope="col">Razão Social</th>
-                        <th scope="col">Nome Fantasia</th>
-                        <th scope="col">Segmento</th>
-                        @can('ver-sig-empresa')
-                            <th scope="col">Status</th>
-                            <th scope="col">SIG</th>
-                        @endcan
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($companies as $company)
-                    <tr>
-                        <td style="cursor: pointer; width: 200px;">
-                            <div style="cursor: pointer;">
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input company-checkbox"
-                                        type="checkbox"
-                                        name="companies_selected[]"
-                                        value="{{ $company->id }}"
-                                        id="flexCheckDefault{{$loop->index}}"
-                                        @if(collect($companiesChecked)->contains($company->id))
-                                        checked
-                                        @endif
-                                        >
-                                    <label
-                                        class="form-check-label"
-                                        for="flexCheckDefault{{$loop->index}}"
-                                        >
-                                        {{ $company->cnpj }}
-                                    </label>
+            
+            <div class="table table-responsive"> 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">CNPJ</th>
+                            <th scope="col">Razão Social</th>
+                            <th scope="col">Nome Fantasia</th>
+                            <th scope="col">Segmento</th>
+                            @can('ver-sig-empresa')
+                                <th scope="col">Status</th>
+                                <th scope="col">SIG</th>
+                            @endcan
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($companies as $company)
+                        <tr>
+                            <td style="cursor: pointer; width: 200px;">
+                                <div style="cursor: pointer;">
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input company-checkbox"
+                                            type="checkbox"
+                                            name="companies_selected[]"
+                                            value="{{ $company->id }}"
+                                            id="flexCheckDefault{{$loop->index}}"
+                                            @if(collect($companiesChecked)->contains($company->id))
+                                            checked
+                                            @endif
+                                            >
+                                        <label
+                                            class="form-check-label"
+                                            for="flexCheckDefault{{$loop->index}}"
+                                            >
+                                            {{ $company->cnpj }}
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td style="width: 430px;">{{ $company->company_name }}</td>
-                        <td>{{ $company->trading_name }}</td>
-                        <td>{{ optional($company->activityField)->description }}</td>
-                        
-                        @can('ver-sig-empresa')
-                            <td>{{ $company->last_sig_status }}</td>
-                            <td>
-                                <a
-                                    href="javascript:void(0)"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#sig"
-                                    data-company-id="{{ $company->id }}"
-                                    data-name="{{ $company->trading_name }}"
-                                    >
-                                    <i class="fa fa-check"></i>
-                                </a>
                             </td>
-                        @endcan
-                        
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4">
-                            <p class="text-center mb-0 py-4">
-                                Nenhum registro de empresa encontrado.
-                            </p>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                            <td style="width: 430px;">{{ $company->company_name }}</td>
+                            <td>{{ $company->trading_name }}</td>
+                            <td>{{ optional($company->activityField)->description }}</td>
+
+                            @can('ver-sig-empresa')
+                                <td>{{ $company->last_sig_status }}</td>
+                                <td>
+                                    <a
+                                        href="javascript:void(0)"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sig"
+                                        data-company-id="{{ $company->id }}"
+                                        data-name="{{ $company->trading_name }}"
+                                        >
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                </td>
+                            @endcan
+
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4">
+                                <p class="text-center mb-0 py-4">
+                                    Nenhum registro de empresa encontrado.
+                                </p>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </form>
         
         @can('ver-sig-empresa')
@@ -417,8 +417,10 @@
         </div>
     @endcan
 
-        <div>
-            {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+        <div class="row">
+            <div class="table table-responsive">
+                {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+            </div>
         </div>
     </div>
 @endsection
@@ -433,14 +435,14 @@
                 $form.submit();
             });
 
-            $('.work-checkbox').click(function () {
+            $('.company-checkbox').click(function () {
                 let $checkbox = $(this);
                 let isChecked = $checkbox.is(':checked')
 
                 if (isChecked) {
                     $.ajax({
                         type: "POST",
-                        url: base_url() + 'v1/check-work',
+                        url: base_url() + 'v1/check-company',
                         data: {
                             work: $checkbox.val(),
                         },
@@ -456,7 +458,7 @@
                 if (! isChecked) {
                     $.ajax({
                         type: "POST",
-                        url: base_url() + 'v1/remove-check-work',
+                        url: base_url() + 'v1/remove-check-company',
                         data: {
                             work: $checkbox.val(),
                         },
@@ -535,11 +537,9 @@
         console.log(atLeastOneCheckboxWasClicked)
         console.log('Aqui!')
 
-        btnSelectAll.textContent = (inputSelectAllWasClicked == 1)
-            // ((atLeastOneCheckboxWasClicked !== '') &&
-            //     (inputClickedInPage == pageOfPagination) &&
-            //     (inputSelectAllWasClicked == 1))
-            ? 'Deselecionar Todos' : 'Selecionar Todos';
+         btnSelectAll.textContent =
+            ((inputClickedInPage == pageOfPagination) && (inputSelectAllWasClicked == 1))
+            ? 'Desselecionar Todos' : 'Selecionar Todos';
 
         function toggleCheckboxes() {
 

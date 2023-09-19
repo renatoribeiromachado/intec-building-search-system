@@ -239,10 +239,7 @@ class CompanySearchController extends Controller
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $companies = $this->getFilteredCompanies($request);
-        // $workFeatures = $this->workFeature
-        //     ->orderBy('description', 'asc')
-        //     ->get();
-
+        
         return view('layouts.company.search.step_three.index', compact(
             'companies',
             'statuses',
@@ -468,10 +465,11 @@ class CompanySearchController extends Controller
     public function export(Request $request)
     {
         $searchParams = $request->query();
+        
         return Excel::download(
             new CompanySearchesExport(
                 $searchParams,
-                $this->company,
+                $this->company, 
                 $this->state,
                 $this->city
             ),
