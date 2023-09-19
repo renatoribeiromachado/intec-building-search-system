@@ -579,17 +579,38 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             
-             $(function(){
-                 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            $(document).ready(function () {
+                $(".datepicker").datepicker({
+                    // dateFormat: 'yy-mm-dd' // Define o formato da data
+                    dateFormat: 'dd/mm/yy' // Define o formato da data
                 });
-                
-                /*CEP automático - Reanto Machado 19/09/2023*/
-                document.getElementById('zip_code').addEventListener('keyup', function () {
-                    const zipCode = this.value;
+
+                // jquery mask
+                $('.cep').mask('00000-000');
+                $('.cnpj').mask('00.000.000/0000-00', { reverse: false });
+                $('.date').mask('00/00/0000');
+                $('.money').mask('000.000.000.000.000,00', { reverse: true });
+
+                var SPMaskBehavior = function (val) {
+                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                },
+                    spOptions = {
+                        onKeyPress: function (val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        }
+                    };
+
+                $('.phone').mask(SPMaskBehavior, spOptions);
+
+                // Manipular o evento keyup do CEP usando jQuery
+                $('#zip_code').keyup(function () {
+                    const zipCode = $(this).val();
                     const url = `https://viacep.com.br/ws/${zipCode}/json/`;
 
                     fetch(url)
@@ -600,11 +621,11 @@
                             return response.json();
                         })
                         .then(resposta => {
-                            document.getElementById('address').value = resposta.logradouro;
-                            document.getElementById('district').value = resposta.bairro;
-                            document.getElementById('city').value = resposta.localidade;
-                            document.querySelector('#state option[value="' + resposta.uf + '"]').selected = true;
-                            document.getElementById('number').focus();
+                            $('#address').val(resposta.logradouro);
+                            $('#district').val(resposta.bairro);
+                            $('#city').val(resposta.localidade);
+                            $('#state option[value="' + resposta.uf + '"]').prop('selected', true);
+                            $('#number').focus();
                         })
                         .catch(error => {
                             console.error(error);
@@ -612,42 +633,17 @@
                         });
                 });
 
-                /*Calendario automatico*/
-                $(".datepicker").datepicker({
-                    // dateFormat: 'yy-mm-dd' // Define o formato da data
-                    dateFormat: 'dd/mm/yy' // Define o formato da data
-                });
-                
-                /*Mascaras*/
-                $('.cep').mask('00000-000');
-                $('.cnpj').mask('00.000.000/0000-00', {reverse: false});
-                $('.date').mask('00/00/0000');
-                $('.money').mask('000.000.000.000.000,00', {reverse: true});
-
-                var SPMaskBehavior = function (val) {
-                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-                },
-                spOptions = {
-                    onKeyPress: function (val, e, field, options) {
-                        field.mask(SPMaskBehavior.apply({}, arguments), options);
-                    }
-                };
-
-                $('.phone').mask(SPMaskBehavior, spOptions);
-
-
                 // alerts
                 $('.alert-success').on('click', function () {
                     $(this).hide('slow');
-                })
+                });
 
                 setInterval(() => {
                     $('.alert-success').trigger('click');
                 }, 3000);
                 // end alerts
             });
-            
-        
+
             base_url = function () {
                 if (document.location.hostname === "localhost") {
                     var url = "{!! config('app.url') !!}/";
