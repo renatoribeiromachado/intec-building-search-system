@@ -345,10 +345,28 @@
         <select name="state" class="form-select" id="state">
             <option value="">--Selecione--</option>
             @foreach($states as $state)
-            <option value='{{ $state }}' @if($state == $company->state) selected @endif>{{ $state }}</option>
-        @endforeach
+                <option value='{{ $state }}' @if($state == $company->state) selected @endif>{{ $state }}</option>
+            @endforeach
         </select>
     </div>
+    
+    <div class="col-md-2">
+        @if($company->classification == null)
+            <label><strong>Classificação:</strong></label>
+        @elseif($company->classification == 'Satisfeito')
+            <label class="text-success"><strong>Classificação:</strong></label>
+            <span class="text-success"><i class="fa fa-thumbs-o-up"></i></span>
+        @elseif($company->classification == 'Insatisfeito')
+            <label class="text-danger"><strong>Classificação:</strong></label>
+            <span class="text-danger"><i class="fa fa-thumbs-o-down"></i></span>
+        @endif
+        <select name="classification" class="form-select">
+            <option value="" style="color: gray;">--Selecione--</option>
+            <option value="Satisfeito" style="color: green;" @if($company->classification == 'Satisfeito') selected @endif>Satisfeito</option>
+            <option value="Insatisfeito" style="color: red;" @if($company->classification == 'Insatisfeito') selected @endif>Insatisfeito</option>
+        </select>
+    </div>
+    
 </div>
 
 <div class="row mt-2">

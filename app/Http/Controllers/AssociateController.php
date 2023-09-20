@@ -162,6 +162,7 @@ class AssociateController extends Controller
             $company->home_page = $request->home_page;
             $company->is_active = $request->is_active;
             $company->reason = $request->reason;
+            $company->classification = $request->classification;
             $company->is_project_owner = false;
             $company->last_review = convertPtBrDateToEnDate($request->last_review);
             $company->created_by = auth()->user()->id;
@@ -343,6 +344,7 @@ class AssociateController extends Controller
             } else {
                 $company->reason = $request->reason;
             }
+            $company->classification = $request->classification;
             $company->is_project_owner = false;
             $company->last_review = convertPtBrDateToEnDate($request->last_review);
             $company->updated_by = auth()->user()->id;
