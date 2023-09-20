@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Associate;
 use Illuminate\Http\Request;
-use App\Models\Sig;
 use App\Models\SigAssociate;
+use App\Http\Requests\StoreSigAssociateRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+//Paginator::useBootstrap();
+
 
 class SigAssociateController extends Controller
 {
@@ -32,10 +34,25 @@ class SigAssociateController extends Controller
      */
     public function index()
     {
-       $associates = $this->sigAssociate->get();
+        $authUser = Auth::user();
+        $sig_associates = $this->sigAssociate->where('user_id', $authUser->id)->orderBy('id', 'desc')->paginate();
 
         return view('layouts.sig_associate.index', compact(
-            'associates',
+            'sig_associates',
+        ));
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sigGeral()
+    {
+        $sig_associates = $this->sigAssociate->orderBy('id', 'desc')->paginate();
+
+        return view('layouts.sig_associate.geral', compact(
+            'sig_associates',
         ));
     }
     
@@ -45,33 +62,12 @@ class SigAssociateController extends Controller
      * @param  \App\Http\Requests\StoreWorkRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSigAssociateRequest $request)
     {
         
         //dd($request->all());
         $authUser = Auth::user();
 
-//        try {
-//            DB::beginTransaction();
-//
-//            $sigAssociate = $this->sigAssociate;
-//            $sigAssociate->user_id = $authUser->id;
-//            $sigAssociate->code_associate = $request->code_associate;
-//            $sigAssociate->appointment_date = convertPtBrDateToEnDate($request->appointment_date);
-//            $sigAssociate->notes = $request->notes;
-//            $sigAssociate->save();
-//
-//            DB::commit();
-//
-//        } catch (Exception $ex) {
-//
-//            DB::rollBack();
-//
-//            return redirect()->back()
-//                ->withInput($request->all())
-//                ->withErrors(['error' => $ex->getMessage()]);
-//        }
-        
         $data = [
             'user_id' => $authUser->id,
             'code_associate' => $request->code_associate,
@@ -97,6 +93,7 @@ class SigAssociateController extends Controller
      */
     public function update(Request $request)
     {
+        //dd($request->all());
         $formattedAppointmentDate = \Carbon\Carbon::createFromFormat('d/m/Y', $request->appointment_date)->format('Y-m-d');
 
         $data = $request->all();

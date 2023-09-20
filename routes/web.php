@@ -26,6 +26,7 @@ use App\Http\Controllers\SigCompanyController;
 use App\Http\Controllers\SigAssociateController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\CronCompanyController;
+use App\Http\Controllers\CronAssociateController;
 use App\Http\Controllers\EmailWorkController;
 use App\Http\Controllers\EmailCompanyController;
 use App\Http\Controllers\MonitoringController;
@@ -53,6 +54,9 @@ Route::get('cron', [CronController::class, 'cron'])->name('crom');
 
 /*Cron empresas*/
 Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCompany');
+
+/*Cron associados*/
+Route::get('cronAssociate', [CronAssociateController::class, 'cron'])->name('cronAssociate');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -288,6 +292,7 @@ Route::middleware(['auth'])->group(function () {
     
     /*SIG Associado - Renato Machado 20/09/2023 */
     Route::get('sig-associate', [SigAssociateController::class, 'index'])->name('sig_associate.index');
+    Route::get('sig-sigGeral', [SigAssociateController::class, 'sigGeral'])->name('sig_associate.sigGeral');
     Route::post('sig-associate/store', [SigAssociateController::class, 'store'])->name('sig_associate.store');
     Route::get('sig-associate/{id}/edit', [SigAssociateController::class, 'edit'])->name('sig_associate.edit');
     Route::put('sig-associate', [SigAssociateController::class, 'update'])->name('sig_associate.update');
