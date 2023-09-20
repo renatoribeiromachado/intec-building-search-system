@@ -491,6 +491,17 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    
+                                    @can('ver-sig-associado')
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('sig_associate.index') }}"
+                                                >
+                                                SIG / Associado
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </li>
                       

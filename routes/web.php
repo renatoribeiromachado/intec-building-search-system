@@ -23,6 +23,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\WorkSearchController;
 use App\Http\Controllers\SigController;
 use App\Http\Controllers\SigCompanyController;
+use App\Http\Controllers\SigAssociateController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\CronCompanyController;
 use App\Http\Controllers\EmailWorkController;
@@ -264,7 +265,7 @@ Route::middleware(['auth'])->group(function () {
         // Route::put('sync/permission-role', 'RolesController@sync_permission_role')->name('perm.sync.permission_role');
     });
     
-    /*SIG obras - Renato Macchado 14/08/2023 */
+    /*SIG obras - Renato Machado 14/08/2023 */
     Route::get('sig-works', [SigController::class, 'index'])->name('sig_works.index');
     Route::post('sig/store', [SigController::class, 'store'])->name('sig.store');
     Route::get('sig/{id}/edit', [SigController::class, 'edit'])->name('sig.edit');
@@ -274,7 +275,7 @@ Route::middleware(['auth'])->group(function () {
     /*Enviar email obras*/
     Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');
     
-    /*SIG Empresa - Renato Macchado 31/08/2023 */
+    /*SIG Empresa - Renato Machado 31/08/2023 */
     Route::get('sig-companies', [SigCompanyController::class, 'index'])->name('sig_companies.index');
     Route::post('sig-company/store', [SigCompanyController::class, 'store'])->name('sig-company.store');
     Route::get('sig-company/{id}/edit', [SigCompanyController::class, 'edit'])->name('sig-company.edit');
@@ -283,6 +284,17 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('sig-company/{id}', [SigCompanyController::class, 'destroy'])->name('sig-company.destroy');
     /*Enviar email empresa - Renato machado 01/09/2023*/
     Route::post('/send-email-empresa', [EmailCompanyController::class, 'sendEmailCompany'])->name('send.email-company');
+    
+    
+    /*SIG Associado - Renato Machado 20/09/2023 */
+    Route::get('sig-associate', [SigAssociateController::class, 'index'])->name('sig_associate.index');
+    Route::post('sig-associate/store', [SigAssociateController::class, 'store'])->name('sig_associate.store');
+    Route::get('sig-associate/{id}/edit', [SigAssociateController::class, 'edit'])->name('sig_associate.edit');
+    Route::put('sig-associate', [SigAssociateController::class, 'update'])->name('sig_associate.update');
+    Route::get('sig-associatereport', [SigAssociateController::class, 'report'])->name('sig_associate.report');
+    Route::delete('sig-associate/{id}', [SigAssociateController::class, 'destroy'])->name('sig_associate.destroy');
+    /*Enviar email empresa - Renato machado 01/09/2023*/
+    Route::post('/send-email-associate', [EmailAssociateController::class, 'sendEmailAssociate'])->name('send.email-associate');
       
     Route::prefix('works')->group(function() {
         Route::get('', [WorkController::class, 'index'])->name('work.index');
