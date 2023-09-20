@@ -195,7 +195,7 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         }
 
         // pega sessão das atividades da empresa
-        if (session()->has('segmentSubTypesVisible') && isset($activityFieldsChecked)) {
+        if (session()->has('activityVisible') && isset($activityFieldsChecked)) {
             $activityToSearch = [];
             foreach ($activityVisible as $activityVisible) {
                 if (in_array($activityVisible, $activityFieldsChecked)) {
