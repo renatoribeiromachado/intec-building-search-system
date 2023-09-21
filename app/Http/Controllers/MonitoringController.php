@@ -36,7 +36,7 @@ class MonitoringController extends Controller
 //                DB::raw('COUNT(*) as total'))
 //        ->groupBy('user_id')
 //        ->get();
-        $monitorings = $this->loginHistory->whereNotNull('associate_id')->paginate(20);
+        $monitorings = $this->loginHistory->whereNotNull('associate_id')->orderBy('created_at','desc')->paginate(20);
 
         return view('layouts.monitoring.index', compact('monitorings'));
     } 
@@ -44,12 +44,12 @@ class MonitoringController extends Controller
     /*Pesquisa por id associado*/
     public function search(Request $request)
     {
-        $associate = $this->associate->where('old_code', $request->code)->first();
+        $associate = $this->associate->where('old_code', $request->code)->orderBy('created_at','desc')->first();
 
         if ($associate) {
             $associateId = $associate->id;
             //$monitoring = $this->loginHistory->where('associate_id', $associateId)->get();
-            $monitoring = $this->loginHistory->where('associate_id', $associateId)->whereNotNull('associate_id')->get();
+            $monitoring = $this->loginHistory->where('associate_id', $associateId)->whereNotNull('associate_id')->orderBy('created_at','desc')->get();
 
             return view('layouts.monitoring.search', compact('monitoring'));
         } else {

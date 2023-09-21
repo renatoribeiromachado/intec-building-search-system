@@ -106,7 +106,7 @@
             
         </form>
 
-        <form action="{{ route('company.search.step_three.index') }}" method="get">
+        <form action="{{ route('company.search.step_three.index') }}" method="get" target="_blank">
             @csrf
             @method('get')
 

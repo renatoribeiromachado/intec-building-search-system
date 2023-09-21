@@ -667,36 +667,36 @@
 
                 // Envia os dados por AJAX
                 $.ajax({
-    type: 'POST',
-    url: $(this).attr('action'),
-    data: formData,
-    success: function (response) {
-        // Fecha o modal
-        $('#sig').modal('hide');
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function (response) {
+                        // Fecha o modal
+                        $('#sig').modal('hide');
 
-        // Limpa o formulário
-        $('#sig-form')[0].reset();
+                        // Limpa o formulário
+                        $('#sig-form')[0].reset();
 
-        // Reativa o botão de envio e redefine o texto "Cadastrar"
-        submitButton.disabled = false;
-        submitButton.textContent = 'Cadastrar';
+                        // Reativa o botão de envio e redefine o texto "Cadastrar"
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Cadastrar';
 
-        // Verifica se a operação foi bem-sucedida
-        if (response.success) {
-            const flashMessage = document.getElementById('flash-message');
-            flashMessage.textContent = response.message;
-            flashMessage.style.display = 'block';
-        }
-    },
-    error: function (error) {
-        // Manipule os erros aqui, se necessário
-        console.log(error.responseText);
+                        // Verifica se a operação foi bem-sucedida
+                        if (response.success) {
+                            const flashMessage = document.getElementById('flash-message');
+                            flashMessage.textContent = response.message;
+                            flashMessage.style.display = 'block';
+                        }
+                    },
+                    error: function (error) {
+                        // Manipule os erros aqui, se necessário
+                        console.log(error.responseText);
 
-        // Reativa o botão de envio e redefine o texto "Cadastrar"
-        submitButton.disabled = false;
-        submitButton.textContent = 'Cadastrar';
-    }
-});
+                        // Reativa o botão de envio e redefine o texto "Cadastrar"
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Cadastrar';
+                    }
+                });
 
 
             });

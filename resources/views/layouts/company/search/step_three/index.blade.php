@@ -1,8 +1,9 @@
-@extends('layouts.app_customer')
+@extends('layouts.app')
 
 @section('content')
 
 <style>
+    hr{border: 2px solid red !important;}
     /*CSS para impressão*/
     @media print {
         .print{
@@ -83,7 +84,7 @@
     @include('layouts.alerts.success')
     <div class="row mt-2">
         <div class="col-md-2">
-            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
+            <a href="" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
         </div>
     </div>
     
@@ -147,200 +148,117 @@
                 link.value = currentUrl;
             }
         });
+        
+        /*Desativa EMPRESA*/
+        function fncXMHide(className) {
+            const elements = document.querySelectorAll('.' + className);
+            elements.forEach(function(element) {
+                element.style.display = 'none';
+            });
+            fncLoadPageBreak();
+        }
     </script>
     
     @forelse ($companies as $company)
-        <div class="row mt-2">
-            <div class="col-md-12">
-                <img
-                    src="{{ asset('images/relatorio-empresas.png') }}"
-                    class="img-fluid"
-                    alt="Descrição da Imagem"
-                    >
-                <p class="pt-1">
-                    Última Atualização:
-                    <strong>{{ optional($company->last_review)->format('d/m/Y') }}</strong> -
-                    Revisão: <strong>{{ $company->revision }}</strong> -
-                    Emitido em:
-                    <strong>
-                        {{ now()->setTimezone(
-                        config('timezones.brazil'))->format('d/m/Y') }}
-                    </strong>
-                </p>
+        <div class="obra-info info-{{ $company->id }}">
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <img src="{{ asset('images/relatorio-empresas.png') }}" class="img-fluid" alt="PESQUISA DE EMPRESA">
+                    <p class="pt-1">
+                        Última Atualização:
+                        <strong>{{ optional($company->last_review)->format('d/m/Y') }}</strong> -
+                        Revisão: <strong>{{ $company->revision }}</strong> -
+                        Emitido em:
+                        <strong>
+                            {{ now()->setTimezone(
+                            config('timezones.brazil'))->format('d/m/Y') }}
+                        </strong>
+                    </p>
+                </div>
             </div>
-        </div>
-    
-      @can('ver-sig-empresa')
-        <div class="row mt-2">
-            <div class="col-md-4">
-                <a class="btn btn-primary" title="Cadastrar SIG"
-                    href="javascript:void(0)"
-                    data-bs-toggle="modal"
-                    data-bs-target="#sig"
-                    data-company-id="{{ $company->id }}"
-                    data-name="{{ $company->name }}"
-                    >
-                    <i class="fa fa-check"></i> NOVO SIG
-                </a>
-            </div>
-        </div>
 
-    @endcan
-    
-    @can('ver-sig-empresa')
-        <!-- The Modal -->
-        <div class="modal" id="sig">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-primary text-white">
-                        <h4 class="modal-title">Cadastro de SIG-Empresa</h4>
-                    </div>
+            <!--BOTÕES-->
+            @can('ver-sig-empresa')
+              <div class="row mt-2">
+                  <div class="col-md-4">
+                      <button class="btn btn-primary text-white" type='button' onclick='fncXMHide("info-{{ $company->id }}")' title="DESATIVAR EMPRESA"> <i class="fa fa-eye"></i> Desativar</button>
+                      <a class="btn btn-primary text-white" title="Cadastrar SIG"
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#sig"
+                          data-company-id="{{ $company->id }}"
+                          data-name="{{ $company->name }}"
+                          >
+                          <i class="fa fa-check"></i> NOVO SIG
+                      </a>
+                  </div>
+              </div>
+            @endcan
 
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form action="{{ route('sig-company.store') }}" method="post">
-                            @csrf
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p><strong>Empresa:</strong> <span id="modal-name"></span></p>
-                                </div>
-                            </div>
-                            
-                            <!--Inputs hidden -->
-                            <input type="hidden" name="company_id" value="" id="modal-company-id-input">
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label>Agendar para</label>
-                                    <input type="text" name="appointment_date" class="form-control datepicker" value="" required="">
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="priority">Prioridade</label>
-                                    <select id="priority" name="priority" class="form-select">
-                                        @foreach ($priorities as $priority)
-                                            <option value="{{ $priority }}">{{ $priority }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="status">Status</label>
-                                    <select id="status" name="status" class="form-select">
-                                        @foreach ($statuses as $status)
-                                            <option value="{{ $status }}">{{ $status }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="notes">Descriçao</label>
-                                    <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
-                                </div>
-                            </div>
-                            
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
-                            </div>
-                        </form>
-                    </div> <!-- /.modal-body -->
-                </div> <!-- /.modal-content -->
-            </div>
-        </div>
-        <script>
-            /*Botão Sig*/
-            document.addEventListener('DOMContentLoaded', function () {
-                const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
-                const modalName = document.getElementById('modal-name');
-                const modalCompanyIdInput = document.getElementById('modal-company-id-input');
-
-                sigLinks.forEach(link => {
-                    link.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        const companyId = this.getAttribute('data-company-id');
-                        const comapnyName = this.getAttribute('data-name');
-                        modalName.textContent = comapnyName;
-                        modalCompanyIdInput.value = companyId;
-
-                        // Filtra as linhas da tabela
-                        const reportRows = document.querySelectorAll('.report-row');
-                        reportRows.forEach(row => {
-                            const reportCompanyId = row.getAttribute('data-company-id');
-                            if (reportCompanyId === companyId) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        });
-                    });
-                });
-            });
-        </script>
-    @endcan
-    
-        <div class="row mt-2 mb-3">
-            <div class="col-md-12">
-                <p class="text-success"><b>DADOS DA EMPRESA {{ $loop->iteration }}:</b></p>
-                <table class="table table-condensed mt-2">
-                    <tr>
-                        <td style="width:78% !important;">
-                            <strong>Razão Social:</strong>  {{ $company->company_name }}<br>
-                          
-                            <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }}<br>
-
-                            <strong>Cidade:</strong> {{ $company->city }}<br>
-
-                            <strong>Segmento:</strong> {{ optional($company->activityField)->description }}<br>
-                            
-                            <strong>CNPJ:</strong> {{ $company->cnpj }}<br>
-                        </td>
-                        <td>
-                            <strong>Fantasia:</strong>  {{ $company->trading_name }}<br>
-                            
-                            <strong>Bairro</strong>: {{ $company->district }}<br>
-
-                            <strong>Estado:</strong> {{ $company->state }} <strong>CEP:</strong> {{ $company->zip_code }}<br>
-
-                            <strong>Site:</strong> {{ $company->home_page }}<br>
-                            
-                            <strong>E-mail 1:</strong> <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a><br>
-
-                            <strong>E-mail 2:</strong> <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a><br>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2">
-                            <strong>Observações:</strong> {{ $company->notes }}
-                        </td>
-                    </tr>
-
-                    @foreach($company->contacts as $contact)
+            <div class="row mt-2 mb-3">
+                <div class="col-md-12">
+                    <p class="text-success"><b>DADOS DA EMPRESA {{ $loop->iteration }}:</b></p>
+                    
+                    <hr>
+                    
+                    <table class="table table-condensed mt-2">
                         <tr>
-                            <td class="pt-3">
-                                <strong>Contato:</strong> {{ $contact->name }}<br>
-                                <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
-                                <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
-                                <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
-                                <strong>Telefone 3:</strong> ({{ $contact->ddd_three }}) {{ $contact->phone_three }}<br>
-                                <strong>Telefone 4:</strong> ({{ $contact->ddd_four }}) {{ $contact->phone_four }}<br>
+                            <td style="width:78% !important;">
+                                <strong>Razão Social:</strong>  {{ $company->company_name }}<br>
+
+                                <strong>Endereço:</strong> {{ $company->address }}, {{ $company->number }}<br>
+
+                                <strong>Cidade:</strong> {{ $company->city }}<br>
+
+                                <strong>Segmento:</strong> {{ optional($company->activityField)->description }}<br>
+
+                                <strong>CNPJ:</strong> {{ $company->cnpj }}<br>
                             </td>
-                            <td class="pt-3">
-                                <strong>E-mail 1:</strong> <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a><br>
-                                <strong>E-mail 2:</strong> <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a><br>
-                                <strong>E-mail 3:</strong> <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a><br>
+                            <td>
+                                <strong>Fantasia:</strong>  {{ $company->trading_name }}<br>
+
+                                <strong>Bairro</strong>: {{ $company->district }}<br>
+
+                                <strong>Estado:</strong> {{ $company->state }} <strong>CEP:</strong> {{ $company->zip_code }}<br>
+
+                                <strong>Site:</strong> {{ $company->home_page }}<br>
+
+                                <strong>E-mail 1:</strong> <a href="mailto:{{ $company->primary_email }}">{{ $company->primary_email }}</a><br>
+
+                                <strong>E-mail 2:</strong> <a href="mailto:{{ $company->secondary_email }}">{{ $company->secondary_email }}</a><br>
                             </td>
                         </tr>
-                    @endforeach
-                </table>
+
+                        <tr>
+                            <td colspan="2">
+                                <strong>Observações:</strong> {{ $company->notes }}
+                            </td>
+                        </tr>
+                        
+                        @foreach($company->contacts as $contact)
+                            <tr>
+                                <td class="pt-3">
+                                    <strong>Contato:</strong> {{ $contact->name }}<br>
+                                    <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
+                                    <strong>Telefone 1:</strong> ({{ $contact->ddd }}) {{ $contact->main_phone }}<br>
+                                    <strong>Telefone 2:</strong> ({{ $contact->ddd_two }}) {{ $contact->phone_two }}<br>
+                                    <strong>Telefone 3:</strong> ({{ $contact->ddd_three }}) {{ $contact->phone_three }}<br>
+                                    <strong>Telefone 4:</strong> ({{ $contact->ddd_four }}) {{ $contact->phone_four }}<br>
+                                </td>
+                                <td class="pt-3">
+                                    <strong>E-mail 1:</strong> <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a><br>
+                                    <strong>E-mail 2:</strong> <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a><br>
+                                    <strong>E-mail 3:</strong> <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a><br>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                    
+                        <hr> 
+                </div>
             </div>
         </div>
+    
         @empty
         <div class="row mt-2 mb-3">
             <div class="col-md-12">
@@ -351,5 +269,150 @@
         </div>
         
     @endforelse
+    
+    @can('ver-sig-empresa')
+    <!-- The Modal -->
+    <div class="modal" id="sig">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary text-white">
+                    <h4 class="modal-title">Cadastro de SIG-Empresa</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="{{ route('sig-company.store') }}" method="post" id="sig-form">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><strong>Empresa:</strong> <span id="modal-name"></span></p>
+                            </div>
+                        </div>
+
+                        <!--Inputs hidden -->
+                        <input type="hidden" name="company_id" value="" id="modal-company-id-input">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Agendar para</label>
+                                <input type="text" name="appointment_date" class="form-control datepicker" value="" required="">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="priority">Prioridade</label>
+                                <select id="priority" name="priority" class="form-select">
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority }}">{{ $priority }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="status">Status</label>
+                                <select id="status" name="status" class="form-select">
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status }}">{{ $status }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="notes">Descriçao</label>
+                                <textarea id="notes" name="notes" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary" id="submit-button">Cadastrar</button>
+                        </div>
+                    </form>
+                </div> <!-- /.modal-body -->
+            </div> <!-- /.modal-content -->
+        </div>
+    </div>
+    <script>
+        /*Botão Sig*/
+        document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalName = document.getElementById('modal-name');
+            const modalCompanyIdInput = document.getElementById('modal-company-id-input');
+            const submitButton = document.getElementById('submit-button'); // Adicione um ID ao botão
+
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const companyId = this.getAttribute('data-company-id');
+                    const comapnyName = this.getAttribute('data-name');
+                    modalName.textContent = comapnyName;
+                    modalCompanyIdInput.value = companyId;
+
+                    // Filtra as linhas da tabela
+                    const reportRows = document.querySelectorAll('.report-row');
+                    reportRows.forEach(row => {
+                        const reportCompanyId = row.getAttribute('data-company-id');
+                        if (reportCompanyId === companyId) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Intercepta o envio do formulário
+            $('#sig-form').submit(function (e) {
+                e.preventDefault(); // Evita o envio padrão do formulário
+
+                // Obtém os dados do formulário
+                const formData = $(this).serialize();
+
+                // Desativa o botão de envio e define o texto "Cadastrando, Aguarde..."
+                submitButton.disabled = true;
+                submitButton.textContent = 'Cadastrando, aguarde...';
+
+                // Envia os dados por AJAX
+                $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: formData,
+                        success: function (response) {
+                            // Fecha o modal
+                            $('#sig').modal('hide');
+
+                            // Limpa o formulário
+                            $('#sig-form')[0].reset();
+
+                            // Reativa o botão de envio e redefine o texto "Cadastrar"
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Cadastrar';
+
+                            // Verifica se a operação foi bem-sucedida
+                            if (response.success) {
+                                const flashMessage = document.getElementById('flash-message');
+                                flashMessage.textContent = response.message;
+                                flashMessage.style.display = 'block';
+                            }
+                        },
+                        error: function (error) {
+                            // Manipule os erros aqui, se necessário
+                            console.log(error.responseText);
+
+                            // Reativa o botão de envio e redefine o texto "Cadastrar"
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Cadastrar';
+                        }
+                    });
+
+            });
+        });
+    </script>
+    @endcan
+
 </div>
 @endsection
