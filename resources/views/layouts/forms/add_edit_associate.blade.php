@@ -353,6 +353,9 @@
     <div class="col-md-2">
         @if($company->classification == null)
             <label><strong>Classificação:</strong></label>
+        @elseif($company->classification == 'Neutro')
+            <label class="text-primary"><strong>Classificação:</strong></label>
+            <span class="text-primary"><i class="fa fa-check"></i></span>
         @elseif($company->classification == 'Satisfeito')
             <label class="text-success"><strong>Classificação:</strong></label>
             <span class="text-success"><i class="fa fa-thumbs-o-up"></i></span>
@@ -362,6 +365,7 @@
         @endif
         <select name="classification" class="form-select">
             <option value="" style="color: gray;">--Selecione--</option>
+            <option value="Neutro" style="color: blue;" @if($company->classification == 'Neutro') selected @endif>Neutro</option>
             <option value="Satisfeito" style="color: green;" @if($company->classification == 'Satisfeito') selected @endif>Satisfeito</option>
             <option value="Insatisfeito" style="color: red;" @if($company->classification == 'Insatisfeito') selected @endif>Insatisfeito</option>
         </select>

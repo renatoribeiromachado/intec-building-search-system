@@ -374,66 +374,68 @@
                     <p class="boxtitle text-success"><strong>CONTATO(s) DA OBRA</strong></p>
                 </div>
                 <div class="row mb-2">
+                        @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
+                            @php
+                                $workCompanies = (new \App\Models\Work)->find($work->id)->companies;
+                                $contactBelongsToWork = false;
+                            @endphp
 
-                    @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
-    @php
-        $workCompanies = (new \App\Models\Work)->find($work->id)->companies;
-        $contactBelongsToWork = false;
-    @endphp
+                            @foreach ($workCompanies as $company)
+                                @if ($contact->company_id === $company->id)
+                                    @php
+                                        $contactBelongsToWork = true;
+                                        // Defina $company dentro do loop
+                                        $contactCompany = $company;
+                                    @endphp
+                                @endif
+                            @endforeach
 
-    @foreach ($workCompanies as $company)
-        @if ($contact->company_id === $company->id)
-            @php
-                $contactBelongsToWork = true;
-            @endphp
-        @endif
-    @endforeach
+                            @if ($contactBelongsToWork)
+                                <div class="col-md-3 pt-3"> 
+                                    <div class="card p-2">
+                                        <div class="card-header bg-secondary text-white" style="font-size:14px !important;">
+                                            <strong>EMPRESA: {{ $contactCompany->trading_name }}</strong>
+                                        </div>
+                                        <strong>Nome:</strong> {{ $contact->name }}<br>
+                                        <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
+                                        <strong>Telefone(s): </strong> 
+                                        @if ($contact->ddd && $contact->main_phone)
+                                            ({{ $contact->ddd }}) {{ $contact->main_phone }}
+                                        @endif
 
-    @if ($contactBelongsToWork)
-        <div class="col-md-3 pt-3"> 
-            <div class="card p-2">
-                <div class="card-header bg-secondary text-white" style="font-size:14px !important;">
-                    <strong>EMPRESA: {{ $company->trading_name }}</strong>
-                </div>
-                <strong>Nome:</strong> {{ $contact->name }}<br>
-                <strong>Cargo:</strong> {{ optional($contact->position)->description }}<br>
-                <strong>Telefone(s): </strong> 
-                @if ($contact->ddd && $contact->main_phone)
-                    ({{ $contact->ddd }}) {{ $contact->main_phone }}
-                @endif
+                                        @if ($contact->ddd_two && $contact->phone_two)
+                                            <br>
+                                            ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
+                                        @endif
 
-                @if ($contact->ddd_two && $contact->phone_two)
-                    <br>
-                    ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
-                @endif
+                                        @if ($contact->ddd_three && $contact->phone_three)
+                                            <br>
+                                            ({{ $contact->ddd_three }}) {{ $contact->phone_three }}
+                                        @endif
 
-                @if ($contact->ddd_three && $contact->phone_three)
-                    <br>
-                    ({{ $contact->ddd_three }}) {{ $contact->phone_three }}
-                @endif
+                                        @if ($contact->ddd_four && $contact->phone_four)
+                                            <br>
+                                            ({{ $contact->ddd_four }}) {{ $contact->phone_four }}
+                                        @endif 
+                                        <br>
 
-                @if ($contact->ddd_four && $contact->phone_four)
-                    <br>
-                    ({{ $contact->ddd_four }}) {{ $contact->phone_four }}
-                @endif 
-                <br>
+                                        <strong>E-mail(s):</strong> 
+                                        @if ($contact->email)
+                                            <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>
+                                        @endif
 
-                <strong>E-mail(s):</strong> 
-                @if ($contact->email)
-                    <a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a>
-                @endif
+                                        @if ($contact->secondary_email)
+                                            <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a>
+                                        @endif
 
-                @if ($contact->secondary_email)
-                    <a href="mailto:{{ $contact->secondary_email }}">{{ $contact->secondary_email }}</a>
-                @endif
-
-                @if ($contact->tertiary_email)
-                    <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a>
-                @endif<br>
-            </div>
-        </div>
-    @endif
-@endforeach
+                                        @if ($contact->tertiary_email)
+                                            <a href="mailto:{{ $contact->tertiary_email }}">{{ $contact->tertiary_email }}</a>
+                                        @endif<br>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
 
                 </div>
             </div>

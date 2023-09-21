@@ -41,7 +41,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <label class="form-label"><strong>Anotação</strong></label>
-                        <textarea name="notes" class="form-control" rows="5" placeholder="Dieixe uma anotação..."></textarea>
+                        <textarea name="notes" class="form-control" rows="5" placeholder="Deixe uma anotação..."></textarea>
                         @error('notes')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -56,11 +56,26 @@
     </div>
     
     <div class="row mt-5">
-        <div class="col-md-12">
-            @can('ver-sig-geral-de-associados')
-            <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
-            @endcan
-        </div>
+     
+        @can('ver-sig-geral-de-associados')
+            <div class="col-md-2">
+                <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
+            </div>
+
+            <div class="col-md-10"> 
+                <form action="{{ route('sig_associate.search') }}" class="form-inline" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" name="search" class="form-control" value="" placeholder="Digite o código...">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-secondary text-white"><i class='fa fa-search'></i> Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        @endcan
         
         <div class="col-md-12 mt-5">
             <div class="table table-responsive">

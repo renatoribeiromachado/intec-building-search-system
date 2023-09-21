@@ -129,4 +129,22 @@ class SigAssociateController extends Controller
 
         return redirect()->back();
     }
+    
+    
+    public function search(Request $request)
+    {
+//        if (!$sigAssociate = $this->sigAssociate->find($request->search)) {
+//            return redirect()->back();
+//        }
+        //dd($request->search);
+
+       $sig_associates = $this->sigAssociate->where('code_associate', $request->search)->paginate();
+
+        //return redirect()->back();
+        
+        return view('layouts.sig_associate.index', compact(
+            'sig_associates',
+        ));
+    }
+    
 }
