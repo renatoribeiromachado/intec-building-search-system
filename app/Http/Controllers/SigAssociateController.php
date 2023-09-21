@@ -36,9 +36,17 @@ class SigAssociateController extends Controller
     {
         $authUser = Auth::user();
         $sig_associates = $this->sigAssociate->where('user_id', $authUser->id)->orderBy('id', 'desc')->paginate();
+        
+        $rapporteurs = $this->sigAssociate
+                                ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
+                                ->groupBy('user_id')
+                                ->orderBy('max_id', 'desc') // Ordenando pelo id máximo
+                                ->with('user')
+                                ->get();
 
         return view('layouts.sig_associate.index', compact(
             'sig_associates',
+            'rapporteurs'
         ));
     }
     
@@ -142,8 +150,33 @@ class SigAssociateController extends Controller
 
         //return redirect()->back();
         
+        $rapporteurs = $this->sigAssociate
+                                ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
+                                ->groupBy('user_id')
+                                ->orderBy('max_id', 'desc') // Ordenando pelo id máximo
+                                ->with('user')
+                                ->get();
+
         return view('layouts.sig_associate.index', compact(
             'sig_associates',
+            'rapporteurs'
+        ));
+    }
+    
+    public function searchReport(Request $request)
+    {
+       $sig_associates = $this->sigAssociate->where('user_id', $request->search_report)->paginate();
+
+        $rapporteurs = $this->sigAssociate
+                                ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
+                                ->groupBy('user_id')
+                                ->orderBy('max_id', 'desc') // Ordenando pelo id máximo
+                                ->with('user')
+                                ->get();
+
+        return view('layouts.sig_associate.index', compact(
+            'sig_associates',
+            'rapporteurs'
         ));
     }
     

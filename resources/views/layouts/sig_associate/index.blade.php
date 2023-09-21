@@ -59,17 +59,39 @@
      
         @can('ver-sig-geral-de-associados')
             <div class="col-md-2">
+                <label><strong>SIG Geral:</strong></label>
                 <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
             </div>
 
-            <div class="col-md-10"> 
+            <div class="col-md-5"> 
+                <label><strong>Cód. associado:</strong></label>
                 <form action="{{ route('sig_associate.search') }}" class="form-inline" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <input type="text" name="search" class="form-control" value="" placeholder="Digite o código...">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-secondary text-white"><i class='fa fa-search'></i> Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="col-md-5">
+                <label><strong>Relator:</strong></label>
+                <form action="{{ route('sig_associate.searchReport') }}" class="form-inline" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select name="search_report" class="form-select">
+                                <option value="">--Selecione--</option>
+                                @foreach ($rapporteurs as $reporter)
+                                    <option value="{{ $reporter->user->id }}">{{ $reporter->user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
                             <button type="submit" class="btn btn-secondary text-white"><i class='fa fa-search'></i> Pesquisar</button>
                         </div>
                     </div>
