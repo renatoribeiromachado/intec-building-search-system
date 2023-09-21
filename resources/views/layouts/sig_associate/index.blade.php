@@ -12,7 +12,7 @@
     @include('layouts.alerts.success')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('sig_associate.store') }}" method="post">
+            <form id="form1" action="{{ route('sig_associate.store') }}" method="post">
                 @csrf
 
                 <div class="row">
@@ -55,50 +55,39 @@
         </div>
     </div>
     
-    <div class="row mt-5">
-     
-        @can('ver-sig-geral-de-associados')
-            <div class="col-md-2">
-                <label><strong>SIG Geral:</strong></label>
-                <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
-            </div>
+    @can('ver-sig-geral-de-associados')
+        <form id="form2" action="{{ route('sig_associate.search') }}" class="form-inline" method="post">
+            @csrf
+             <div class="row mt-5">
+                 <div class="col-md-2">
+                     <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
+                 </div>
+                 
+                 <div class="col-md-2"> 
+                     <input type="text" name="appointment_date" class="form-control datepicker" value="" placeholder="Data de agendamento...">
+                 </div>
 
-            <div class="col-md-5"> 
-                <label><strong>Cód. associado:</strong></label>
-                <form action="{{ route('sig_associate.search') }}" class="form-inline" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-5">
-                            <input type="text" name="search" class="form-control" value="" placeholder="Digite o código...">
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-secondary text-white"><i class='fa fa-search'></i> Pesquisar</button>
-                        </div>
-                    </div>
-                </form>
+                 <div class="col-md-2"> 
+                     <input type="text" name="code_associate" class="form-control" value="" placeholder="Digite o código...">
+                 </div>
+
+                 <div class="col-md-3">
+                     <select name="reporter" class="form-select">
+                         <option value="">--Selecione o Relator--</option>
+                         @foreach ($rapporteurs as $reporter)
+                         <option value="{{ $reporter->user->id }}">{{ $reporter->user->name }}</option>
+                         @endforeach
+                     </select>
+                 </div>
+                 
+                 <div class="col-md-2"> 
+                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                 </div>
             </div>
+        </form>
+    @endcan
         
-            <div class="col-md-5">
-                <label><strong>Relator:</strong></label>
-                <form action="{{ route('sig_associate.searchReport') }}" class="form-inline" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-5">
-                            <select name="search_report" class="form-select">
-                                <option value="">--Selecione--</option>
-                                @foreach ($rapporteurs as $reporter)
-                                    <option value="{{ $reporter->user->id }}">{{ $reporter->user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-secondary text-white"><i class='fa fa-search'></i> Pesquisar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        @endcan
-        
+    <div class="row mt-1">
         <div class="col-md-12 mt-5">
             <div class="table table-responsive">
                 <table class="table table-condensed">
@@ -128,9 +117,9 @@
                                     data-notes="{{ $sig_associate->notes }}"><i class="fa fa-edit"></i>
                                 </a>
                             </td>
-                           
+
                             <td>
-                                <form action="{{ route('sig_associate.destroy', $sig_associate->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?')">
+                                <form id="form4" action="{{ route('sig_associate.destroy', $sig_associate->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger shadow"><i class="fa fa-trash"></i></button>
@@ -165,7 +154,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{ route('sig_associate.update') }}" method="POST">
+                    <form id="form5" action="{{ route('sig_associate.update') }}" method="POST">
 
                         @method('PUT')
                         @csrf

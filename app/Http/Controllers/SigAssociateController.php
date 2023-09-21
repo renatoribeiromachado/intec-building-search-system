@@ -136,48 +136,44 @@ class SigAssociateController extends Controller
         session()->flash('success', 'Deletado com sucesso.');
 
         return redirect()->back();
+        
+        
     }
     
     
     public function search(Request $request)
     {
-//        if (!$sigAssociate = $this->sigAssociate->find($request->search)) {
-//            return redirect()->back();
-//        }
-        //dd($request->search);
+        // Inicialize a consulta de sig_associates
+        $sig_associates = $this->sigAssociate->query();
 
-       $sig_associates = $this->sigAssociate->where('code_associate', $request->search)->paginate();
+        // Verifique e aplique a pesquisa com base no código do associado
+        if (!empty($request->code_associate)) {
+            $sig_associates->where('code_associate', $request->code_associate);
+        }
 
-        //return redirect()->back();
+        // Verifique e aplique a pesquisa com base no usuário repórter
+        if (!empty($request->reporter)) {
+            $sig_associates->where('user_id', $request->reporter);
+        }
         
+        if (!empty($request->appointment_date)) {
+            $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $request->appointment_date)->startOfDay();
+            $sig_associates->where('appointment_date', $appointmentDateUTC);
+        }
+
+        // Obtenha os registros paginados
+        $sig_associates = $sig_associates->paginate();
+
+        // Obtenha os raportadores
         $rapporteurs = $this->sigAssociate
-                                ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
-                                ->groupBy('user_id')
-                                ->orderBy('max_id', 'desc') // Ordenando pelo id máximo
-                                ->with('user')
-                                ->get();
+            ->select('user_id', \DB::raw('MAX(id) as max_id'))
+            ->groupBy('user_id')
+            ->orderBy('max_id', 'desc')
+            ->with('user')
+            ->get();
 
-        return view('layouts.sig_associate.index', compact(
-            'sig_associates',
-            'rapporteurs'
-        ));
+        return view('layouts.sig_associate.index', compact('sig_associates', 'rapporteurs'));
     }
-    
-    public function searchReport(Request $request)
-    {
-       $sig_associates = $this->sigAssociate->where('user_id', $request->search_report)->paginate();
 
-        $rapporteurs = $this->sigAssociate
-                                ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
-                                ->groupBy('user_id')
-                                ->orderBy('max_id', 'desc') // Ordenando pelo id máximo
-                                ->with('user')
-                                ->get();
-
-        return view('layouts.sig_associate.index', compact(
-            'sig_associates',
-            'rapporteurs'
-        ));
-    }
-    
+ 
 }

@@ -299,7 +299,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sig-associatereport', [SigAssociateController::class, 'report'])->name('sig_associate.report');
     Route::delete('sig-associate/{id}', [SigAssociateController::class, 'destroy'])->name('sig_associate.destroy');
     Route::post('sig-associate', [SigAssociateController::class, 'search'])->name('sig_associate.search');
-    Route::post('sig-associate-report', [SigAssociateController::class, 'searchReport'])->name('sig_associate.searchReport');
     /*Enviar email empresa - Renato machado 01/09/2023*/
     Route::post('/send-email-associate', [EmailAssociateController::class, 'sendEmailAssociate'])->name('send.email-associate');
       
