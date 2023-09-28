@@ -32,10 +32,28 @@ class SigAssociateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authUser = Auth::user();
-        $sig_associates = $this->sigAssociate->where('user_id', $authUser->id)->orderBy('id', 'desc')->paginate();
+        /// Inicialize a consulta de sig_associates
+        $sig_associates = $this->sigAssociate->query();
+
+        // Verifique e aplique a pesquisa com base no código do associado
+        if (!empty($request->code_associate)) {
+            $sig_associates->where('code_associate', $request->code_associate);
+        }
+
+        // Verifique e aplique a pesquisa com base no usuário repórter
+        if (!empty($request->reporter)) {
+            $sig_associates->where('user_id', $request->reporter);
+        }
+        
+        if (!empty($request->appointment_date)) {
+            $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $request->appointment_date)->startOfDay();
+            $sig_associates->where('appointment_date', $appointmentDateUTC);
+        }
+
+        // Obtenha os registros paginados
+        $sig_associates = $sig_associates->paginate(10);
         
         $rapporteurs = $this->sigAssociate
                                 ->select('user_id', \DB::raw('MAX(id) as max_id')) // Usando MAX(id) para obter o último registro de cada grupo
@@ -143,6 +161,7 @@ class SigAssociateController extends Controller
     
     public function search(Request $request)
     {
+        
         // Inicialize a consulta de sig_associates
         $sig_associates = $this->sigAssociate->query();
 
@@ -162,7 +181,7 @@ class SigAssociateController extends Controller
         }
 
         // Obtenha os registros paginados
-        $sig_associates = $sig_associates->paginate();
+        $sig_associates = $sig_associates->paginate(10);
 
         // Obtenha os raportadores
         $rapporteurs = $this->sigAssociate

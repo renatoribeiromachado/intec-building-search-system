@@ -140,7 +140,9 @@
         </div>
         
         <div class="card-header">
-            {!! $sig_associates->links() !!}
+            {!! $sig_associates->appends([
+                'reporter' => request()->get('reporter','')
+            ])->links() !!}
         </div>
    
     </div>
