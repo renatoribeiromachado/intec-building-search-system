@@ -129,7 +129,11 @@ class SigCompanyController extends Controller
             'id','associate_id', 'user_id', 'company_id', 'appointment_date',
             'created_at', 'priority', 'status','notes'
         );
-
+        
+        /*Se o ACL role = associado-gestora for diferentedo autenticado (false) 
+         * ou não for autenticado como associado-gestora (false) authUserIsAnAssociate() 
+         * vera os sigs pelo user_id autenticado
+        */
         if ($authUser->role->slug == Associate::ASSOCIATE_USER || (!authUserIsAnAssociate())) 
         {
             $query = $query->where('user_id', $authUser->id);
@@ -137,38 +141,34 @@ class SigCompanyController extends Controller
 
         /*Empresa*/
         $trading_name = $request->trading_name;
-        if ($trading_name) {
-            $query->whereHas('company', function ($query) use ($trading_name, $authUser) {
-                $query->where('companies.trading_name', 'like', '%'.$trading_name.'%')
-                        ->where('user_id', $authUser->id);
+        if ($trading_name && $authUser->role->slug = authUserIsAnAssociate()) {
+            $query->whereHas('company', function ($query) use ($trading_name) {
+                $query->where('companies.trading_name', 'like', '%'.$trading_name.'%');
             });
         }
         
         /*Prioridade*/
         $priority = $request->priority;
-        if ($priority) {
-            $query->where(function ($query) use ($priority, $authUser) {
-                $query->where('priority', $priority)
-                      ->where('user_id', $authUser->id);
+        if ($priority && $authUser->role->slug = authUserIsAnAssociate()) {
+            $query->where(function ($query) use ($priority) {
+                $query->where('priority', $priority);
             });
         }
         
         /*Status*/
         $status = $request->status;
-        if ($status) {
-            $query->where(function ($query) use ($status, $authUser) {
-                $query->where('status', $status)
-                      ->where('user_id', $authUser->id);
+        if ($status && $authUser->role->slug = authUserIsAnAssociate()) {
+            $query->where(function ($query) use ($status) {
+                $query->where('status', $status);
             });
         }
         
         /*Data de agendamento*/
         $appointmentDate = $request->appointment_date;
-        if ($appointmentDate) {
+        if ($appointmentDate && $authUser->role->slug = authUserIsAnAssociate()) {
             $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
-            $query->where(function ($query) use ($appointmentDateUTC, $authUser) {
-                $query->where('appointment_date', $appointmentDateUTC)
-                      ->where('user_id', $authUser->id);
+            $query->where(function ($query) use ($appointmentDateUTC) {
+                $query->where('appointment_date', $appointmentDateUTC);
             });
         }
         
@@ -182,22 +182,20 @@ class SigCompanyController extends Controller
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
-        if ($start_date && $end_date) {
+        if ($start_date && $end_date && $authUser->role->slug = authUserIsAnAssociate()) {
             $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d');
             $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d');
-
-            $query->whereBetween('created_at', [$start_date, $end_date])
-                   ->where('user_id', $authUser->id);
+            $query->whereBetween('created_at', [$start_date, $end_date]);
         }
         
         /*Descrição*/
-        $notes = $request->notes;
-        if ($notes) {
-            $query->where(function ($q) use ($notes, $authUser) {
-                return $q->where('notes', 'like', '%'.$notes.'%')
-                        ->where('user_id', $authUser->id);
-            });
-        }
+//        $notes = $request->notes;
+//        if ($notes) {
+//            $query->where(function ($q) use ($notes, $authUser) {
+//                return $q->where('notes', 'like', '%'.$notes.'%')
+//                        ->where('user_id', $authUser->id);
+//            });
+//        }
 
         /*Associdao pode ver todos da empresa*/
 //        if($this->sigCompany->associate_id == null){
