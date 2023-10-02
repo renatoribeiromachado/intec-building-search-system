@@ -155,8 +155,9 @@ class SigController extends Controller
         /*Status*/
         $status = $request->status;
         if ($status && $authUser->role->slug = authUserIsAnAssociate()) {
-             $query->where(function ($query) use ($status) {
-                $query->where('status', $status);
+             $query->where(function ($query) use ($status,$authUser) {
+                $query->where('status', $status)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
