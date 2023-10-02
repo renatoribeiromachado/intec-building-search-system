@@ -142,24 +142,27 @@ class SigCompanyController extends Controller
         /*Empresa*/
         $trading_name = $request->trading_name;
         if ($trading_name && $authUser->role->slug = authUserIsAnAssociate()) {
-            $query->whereHas('company', function ($query) use ($trading_name) {
-                $query->where('companies.trading_name', 'like', '%'.$trading_name.'%');
+            $query->whereHas('company', function ($query) use ($trading_name,$authUser) {
+                $query->where('companies.trading_name', 'like', '%'.$trading_name.'%')
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
         /*Prioridade*/
         $priority = $request->priority;
         if ($priority && $authUser->role->slug = authUserIsAnAssociate()) {
-            $query->where(function ($query) use ($priority) {
-                $query->where('priority', $priority);
+            $query->where(function ($query) use ($priority,$authUser) {
+                $query->where('priority', $priority)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
         /*Status*/
         $status = $request->status;
         if ($status && $authUser->role->slug = authUserIsAnAssociate()) {
-            $query->where(function ($query) use ($status) {
-                $query->where('status', $status);
+            $query->where(function ($query) use ($status,$authUser) {
+                $query->where('status', $status)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
@@ -167,8 +170,9 @@ class SigCompanyController extends Controller
         $appointmentDate = $request->appointment_date;
         if ($appointmentDate && $authUser->role->slug = authUserIsAnAssociate()) {
             $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
-            $query->where(function ($query) use ($appointmentDateUTC) {
-                $query->where('appointment_date', $appointmentDateUTC);
+            $query->where(function ($query) use ($appointmentDateUTC,$authUser) {
+                $query->where('appointment_date', $appointmentDateUTC)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
@@ -185,7 +189,8 @@ class SigCompanyController extends Controller
         if ($start_date && $end_date && $authUser->role->slug = authUserIsAnAssociate()) {
             $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d');
             $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d');
-            $query->whereBetween('created_at', [$start_date, $end_date]);
+            $query->whereBetween('created_at', [$start_date, $end_date])
+                    ->where('associate_id', $authUser->contact->company->associate->id);
         }
         
         /*Descrição*/
