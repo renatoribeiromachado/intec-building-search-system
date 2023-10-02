@@ -139,16 +139,18 @@ class SigController extends Controller
         /*Codigo da Obra*/
         $oldCode = $request->code;
         if ($oldCode && $authUser->role->slug = authUserIsAnAssociate()) {
-            $query->whereHas('work', function ($q) use ($oldCode) {
-                return $q->where('works.old_code', 'like', '%'.$oldCode.'%');
+            $query->whereHas('work', function ($q) use ($oldCode,$authUser) {
+                return $q->where('works.old_code', 'like', '%'.$oldCode.'%')
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
         /*Prioridade*/
         $priority = $request->priority;
         if ($priority && $authUser->role->slug = authUserIsAnAssociate()) {
-            $query->where(function ($query) use ($priority) {
-                $query->where('priority', $priority);
+            $query->where(function ($query) use ($priority,$authUser) {
+                $query->where('priority', $priority)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
@@ -165,8 +167,9 @@ class SigController extends Controller
         $appointmentDate = $request->appointment_date;
         if ($appointmentDate && $authUser->role->slug = authUserIsAnAssociate()) {
             $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
-            $query->where(function ($query) use ($appointmentDateUTC) {
-                $query->where('appointment_date', $appointmentDateUTC);
+            $query->where(function ($query) use ($appointmentDateUTC,$authUser) {
+                $query->where('appointment_date', $appointmentDateUTC)
+                        ->where('associate_id', $authUser->contact->company->associate->id);
             });
         }
         
@@ -184,7 +187,8 @@ class SigController extends Controller
             $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d');
             $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d');
 
-            $query->whereBetween('created_at', [$start_date, $end_date]);
+            $query->whereBetween('created_at', [$start_date, $end_date])
+                    ->where('associate_id', $authUser->contact->company->associate->id);
                    //->where('user_id', $authUser->id);
         }
         
