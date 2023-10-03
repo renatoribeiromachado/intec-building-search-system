@@ -14,19 +14,14 @@
     </div>
 
     <div class="col-md-3">
-        <x-intec-input
-            label-input-id="linked_company"
-            {{-- Selecione o CNPJ para esse associado: --}}
-            label-text="CNPJ para esse associado:"
-            input-type="text"
-            input-name="linked_company"
-            class-one=""
-            label-class="label-font-bold"
-            input-value="{{ $associate->linked_company
+        <label><strong>CNPJ para esse associado:</strong></label>
+        <select name="linked_company" class="form-select" id="linked_company">
+            <option value="{{ $associate->linked_company }}">{{ $associate->linked_company
                 ? $associate->linked_company
-                : '30.252.400/0001-55' }}"
-            :input-readonly="true"
-        />
+                : 'Selecione o CNPJ' }}</option>
+            <option value="30.252.400/0001-55">30.252.400/0001-55</option>
+            <option value="36.622.261/0001-90">36.622.261/0001-90</option>
+        </select>
     </div>
     
     <div class="col-md-2 mb-2">
