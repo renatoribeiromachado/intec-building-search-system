@@ -143,6 +143,11 @@ class SigController extends Controller
                 return $q->where('works.old_code', 'like', '%'.$oldCode.'%')
                         ->where('associate_id', $authUser->contact->company->associate->id);
             });
+        }elseif($oldCode){
+            $query->whereHas('work', function ($q) use ($oldCode,$authUser) {
+                return $q->where('works.old_code', 'like', '%'.$oldCode.'%')
+                        ->where('user_id', $authUser->id);
+            });
         }
         
         /*Prioridade*/
@@ -151,6 +156,11 @@ class SigController extends Controller
             $query->where(function ($query) use ($priority,$authUser) {
                 $query->where('priority', $priority)
                         ->where('associate_id', $authUser->contact->company->associate->id);
+            });
+        }elseif($priority){
+            $query->where(function ($query) use ($priority,$authUser) {
+                $query->where('priority', $priority)
+                        ->where('user_id', $authUser->id);
             });
         }
         
@@ -161,6 +171,11 @@ class SigController extends Controller
                 $query->where('status', $status)
                         ->where('associate_id', $authUser->contact->company->associate->id);
             });
+        }elseif($status){
+            $query->where(function ($query) use ($status,$authUser) {
+                $query->where('$status', $status)
+                        ->where('user_id', $authUser->id);
+            });
         }
         
         /*Data de agendamento*/
@@ -170,6 +185,12 @@ class SigController extends Controller
             $query->where(function ($query) use ($appointmentDateUTC,$authUser) {
                 $query->where('appointment_date', $appointmentDateUTC)
                         ->where('associate_id', $authUser->contact->company->associate->id);
+            });
+        }elseif($appointmentDate){
+            $appointmentDateUTC = \Carbon\Carbon::createFromFormat('d/m/Y', $appointmentDate)->startOfDay();
+            $query->where(function ($query) use ($appointmentDateUTC,$authUser) {
+                $query->where('appointment_date', $appointmentDateUTC)
+                        ->where('user_id', $authUser->id);
             });
         }
         
@@ -189,7 +210,12 @@ class SigController extends Controller
 
             $query->whereBetween('created_at', [$start_date, $end_date])
                     ->where('associate_id', $authUser->contact->company->associate->id);
-                   //->where('user_id', $authUser->id);
+        }elseif($start_date && $end_date){
+            $start_date = Carbon::createFromFormat('d/m/Y', $start_date)->format('Y-m-d');
+            $end_date = Carbon::createFromFormat('d/m/Y', $end_date)->format('Y-m-d');
+
+            $query->whereBetween('created_at', [$start_date, $end_date])
+                   ->where('user_id', $authUser->id);
         }
         
         /*Descrição*/
