@@ -173,7 +173,7 @@ class SigController extends Controller
             });
         }elseif($status){
             $query->where(function ($query) use ($status,$authUser) {
-                $query->where('$status', $status)
+                $query->where('status', $status)
                         ->where('user_id', $authUser->id);
             });
         }
