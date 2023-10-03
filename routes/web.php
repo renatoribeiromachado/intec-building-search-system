@@ -58,7 +58,7 @@ Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCom
 /*Cron associados*/
 Route::get('cronAssociate', [CronAssociateController::class, 'cron'])->name('cronAssociate');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'single.device.session'])->group(function () {
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
     
