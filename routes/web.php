@@ -59,7 +59,7 @@ Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCom
 Route::get('cronAssociate', [CronAssociateController::class, 'cron'])->name('cronAssociate');
 
 Route::middleware(['auth', 'single.device.session'])->group(function () {
-
+//Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
     
     /*Monitoramento - Renato Machado 08/09/2023*/
