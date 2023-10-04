@@ -1,10 +1,10 @@
 @extends('layouts.app_customer')
 
 @section('content')
-
+<div class="container">
     <div class="bg-light p-5 rounded" style="padding-bottom: 100px !important;">
         <div class="container">
-            <h1>EDIÇÃO DE OBRA</h1>
+            <h3>EDIÇÃO DE OBRA</h3>
         </div>
 
         <form
@@ -105,7 +105,7 @@
 
         <div class="container">
             <div class="row">
-                <h2 class="my-4">Empresa(s) Vinculada(s)</h2>
+                <h3 class="my-4">Empresa(s) Vinculada(s)</h3>
 
                 <table class="table mx-2">
                     <thead>
@@ -273,6 +273,7 @@
             </div>
         </div>
     </div>
+</div>
 
     @push('scripts')
         <script>

@@ -95,7 +95,16 @@ class Work extends Model
         if (request()->name) {
             $work = $work->where('works.name', 'like', '%'.request()->name.'%');
         }
-
+        
+        if (request()->status !== null) {
+            if (request()->status == '2') {
+                $work = $work->where('works.status', '0');
+            } else {
+                $status = intval(request()->status);
+                $work = $work->where('works.status', $status);
+            }
+        }
+        
         $work = $work->where($where);
 
         if (request()->researcher_id) {

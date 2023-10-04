@@ -418,7 +418,7 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             'Nome da Obra',
             'Valor do Investimeto R$',
             'Padrão de investimento',
-            'Área Total do Projeto',
+            'Área total construída (m2)',
             'Endereço',
             'Nº',
             'Bairro',

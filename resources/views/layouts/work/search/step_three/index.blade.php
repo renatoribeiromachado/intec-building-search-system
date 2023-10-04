@@ -260,7 +260,7 @@
                                     <strong>Sala(s) de jantar / estar</strong>: {{ $work->living_room }}
                                 </td>
                                 <td>
-                                    <strong>Área(s) de Serv. / Terraço(s) / Varanda(s)</strong>: {{ $work->tower }}
+                                    <strong>Área(s) de Serv. / Terraço(s) / Varanda(s)</strong>: {{ $work->service_area_terrace_balcony }}
                                     <br>
                                     <strong>Copa / Cozinha</strong>: {{ $work->cup_and_kitchen }}
                                     <br>

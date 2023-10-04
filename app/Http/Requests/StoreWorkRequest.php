@@ -32,7 +32,7 @@ class StoreWorkRequest extends FormRequest
             //'image' => 'image|mimes:jpeg,png|max:2048',
             'zip_code' => 'required',
             'address' => 'required',
-            'district' => 'required',
+            //'district' => 'required',
             'number' => 'nullable',
             'city' => 'required',
             'state' => 'required',

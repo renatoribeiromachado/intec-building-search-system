@@ -61,14 +61,47 @@
                 <div class="row">
                     <div class="col-md-2 mb-2">
                         <label for="inputPassword4">Revisão</label>
-                        <input type="number" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $work->revision) }}">
+                        @if(auth()->guard('web')->user()->role_id == 3)
+                            <input type="text" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $work->revision) }}">
+                        @else
+                            <input type="text" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $work->revision) }}" readonly="">
+                        @endif
                         @error('revision')
                             <div class="invalid-feedback">
                                 {{ $errors->first('revision') }}
                             </div>
                         @enderror
                     </div>
-        
+                    
+                    <!--last_review revision-->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+                    <script>
+                        $(function () {
+                           let revisionChanged = false; // Variável de controle
+
+                           $("#last_review").datepicker({
+                               dateFormat: 'dd/mm/yy',
+                               onSelect: function (dateText, inst) {
+                                   if (!revisionChanged) {
+                                       const currentRevision = parseInt($("#revision").val());
+
+                                       if (!isNaN(currentRevision)) {
+                                           // Adicione 1 ao valor atual e atualize o campo de revisão
+                                           $("#revision").val(currentRevision + 1);
+                                           revisionChanged = true; // Defina a variável de controle como true
+                                       } else {
+                                           // Se o valor atual não for um número, defina como 1
+                                           $("#revision").val(1);
+                                           revisionChanged = true; // Defina a variável de controle como true
+                                       }
+                                   }
+                               }
+                           });
+                       });
+                    </script>
+                    
                     <div class="col-md-10 mb-2">
                         <label for="inputPassword4">Obra</label>
                         <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $work->name) }}" placeholder="">
@@ -377,7 +410,7 @@
 
         <div class="row mt-2">
             <div class="form-group col-md-3 mb-2">
-                <label for="inputPassword4">Área total do Projeto</label>
+                <label for="inputPassword4">Área total construída (m2)</label>
                 <input type="text" id="total_project_area" name="total_project_area" class="form-control @error('total_project_area') is-invalid @enderror" value="{{ old('total_project_area', $work->total_project_area) }}" placeholder="">
                 @error('total_project_area')
                     <div class="invalid-feedback">

@@ -710,7 +710,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Nome da Obra',
             'Valor do Investimento R$',
             'Padrão de investimento',
-            'Área Total do Projeto',
+            'Área total construída (m2)',
             'Endereço',
             'Nº',
             'Bairro',
