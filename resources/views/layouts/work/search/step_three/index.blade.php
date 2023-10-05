@@ -3,57 +3,59 @@
 @section('content')
 
 <style>
-    hr{border: 2px solid red !important;}
-    /*CSS para impressão*/
-    @media print {
-        .print{
-            display: block !important;
+        /* Estilo para remover a margem inferior das tabelas */
+        .remove-margin-bottom {
+            margin-bottom: 0;
         }
-        .no-print{
-            display: none;
+        .table-bordered {
+            border-color: #ff3b00 !important;
         }
-    }
-    body {
-        /* margin:0; */
-        /* padding:0; */
-        line-height: 1.4em;
-        padding-bottom: 70px;
-    }
-    @page {
-        margin: 0.5cm;
-    }
+        .small-font {
+            font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+        }
 
-    table{
-        border: none !important;
-    }
-    p{
-        /* font-size: 10px; */
-    }
-    tr{
-        background: white !important;
-        border: none !important;
-    }
-    th{
-        /* font-size: 10px; */
-        border: none !important;
-    }
-    td{
-        /* font-size: 10px; */
-        border: none !important;
-        padding: 0 !important;
-    }
-    .alinhadoDireita {
-        text-align:right;
-    }
+        body {
+            font-size: 14px; /* Defina o tamanho de fonte desejado, por exemplo, 12px */
+        }
 
-    .margin{
-        margin-top:-20px;
-    }
+        .h1 {
+            font-size: 18px !important; /* Por exemplo, aumente o tamanho do título em 150% */
+        }
+        .emp{
+             font-size:14px !important; 
+        }
+        
+        /*print*/
+        @@media print {
+            body {
+                font-size: 60% !important; /* Reduza o tamanho da fonte para 75% do tamanho original */
+            }
+            
+            .hidden{
+                display:none;
+            }
+            .emp{
+                font-size:10px !important;
+            }
 
-    .pg{
-        page-break-after: always;
-    }
-</style>
+            /* Defina as margens da página para ajustar o conteúdo na impressão */
+            @page {
+                size: A4; /* Escolha o tamanho de página desejado, como A4 */
+                margin: 1cm; /* Defina as margens da página conforme necessário */
+            }
+            .image-for-print {
+                max-width: 10% !important; /* Reduzirá a largura da imagem para ajustar à largura da página impressa */
+                height: auto; /* Mantém a proporção de aspecto da imagem */
+            }
+            .h1 {
+                font-size: 70% !important; /* Por exemplo, aumente o tamanho do título em 150% */
+            }
+            p{
+                line-height: 1.2 !important; 
+                margin-bottom: 1px;
+            }
+        }
+    </style>
 
 <div class="container pt-5">
     
@@ -62,7 +64,7 @@
         {{ session('success') }}
     </div>
     
-    <div class="row mt-2">
+    <div class="row mt-2 hidden">
         <div class="col-md-2">
             <a href="" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
         </div>
@@ -158,7 +160,7 @@
 
             <!--BOTÕES-->
             @can('ver-sig')
-                <div class="row mt-2">
+                <div class="row mt-2 hidden">
                     <div class="col-md-4">
                         <button class="btn btn-primary text-white" type='button' onclick='fncXMHide("info-{{ $work->id }}")' title="DESATIVAR OBRA"> <i class="fa fa-eye"></i> Desativar</button>
 
@@ -391,9 +393,9 @@
                         @endforeach
 
                         @if ($contactBelongsToWork)
-                            <div class="col-md-3 pt-3"> 
+                            <div class="col-4 col-md-3 pt-3"> 
                                 <div class="card p-2">
-                                    <div class="card-header bg-secondary text-white" style="font-size:14px !important;">
+                                    <div class="card-header bg-secondary text-white emp">
                                         <strong>EMPRESA: {{ $contactCompany->trading_name }}</strong>
                                     </div>
                                     <strong>Nome:</strong> {{ $contact->name }}<br>
@@ -507,7 +509,7 @@
                             </div>
                             @foreach ($company->contacts()->where('contacts.archived', false)->get() as $workCompanyContact)
                                 @if($workCompanyContact)
-                                    <div class="col-md-3 pt-3">
+                                    <div class="col-4 col-md-3 pt-3">
                                         <div class="card p-2">
                                             <strong>Nome:</strong> {{ $workCompanyContact->name }} <br>
                                             <strong>Cargo:</strong> {{ optional($workCompanyContact->position)->description }} <br>
