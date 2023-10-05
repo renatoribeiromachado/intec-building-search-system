@@ -25,6 +25,7 @@ class City extends Model
         return self::select("*")
             ->select('id', 'description')
             ->where('state_id', $state->id)
+            ->orderBy('description')
             ->get();
     }
 
