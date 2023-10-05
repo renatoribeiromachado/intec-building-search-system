@@ -2,10 +2,11 @@
 
 @section('content')
 
+<div class="container">
     <div class="bg-light p-5 rounded">
-        <h1>LISTA DE EMPRESAS</h1>
+        <h3>FILTRO DE EMPRESAS</h3>
 
-        <div>
+        <div class="mt-4 p-5 text-black rounded" style="background: #e0e0e0;">
             <form action="{{ route('company.index') }}" method="get">
                 <div class="row mb-3">
                     <div class="form-group col">
@@ -36,7 +37,7 @@
                             class="btn btn-warning btn mt-4"
                             title="Limpar a pesquisa"
                             >
-                            <i class="fa fa-eraser"></i> Limpar
+                            <i class="fa fa-eraser"></i>
                         </a>
                     </div>
                 </div>
@@ -82,118 +83,123 @@
             @endcan
         </div>
 
-        <div class="">
-            <a class="btn btn-primary float-end"
-                href="{{ route('company.create') }}"
-                >
-                Novo Cadastro
-            </a>
+        <div class="row mt-3 mb-2">
+            <div class="col">
+                <a class="btn btn-primary float-end"
+                    href="{{ route('company.create') }}"
+                    >
+                    Novo Cadastro
+                </a
+            </div>
         </div>
 
         @include('layouts.alerts.all-errors')
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">CNPJ</th>
-                    <th scope="col">Razão Social</th>
-                    <th scope="col">Nome Fantasia</th>
-                    <th scope="col">Atividade</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($companies as $company)
+        <div class="table-responsive mt-4">
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">{{ $company->id }}</th>
-                        <td>{{ $company->cnpj }}</td>
-                        <td>{{ $company->company_name }}</td>
-                        <td>{{ $company->trading_name }}</td>
-                        <td>{{ optional($company->activityField)->description }}</td>
-                        <td>{{ $company->city }}</td>
-                        <td style="width: 15%;">
-                            <a
-                                href="{{ route('company.edit', $company->id) }}"
-                                class="btn btn-sm btn-outline-success me-1 mb-2"
-                                >
-                                Editar
-                            </a>
-
-                            @can('excluir-empresa')
+                        <th scope="col">#</th>
+                        <th scope="col">CNPJ</th>
+                        <th scope="col">Razão Social</th>
+                        <th scope="col">Nome Fantasia</th>
+                        <th scope="col">Atividade</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($companies as $company)
+                        <tr>
+                            <th scope="row">{{ $company->id }}</th>
+                            <td>{{ $company->cnpj }}</td>
+                            <td>{{ $company->company_name }}</td>
+                            <td>{{ $company->trading_name }}</td>
+                            <td>{{ optional($company->activityField)->description }}</td>
+                            <td>{{ $company->city }}</td>
+                            <td style="width: 15%;">
                                 <a
-                                    href="#"
-                                    class="btn btn-sm btn-outline-danger mb-2"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop{{$loop->index}}"
+                                    href="{{ route('company.edit', $company->id) }}"
+                                    class="btn btn-sm btn-outline-success me-1 mb-2"
                                     >
-                                    Excluir
+                                    Editar
                                 </a>
 
-                                <!-- Modal -->
-                                <div class="modal fade"
-                                    id="staticBackdrop{{$loop->index}}"
-                                    data-bs-backdrop="static"
-                                    data-bs-keyboard="false"
-                                    tabindex="-1"
-                                    aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true"
-                                    >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Excluir Registro</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
+                                @can('excluir-empresa')
+                                    <a
+                                        href="#"
+                                        class="btn btn-sm btn-outline-danger mb-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{$loop->index}}"
+                                        >
+                                        Excluir
+                                    </a>
 
-                                            <div class="modal-body">
-                                                <div class="text-center">
-                                                    Tem certeza que deseja excluir o registro da empresa: <br>
-                                                    <strong class="text-danger">{{ $company->company_name }}</strong>?
+                                    <!-- Modal -->
+                                    <div class="modal fade"
+                                        id="staticBackdrop{{$loop->index}}"
+                                        data-bs-backdrop="static"
+                                        data-bs-keyboard="false"
+                                        tabindex="-1"
+                                        aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true"
+                                        >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Excluir Registro</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="text-center">
+                                                        Tem certeza que deseja excluir o registro da empresa: <br>
+                                                        <strong class="text-danger">{{ $company->company_name }}</strong>?
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button"
+                                                        class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal"
+                                                        >
+                                                        Fechar
+                                                    </button>
+
+                                                    <form action="{{ route('company.destroy', $company->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-outline-danger"
+                                                            >
+                                                            Deletar
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button"
-                                                    class="btn btn-outline-secondary"
-                                                    data-bs-dismiss="modal"
-                                                    >
-                                                    Fechar
-                                                </button>
-
-                                                <form action="{{ route('company.destroy', $company->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-
-                                                    <button
-                                                        type="submit"
-                                                        class="btn btn-outline-danger"
-                                                        >
-                                                        Deletar
-                                                    </button>
-                                                </form>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div><!-- End the Modal -->
-                            @endcan
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6">
-                            <p class="text-center mb-0 py-4">
-                                Nenhum registro encontrado.
-                            </p>
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
+                                    </div><!-- End the Modal -->
+                                @endcan
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6">
+                                <p class="text-center mb-0 py-4">
+                                    Nenhum registro encontrado.
+                                </p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        
         <div>
             {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
+</div>
 @endsection

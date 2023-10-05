@@ -1,9 +1,9 @@
 @extends('layouts.app_customer')
 
 @section('content')
-
+<div class="container">
     <div class="bg-light p-5 rounded mb-5">
-        <h1>EDIÇÃO DE EMPRESA</h1>
+        <h3>EDIÇÃO DE EMPRESA</h3>
 
         <form action="{{ route('company.update', $company->id) }}" method="POST" role="form">
             @csrf
@@ -146,4 +146,5 @@
         </div>
 
     </div>
+</div>
 @endsection
