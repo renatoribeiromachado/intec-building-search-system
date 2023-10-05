@@ -3,6 +3,39 @@
 @section('content')
 
 <style>
+        hr{border: 2px solid red !important;}
+        
+        table{
+            border: none !important;
+        }
+        p{
+            /* font-size: 10px; */
+        }
+        tr{
+            background: white !important;
+            border: none !important;
+        }
+        th{
+            /* font-size: 10px; */
+            border: none !important;
+        }
+        td{
+            /* font-size: 10px; */
+            border: none !important;
+            padding: 0 !important;
+        }
+        .alinhadoDireita {
+            text-align:right;
+        }
+
+        .margin{
+            margin-top:-20px;
+        }
+
+        .pg{
+            page-break-after: always;
+        }
+        
         /* Estilo para remover a margem inferior das tabelas */
         .remove-margin-bottom {
             margin-bottom: 0;
@@ -16,6 +49,8 @@
 
         body {
             font-size: 14px; /* Defina o tamanho de fonte desejado, por exemplo, 12px */
+            line-height: 1.4em;
+            padding-bottom: 70px;
         }
 
         .h1 {
