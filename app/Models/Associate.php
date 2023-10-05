@@ -40,6 +40,13 @@ class Associate extends Model
         if (request()->search_old_code) {
             $associate = $associate->where('old_code', request()->search_old_code);
         }
+        
+        /*REnato Machado - 05/10/2023*/
+        if (request()->search_order) {
+            $associate = $associate->whereHas('company.orders', function ($query) {
+                $query->where('old_code', request()->search_order);
+            });
+        }
 
         if (request()->search_cnpj) {
             $associate = $associate
@@ -70,6 +77,8 @@ class Associate extends Model
     {
         return $this->belongsTo(Company::class);
     }
+    
+    
 
     public function salesperson()
     {
