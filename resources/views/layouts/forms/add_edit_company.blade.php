@@ -302,7 +302,7 @@
                     <label for="last_review">Atualização</label>
                     <input
                         type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror"
-                        value="{{ old('last_review', optional($company->last_review)->format('d/m/Y')) }}"
+                        value="{{ old('last_review', optional($company->last_review)->format('d/m/Y')) }}" readonly=""
                         placeholder="">
                     @error('last_review')
                         <div class="invalid-feedback">

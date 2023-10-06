@@ -19,7 +19,7 @@
 
                     <div class="col-md-3 mb-2">
                         <label for="inputPassword4">Data de Atualização</label>
-                        <input type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="">
+                        <input type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror" value="{{ old('last_review', optional($work->last_review)->format('d/m/Y')) }}" placeholder="" readonly="">
                         @error('last_review')
                             <div class="invalid-feedback">
                                 {{ $errors->first('last_review') }}
