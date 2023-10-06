@@ -482,7 +482,11 @@
             <div class="row mt-2">
                 <div class="col-md-12">
                     <p class="boxtitle text-success"><strong>EMPRESA(s) PARTICIPANTE(s)</strong></p>
-                    @foreach ((new \App\Models\Work)->find($work->id)->companies as $company)
+                    @foreach (
+                            (new \App\Models\Work)->find($work->id)->companies->sortBy(function ($company) {
+                                return $company->activity_field_id != 2;
+                            }) as $company
+                        )
                         <table class="table table-condensed">
                             <tbody>
                                 <tr>
