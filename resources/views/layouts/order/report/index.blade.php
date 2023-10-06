@@ -68,18 +68,14 @@
                     </th>
                 </tr>
                 <tr>
-                    
-                       <td class="text-center h1">
-    @if($order->company->associate->linked_company == "36.622.261/0001-90")
-        <strong>CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
-    @else
-        <strong>INTEC INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
-    @endif
-    {{ $order->company->associate->linked_company }}
-</td>
-
-                       
-                    
+                    <td class="text-center h1">
+                         @if($order->company->associate->linked_company == "36.622.261/0001-90")
+                             <strong>CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
+                         @else
+                             <strong>INTEC INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
+                         @endif
+                         {{ $order->company->associate->linked_company }}
+                     </td>
                 </tr>
                 <tr>
                     <th class="text-center h1">
@@ -154,7 +150,7 @@
                 <tr>
                     <td>
                         <strong>Endereço:</strong>
-                        {{ $order->company->address }}
+                        {{ $order->company->address }}, {{ $order->company->number }}
                     </td>
                     <td>
                         <strong>Bairro:</strong>
