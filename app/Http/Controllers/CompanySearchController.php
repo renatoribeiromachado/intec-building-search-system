@@ -11,6 +11,7 @@ use App\Models\SegmentSubType;
 use App\Models\State;
 use App\Models\Sig;
 use App\Models\SigCompany;
+use App\Models\Researcher;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,7 @@ class CompanySearchController extends Controller
         Company $company,
         State $state,
         City $city,
+        Researcher $researcher,
         SegmentSubType $segmentSubType,
         SigCompany $sigCompany
     ) {
@@ -47,6 +49,7 @@ class CompanySearchController extends Controller
         $this->company = $company;
         $this->state = $state;
         $this->city = $city;
+        $this->researcher = $researcher;
         $this->segmentSubType = $segmentSubType;
         $this->sigCompany = $sigCompany;
     }
@@ -54,6 +57,8 @@ class CompanySearchController extends Controller
     public function showCompanySearchStepOne()
     {
         $this->resetCompaniesSession();
+        
+        $researchers = $this->researcher->get();//Renato machado 10/10/2023
 
         $activityFields = $this->activityField
             ->select('id', 'description')
@@ -128,6 +133,7 @@ class CompanySearchController extends Controller
             'activityFields',
             'statesOne',
             'statesTwo',
+            'researchers',
             'statesThree',
             'statesFour',
             'statesFive',
@@ -276,6 +282,7 @@ class CompanySearchController extends Controller
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
         $homePage = $request->home_page;
+        $researcher = $request->researcher_id;//Renato Machado 10/10/2023
 
         // State filter
         $allStateIds = null;
@@ -430,6 +437,13 @@ class CompanySearchController extends Controller
             $companies = $companies->whereBetween(
                 'companies.last_review', [$dataFilterStartsAtFinal, $dataFilterEndsAtFinal]
             );
+        }
+        
+        if ($researcher) {
+            $companies = $companies
+            ->join('company_researcher as cr', 'cr.company_id', '=', 'companies.id')
+            ->join('researchers as r', 'r.id', '=', 'cr.researcher_id')
+            ->where('cr.researcher_id', '=', $researcher);
         }
 
         return $companies->paginate(self::REGISTRIES_PER_PAGE);

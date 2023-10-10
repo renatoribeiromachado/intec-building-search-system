@@ -234,6 +234,21 @@
                                 />
                             </div>
                         </div>
+                        
+                        @can('ver-filtro-pesquisador-empresas')
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label class="control-label"> Pesquisador</label>
+                                    <select name="researcher_id" class="form-select form-group">
+                                        <option value="0">-- Selecione --</option>
+                                        @foreach($researchers as $researcher)
+                                            <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
+                        
                     </div>
 
                     <div class="col-md-6">
@@ -354,6 +369,7 @@
                 </div>
 
                 <div class="row mt-4 pb-4">
+                    
                     {{-- <div class="col-md-3">
                         <label class="control-label">
                             <i class="fa fa-search"></i>

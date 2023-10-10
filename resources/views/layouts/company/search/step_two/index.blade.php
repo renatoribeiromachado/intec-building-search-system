@@ -96,6 +96,12 @@
                 name="search_1"
                 value="{{ request()->search }}">
             
+            <input
+                type="hidden"
+                id="researcher_id_1"
+                name="researcher_id_1"
+                value="{{ request()->researcher_id }}">
+            
             @foreach ($statesChecked as $stateChecked)
             <input type="hidden" name="states[]" value="{{ $stateChecked }}">
             @endforeach
