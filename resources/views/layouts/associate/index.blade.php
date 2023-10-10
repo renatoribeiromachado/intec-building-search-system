@@ -111,6 +111,15 @@
         <div class="row mt-3 mb-2">
             <div class="col">
                 <a
+                    href="{{ route('associate.export') }}"
+                    class="btn btn-success float-start"
+                    title="Exportar Excel (Associado)"
+                    >
+                    <i class="fa fa-ok"></i>
+                    Exportar Excel
+                </a>
+                
+                <a
                     href="{{ route('associate.create') }}"
                     class="btn btn-primary float-end"
                     title="Cadastrar Novo Cliente (Associado)"

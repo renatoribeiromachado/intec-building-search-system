@@ -319,6 +319,7 @@ class CompanySearchController extends Controller
         $companies = $this->company
             ->leftJoin('associates', 'companies.id', '=', 'associates.company_id')
             ->whereNull('associates.company_id')
+            ->where('companies.is_active', '!=', 0) 
             ->select('companies.*');
 
 

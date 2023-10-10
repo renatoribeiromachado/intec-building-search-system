@@ -20,6 +20,8 @@ use App\Traits\ContactActionsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Exports\AssociatesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AssociateController extends Controller
 {
@@ -84,6 +86,17 @@ class AssociateController extends Controller
             'associates',
         ));
     }
+    
+    /**
+     * Função apra exportar com excel * 12/08/2023 - Renato Machado
+     */
+    public function export()
+    {
+        $associatesExport = new AssociatesExport();
+
+        return Excel::download($associatesExport, 'associados.xlsx');
+    }
+
 
     public function create()
     {

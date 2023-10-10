@@ -359,6 +359,7 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
         Route::post('store', [AssociateController::class, 'store'])->name('associate.store');
         Route::get('edit/{associate}', [AssociateController::class, 'edit'])->name('associate.edit');
         Route::put('{associate}', [AssociateController::class, 'update'])->name('associate.update');
+        Route::get('export', [AssociateController::class, 'export'])->name('associate.export');
 
         // Add / Edit contact
         Route::post(
