@@ -219,6 +219,7 @@ class AssociateController extends Controller
         $company = $associate->company;
         $contacts = $company->contacts()
             ->whereDoesntHave('user')
+            ->orderBy('contacts.name', 'asc')
             ->get();
 
         $associates = $company->contacts()

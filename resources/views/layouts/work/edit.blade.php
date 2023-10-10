@@ -192,8 +192,10 @@
                                                         @foreach (
                                                             $work->companyContacts()
                                                                 ->where('contact_work.company_id', $company->id)
+                                                                ->orderBy('name', 'asc')
                                                                 ->get() as $workCompanyContact
-                                                            )
+                                                        )
+
 
                                                             <div class="col intec-contact-wrapper">
                                                                 @if ($workCompanyContact->name)

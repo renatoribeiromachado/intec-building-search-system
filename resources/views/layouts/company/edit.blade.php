@@ -42,7 +42,7 @@
                 <h2 class="mb-4">Contatos</h2>
                 <div class="row">
                     <a class="invisible" name="contacts-section"></a>
-                    @foreach ($company->contacts()->where('contacts.archived', false)->get() as $contact)
+                    @foreach ($company->contacts()->where('contacts.archived', false)->orderBy('name', 'asc')->get() as $contact)
                         <div class="col-3 mb-3">
                             <div class="card rounded-3" style="width: 18rem;">
                                 <div class="card-body">
