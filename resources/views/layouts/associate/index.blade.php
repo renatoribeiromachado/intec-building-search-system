@@ -110,14 +110,16 @@
         
         <div class="row mt-3 mb-2">
             <div class="col">
-                <a
-                    href="{{ route('associate.export') }}"
-                    class="btn btn-success float-start"
-                    title="Exportar Excel (Associado)"
-                    >
-                    <i class="fa fa-ok"></i>
-                    Exportar Excel
-                </a>
+                @can('ver-excel-associados')
+                    <a
+                        href="{{ route('associate.export') }}"
+                        class="btn btn-success float-start"
+                        title="Exportar Excel (Associado)"
+                        >
+                        <i class="fa fa-ok"></i>
+                        Exportar Excel
+                    </a>
+                @endcan
                 
                 <a
                     href="{{ route('associate.create') }}"
