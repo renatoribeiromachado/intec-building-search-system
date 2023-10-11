@@ -411,7 +411,7 @@
                     <p class="boxtitle text-success"><strong>CONTATO(s) DA OBRA</strong></p>
                 </div>
                 <div class="row mb-2">
-                    @foreach ((new \App\Models\Work)->find($work->id)->contacts as $contact)
+                    @foreach ((new \App\Models\Work)->find($work->id)->contacts->sortBy('name') as $contact)
                         @php
                             $workCompanies = (new \App\Models\Work)->find($work->id)->companies;
                             $contactBelongsToWork = false;
@@ -546,7 +546,7 @@
                             <div class='col-md-12'>
                                 <p><strong>Contato(s)</strong></p>
                             </div>
-                            @foreach ($company->contacts()->where('contacts.archived', false)->get() as $workCompanyContact)
+                            @foreach ($company->contacts()->where('contacts.archived', false)->orderBy('name','asc')->get() as $workCompanyContact)
                                 @if($workCompanyContact)
                                     <div class="col-4 col-md-3 pt-3">
                                         <div class="card p-2">

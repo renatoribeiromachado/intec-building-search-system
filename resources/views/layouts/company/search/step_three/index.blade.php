@@ -235,7 +235,7 @@
                             </td>
                         </tr>
                         
-                        @foreach($company->contacts as $contact)
+                        @foreach($company->contacts->sortBy('name') as $contact)
                             <tr>
                                 <td class="pt-3">
                                     <strong>Contato:</strong> {{ $contact->name }}<br>
