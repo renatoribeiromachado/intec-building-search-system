@@ -684,4 +684,87 @@ class WorkSearchController extends Controller
 
         return response()->json($companies);
     }
+    
+    /*Pegando os dados da pesquisa - Renato Machado 11/10/2023*/
+    public function showWorkSearchSavedView(Request $request)
+    {
+        
+        $authUser = Auth::user();
+        $this->authorize('salvar-pesquisa');
+
+        
+        $works = $this->getFilteredWorks($request);
+        $worksChecked = session($this->worksSessionName);
+        $currentPage = is_null($request->page) ? 1 : $request->page;
+        $btnExistsInSession = session()->has('btnSelectAll');
+        $statuses = Sig::STATUSES;
+        $priorities = Sig::PRIORITIES;
+        $loggedUser = Auth::user();
+
+        $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
+            ? session('btnSelectAll')['clicked_in_page']
+            : $currentPage;
+
+        $inputPageOfPagination = $currentPage;
+
+        $inputSelectAll = $btnExistsInSession
+            ? session('btnSelectAll')['btn_clicked']
+            : 0;
+        
+        $statesChecked = [];
+        if (! is_null(request()->states)) {
+            request()->session()->put($this->statesSessionName, request()->states);
+            $statesChecked = session($this->statesSessionName);
+        }
+        
+        $segmentSubTypesChecked = [];
+        if (! is_null(request()->segment_sub_types)) {
+            request()->session()->put($this->segmentSubTypesSessionName, request()->segment_sub_types);
+            $segmentSubTypesChecked = session($this->segmentSubTypesSessionName);
+        }
+        
+        $stagesChecked = [];
+        if (! is_null(request()->stages)) {
+            request()->session()->put($this->stagesSessionName, request()->stages);
+            $stagesChecked = session($this->stagesSessionName);
+        }
+
+        $work2 = null;
+        foreach($works as $work) {
+            $work2 = $this->work->findOrFail($work->id);
+            if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+                $lastSigStatus = optional($work2->sigs()
+                    ->where('associate_id', $authUser->contact->company->associate->id)
+                    ->get()->last())->status;
+                $work->last_sig_status = $lastSigStatus;
+            }else{
+                $lastSigStatus = optional($work2->sigs()
+                    ->where('user_id', '=', $loggedUser->id)
+                    ->get()->last())->status;
+                $work->last_sig_status = $lastSigStatus;
+            }
+        }
+
+        $searchParams = $request->query();
+        
+        return view('layouts.work.search.saved.index', compact(
+            'works',
+            'worksChecked',
+            'statesChecked',
+            'segmentSubTypesChecked',
+            'stagesChecked',
+            'clickedInPage',
+            'inputPageOfPagination',
+            'inputSelectAll',
+            'statuses',
+            'priorities',
+            'searchParams'
+        ));
+    }
+
+    /*Salvando pesquisa - Renato Machado 11/10/2023*/
+    public function showWorkSearchSaved()
+    {
+        dd('aqui');
+    }
 }

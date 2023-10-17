@@ -613,20 +613,28 @@
                 <div class="row mt-4 pb-4">
 
                     <!--PESQUISAS SALVAS-->
-                    {{-- <div class="col-md-3">
-                        <label class="control-label"> <i class="fa fa-search"></i> <strong>Pesquisa(s) Salva(s)</strong></label>
-                        <select name="" id="selecao" class="form-select">
-                            <option value="0">-- Selecione --</option>
-                        </select>
-                    </div> --}}
+                    @can('salvar-pesquisa')
+                        <div class="col-md-3">
+                             <label class="control-label">
+                                 <i class="fa fa-search"></i>
+                                 <strong>Pesquisa(s) Salva(s)</strong>
+                             </label>
+                             <select name id="selecao" class="form-select">
+                                 <option value="0">-- Selecione --</option>
+                             </select>
+                         </div>
+                    @endcan
 
                     <!--PESQUISAS DELETAR-->
-                    {{-- <div class="col-md-3">
-                        <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
-                        <select name="" id="delete" class="form-select">
-                            <option value="0">Selecione - Delete automatico</option>
-                        </select>
-                    </div> --}}
+                    @can('salvar-pesquisa')
+                        <div class="col-md-3">
+                            <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
+                            <select name="" id="delete" class="form-select">
+                                <option value="0">Selecione - Delete automatico</option>
+                            </select>
+                        </div>
+                    @endcan
+                    
 
                     <!--ORDENAÇÃO-->
                     {{-- <div class="col-md-3">
@@ -644,24 +652,35 @@
                     <div class="col-md-3">
                         <label class="control-label"> <strong>Ação</strong></label>
                         <br>
-                        {{--
-                        <button
-                            type="submit"
-                            class="btn btn-primary create"
-                            title="Salvar Pesquisa"
-                            value="1"
-                            onclick="Acao('');"
-                            >
-                            <i class="fa fa-search"></i> Salvar Pesquisa
-                        </button>
-                        --}}
-                        <button type="submit" class="btn btn-success submit" title="Pesquisar">
+                        @can('salvar-pesquisa')
+                            <button type="submit" class="btn btn-primary submit" title="Pesquisar" id="salvar-pesquisa">
+                                <i class="fa fa-search"></i> Salvar Pesquisa
+                            </button>
+                        @endcan
+                        
+                        <button type="submit" class="btn btn-success submit" title="Pesquisar" id="pesquisar">
                             <i class="fa fa-search"></i> Pesquisar
                         </button>
                     </div>
                 </div>
             </form>
         </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Adicione um ouvinte de evento de clique ao botão "Salvar Pesquisa"
+                document.getElementById('salvar-pesquisa').addEventListener('click', function() {
+                    // Redireciona o formulário para a rota desejada
+                    document.getElementById('formulario').action = "{{ route('work.search.saved-view') }}";
+                });
+
+                // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
+                document.getElementById('pesquisar').addEventListener('click', function() {
+                    // Redireciona o formulário para a rota desejada
+                    document.getElementById('formulario').action = "{{ route('work.search.step_two.index') }}";
+                });
+            });
+        </script>
     </div>
 @endsection
 

@@ -343,6 +343,10 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
             'search/step-3',
             [WorkSearchController::class, 'showWorkSearchStepThree']
         )->name('work.search.step_three.index');
+        
+        /*Salvando pesquisa - Renato Machado - 11/10/2023*/
+        Route::get('search/savedView',[WorkSearchController::class, 'showWorkSearchSavedView'])->name('work.search.saved-view');
+        Route::post('search/saved',[WorkSearchController::class, 'showWorkSearchSaved'])->name('work.search.saved');
 
         Route::get('export-works', [WorkSearchController::class, 'export'])->name('work.search.export');
         /*auto-complete Obras/empresa (Fantasia) - Renato machado 30/08/2023*/

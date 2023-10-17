@@ -370,15 +370,17 @@
 
                 <div class="row mt-4 pb-4">
                     
-                    {{-- <div class="col-md-3">
-                        <label class="control-label">
-                            <i class="fa fa-search"></i>
-                            <strong>Pesquisa(s) Salva(s)</strong>
-                        </label>
-                        <select name id="selecao" class="form-select">
-                            <option value="0">-- Selecione --</option>
-                        </select>
-                    </div> --}}
+                    @can('salvar-pesquisa')
+                        <div class="col-md-3">
+                             <label class="control-label">
+                                 <i class="fa fa-search"></i>
+                                 <strong>Pesquisa(s) Salva(s)</strong>
+                             </label>
+                             <select name id="selecao" class="form-select">
+                                 <option value="0">-- Selecione --</option>
+                             </select>
+                         </div>
+                    @endcan
 
                     {{-- <div class="col-md-3">
                         <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
