@@ -119,7 +119,6 @@ class SigController extends Controller
     public function report(Request $request)
     {
         
-        
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
@@ -238,6 +237,125 @@ class SigController extends Controller
             'reports' => $reports,
             'statuses' => $statuses,
             'priorities' => $priorities
+        ]);
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreWorkRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function summary(Request $request)
+    {
+
+        $authUser = Auth::user();
+        //dd($authUser->contact->company->associate->id);
+        $query = $this->sig->select(
+            'id','associate_id','user_id', 'work_id', 'appointment_date',
+            'created_at', 'priority', 'status','notes'
+        );
+        
+        /*Se o ACL role = associado-gestora for diferentedo autenticado (false) 
+         * ou não for autenticado como associado-gestora (false) authUserIsAnAssociate() 
+         * vera os sigs pelo user_id autenticado
+        */
+        if ($authUser->role->slug == Associate::ASSOCIATE_USER || (! authUserIsAnAssociate())) {
+            $query = $query->where('user_id', $authUser->id);
+        }
+        
+        /*Usuarios*/
+        $reporters = $request->reporters;
+        if ($reporters) {
+            $query->whereIn('sigs.user_id', $reporters);
+        }
+
+        $reports = null;
+
+        if ($authUser->contact && $authUser->contact->company && $authUser->contact->company->associate) {
+            $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
+        } else {
+            $reports = $query->get();
+        }
+
+        $statusCounts = [];
+        
+        $priorityFilter = $request->priority;
+        $appointmentDateFilter = $request->appointment_date;
+        $statusFilter = $request->status; 
+        $startDate = !empty($startDate) ? Carbon::createFromFormat('d/m/Y', $startDate)->startOfDay() : null;
+        $endDate = !empty($endDate) ? Carbon::createFromFormat('d/m/Y', $endDate)->endOfDay() : null;
+
+        foreach ($reports as $report) {
+            $id = $report->id;
+            $status = $report->status;
+            $userId = $report->user_id;
+            $workId = $report->work->old_code;
+            $userName = $report->user->name;
+            $appointmentDate = Carbon::parse($report->appointment_date);
+            $createdDate = Carbon::parse($report->created_at);
+            $notes = $report->notes;
+            $priority = $report->priority;
+            
+            // Converta a data de agendamento do relatório para o formato Y-m-d
+            $appointmentDateFormatted = $appointmentDate->format('Y-m-d');
+            $appointmentDateFormattedFilter = !empty($appointmentDateFilter) ? Carbon::createFromFormat('d/m/Y', $appointmentDateFilter)->format('Y-m-d') : null;
+
+            // Verifique se a prioridade, a data de agendamento, o status e as datas de criação correspondem
+            if (
+                ($priority == $priorityFilter || empty($priorityFilter)) &&
+                (is_null($appointmentDateFormattedFilter) || $appointmentDateFormatted === $appointmentDateFormattedFilter || empty($appointmentDateFilter)) &&
+                ($status == $statusFilter || empty($statusFilter)) &&
+                (
+                    (is_null($startDate) && is_null($endDate)) || // Se ambas as datas de início e término estiverem vazias, não filtrar por data de criação
+                    (
+                        (is_null($startDate) || $createdDate >= $startDate) && // Verifica a data de início, se fornecida
+                        (is_null($endDate) || $createdDate <= $endDate) // Verifica a data de término, se fornecida
+                    )
+                )
+            ) {
+                if (!isset($statusCounts[$userId])) {
+                    $statusCounts[$userId] = [
+                        'user_name' => $userName,
+                        'appointments' => [],
+                    ];
+                }
+
+                if (!isset($statusCounts[$userId]['appointments'][$appointmentDateFormatted])) {
+                    $statusCounts[$userId]['appointments'][$appointmentDateFormatted] = [
+                        'status' => [],
+                        'work_ids' => [],
+                        'work_notes' => [], // Incluímos um array para armazenar as notas.
+                        'ids' => [], // Incluímos um array para armazenar os IDs dos relatórios.
+                    ];
+                }
+
+                if (!isset($statusCounts[$userId]['appointments'][$appointmentDateFormatted]['status'][$status])) {
+                    $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['status'][$status] = 1;
+                } else {
+                    $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['status'][$status]++;
+                }
+
+                // Adicione o ID do relatório à lista associada a esta data de agendamento e status.
+                $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['ids'][$status][] = $id;
+
+                $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_ids'][$status][] = $workId;
+
+                // Adicione as notas à lista associada a esta data de agendamento e status.
+                $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_notes'][$status][] = $notes;
+            }
+        }
+
+        /*Associado Gestor pode ver todos usuarios da empresa a que pertence*/
+        if($authUser->role->slug == Associate::ASSOCIATE_USER || (! authUserIsAnAssociate())){
+          $reports = $query->get();  
+        }else{
+            $reports = $query->where('associate_id', $authUser->contact->company->associate->id)->get();
+        }
+
+        return view('layouts.sig_works.report.summary', [
+            'reports' => $reports,
+            'statusCounts' => $statusCounts
         ]);
     }
     

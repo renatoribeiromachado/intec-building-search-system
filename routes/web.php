@@ -276,6 +276,7 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     Route::put('sig', [SigController::class, 'update'])->name('sig.update');
     Route::delete('sig/{id}', [SigController::class, 'destroy'])->name('sig.destroy');
     Route::get('sig-works/report', [SigController::class, 'report'])->name('sig_works.report');
+    Route::get('sig-works/summary', [SigController::class, 'summary'])->name('sig_works.summary');
     /*Enviar email obras*/
     Route::post('/send-email-obra', [EmailWorkController::class, 'sendEmailWork'])->name('send.email-obra');
     
