@@ -48,8 +48,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
 
         $sql = "SELECT 
                 w.id, 
-                w.name 
-                as work, 
+                w.name as work, 
                 c.name, 
                 c.email,
                 c.secondary_email,
@@ -65,12 +64,14 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 p.description as position,
                 cp.trading_name AS fantasy,
                 cp.cnpj
-                FROM works w 
-                JOIN contact_work cw ON cw.work_id = w.id
-                LEFT JOIN contacts c ON c.id = cw.contact_id
-                JOIN positions p ON p.id = c.position_id
-                JOIN companies cp ON cp.id = c.company_id
-                WHERE w.id = $data";
+            FROM works w 
+            JOIN contact_work cw ON cw.work_id = w.id
+            LEFT JOIN contacts c ON c.id = cw.contact_id
+            JOIN positions p ON p.id = c.position_id
+            JOIN companies cp ON cp.id = c.company_id
+            WHERE w.id = $data
+            ORDER BY w.last_review DESC, w.name ASC
+            ";
         
         $results = \DB::select($sql);
 
@@ -113,7 +114,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 JOIN works w ON w.id = cw.work_id
                 JOIN activity_field_work afw ON afw.company_id = cp.id
                 JOIN activity_fields af ON af.id = afw.activity_field_id
-                WHERE afw.work_id = $data";
+                WHERE afw.work_id = $data ORDER BY w.last_review DESC";
 
         $results = \DB::select($sql);
 
@@ -201,12 +202,16 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'phases.description AS phase_description',
                 'stages.description AS stage_description',
                 'segments.description AS segment_description',
+                'segments.background AS segment_background',
                 'segment_sub_types.description AS segment_sub_type_description',
             )
             ->join('phases', 'works.phase_id', '=', 'phases.id')
             ->join('stages', 'works.stage_id', '=', 'stages.id')
             ->join('segments', 'works.segment_id', '=', 'segments.id')
-            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id');
+            ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id')
+            ->where('works.status', '!=', 0) 
+            ->orderBy('last_review', 'desc')
+            ->orderBy('name', 'asc');
 
         if ($search) {
             $works = $works->whereHas('companies', function ($q) use ($search) {

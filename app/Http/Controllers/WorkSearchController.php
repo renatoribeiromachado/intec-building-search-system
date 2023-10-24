@@ -388,7 +388,8 @@ class WorkSearchController extends Controller
             ->join('segments', 'works.segment_id', '=', 'segments.id')
             ->join('segment_sub_types', 'works.segment_sub_type_id', '=', 'segment_sub_types.id')
             ->where('works.status', '!=', 0) 
-            ->orderBy('last_review', 'desc');
+            ->orderBy('last_review', 'desc')
+            ->orderBy('name', 'asc');
 
         
         /*Empresa participante*/
