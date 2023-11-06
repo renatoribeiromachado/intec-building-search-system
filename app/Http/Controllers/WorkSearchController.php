@@ -518,10 +518,10 @@ class WorkSearchController extends Controller
             $price = str_replace(['.', ','], ['', '.'], $price);
 
             $works = $works->where(function($query) use ($qi, $price) {
-                if ($qi == '>') {
-                    $query->where('works.price', '>', $price);
-                } elseif ($qi == '<') {
-                    $query->where('works.price', '<', $price);
+                if ($qi == '>=') {
+                    $query->where('works.price', '>=', $price);
+                } elseif ($qi == '<=') {
+                    $query->where('works.price', '<=', $price);
                 }
             });
         }
