@@ -122,6 +122,7 @@ class SigController extends Controller
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $authUser = Auth::user();
+        
         $query = $this->sig->select(
             'id','associate_id','user_id', 'work_id', 'appointment_date',
             'created_at', 'priority', 'status','notes'

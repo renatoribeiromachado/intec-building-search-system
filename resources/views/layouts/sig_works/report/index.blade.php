@@ -23,46 +23,49 @@
                     <tbody>
                         @forelse($reports as $report)
                             <tr>
-                                <td>
-                                    {{ $report->created_at->format('d/m/Y') }}
+                                <td>{{ $report->created_at->format('d/m/Y') }}</td>
+                                <td>{{ optional($report->appointment_date)->format('d/m/Y') }}</td>
+                                <td class="text-primary">
+                                    @if ($report->work)
+                                        {{ $report->work->old_code }}
+                                    @else
+                                    <p>{{ $report->work_id }} - Essa obra foi deletada da plataforma</p>
+                                    @endif
                                 </td>
-                                <td>
-                                    {{ optional($report->appointment_date)->format('d/m/Y') }}
-                                </td>
-                                <td class="text-primary">{{ $report->work->old_code }}</td>
                                 <td>{{ $report->user->name }}</td>
                                 <td>{{ $report->priority }}</td>
                                 <td>{{ $report->status }}</td>
-                     
-                                <td><a href="#" class="btn btn-outline-success me-1 edit-btn"
-                                               data-bs-toggle="modal" data-bs-target="#update"
-                                               data-id="{{ $report->id }}"
-                                               data-appointment="{{ $report->appointment_date }}"
-                                               data-priority="{{ $report->priority }}"
-                                               data-status="{{ $report->status }}"
-                                               data-notes="{{ $report->notes }}"><i class="fa fa-edit"></i></a></td>
+
                                 <td>
-                                     <form action="{{ route('sig.destroy', $report->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?')">
+                                    <a href="#" class="btn btn-outline-success me-1 edit-btn"
+                                       data-bs-toggle="modal" data-bs-target="#update"
+                                       data-id="{{ $report->id }}"
+                                       data-appointment="{{ $report->appointment_date }}"
+                                       data-priority="{{ $report->priority }}"
+                                       data-status="{{ $report->status }}"
+                                       data-notes="{{ $report->notes }}"><i class="fa fa-edit"></i></a>
+                                </td>
+                                <td>
+                                    <form action="{{ route('sig.destroy', $report->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger shadow"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
-          
                             </tr>
-                                                     
+
                             @if ($report->notes)
-                            <tr>
-                                 <th>Descrição</th>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="6">{{ $report->notes }}</td>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="8" class="text-center pt-1" style="background: #000d37;"></td>
-                            </tr>
+                                <tr>
+                                    <th>Descrição</th>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="6">{{ $report->notes }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="8" class="text-center pt-1" style="background: #000d37;"></td>
+                                </tr>
                             @endif
 
                         @empty
@@ -72,6 +75,7 @@
                                 </td>
                             </tr>
                         @endforelse
+
                     </tbody>
                 </table>
             </div>
