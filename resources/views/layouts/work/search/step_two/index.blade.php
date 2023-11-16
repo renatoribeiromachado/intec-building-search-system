@@ -477,7 +477,15 @@
                                                     <td>
                                                         {{ optional($report->appointment_date)->format('d/m/Y') }}
                                                     </td>
-                                                    <td class="text-primary"><strong>{{ $report->work->old_code }}</strong></td>
+                                                    <td class="text-primary">
+                                                        
+                                                         @if ($report->work)
+                                                                {{ $report->work->old_code }}
+                                                            @else
+                                                            <p>{{ $report->work_id }} - Essa obra foi deletada da plataforma</p>
+                                                            @endif
+                                                     
+                                                    </td>
                                                     <td>{{ $report->user->name }}</td>
                                                     <td>{{ $report->priority }}</td>
                                                     <td class="text-primary"><strong>{{ $report->status }}</strong></td>
