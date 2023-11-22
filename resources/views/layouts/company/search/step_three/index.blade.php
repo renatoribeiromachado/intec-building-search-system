@@ -4,25 +4,7 @@
 
 <style>
     hr{border: 2px solid red !important;}
-    /*CSS para impressão*/
-    @media print {
-        .print{
-            display: block !important;
-        }
-        .no-print{
-            display: none;
-        }
-    }
-    body {
-        /* margin:0; */
-        /* padding:0; */
-        line-height: 1.4em;
-        padding-bottom: 70px;
-    }
-    @page {
-        margin: 0.5cm;
-    }
-
+        
     table{
         border: none !important;
     }
@@ -42,30 +24,6 @@
         border: none !important;
         padding: 0 !important;
     }
-    /* input[type=checkbox] {
-        -moz-appearance:none !important;
-        -webkit-appearance:none !important;
-        -o-appearance:none !important;
-        outline: none !important;
-        content: none !important;
-    }
-    input[type=checkbox]:before {
-        font-family: "FontAwesome" !important;
-        content: "\f00c" !important;
-        font-size: 10px !important;
-        color: transparent !important;
-        background: #fef2e0 !important;
-        display: block !important;
-        width: 12px !important;
-        height: 12px !important;
-        border: 1px solid black !important;
-        margin-right: 1px !important;
-    }
-
-    input[type=checkbox]:checked:before {
-        color: black !important;
-    } */
-
     .alinhadoDireita {
         text-align:right;
     }
@@ -77,12 +35,100 @@
     .pg{
         page-break-after: always;
     }
+
+    /* Estilo para remover a margem inferior das tabelas */
+    .remove-margin-bottom {
+        margin-bottom: 0;
+    }
+    .table-bordered {
+        border-color: #ff3b00 !important;
+    }
+    .small-font {
+        font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+    }
+
+    body {
+        font-size: 14px; /* Defina o tamanho de fonte desejado, por exemplo, 12px */
+        line-height: 1.4em;
+        padding-bottom: 70px;
+    }
+
+    .h1 {
+        font-size: 18px !important; /* Por exemplo, aumente o tamanho do título em 150% */
+    }
+    .emp{
+         font-size:14px !important; 
+    }
+        
+    /* Defina a tabela para exibição padrão */
+    .contact-table {
+        display: none;
+    }
+
+    /* Oculte os elementos de contato individuais em modo de impressão */
+    .contact-card {
+        display: block;
+    }
+
+   /* Estilos de impressão */
+@media print {
+    .contact-table {
+        display: block;
+    }
+    .contact-card {
+        display: none;
+    }
+    body {
+        margin: 0px; /* Remova todas as margens da página */
+    }
+    .hidden {
+        display: none;
+    }
+    .emp {
+        font-size: 8px !important; /* Reduza o tamanho da fonte para 8px */
+    }
+    @page {
+        size: A4; /* Escolha o tamanho de página desejado, como A4 */
+        margin: 0; /* Defina as margens da página como zero */
+    }
+    .image-for-print {
+        display: none;
+        max-width: 100% !important; /* Mantenha a largura da imagem ajustada automaticamente */
+        height: auto; /* Mantenha a proporção de aspecto da imagem */
+    }
+    .h1 {
+        font-size: 50% !important; /* Mantenha o tamanho do título igual ao original */
+        margin-top: 5px;
+    }
+    p {
+        font-size: 12px !important;
+        line-height: 0.5; /* Reduza o espaçamento entre linhas para 1 (padrão) */
+        margin-bottom: 10px; /* Remova a margem inferior dos parágrafos */
+    }
+    .obra {
+        page-break-before: always;
+    }
+     hr {
+        margin: 1px !important; /* Reduza o espaço entre os elementos <hr> */
+    }
+    td {
+        font-size: 12px !important;
+        max-height: 5px !important; /* Ajuste a altura máxima conforme necessário */
+        overflow: hidden;
+    }
+    br {
+        line-height: 0 !important; /* Define o espaçamento vertical entre as quebras de linha como 0 */
+        margin: 0 !important; /* Remove qualquer margem vertical entre as quebras de linha */
+    }
+}
+
+
 </style>
 
 <div class="container pt-3">
     
     @include('layouts.alerts.success')
-    <div class="row mt-2">
+    <div class="row mt-2 hidden">
         <div class="col-md-2">
             <a href="" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#sendEmail"><i class="fa fa-check"></i> Enviar link por e-mail</a>
         </div>
@@ -160,7 +206,7 @@
     </script>
     
     @forelse ($companies as $company)
-        <div class="obra-info info-{{ $company->id }}">
+        <div class="obra-info info-{{ $company->id }} obra">
             <div class="row mt-2">
                 <div class="col-md-12">
                     <img src="{{ asset('images/relatorio-empresas.png') }}" class="img-fluid" alt="PESQUISA DE EMPRESA">
@@ -179,7 +225,7 @@
 
             <!--BOTÕES-->
             @can('ver-sig-empresa')
-              <div class="row mt-2">
+              <div class="row mt-2 hidden">
                   <div class="col-md-4">
                       <button class="btn btn-primary text-white" type='button' onclick='fncXMHide("info-{{ $company->id }}")' title="DESATIVAR EMPRESA"> <i class="fa fa-eye"></i> Desativar</button>
                       <a class="btn btn-primary text-white" title="Cadastrar SIG"

@@ -286,6 +286,7 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     Route::get('sig-company/{id}/edit', [SigCompanyController::class, 'edit'])->name('sig-company.edit');
     Route::put('sig-company', [SigCompanyController::class, 'update'])->name('sig-company.update');
     Route::get('sig-companies/report', [SigCompanyController::class, 'report'])->name('sig_companies.report');
+    Route::get('sig-companies/summary', [SigCompanyController::class, 'summary'])->name('sig_companies.summary');
     Route::delete('sig-company/{id}', [SigCompanyController::class, 'destroy'])->name('sig-company.destroy');
     /*Enviar email empresa - Renato machado 01/09/2023*/
     Route::post('/send-email-empresa', [EmailCompanyController::class, 'sendEmailCompany'])->name('send.email-company');

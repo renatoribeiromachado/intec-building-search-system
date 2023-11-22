@@ -287,17 +287,17 @@ class SigController extends Controller
         $startDate = !empty($startDate) ? Carbon::createFromFormat('d/m/Y', $startDate)->startOfDay() : null;
         $endDate = !empty($endDate) ? Carbon::createFromFormat('d/m/Y', $endDate)->endOfDay() : null;
 
-        foreach ($reports as $report) {
+     foreach ($reports as $report) {
             $id = $report->id;
             $status = $report->status;
             $userId = $report->user_id;
-            $workId = $report->work->old_code;
+            $work = $report->work;
             $userName = $report->user->name;
             $appointmentDate = Carbon::parse($report->appointment_date);
             $createdDate = Carbon::parse($report->created_at);
             $notes = $report->notes;
             $priority = $report->priority;
-            
+
             // Converta a data de agendamento do relatório para o formato Y-m-d
             $appointmentDateFormatted = $appointmentDate->format('Y-m-d');
             $appointmentDateFormattedFilter = !empty($appointmentDateFilter) ? Carbon::createFromFormat('d/m/Y', $appointmentDateFilter)->format('Y-m-d') : null;
@@ -340,12 +340,19 @@ class SigController extends Controller
                 // Adicione o ID do relatório à lista associada a esta data de agendamento e status.
                 $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['ids'][$status][] = $id;
 
-                $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_ids'][$status][] = $workId;
+                if ($work && isset($work->old_code)) {
+                    $workId = $work->old_code;
+                    $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_ids'][$status][] = $workId;
+                } else {
+                    // Se não existir $work->old_code, adicione uma entrada indicando isso.
+                    $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_ids'][$status][] = 'Obra deletada da plataforma';
+                }
 
                 // Adicione as notas à lista associada a esta data de agendamento e status.
                 $statusCounts[$userId]['appointments'][$appointmentDateFormatted]['work_notes'][$status][] = $notes;
             }
         }
+
 
         /*Associado Gestor pode ver todos usuarios da empresa a que pertence*/
         if($authUser->role->slug == Associate::ASSOCIATE_USER || (! authUserIsAnAssociate())){

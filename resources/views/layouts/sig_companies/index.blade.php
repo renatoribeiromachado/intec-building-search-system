@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ route('sig_companies.report') }}" method="get">
+            <form action="{{ route('sig_companies.report') }}" id="formulario" method="get">
                 @csrf
 
                 <div class="row">
@@ -124,11 +124,31 @@
                 --}}
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Gerar relatório</button>
+                    @can('ver-resumo-sig')
+                        <button type="submit" class="btn btn-info" id="gerar-resumo">Gerar resumo</button>
+                    @endcan
+                    <button type="submit" class="btn btn-primary" id="gerar-relatorio">Gerar relatório</button>
                 </div>
             </form>
         </div>
     </div>
+                
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicione um ouvinte de evento de clique ao botão "Salvar Pesquisa"
+            document.getElementById('gerar-resumo').addEventListener('click', function() {
+                // Redireciona o formulário para a rota desejada
+                document.getElementById('formulario').action = "{{ route('sig_companies.summary') }}";
+            });
+
+            // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
+            document.getElementById('gerar-relatorio').addEventListener('click', function() {
+                // Redireciona o formulário para a rota desejada
+                document.getElementById('formulario').action = "{{ route('sig_companies.report') }}";
+            });
+        });
+    </script>
+
 
 </div>
 
