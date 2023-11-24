@@ -15,6 +15,7 @@ use App\Models\City;
 use App\Models\Work;
 use App\Models\WorkFeature;
 use App\Models\Researcher;
+use App\Models\WorkSearchSaved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,8 @@ class WorkSearchController extends Controller
         SegmentSubType $segmentSubType,
         WorkFeature $workFeature,
         Researcher $researcher,
-        Sig $sig  
+        Sig $sig,
+        WorkSearchSaved $workSaved  
     ) {
         $this->activityField = $activityField;
         $this->stage = $stage;
@@ -60,20 +62,22 @@ class WorkSearchController extends Controller
         $this->workFeature = $workFeature;
         $this->researcher = $researcher;
         $this->sig = $sig;
+        $this->workSaved = $workSaved;
     }
 
     public function showWorkSearchStepOne()
     {
         $this->authorize('ver-pesquisa-de-obras');
 
+        $authUser = Auth::user();
+        
         $this->resetWorksSession();
         $activityFields = $this->activityField->get();//Renato machado 09/09/2023
         $stagesOne = $this->stage->where('phase_id', 1)->get();
         $stagesTwo = $this->stage->where('phase_id', 2)->get();
         $stagesThree = $this->stage->where('phase_id', 3)->get();
         $researchers = $this->researcher->get();//Renato machado 04/09/2023
-
-        $authUser = Auth::user();
+        $workSaveds = $this->workSaved->where('user_id', $authUser->id)->get();//Renato machado 04/09/2023
 
         if (authUserIsAnAssociate()) {
 
@@ -153,7 +157,8 @@ class WorkSearchController extends Controller
             'segmentSubTypeThree',
             'states',
             'researchers',
-            'activityFields'
+            'activityFields',
+            'workSaveds'
         ));
     }
 
@@ -764,8 +769,180 @@ class WorkSearchController extends Controller
     }
 
     /*Salvando pesquisa - Renato Machado 11/10/2023*/
-    public function showWorkSearchSaved()
+
+    public function showWorkSearchSaved(Request $request)
     {
-        dd('aqui');
+
+        // Trate os campos que são arrays convertendo-os para JSON
+        $states = json_encode($request->input('states', []));
+        $segmentSubTypes = json_encode($request->input('segment_sub_types', []));
+        $stages = json_encode($request->input('stages', []));
+        
+        $authUser = Auth::user();
+        
+        // Certifique-se de que cities_ids é um array
+        $citiesIds = explode(',', $request->input('cities_ids_1', ''));
+
+        // Crie um novo registro usando o modelo Eloquent
+        $workSearchSaved = WorkSearchSaved::create([
+            'search_name' => $request->input('search_name'),
+            //'input_select_all' => $request->input('input_select_all_1'),
+            //'input_page_of_pagination' => $request->input('input_page_of_pagination_1'),
+           // 'clicked_in_page' => $request->input('clicked_in_page_1'),
+            'last_review_from' => $request->input('last_review_from_1'),
+            'last_review_to' => $request->input('last_review_to_1'),
+            'investment_standard' => $request->input('investment_standard_1'),
+            'name' => $request->input('name_1'),
+            'old_code' => $request->input('old_code_1'),
+            'address' => $request->input('address_1'),
+            'district' => $request->input('district_1'),
+            'qa' => $request->input('qa_1'),
+            'total_area' => $request->input('total_area_1'),
+            'qi' => $request->input('qi_1'),
+            'price' => $request->input('price_1'),
+            'qr' => $request->input('qr_1'),
+            'state_id' => $request->input('state_id_1'),
+            'cities_ids' => json_encode($citiesIds),
+            'researcher_id' => $request->input('researcher_id_1'),
+            'revision' => $request->input('revision_1'),
+            'search' => $request->input('search_1'),
+            'modality_id' => $request->input('modality_id_1'),
+            'floor' => $request->input('floor_1'),
+            'states' => $states,
+            'segment_sub_types' => $segmentSubTypes,
+            'stages' => $stages,
+            'user_id' => $authUser->id
+        ]);
+
+
+        // Exemplo de redirecionamento
+        return redirect()->route('work.search.step_one.index');
     }
+   
+    
+    /*Ver pesauisa salva - Renato Machado 11/10/2023*/
+
+
+    public function  showWorkSearchSavedWorks(Request $request)
+    {
+        //dd($request->saved_id);
+        if(!$workSaved = $this->workSaved->where('id',$request->saved_id)->get()){
+            return redirect()->back();
+        }
+        
+        $this->authorize('ver-pesquisa-de-obras');
+
+        $authUser = Auth::user();
+        
+        $this->resetWorksSession();
+        $activityFields = $this->activityField->get();//Renato machado 09/09/2023
+        $stagesOne = $this->stage->where('phase_id', 1)->get();
+        $stagesTwo = $this->stage->where('phase_id', 2)->get();
+        $stagesThree = $this->stage->where('phase_id', 3)->get();
+        $researchers = $this->researcher->get();//Renato machado 04/09/2023
+        $workSaveds = $this->workSaved->where('user_id', $authUser->id)->get();//Renato machado 04/09/2023
+
+        if (authUserIsAnAssociate()) {
+
+            $statesVisible = session('statesVisible');
+            $segmentSubTypesVisible = session('segmentSubTypesVisible');
+            
+            $statesOne = $this->state
+                ->where('zone_id', 1)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesTwo = $this->state
+                ->where('zone_id', 2)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesThree = $this->state
+                ->where('zone_id', 3)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFour = $this->state
+                ->where('zone_id', 4)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFive = $this->state
+                ->where('zone_id', 5)
+                ->whereIn('id', $statesVisible)
+                ->get();
+
+            $segmentSubTypeOne = $this->segmentSubType
+                ->where('segment_id', 1)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeTwo = $this->segmentSubType
+                ->where('segment_id', 2)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeThree = $this->segmentSubType
+                ->where('segment_id', 3)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->whereIn('id', $statesVisible)
+                ->get()->pluck('description', 'state_acronym');
+        }
+
+        if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
+            $authUser->role->slug != Associate::ASSOCIATE_USER) {
+            $statesOne = $this->state->where('zone_id', 1)->get();
+            $statesTwo = $this->state->where('zone_id', 2)->get();
+            $statesThree = $this->state->where('zone_id', 3)->get();
+            $statesFour = $this->state->where('zone_id', 4)->get();
+            $statesFive = $this->state->where('zone_id', 5)->get();
+
+            $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+            $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+            $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->get()->pluck('description', 'state_acronym');
+        }
+
+        return view('layouts.work.search.saved.saved', compact(
+            'stagesOne',
+            'stagesTwo',
+            'stagesThree',
+            'states',
+            'statesOne',
+            'statesOne',
+            'statesTwo',
+            'statesThree',
+            'statesFour',
+            'statesFive',
+            'segmentSubTypeOne',
+            'segmentSubTypeTwo',
+            'segmentSubTypeThree',
+            'states',
+            'researchers',
+            'activityFields',
+            'workSaved',
+            'workSaveds'
+        ));
+        
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @return type**
+     */
+    public function destroy(Request $request)
+    {
+
+        if (!$workSaved = $this->workSaved->find($request->id)) {
+            return redirect()->back();
+        }
+
+        $workSaved->delete();
+
+        return redirect()->back()->with('success', 'Deletada com sucesso');
+    }
+    
+
 }

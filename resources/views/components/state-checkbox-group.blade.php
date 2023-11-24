@@ -26,8 +26,9 @@
                         class="{{ $classTwo }}"
                         value="{{ $item->id }}"
                         @if ((! \Route::is('work.search.step_one.index')) &&
+                            (! \Route::is('work.search.saved.saved')) &&
                             (! \Route::is('company.search.step_one.index')) &&
-                            $collectionRelation->contains($item))
+                            is_array($collectionRelation) && in_array($item, $collectionRelation))
                             checked
                         @endif
                         >
