@@ -301,7 +301,7 @@
                             @endphp
 
                             <p class="text-uppercase pt-3">
-                                <input type="checkbox" name="zones[]" value="{{ $statesOne }}" class="norte checkRegiaoGeral" id="zone-all-1" />
+                                <input type="checkbox" name="states[]" value="{{ $statesOne }}" class="norte checkRegiaoGeral" id="zone-all-1" />
                                 <strong>Norte <code>* Selecione Todos</code></strong>
                             </p>
 
@@ -311,7 +311,7 @@
                         @foreach ($statesOne as $checkbox)
                             <div class="col-md-4 pt-3">
                                 <p class="text-right text-uppercase">
-                                    <input type="checkbox" class="checkNorte checkRegiaoGeral" name="zones[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="checkNorte checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
                                     <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
                                 </p>
                             </div>
@@ -331,7 +331,7 @@
                             @endphp
 
                             <p class="text-uppercase pt-3">
-                                <input type="checkbox" name="zones[]" value="{{ $statesTwo }}" class="nordeste checkRegiaoGeral" id="zone-all-2" />
+                                <input type="checkbox" name="states[]" value="{{ $statesTwo }}" class="nordeste checkRegiaoGeral" id="zone-all-2" />
                                 <strong>Nordeste <code>* Selecione Todos</code></strong>
                             </p>
 
@@ -341,7 +341,7 @@
                         @foreach ($statesTwo as $checkbox)
                             <div class="col-md-4 pt-3">
                                 <p class="text-right text-uppercase">
-                                    <input type="checkbox" class="checkNordeste checkRegiaoGeral" name="zones[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="checkNordeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
                                     <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
                                 </p>
                             </div>
@@ -360,7 +360,7 @@
                             @endphp
 
                             <p class="text-uppercase pt-3">
-                                <input type="checkbox" name="zones[]" value="{{ $statesThree }}" class="centro-oeste checkRegiaoGeral" id="zone-all-3" />
+                                <input type="checkbox" name="states[]" value="{{ $statesThree }}" class="centro-oeste checkRegiaoGeral" id="zone-all-3" />
                                 <strong>Centro-Oeste <code>* Selecione Todos</code></strong>
                             </p>
 
@@ -370,7 +370,7 @@
                         @foreach ($statesThree as $checkbox)
                             <div class="col-md-4 pt-3">
                                 <p class="text-right text-uppercase">
-                                    <input type="checkbox" class="checkCentroOeste checkRegiaoGeral" name="zones[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="checkCentroOeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
                                     <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
                                 </p>
                             </div>
@@ -389,7 +389,7 @@
                             @endphp
 
                             <p class="text-uppercase pt-3">
-                                <input type="checkbox" name="zones[]" value="{{ $statesFour }}" class="sudeste checkRegiaoGeral" id="zone-all-4" />
+                                <input type="checkbox" name="states[]" value="{{ $statesFour }}" class="sudeste checkRegiaoGeral" id="zone-all-4" />
                                 <strong>Sudeste <code>* Selecione Todos</code></strong>
                             </p>
 
@@ -399,7 +399,7 @@
                         @foreach ($statesFour as $checkbox)
                             <div class="col-md-4 pt-3">
                                 <p class="text-right text-uppercase">
-                                    <input type="checkbox" class="checkSudeste checkRegiaoGeral" name="zones[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="checkSudeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
                                     <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
                                 </p>
                             </div>
@@ -418,7 +418,7 @@
                             @endphp
 
                             <p class="text-uppercase pt-3">
-                                <input type="checkbox" name="zones[]" value="{{ $statesFive }}" class="sul checkRegiaoGeral" id="zone-all-5" />
+                                <input type="checkbox" name="states[]" value="{{ $statesFive }}" class="sul checkRegiaoGeral" id="zone-all-5" />
                                 <strong>Sul <code>* Selecione Todos</code></strong>
                             </p>
 
@@ -428,7 +428,7 @@
                         @foreach ($statesFive as $checkbox)
                             <div class="col-md-4 pt-3">
                                 <p class="text-right text-uppercase">
-                                    <input type="checkbox" class="checkSul checkRegiaoGeral" name="zones[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="checkSul checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
                                     <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
                                 </p>
                             </div>
