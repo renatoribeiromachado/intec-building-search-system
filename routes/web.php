@@ -59,7 +59,7 @@ Route::get('cronCompany', [CronCompanyController::class, 'cron'])->name('cronCom
 Route::get('cronAssociate', [CronAssociateController::class, 'cron'])->name('cronAssociate');
 
 Route::middleware(['auth', 'single.device.session'])->group(function () {
-//Route::middleware(['auth'])->group(function () {
+    //Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
     
     /*Monitoramento - Renato Machado 08/09/2023*/
@@ -295,7 +295,6 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Enviar email empresa - Renato machado 01/09/2023*/
     Route::post('/send-email-empresa', [EmailCompanyController::class, 'sendEmailCompany'])->name('send.email-company');
     
-    
     /*SIG Associado - Renato Machado 20/09/2023 */
     Route::get('sig-associate', [SigAssociateController::class, 'index'])->name('sig_associate.index');
     Route::get('sig-sigGeral', [SigAssociateController::class, 'sigGeral'])->name('sig_associate.sigGeral');
@@ -364,6 +363,11 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
         Route::get('/works/getCompanyName', [WorkSearchController::class, 'getCompanyName'])->name('works.getCompanyName');
 
     });
+    
+    /*Alterar Senha - Renato Machado 28/11/2023 */
+    Route::get('user-password', [UserController::class, 'password'])->name('user-password.password');
+    Route::put('user-password', [UserController::class, 'updatePassword'])->name('user-password.updatePassword');
+
 
     Route::prefix('associates')->group(function() {
         Route::get('/', AssociateController::class)->name('associate.index');

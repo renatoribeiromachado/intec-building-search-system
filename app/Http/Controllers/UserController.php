@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Associate;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Role;
@@ -13,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -62,8 +62,8 @@ class UserController extends Controller
         $user = $this->user;
         $roles = $this->role
             ->whereNotIn('slug', [
-                Associate::ASSOCIATE_MANAGER,
-                Associate::ASSOCIATE_USER,
+                'associado-gestora',
+                'associado-usuario',
                 'webmaster',
                 'contato'
             ])
@@ -122,14 +122,7 @@ class UserController extends Controller
 
         $isActive = collect(self::IS_ACTIVE);
 
-        $roles = $this->role
-            ->whereNotIn('slug', [
-                Associate::ASSOCIATE_MANAGER,
-                Associate::ASSOCIATE_USER,
-                'webmaster',
-                'contato'
-            ])
-            ->get();
+        $roles = $this->role->findRoles();
         return view('layouts.user.edit', compact(
             'user',
             'roles',
@@ -205,4 +198,48 @@ class UserController extends Controller
 
         return redirect()->route('user.index');
     }
+    
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function password()
+    {
+        $this->authorize('alterar-senha');
+        $authUser = Auth::user();
+ 
+        $user = $this->user->where('id', $authUser->id)->get();
+        
+        return view('layouts.user_password.index', compact('user'));
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function updatePassword(Request $request)
+    {
+        
+        $this->authorize('alterar-senha');
+
+        $user = $this->user->where('id', $request->id)->first();
+
+        if(!$user){
+            return redirect()->back();
+        }
+
+        $data = [
+            'password' => Hash::make($request->password)
+        ];
+
+        $user->update($data);
+        
+        session()->flash('success', 'Senha alterada com sucesso.');
+
+        return redirect()->back();
+    }
+
 }

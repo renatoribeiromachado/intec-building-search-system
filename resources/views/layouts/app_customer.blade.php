@@ -525,6 +525,33 @@
                                     @endcan
                                 </ul>
                             </li>
+                            
+                            @can('alterar-senha')
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle text-white"
+                                        href="#"
+                                        id="dropdown07XL"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        >
+                                        <i class="fa fa-lock"></i> ALTERAR SENHA
+                                    </a>
+                                    
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                     
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ route('user-password.password') }}"
+                                                >
+                                                Alterar
+                                            </a>
+                                        </li>
+                                    
+                                    </ul>
+                                </li>
+                            @endcan
                       
                         <li class="nav-item dropdown">
                             <a
