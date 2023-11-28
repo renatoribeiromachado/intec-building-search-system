@@ -65,6 +65,10 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Monitoramento - Renato Machado 08/09/2023*/
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
     Route::post('/monitoring/search', [MonitoringController::class, 'search'])->name('monitoring.search');
+    
+    /*Monitoramento Gestor - Renato Machado 24/11/2023*/
+    Route::get('/monitoring-gestor', [MonitoringController::class, 'gestor'])->name('monitoring.gestor');
+    Route::get('/monitoring-gestor/search', [MonitoringController::class, 'searchGestor'])->name('monitoring.searchGestor');
 
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
