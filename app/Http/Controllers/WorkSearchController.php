@@ -673,20 +673,25 @@ class WorkSearchController extends Controller
     /*auto-complerte fantasia obras/empresa*/
     public function getCompany(Request $request) {
         $query = $request->input('search');
-        $companies = Company::select('id', 'trading_name') // Selecionar o ID e fantasy_name
-                     ->where('trading_name', 'like', '%' . $query . '%')
-                     ->limit(50) // Limite de resultados
-                     ->get();
+
+        $companies = Company::select('id', 'activity_field_id', 'trading_name') // Selecionar o ID e fantasy_name
+                    ->where('trading_name', 'like', '%' . $query . '%')
+                    ->where('activity_field_id', 2)
+                    ->doesntHave('associate')
+                    ->limit(50) // Limite de resultados
+                    ->get();
 
         return response()->json($companies);
     }
     /**/
     public function getCompanyName(Request $request) {
         $query = $request->input('searchCompany');
-        $companies = Company::select('id', 'company_name') // Selecionar o ID e company_name
-                     ->where('company_name', 'like', '%' . $query . '%')
-                     ->limit(50) // Limite de resultados
-                     ->get();
+        $companies = Company::select('id', 'activity_field_id', 'company_name') // Selecionar o ID e company_name
+                    ->where('company_name', 'like', '%' . $query . '%')
+                    ->where('activity_field_id', 2)
+                    ->doesntHave('associate')
+                    ->limit(50) // Limite de resultados
+                    ->get();
 
         return response()->json($companies);
     }
