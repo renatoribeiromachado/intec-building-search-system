@@ -676,7 +676,7 @@ class WorkSearchController extends Controller
 
         $companies = Company::select('id', 'activity_field_id', 'trading_name') // Selecionar o ID e fantasy_name
                     ->where('trading_name', 'like', '%' . $query . '%')
-                    ->where('activity_field_id', 2)
+                    //->where('activity_field_id', 2)
                     ->doesntHave('associate')
                     ->limit(50) // Limite de resultados
                     ->get();
@@ -688,7 +688,7 @@ class WorkSearchController extends Controller
         $query = $request->input('searchCompany');
         $companies = Company::select('id', 'activity_field_id', 'company_name') // Selecionar o ID e company_name
                     ->where('company_name', 'like', '%' . $query . '%')
-                    ->where('activity_field_id', 2)
+                    //->where('activity_field_id', 2)
                     ->doesntHave('associate')
                     ->limit(50) // Limite de resultados
                     ->get();
