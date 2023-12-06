@@ -9,6 +9,7 @@ class LoginHistory extends Model
 {
     use HasFactory;
 
+    protected $table = "login_histories_prod";
     protected $fillable = [
         'user_id',
         'associate_id',
