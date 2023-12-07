@@ -104,6 +104,7 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
         $endsAt = $this->searchParams['last_review_to_1'];
         $address = $this->searchParams['address_1'];
         $district = $this->searchParams['district_1'];
+        $researcher = $this->searchParams['researcher_id_1'];
         
         $stateAcronym = isset($this->searchParams['state_id_1'])
         ? $this->searchParams['state_id_1']
@@ -248,6 +249,13 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
 
             // Use as descrições das cidades para filtrar os trabalhos
             $companies = $companies->whereIn('companies.city', $cityDescriptions);
+        }
+        
+        if ($researcher) {
+            $companies = $companies
+            ->join('company_researcher as cr', 'cr.company_id', '=', 'companies.id')
+            ->join('researchers as r', 'r.id', '=', 'cr.researcher_id')
+            ->where('cr.researcher_id', '=', $researcher);
         }
         
         /*Razão social*/
