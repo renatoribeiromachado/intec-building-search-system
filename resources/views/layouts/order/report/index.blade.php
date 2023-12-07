@@ -288,15 +288,17 @@
                             {{ optional($contact->position)->description }}
                         </td>
                         <td>
-                            @if ($contact->ddd && $contact->main_phone)
-                            ({{ $contact->ddd }}) {{ $contact->main_phone }} /
-                            @endif
-                            @if ($contact->ddd_two && $contact->phone_two)
-                            ({{ $contact->ddd_two }}) {{ $contact->phone_two }}
-                            @endif
+                            {{ isset($contact->ddd) && isset($contact->main_phone) ? ' (' . $contact->ddd . ') ' . $contact->main_phone : ''  }}
+                            {{ isset($contact->ddd_two) && isset($contact->phone_two) ? ' / (' . $contact->ddd_two . ') ' . $contact->phone_two : '' }}
+                            {{ isset($contact->ddd_three) && isset($contact->phone_three) ? ' / (' . $contact->ddd_three . ') ' . $contact->phone_three : '' }}
+                            {{ isset($contact->ddd_four) && isset($contact->phone_four) ? ' / (' . $contact->ddd_four . ') ' . $contact->phone_four : '' }}
+
                         </td>
                         <td>
-                            {{ $contact->email }}
+                            {{ isset($contact->email) ? $contact->email : '' }}
+                            {{ isset($contact->secondary_email) ? '; ' . $contact->secondary_email : '' }}
+                            {{ isset($contact->tertiary_email) ? '; ' . $contact->tertiary_email : '' }}
+
                         </td>
                     </tr>
                 @endforeach
