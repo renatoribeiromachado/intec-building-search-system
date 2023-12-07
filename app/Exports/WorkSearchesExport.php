@@ -318,8 +318,15 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
         }
         
         /*Pesquisador*/
+//        if ($researcher) {
+//            $works = $works->where('works.updated_by', $researcher);
+//        }
+        
         if ($researcher) {
-            $works = $works->where('works.updated_by', $researcher);
+            $works = $works
+            ->join('researcher_work as rw', 'rw.work_id', '=', 'works.id')
+            ->join('researchers as r', 'r.id', '=', 'rw.researcher_id')
+            ->where('rw.researcher_id', '=', $researcher);
         }
         
          /*Modalidade*/

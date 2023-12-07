@@ -591,10 +591,6 @@ class WorkSearchController extends Controller
         }
         
         /*Pesquisador*/
-//        if ($researcher) {
-//            $works = $works->where('works.updated_by', '=', $researcher);
-//        }
-        
         if ($researcher) {
             $works = $works
             ->join('researcher_work as rw', 'rw.work_id', '=', 'works.id')

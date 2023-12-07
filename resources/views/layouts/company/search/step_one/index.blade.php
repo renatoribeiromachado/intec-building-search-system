@@ -370,43 +370,104 @@
 
                 <div class="row mt-4 pb-4">
                     
-                    @can('salvar-pesquisa')
+                    <!--PESQUISAS SALVAS-->
+                    @can('salvar-pesquisa-empresa')
                         <div class="col-md-3">
-                             <label class="control-label">
-                                 <i class="fa fa-search"></i>
-                                 <strong>Pesquisa(s) Salva(s)</strong>
-                             </label>
-                             <select name id="selecao" class="form-select">
-                                 <option value="0">-- Selecione --</option>
-                             </select>
-                         </div>
+                            <label class="control-label">
+                                <i class="fa fa-search"></i>
+                                <strong>Pesquisa(s) Salva(s)</strong>
+                            </label>
+                            <form action='' method='get'>
+                                @csrf
+                                <div class="row">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group mb-3">
+                                            <select name='saved_id' id="selecao" class="form-select">
+                                                <option value="0">-- Selecione --</option>
+                                                
+                                                    <option value=""></option>
+                                                
+                                            </select>
+                                            <button type='submit' class="btn btn-success" id='pesquisa-salva'><i class='fa fa-search'></i></button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+          
+                        <div class="col-md-3">
+                          <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
+                          <select name="" id="delete" class="form-select" onchange="showModal()">
+                            <option value="0">-- Selecione - Delete --</option>
+                            
+                              <option value=""></option>
+                            
+                          </select>
+                        </div>
+
+                        <script>
+                          function showModal() {
+                            var selectedComapnyId = document.getElementById("delete").value;
+                            var modal = new bootstrap.Modal(document.getElementById("searchSaved"));
+
+                            if (selectedWorkId !== "0") {
+                              document.getElementById("companyId").value = selectedCompanyId;
+                              modal.show();
+                            } else {
+                              modal.hide();
+                            }
+                          }
+
+                          function closeModal() {
+                            var modal = document.getElementById("myModal");
+                            modal.style.display = "none";
+                          }
+                        </script>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="searchSaved">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title">Deletar Empresa Salva</h4>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="{{ route('work.search.destroy') }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="id" class="form-control" id="companyId" value=""/>
+
+                                    <div class="modal-body">
+                                      <p>Tem certeza que deseja deletar esta pesquisa de empresa salva?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary">Sim</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     @endcan
 
-                    {{-- <div class="col-md-3">
-                        <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
-                        <select name id="delete" class="form-select">
-                            <option value="0">Selecione - Delete automatico</option>
-                        </select>
-                    </div> --}}
-
                     <div class="col-md-3">
-                        {{-- <label class="control-label"> <strong>Ação</strong></label>
+                        <label class="control-label"> <strong>Ação</strong></label>
                         <br>
-                        <button
-                            type="submit"
-                            class="btn btn-primary create"
-                            title="Salvar Pesquisa"
-                            value="1"
-                            onclick="Acao('');"
-                            >
-                            <i class="fa fa-search"></i>Salvar Pesquisa
-                        </button> --}}
-
+                        @can('salvar-pesquisa-empresa')
+                            <button type="submit" class="btn btn-primary submit" title="Pesquisar" id="salvar-pesquisa">
+                                <i class="fa fa-search"></i> Salvar Pesquisa
+                            </button>
+                        @endcan
                         <button
                             type="submit"
                             class="btn btn-success submit"
                             title="Pesquisar"
-                            {{-- onclick="Acao('');" --}}
+                            id="pesquisar"
                             >
                             <i class="fa fa-search"></i>
                             Pesquisar
@@ -415,6 +476,28 @@
                 </div>
             </form>
         </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Adicione um ouvinte de evento de clique ao botão "Salvar Pesquisa"
+                document.getElementById('salvar-pesquisa').addEventListener('click', function() {
+                    // Redireciona o formulário para a rota desejada
+                    document.getElementById('formulario').action = "";
+                });
+
+                // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
+                document.getElementById('pesquisar').addEventListener('click', function() {
+                    // Redireciona o formulário para a rota desejada
+                    document.getElementById('formulario').action = "{{ route('company.search.step_two.index') }}";
+                });
+                 // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
+                document.getElementById('pesquisa-salva').addEventListener('click', function() {
+                    // Redireciona o formulário para a rota desejada
+                    document.getElementById('formulario').action = "";
+                });
+                
+            });
+        </script>
     </div>
 @endsection
 
