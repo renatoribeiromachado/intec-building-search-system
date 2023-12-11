@@ -344,12 +344,21 @@
                     });
 
                 })
+                
+                /*Segmento*/
 
-                $('#segment').bind('change', function () {
-                    var segment = $(this).val();
+               // Carregue os subtipos relacionados ao segmento selecionado ao carregar a página
+                loadSubtypes();
+
+                // Atualize os subtipos quando o segmento for alterado
+                $('#segment').on('change', function () {
+                    loadSubtypes();
+                });
+
+                function loadSubtypes() {
+                    var segment = $('#segment').val();
 
                     if (segment.length > 0) {
-
                         $.ajax({
                             type: "GET",
                             url: base_url() + 'v1/segment-sub-types',
@@ -364,13 +373,19 @@
                                                 </option>`;
                                     $('select[name="segment_sub_type_id"]').html(segmentHtml);
                                 } else {
-
                                     var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
-                                    
+
                                     for (var i = 0; i < return_data.segmentSubTypes.length; i++) {
                                         if (return_data.segmentSubTypes[i] !== "") {
                                             options += '<option value="' + return_data.segmentSubTypes[i].id
-                                                + '" style="background:#fff;color:#454c54;">'
+                                                + '" style="background:#fff;color:#454c54;"';
+
+                                            // Verifique se o subtipo é o mesmo que o associado à obra
+                                            if (return_data.segmentSubTypes[i].id == '{{ $work->segment_sub_type_id }}') {
+                                                options += ' selected';
+                                            }
+
+                                            options += '>'
                                                 + return_data.segmentSubTypes[i].description + '</option>';
                                         }
                                     }
@@ -388,17 +403,25 @@
                                 $('select[name="segment_sub_type_id"]').html(segmentHtml);
                             }
                         });
-                        
                     } else {
-                        // $('#span-subtipo').hide();
+                        // Se nenhum segmento estiver selecionado, limpe os subtipos
+                        $('select[name="segment_sub_type_id"]').html('<option value="" style="background:#fff;color:#454c54;">-- Selecione primeiro o segmento --</option>');
                     }
+                }
+
+                /*Fase*/
+                // Carregue os estágios relacionados à fase selecionada ao carregar a página
+                loadStages();
+
+                // Atualize os estágios quando a fase for alterada
+                $('#phase').on('change', function () {
+                    loadStages();
                 });
 
-                $('#phase').bind('change', function () {
-                    var phase = $(this).val();
+                function loadStages() {
+                    var phase = $('#phase').val();
 
                     if (phase.length > 0) {
-
                         $.ajax({
                             type: "GET",
                             url: base_url() + 'v1/stages',
@@ -408,13 +431,19 @@
                                     $('select[name="stage_id"]')
                                         .html('<option value="" style="background:#fff;color:#454c54;"> Estágios não encontrados. </option>');
                                 } else {
-
                                     var options = '<option value="" style="background:#fff;color:#454c54;">-- Selecione --</option>';
-                                    
+
                                     for (var i = 0; i < return_data.stages.length; i++) {
                                         if (return_data.stages[i] !== "") {
                                             options += '<option value="' + return_data.stages[i].id
-                                                + '" style="background:#fff;color:#454c54;">'
+                                                + '" style="background:#fff;color:#454c54;"';
+
+                                            // Verifique se o estágio é o mesmo associado à obra
+                                            if (return_data.stages[i].id == '{{ $work->stage_id }}') {
+                                                options += ' selected';
+                                            }
+
+                                            options += '>'
                                                 + return_data.stages[i].description + '</option>';
                                         }
                                     }
@@ -432,11 +461,11 @@
                                 $('select[name="stage_id"]').html(html);
                             }
                         });
-                        
                     } else {
-                        // $('#span-subtipo').hide();
+                        // Se nenhuma fase estiver selecionada, limpe os estágios
+                        $('select[name="stage_id"]').html('<option value="" style="background:#fff;color:#454c54;">-- Selecione primeiro a fase --</option>');
                     }
-                });
+                }
 
             })
         </script>
