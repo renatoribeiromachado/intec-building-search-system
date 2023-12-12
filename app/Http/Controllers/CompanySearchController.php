@@ -14,6 +14,7 @@ use App\Models\SigCompany;
 use App\Models\Researcher;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
+use App\Models\CompanySearchSaved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ class CompanySearchController extends Controller
     protected $city;
     protected $segmentSubType;
     protected $sigCompany;
+    protected $companySaved;
 
     public function __construct(
         ActivityField $activityField,
@@ -43,7 +45,8 @@ class CompanySearchController extends Controller
         City $city,
         Researcher $researcher,
         SegmentSubType $segmentSubType,
-        SigCompany $sigCompany
+        SigCompany $sigCompany,
+        CompanySearchSaved $companySaved
     ) {
         $this->activityField = $activityField;
         $this->company = $company;
@@ -52,20 +55,23 @@ class CompanySearchController extends Controller
         $this->researcher = $researcher;
         $this->segmentSubType = $segmentSubType;
         $this->sigCompany = $sigCompany;
+        $this->companySaved = $companySaved;
     }
 
     public function showCompanySearchStepOne()
     {
         $this->resetCompaniesSession();
         
+        $authUser = Auth::user();
+        
         $researchers = $this->researcher->get();//Renato machado 10/10/2023
+        $companySaveds = $this->companySaved->where('user_id', $authUser->id)->get();//Renato machado 11/12/2023
 
         $activityFields = $this->activityField
             ->select('id', 'description')
             ->orderBy('description', 'asc')
             ->get();
 
-        $authUser = Auth::user();
 
         if (authUserIsAnAssociate()) {
 
@@ -140,7 +146,8 @@ class CompanySearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
-            'states'
+            'states',
+            'companySaveds'
         ));
     }
 
@@ -490,5 +497,211 @@ class CompanySearchController extends Controller
             ),
             'pesquisa-de-empresas.xlsx'
         );
+    }
+    
+    /*Pegando os dados da pesquisa - Renato Machado 11/12/2023*/
+    public function showCompanySearchSavedView(Request $request)
+    {
+
+        $companies = $this->getFilteredCompanies($request);
+        $companiesChecked = session($this->companiesSessionName);
+        $currentPage = is_null($request->page) ? 1 : $request->page;
+        $btnExistsInSession = session()->has('btnSelectAll');
+
+        $clickedInPage = $btnExistsInSession
+            && (session('btnSelectAll')['btn_clicked'] == 1)
+            ? session('btnSelectAll')['clicked_in_page']
+            : $currentPage;
+
+        $inputPageOfPagination = $currentPage;
+
+        $inputSelectAll = $btnExistsInSession
+            ? session('btnSelectAll')['btn_clicked']
+            : 0;
+
+        $atLeastOneCheckboxWasClicked = 0;
+        
+        $statesChecked = [];
+        if (! is_null(request()->states)) {
+            request()->session()->put($this->statesSessionName, request()->states);
+            $statesChecked = session($this->statesSessionName);
+        }
+        
+        $activityFieldsChecked = [];
+        if (! is_null(request()->activity_fields)) {
+            request()->session()->put($this->activityFieldsSessionName, request()->activity_fields);
+            $activityFieldsChecked = session($this->activityFieldsSessionName);
+        }
+        
+        $searchParams = $request->query();
+        
+        return view('layouts.company.search.saved.index', compact(
+            'companies',
+            'companiesChecked',
+            'statesChecked',
+            'activityFieldsChecked',
+            'btnExistsInSession',
+            'clickedInPage',
+            'inputPageOfPagination',
+            'inputSelectAll',
+            'atLeastOneCheckboxWasClicked',
+            'searchParams',
+        ));
+    }
+
+    /*Salvando pesquisa - Renato Machado 11/12/2023*/
+
+    public function showCompanySearchSaved(Request $request)
+    {
+
+        // Trate os campos que são arrays convertendo-os para JSON
+        $states = json_encode($request->input('states', []));
+        $activityFields = json_encode($request->input('activity_fields', []));
+        
+        $authUser = Auth::user();
+        
+        // Certifique-se de que cities_ids é um array
+        $citiesIds = explode(',', $request->input('cities_ids_1', ''));
+
+        // Crie um novo registro usando o modelo Eloquent
+        $companySearchSaved = CompanySearchSaved::create([
+            'search_name' => $request->input('search_name'),
+            'last_review_from' => $request->input('last_review_from_1'),
+            'last_review_to' => $request->input('last_review_to_1'),
+            'search' => $request->input('search_1'),
+            'searchCompany' => $request->input('searchCompany_1'),
+            'address' => $request->input('address_1'),
+            'district' => $request->input('district_1'),
+            'state_id' => $request->input('state_id_1'),
+            'cities_ids' => json_encode($citiesIds),
+            'researcher_id' => $request->input('researcher_id_1'),
+            'searchCompany' => $request->input('searchCompany_1'),
+            'cnpj' => $request->input('cnpj_1'),
+            'home_page' => $request->input('home_page_1'),
+            'primary_email' => $request->input('primary_email_1'),
+            'states' => $states,
+            'activity_fields' => $activityFields,
+            'user_id' => $authUser->id
+        ]);
+
+
+        // Exemplo de redirecionamento
+        return redirect()->route('company.search.step_one.index');
+    }
+   
+    
+    /*Ver pesauisa salva - Renato Machado 11/12/2023*/
+    public function  showCompanySearchSavedCompanies(Request $request)
+    {
+        $this->resetCompaniesSession();
+        
+        $authUser = Auth::user();
+        
+        $researchers = $this->researcher->get();//Renato machado 10/10/2023
+
+        if(!$companySaveds = $this->companySaved->where('id',$request->saved_id)->get()){
+            return redirect()->back();
+        }
+
+        $activityFields = $this->activityField
+            ->select('id', 'description')
+            ->orderBy('description', 'asc')
+            ->get();
+
+
+        if (authUserIsAnAssociate()) {
+
+            $statesVisible = session('statesVisible');
+            $segmentSubTypesVisible = session('segmentSubTypesVisible');
+
+            $statesOne = $this->state
+                ->where('zone_id', 1)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesTwo = $this->state
+                ->where('zone_id', 2)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesThree = $this->state
+                ->where('zone_id', 3)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFour = $this->state
+                ->where('zone_id', 4)
+                ->whereIn('id', $statesVisible)
+                ->get();
+            $statesFive = $this->state
+                ->where('zone_id', 5)
+                ->whereIn('id', $statesVisible)
+                ->get();
+
+            $segmentSubTypeOne = $this->segmentSubType
+                ->where('segment_id', 1)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeTwo = $this->segmentSubType
+                ->where('segment_id', 2)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+            $segmentSubTypeThree = $this->segmentSubType
+                ->where('segment_id', 3)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->whereIn('id', $statesVisible)
+                ->get()->pluck('description', 'state_acronym');
+        }
+
+        if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
+            $authUser->role->slug != Associate::ASSOCIATE_USER) {
+            $statesOne = $this->state->where('zone_id', 1)->get();
+            $statesTwo = $this->state->where('zone_id', 2)->get();
+            $statesThree = $this->state->where('zone_id', 3)->get();
+            $statesFour = $this->state->where('zone_id', 4)->get();
+            $statesFive = $this->state->where('zone_id', 5)->get();
+
+            $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
+            $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
+            $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+
+            $states = $this->state
+                ->select('state_acronym', 'description')
+                ->get()->pluck('description', 'state_acronym');
+        }
+
+        return view('layouts.company.search.saved.saved', compact(
+            'activityFields',
+            'statesOne',
+            'statesTwo',
+            'researchers',
+            'statesThree',
+            'statesFour',
+            'statesFive',
+            'segmentSubTypeOne',
+            'segmentSubTypeTwo',
+            'segmentSubTypeThree',
+            'states',
+            'companySaveds'
+        ));
+        
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @return type**
+     */
+    public function destroy(Request $request)
+    {
+
+        if (!$workSaved = $this->companySaved->find($request->id)) {
+            return redirect()->back();
+        }
+
+        $workSaved->delete();
+
+        return redirect()->back()->with('success', 'Deletada com sucesso');
     }
 }

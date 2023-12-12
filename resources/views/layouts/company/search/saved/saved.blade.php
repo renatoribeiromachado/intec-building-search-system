@@ -5,17 +5,18 @@
         <div class="container">
             <div class="row mt-2">
                 <div class="col-md-12 mt-2">
-                    <p class="text-center">
-                        <strong>PESQUISA DE EMPRESA</strong>
-                        - <code>FILTRO</code>
-                    </p>
+                    <p class="text-center"><strong>PESQUISA DE EMPRESA - SALVA</strong> - <code>FILTRO</code></p>
                 </div>
             </div>
+
+            {{-- @include('layouts.alerts.all-errors') --}}
+            @foreach($companySaveds as $companySaved)
 
             <form action="{{ route('company.search.step_two.index') }}" id="formulario" method="get">
                 @csrf
                 @method('GET')
-                
+
+                <!--PERIODOS-->
                 <div class="row mt-2 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-uppercase">
@@ -23,24 +24,41 @@
                         </p>
                         <hr>
                     </div>
+
                     <div class="col-md-6 pb-5">
                         <label for="last_review_from" class="control-label">
                             <strong>Data Inicial</strong>
                         </label>
-                        <input type="text" name="last_review_from" class="date form-control datepicker " value placeholder="Data Inicial..." />
+                        <input type="text" name="last_review_from" class="date form-control datepicker @error('last_review_from') is-invalid @enderror"
+                            @if($companySaved->last_review_from) value="{{ date("d/m/Y", strtotime($companySaved->last_review_from)) }}" @endif
+                            placeholder="Data Inicial..."/>
+
+                            @error('last_review_from')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('last_review_from') }}</strong>
+                            </div>
+                            @enderror
                     </div>
                     <div class="col-md-6 pb-5">
                         <label for="last_review_to" class="control-label">
                             <strong>Data Final</strong>
                         </label>
-                        <input type="text" name="last_review_to" class="date form-control datepicker " value placeholder="Data Final..." />
+                        <input type="text" name="last_review_to" class="date form-control datepicker @error('last_review_to') is-invalid @enderror"
+                            @if($companySaved->last_review_to) value="{{ date("d/m/Y", strtotime($companySaved->last_review_to)) }}" @endif
+                            placeholder="Data Final..."/>
+
+                            @error('last_review_to')
+                            <div class="invalid-feedback">
+                                <strong>{{ $errors->first('last_review_to') }}</strong>
+                            </div>
+                            @enderror
                     </div>
                 </div>
                 
-
                 @if (($statesOne->count() + $statesTwo->count() + $statesThree->count() +
                     $statesFour->count() + $statesFive->count()) > 0)
-                    <div class="row mt-4">
+                    <!--MARCAR TODAS AS REGIÕES-->
+                    <div class="row mt-3 mb-3">
                         <div class="col-md-12">
                             <label class="control-label text-uppercase">
                                 <strong>
@@ -54,81 +72,152 @@
                     </div>
                 @endif
 
+                <!--NORTE-->
                 @if ($statesOne->count() > 0)
-                    <!--NORTE-->
-                    <x-state-checkbox-group
-                        id="zone-all-1"
-                        input-one-name="zones[0]"
-                        class-one="norte checkRegiaoGeral"
-                        label-text="Norte"
-                        :data-list="$statesOne"
-                        class-two="checkNorte checkRegiaoGeral"
-                        list-input-id-for="state-one-"
-                        list-input-name="states[]"
-                        collection-relation=""
-                    />
+                    <div class="row mt-2 bg-light border"> 
+                        <div class="col-md-12">
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->states) ? $companySaved->states : json_decode($companySaved->states, true) ?? []) : [];
+                            @endphp
+
+                            <p class="text-uppercase pt-3">
+                                <input type="checkbox" name="states[]" value="{{ $statesOne }}" class="norte checkRegiaoGeral" id="zone-all-1" />
+                                <strong>Norte <code>* Selecione Todos</code></strong>
+                            </p>
+
+                            <hr>
+                        </div>
+
+                        @foreach ($statesOne as $checkbox)
+                            <div class="col-md-4 pt-3">
+                                <p class="text-right text-uppercase">
+                                    <input type="checkbox" class="checkNorte checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
 
+                <!--NORDESTE-->
                 @if ($statesTwo->count() > 0)
-                    <!--NORDESTE-->
-                    <x-state-checkbox-group
-                        id="zone-all-2"
-                        input-one-name="zones[0]"
-                        class-one="nordeste checkRegiaoGeral"
-                        label-text="Nordeste"
-                        :data-list="$statesTwo"
-                        class-two="checkNordeste checkRegiaoGeral"
-                        list-input-id-for="state-two-"
-                        list-input-name="states[]"
-                        collection-relation=""
-                    />
+    
+                    <div class="row mt-2 bg-light border"> 
+                        <div class="col-md-12">
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->states) ? $companySaved->states : json_decode($companySaved->states, true) ?? []) : [];
+                            @endphp
+
+                            <p class="text-uppercase pt-3">
+                                <input type="checkbox" name="states[]" value="{{ $statesTwo }}" class="nordeste checkRegiaoGeral" id="zone-all-2" />
+                                <strong>Nordeste <code>* Selecione Todos</code></strong>
+                            </p>
+
+                            <hr>
+                        </div>
+
+                        @foreach ($statesTwo as $checkbox)
+                            <div class="col-md-4 pt-3">
+                                <p class="text-right text-uppercase">
+                                    <input type="checkbox" class="checkNordeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
 
+                <!--CENTRO-OESTE-->
                 @if ($statesThree->count() > 0)
-                    <!--CENTRO-OESTE-->
-                    <x-state-checkbox-group
-                        id="zone-all-3"
-                        input-one-name="zones[0]"
-                        class-one="centro-oeste checkRegiaoGeral"
-                        label-text="Centro-Oeste"
-                        :data-list="$statesThree"
-                        class-two="checkCentroOeste checkRegiaoGeral"
-                        list-input-id-for="state-three-"
-                        list-input-name="states[]"
-                        collection-relation=""
-                    />
+                    <div class="row mt-2 bg-light border"> 
+                        <div class="col-md-12">
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->states) ? $companySaved->states : json_decode($companySaved->states, true) ?? []) : [];
+                            @endphp
+
+                            <p class="text-uppercase pt-3">
+                                <input type="checkbox" name="states[]" value="{{ $statesThree }}" class="centro-oeste checkRegiaoGeral" id="zone-all-3" />
+                                <strong>Centro-Oeste <code>* Selecione Todos</code></strong>
+                            </p>
+
+                            <hr>
+                        </div>
+
+                        @foreach ($statesThree as $checkbox)
+                            <div class="col-md-4 pt-3">
+                                <p class="text-right text-uppercase">
+                                    <input type="checkbox" class="checkCentroOeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
 
+                <!--SUDESTE-->
                 @if ($statesFour->count() > 0)
-                    <!--SUDESTE-->
-                    <x-state-checkbox-group
-                        id="zone-all-4"
-                        input-one-name="zones[0]"
-                        class-one="sudeste checkRegiaoGeral"
-                        label-text="Sudeste"
-                        :data-list="$statesFour"
-                        class-two="checkSudeste checkRegiaoGeral"
-                        list-input-id-for="state-four-"
-                        list-input-name="states[]"
-                        collection-relation=""
-                    />
+                    <div class="row mt-2 bg-light border"> 
+                        <div class="col-md-12">
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->states) ? $companySaved->states : json_decode($companySaved->states, true) ?? []) : [];
+                            @endphp
+
+                            <p class="text-uppercase pt-3">
+                                <input type="checkbox" name="states[]" value="{{ $statesFour }}" class="sudeste checkRegiaoGeral" id="zone-all-4" />
+                                <strong>Sudeste <code>* Selecione Todos</code></strong>
+                            </p>
+
+                            <hr>
+                        </div>
+
+                        @foreach ($statesFour as $checkbox)
+                            <div class="col-md-4 pt-3">
+                                <p class="text-right text-uppercase">
+                                    <input type="checkbox" class="checkSudeste checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
 
+                <!--SUL-->
                 @if ($statesFive->count() > 0)
-                    <!--SUL-->
-                    <x-state-checkbox-group
-                        id="zone-all-5"
-                        input-one-name="zones[0]"
-                        class-one="sul checkRegiaoGeral"
-                        label-text="Sul"
-                        :data-list="$statesFive"
-                        class-two="checkSul checkRegiaoGeral"
-                        list-input-id-for="state-five-"
-                        list-input-name="states[]"
-                        collection-relation=""
-                    />
-                @endif
+                    <div class="row mt-2 bg-light border"> 
+                        <div class="col-md-12">
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->states) ? $companySaved->states : json_decode($companySaved->states, true) ?? []) : [];
+                            @endphp
 
+                            <p class="text-uppercase pt-3">
+                                <input type="checkbox" name="states[]" value="{{ $statesFive }}" class="sul checkRegiaoGeral" id="zone-all-5" />
+                                <strong>Sul <code>* Selecione Todos</code></strong>
+                            </p>
+
+                            <hr>
+                        </div>
+
+                        @foreach ($statesFive as $checkbox)
+                            <div class="col-md-4 pt-3">
+                                <p class="text-right text-uppercase">
+                                    <input type="checkbox" class="checkSul checkRegiaoGeral" name="states[]" id="zone-{{ $checkbox->id }}" value="{{ $checkbox->id }}" {{ in_array($checkbox->id, $checkedValues) ? 'checked' : '' }}>
+                                    <label for="zone-{{ $checkbox->id }}"><strong>{{ $checkbox->description }}</strong></label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <label class="control-label text-uppercase">
@@ -141,14 +230,17 @@
                 <div class="row mt-2 bg-light border">
                     @foreach($activityFields as $activityField)
                         @if($activityField->id !== 24)
+                            @php
+                                $savedId = request()->saved_id;
+                                $companySaved = \App\Models\CompanySearchSaved::find($savedId);
+                                $checkedValues = $companySaved ? (is_array($companySaved->activity_fields) ? $companySaved->activity_fields : json_decode($companySaved->activity_fields, true) ?? []) : [];
+                            @endphp
                             <div class="col-md-4 pt-3">
                                 <p class="text-right">
-                                    <input
-                                        type="checkbox"
-                                        id="activity-field-{{ $activityField->id }}"
+                                    <input type="checkbox" id="activity-field-{{ $activityField->id }}"
                                         name="activity_fields[]"
                                         class="activity_fields"
-                                        value="{{ $activityField->id }}"
+                                        value="{{ $activityField->id }}" {{ in_array($activityField->id, $checkedValues) ? 'checked' : '' }}
                                     >
                                     <label for="activity-field-{{ $activityField->id }}">
                                         <strong>{{ $activityField->description }}</strong>
@@ -158,7 +250,7 @@
                         @endif
                     @endforeach
                 </div>
-
+                
                 <div class="row mt-4 pb-4 bg-light border">
                     <div class="col-md-12 pt-3">
                         <p class="text-left"> <i class="fa fa-check"></i><strong>FILTRO ESPECÍFICO</strong></p>
@@ -175,7 +267,7 @@
                                     input-name="search"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->search }}"
                                     :input-readonly="false"
                                     placeholder="Digite a Fantasia da Empresa"
                                 />
@@ -185,6 +277,7 @@
 
                         <div class="row mt-2">
                             <div class="col-md-12">
+                               
                                 <x-intec-input
                                     label-input-id="address"
                                     label-text="Endereço"
@@ -192,7 +285,7 @@
                                     input-name="address"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->address }}"
                                     :input-readonly="false"
                                 />
                             </div>
@@ -207,7 +300,7 @@
                                     required=""
                                     placeholder="-- Selecione --"
                                     :collection="$states"
-                                    value=""
+                                    value="{{ $companySaved->state_id }}"
                                 />
                             </div>
 
@@ -231,22 +324,30 @@
                                     input-name="home_page"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->home_page }}"
                                     :input-readonly="false"
                                 />
                             </div>
                         </div>
                         
-                        @can('ver-filtro-pesquisador-empresas')
+                        @can('ver-filtro-pesquisador-obras')
                             <div class="row mt-2">
                                 <div class="col-md-12">
                                     <label class="control-label"> Pesquisador</label>
                                     <select name="researcher_id" class="form-select form-group">
-                                        <option value="0">-- Selecione --</option>
-                                        @foreach($researchers as $researcher)
-                                            <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <option value="{{ $companySaved->researcher_id }}">
+                                        @if ($companySaved->researcher_id)
+                                            {{ \App\Models\Researcher::find($companySaved->researcher_id)->name }}
+                                        @else
+                                            -- Selecione --
+                                        @endif
+                                    </option>
+
+                                    @foreach($researchers as $researcher)
+                                        <option value="{{ $researcher->id }}">{{ $researcher->name }}</option>
+                                    @endforeach
+                                </select>
+
                                 </div>
                             </div>
                         @endcan
@@ -263,7 +364,7 @@
                                     input-name="searchCompany"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->searchCompany }}"
                                     :input-readonly="false"
                                     placeholder="Digite a Razão Social da Empresa"
                                 />
@@ -279,7 +380,7 @@
                                     input-name="district"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->district }}"
                                     :input-readonly="false"
                                 />
                             </div>
@@ -289,8 +390,39 @@
                         <div class="row mt-2">
                             <div class="col-md-12">
                                 <label class="control-label">Cidades Selecionadas - <a class="clear" onclick="limparSelecionadas()">Limpar selecionada(s)</a> *</label>
-                                <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
-                                <input type="hidden" name="cities_ids" id="citiesIdsInput" value="">
+                                @php
+                                    $citiesIdsArray = json_decode($companySaved->cities_ids, true);
+                                    $citiesNames = [];
+
+                                    if (!empty($citiesIdsArray)) {
+                                        foreach ($citiesIdsArray as $cityId) {
+                                            $cityId = trim($cityId);
+
+                                            if (!empty($cityId)) {
+                                                // Obtém a cidade diretamente pelo ID
+                                                $city = \App\Models\City::find($cityId);
+
+                                                if ($city) {
+                                                    $citiesNames[] = $city->description; // Use o campo correto da cidade
+                                                } else {
+                                                    // Adicione um log para depuração
+                                                    \Log::info("City not found for ID: $cityId");
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        // Adicione um log para depuração
+                                        \Log::info("No city IDs found in the array");
+                                    }
+
+                                    // Converte a array de nomes em uma string separada por vírgulas
+                                    $formattedCitiesNames = implode(', ', $citiesNames);
+                                @endphp
+
+                                <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" 
+                                       value="{{ $formattedCitiesNames }}" style="color: blue;" 
+                                       placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
+                                <input type="hidden" name="cities_ids" id="citiesIdsInput" value="{{ implode(',', json_decode($companySaved->cities_ids, true)) }}">
                             </div>
                         </div>
 
@@ -350,7 +482,7 @@
                                     input-name="cnpj"
                                     class-one="cnpj"
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->cnpj }}"
                                     :input-readonly="false"
                                 />
                             </div>
@@ -362,145 +494,32 @@
                                     input-name="primary_email"
                                     class-one=""
                                     label-class=""
-                                    input-value=""
+                                    input-value="{{ $companySaved->primary_email }}"
                                     :input-readonly="false"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                 <div class="row mt-4 pb-4">
 
-                <div class="row mt-4 pb-4">
-                    
-                    <!--PESQUISAS SALVAS-->
-                    @can('salvar-pesquisa-empresa')
-                        <div class="col-md-3">
-                            <label class="control-label">
-                                <i class="fa fa-search"></i>
-                                <strong>Pesquisa(s) Salva(s)</strong>
-                            </label>
-                            <form action='' method='get'>
-                                @csrf
-                                <div class="row">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group mb-3">
-                                            <select name='saved_id' id="selecao" class="form-select">
-                                                <option value="0">-- Selecione --</option>
-                                                @foreach($companySaveds as $companySaved)
-                                                    <option value="{{ $companySaved->id }}">{{ $companySaved->search_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <button type='submit' class="btn btn-success" id='pesquisa-salva'><i class='fa fa-search'></i></button> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-          
-                        <div class="col-md-3">
-                            <label class="control-label text-danger"> <strong>Deletar Pesquisa(s)</strong></label>
-                            <select name="" id="delete" class="form-select" onchange="showModal()">
-                                <option value="0">-- Selecione - Delete --</option>
-                                @foreach($companySaveds as $companySaved)
-                                  <option value="{{ $companySaved->id }}">{{ $companySaved->search_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <script>
-                            function showModal() {
-                                var selectedCompanyId = document.getElementById("delete").value;
-                                var modal = new bootstrap.Modal(document.getElementById("searchSaved"));
-
-                                if (selectedCompanyId !== "0") {
-                                  document.getElementById("companyId").value = selectedCompanyId;
-                                  modal.show();
-                                } else {
-                                  modal.hide();
-                                }
-                              }
-
-                              function closeModal() {
-                                var modal = document.getElementById("myModal");
-                                modal.style.display = "none";
-                              }
-                        </script>
-
-                        <!-- The Modal -->
-                        <div class="modal" id="searchSaved">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <!-- Modal Header -->
-                                    <div class="modal-header bg-danger">
-                                        <h5 class="modal-title text-white">Deletar Pesquisa de Empresa Salva</h5>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        <form action="{{ route('company.search.destroy') }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name="id" class="form-control" id="companyId" value=""/>
-
-                                            <div class="modal-body">
-                                                <p>Tem certeza que deseja deletar esta pesquisa de empresa salva?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Sim</button>
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endcan
-
+                    <!--BOTÕES-->
                     <div class="col-md-3">
                         <label class="control-label"> <strong>Ação</strong></label>
                         <br>
-                        @can('salvar-pesquisa-empresa')
-                            <button type="submit" class="btn btn-primary submit" title="Pesquisar" id="salvar-pesquisa">
-                                <i class="fa fa-search"></i> Salvar Pesquisa
-                            </button>
-                        @endcan
-                        <button
-                            type="submit"
-                            class="btn btn-success submit"
-                            title="Pesquisar"
-                            id="pesquisar"
-                            >
-                            <i class="fa fa-search"></i>
-                            Pesquisar
+                        
+                        <button type="submit" class="btn btn-success submit" title="Pesquisar" id="pesquisar">
+                            <i class="fa fa-search"></i> Pesquisar
                         </button>
                     </div>
                 </div>
-            </form>
-        </div>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Adicione um ouvinte de evento de clique ao botão "Salvar Pesquisa"
-                document.getElementById('salvar-pesquisa').addEventListener('click', function() {
-                    // Redireciona o formulário para a rota desejada
-                    document.getElementById('formulario').action = "{{ route('company.search.saved-view') }}";
-                });
 
-                // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
-                document.getElementById('pesquisar').addEventListener('click', function() {
-                    // Redireciona o formulário para a rota desejada
-                    document.getElementById('formulario').action = "{{ route('company.search.step_two.index') }}";
-                });
-                 // Adicione um ouvinte de evento de clique ao botão "Pesquisar"
-                document.getElementById('pesquisa-salva').addEventListener('click', function() {
-                    // Redireciona o formulário para a rota desejada
-                    document.getElementById('formulario').action = "{{ route('company.search.companies') }}";
-                });
-                
-            });
-        </script>
+             </form>
+           
+        </div>
     </div>
+@endforeach
 @endsection
 
 @push('scripts')
@@ -625,3 +644,5 @@ function updateRegiaoCheckboxes(regiaoCheckboxes, isChecked) {
     </script>
 
 @endpush
+
+

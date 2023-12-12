@@ -114,6 +114,13 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
             'search/step-3',
             [CompanySearchController::class, 'showCompanySearchStepThree']
         )->name('company.search.step_three.index');
+        
+        
+        /*Salvando pesquisa - Renato Machado - 11/12/2023*/
+        Route::get('search/savedView',[CompanySearchController::class, 'showCompanySearchSavedView'])->name('company.search.saved-view');
+        Route::post('search/saved',[CompanySearchController::class, 'showCompanySearchSaved'])->name('company.search.saved');
+        Route::get('search/companies',[CompanySearchController::class, 'showCompanySearchSavedCompanies'])->name('company.search.companies');
+        Route::delete('search/delete', [CompanySearchController::class, 'destroy'])->name('company.search.destroy');
     });
 
     Route::prefix('stages')->group(function () {
