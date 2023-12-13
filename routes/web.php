@@ -30,9 +30,11 @@ use App\Http\Controllers\CronAssociateController;
 use App\Http\Controllers\EmailWorkController;
 use App\Http\Controllers\EmailCompanyController;
 use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\PopupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
+        
 
 /*
 |--------------------------------------------------------------------------
@@ -374,6 +376,10 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Alterar Senha - Renato Machado 28/11/2023 */
     Route::get('user-password', [UserController::class, 'password'])->name('user-password.password');
     Route::put('user-password', [UserController::class, 'updatePassword'])->name('user-password.updatePassword');
+    
+    /*Popup - 13/12/2023 - Renato Machado*/
+    Route::get('popup', [PopupController::class, 'index'])->name('popup.index');
+    Route::put('popup/{id}', [PopupController::class, 'update'])->name('popup.update');
 
 
     Route::prefix('associates')->group(function() {

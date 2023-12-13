@@ -353,6 +353,14 @@
                                         </a>
                                     </li>
                                     @endcan
+                                    
+                                    @can('ver-popup')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('popup.index') }}">
+                                            Pop-up
+                                        </a>
+                                    </li>
+                                    @endcan
                                 </ul>
                             </li>
                         @endcan

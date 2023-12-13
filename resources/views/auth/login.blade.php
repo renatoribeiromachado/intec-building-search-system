@@ -81,6 +81,34 @@
             </div>
         </div>
     </div>
+    
+    @php
+        $popupData = App\Models\Popup::where('status', '1')->first();
+    @endphp
+
+    <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="formCreate">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h4 class="modal-title" id="formCreate">{{ optional($popupData)->title }}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ optional($popupData)->description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Pop-up-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let statusPopup = {{ $popupData->status ?? 0 }};
+            if (statusPopup === 1) {
+                $('#popup').modal('show'); // Substitua 'popup' pelo ID real do seu modal
+            }
+        });
+     </script>
 
 </section>
 @endsection
