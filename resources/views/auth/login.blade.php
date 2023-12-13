@@ -94,11 +94,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>{{ optional($popupData)->description }}</p>
+                    {!! nl2br(e(optional($popupData)->description)) !!}
                 </div>
             </div>
         </div>
     </div>
+    
     <!--Pop-up-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script>
