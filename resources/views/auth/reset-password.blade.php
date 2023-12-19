@@ -1,48 +1,58 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.app')
+@section('content')
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-12">
+                <div class="card rounded-3 text-black shadow">
+                    <div class="row g-0">
+                        <div class="col-lg-12">
+                            <div class="card-body p-md-5 mx-md-4">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                                <div class="text-center">
+                                    <img src='{{ url('images/logomarca.png') }}' style="width: 285px;"/>
+                                    <h4 class="mt-1 mb-5 pb-1">Intec Brasil</h4>
+                                    <p>Redefina sua senha</p>
+                                </div>
+                                
+                                <form method="POST" action="{{ route('password.update') }}">
+                                    @csrf
 
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
+                                    <!-- Password Reset Token -->
+                                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                                    <!-- Email Address -->
+                                    <div class="col-md-12 mb-4">
+                                        <label for="email" value="__('Email')" />
+                                        <input id="email" class="form-control" type="email" name="email" value="{{ $request->email }}" required autofocus readonly/>
+                                    </div>
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+                                    <!-- Password -->
+                                    <div class="col-md-12 mt-4">
+                                        <label for="password" value="__('Password')" />
+                                        <input id="password" class="form-control" type="password" name="password" required />
+                                    </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+                                    <!-- Confirm Password -->
+                                    <div class="col-md-12 mt-4">
+                                        <label for="password_confirmation" value="__('Confirm Password')" />
+                                        <input id="password_confirmation" class="form-control"
+                                               type="password"
+                                               name="password_confirmation" required />
+                                    </div>
+
+                                    <div class="flex items-center justify-end mt-4">
+                                        <button class="btn btn-primary">
+                                            {{ __('Resetar senha') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+        </div>
+    </div>
+</section>
+@endsection

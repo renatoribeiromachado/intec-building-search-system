@@ -14,6 +14,16 @@
                                     <h4 class="mt-1 mb-5 pb-1">Pesquisa de Obras</h4>
                                     <p>Esqueceu sua senha? <br>Sem problemas. Basta nos informar seu endereço de e-mail<br> e enviaremos por e-mail um link de redefinição de senha que permitirá que você escolha uma nova.</p>
                                 </div>
+                                
+                                <!-- Mensagem de sucesso ao enviar o link -->
+                                <div class="text-center">
+                                    @if(session('status'))
+                                        <div class="alert alert-success">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                
 
                                 <!--Mensagem que vem da classe app/Http/Middleware/SingleDeviceSessionMiddleware, qdo o mesmo usuario com o mesmo se login se loga em outro dispositivo-->
                                 <div class="text-center">
