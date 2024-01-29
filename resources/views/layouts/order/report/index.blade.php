@@ -69,12 +69,14 @@
                 </tr>
                 <tr>
                     <td class="text-center h1">
-                         @if($order->company->associate->linked_company == "36.622.261/0001-90")
-                             <strong>CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
-                         @else
-                             <strong>INTEC INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
-                         @endif
-                         {{ $order->company->associate->linked_company }}
+                        @if($order->company->associate->linked_company == "36.622.261/0001-90")
+                            <strong>CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
+                        @elseif($order->company->associate->linked_company == "30.252.400/0001-55")
+                            <strong>INTEC INFORMAÇÕES DA CONSTRUÇÃO LTDA - CNPJ:</strong>
+                        @elseif($order->company->associate->linked_company == "36.473.409/0001-72")
+                            <strong>PERFORMANCE INFORMATIVO DE OBRAS LTDA - CNPJ:</strong>
+                        @endif
+                            {{ $order->company->associate->linked_company }}
                      </td>
                 </tr>
                 <tr>
@@ -404,178 +406,271 @@
                 </p>
             </div>
         </div>
-    @else
-        <div class="container minuta">
-            <div class="row">
-                <p>INSTRUMENTO DE CONTRATO DE SERVIÇOS AO BANCO DE DADOS INTEC</p> 
-                <p>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</p>
-                <p>Por este instrumento, de um lado, a CONTRATANTE, devidamente qualificada no ato de adesão ao Contrato de Prestação de Serviços, e, de outro, a
-                CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA, com sede na Rua Alencar Araripe, 985 - Sacomã - 04253000 - Sao Paulo, SP, inscrita
-                no CNPJ/MF sob o nº 36.622.261/0001-90, doravante designada INTEC, resolvem firmar este Contrato de Prestação de Serviços, que se regerá mediante
-                as seguintes cláusulas e condições:</p>
-                <p>I) DO ACESSO ÀS BASES DE DADOS COMERCIAIS DA INTEC</p>
-                <p>1.1 Este contrato não se destina ao consumidor final e tem por finalidade disponibilizar e servir de insumo a atividade profissional da CONTRATANTE
-                para que possa ter acesso às bases de dados comerciais de produtos ou serviços na área da construção civil mantidos em plataforma virtual pela INTEC.
-                Parágrafo Primeiro: A CONTRATANTE realizará a opção de acesso as informações de obras por seguimento e, por consequência, ao preço a que este
-                se refere no momento do aceite eletrônico desta contratação.</p>
-                <p>Parágrafo Segundo: O preço ajustado e as condições de pagamento ficará registrada no Pedido de Fornecimento de Informações. Parágrafo Terceiro: A
-                CONTRATANTE terá acesso à 100% das informações contratadas dentro do plano descrito já em seu primeiro acesso, sem qualquer limitação de
-                quantidade de consultas, buscas ou lote de obras que estejam dentro do plano.</p>
-                <p>Parágrafo Quarto: Novos blocos de informações ou funcionalidades disponibilizados nos bancos de dados e nos serviços objeto desta contratação
-                    poderão ser utilizados pela CONTRATANTE sem implicar em qualquer custo adicional.</p>
-                <p>Parágrafo Quinto: A partir do momento em que a CONTRATADA e CONTRATANTE realizarem a assinatura deste documento, ficará formalizada, para
-                    todo e qualquer efeito de direito, a sua adesão as condições contratuais.</p>
-                <p>Parágrafo Sexto: No término do prazo previsto de contratação, a INTEC entrará em contato com a CONTRATANTE para verificar a hipótese de renovação,
-                    ajustando novo valor, pacote e condições de pagamento.</p>
-                <p>Parágrafo Sétimo: A INTEC não realiza a exportação manual e ou envio de planilhas com as informações do banco de dados contratado, o próprio sistema
-                possui a funcionalidade onde o CONTRATANTE pode realizar a exportação em excel de até 500 obras ou empresas por lote exportado.
-                Parágrafo Oitavo: O CONTRATANTE dos serviços INTEC terá um limite pré-estabelecido de 01 (uma) licença de acesso e senha por contratação e para
-                cada login excedente será acrescido o valor único de R$ 500,00 (Quinhentos reais).</p>
-                <p>II) DO PREÇO</p>
-                <p>2.1 A CONTRATANTE pagará, anualmente, à INTEC, o valor ao plano escolhido, para ter acesso por (12) doze meses ao sistema e banco de dados
-                    contratado, descrito no Pedido de Fornecimento de Informações.</p>
-                <p>Parágrafo Primeiro: O pagamento da anuidade poderá ser parcelado em até (12) doze vezes, todavia, o acesso poderá ser interrompido, sem prévio
-                    aviso, caso ocorra a inadimplência de qualquer das parcelas descritas e ajustadas na condição de pagamento.</p>
-                <p>Parágrafo Segundo: Quando da aquisição do pacote anual a INTEC encaminhará por e-mail a nota fiscal à CONTRATANTE, no valor correspondente a
-                    aquisição, conforme informado no Pedido de Fornecimento de Informações.</p>
-                <p>Parágrafo Terceiro: As partes convencionam que, no caso de não pagamento até a data do vencimento, o valor da fatura sofrerá acréscimo de 2% (dois
-                por cento), a título de multa por atraso, e juros de mora de (1%) um por cento ao mês, calculados pro rata temporis, desde a data do inadimplemento até
-                a do efetivo pagamento.</p>
-                <p>Parágrafo Quarto: Ocorrendo acumulo de (2) duas parcelas não pagas em seus respectivos vencimentos, as parcelas vincendas, tornam-se vencidas,
-                podendo a CONTRATADA efetuar a sua cobrança administrativa ou judicial, arcando a CONTRATANTE com as custas e despesas, além de honorários
-                advocatícios na proporção de (20%) vinte por cento sobre o saldo devido, sem prejuízo da multa, juros de mora de (1%) um por cento ao mês e correção
-                monetária até efetiva liquidação.</p>
-                <p>Parágrafo Quinto: A não utilização dos serviços contratados NÃO isenta a CONTRATANTE do pagamento da ANUIDADE, sendo livre o acesso pelo
-                    período de (12) doze meses da contratação, exceto em caso de inadimplência.</p>
-                <p>III) DO DISTRATO</p>
-                <p>3.1 Nos casos em que a CONTRATADA cedeu à CONTRATANTE a condição facilitada de pagamento em até 12 parcelas e a CONTRATANTE venha a
-                solicitar o DISTRATO dentro do período minimo determinado na pagina 1 (um), a CONTRATADA em nome da boa prática e parceria comercial dará
-                como quitado (50%) do saldo residual, e será realizado apenas a cobrança dos outros (50%) restante do saldo residual, cujo pagamento deverá ser
-                realizado pelo CONTRATANTE em uma única parcela no prazo de (10) dez dias da solicitação do DISTRATO, sob pena de incorrer multa de (20%) vinte
-                por cento sobre o saldo devido, acrescido de juros e correção monetária e honorários advocatícios. Visto que, conforme cláusula 1.1 Paragráfo terceiro,
-                a CONTRATADA entregou e disponibilizou desde o início deste contrato 100% das informações do seu banco de dados dentro do plano contratado sem
-                qualquer limitação ou restrição de uso.</p>
-                <p>3.2 O DISTRATO poderá ser realizado a qualquer tempo, com prévio aviso de (30) trinta dias, devendo ser encaminhado um e-mail para
-                    posvendas@intecbrasil.com.br, com o assunto DISTRATO.</p>
-                <p>IV) DAS RESPONSABILIDADES E DOS DIREITOS DA INTEC</p>
-                <p>4.1 A INTEC responsabiliza-se por perdas e danos que se originem das informações prestadas, desde que tenha culpa exclusiva.</p>
-                <p>4.2 A realização ou não realização de quaisquer negócios jurídicos entre a CONTRATANTE e os seus clientes ou eventual insucesso de campanhas
-                levadas a termo com o uso das informações disponibilizadas na plataforma da INTEC, e eventuais perdas e danos que qualquer deles e/ou terceiros
-                possam vir a pleitear, judicial e/ou extrajudicialmente, não são responsabilidade da INTEC.</p>
-                <p>4.3 A INTEC responsabiliza-se pela integridade das informações existentes nas bases de dados e nos serviços contratados, tais como recebidas de suas
-                    fontes, bem como não se responsabiliza pelo desempenho do serviço, eventualmente pretendido pela CONTRATANTE.</p>
-                <p>4.4 A INTEC declara que é legitima proprietária dos direitos de propriedade intelectual relativos ao sistema de pesquisa, bem como sobre os demais
-                materiais e as informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, sendo vedada a sua cópia, reprodução ou
-                utilização, senão nos termos ora contratados.</p>
-                <p>Parágrafo Único: Todos os direitos de propriedade intelectual sobre a plataforma e a documentação a ele relacionada, bem como sobre os demais
-                    materiais e informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, permanecerão sob a titularidade da INTEC.</p>
-                <p>V) DAS RESPONSABILIDADES E DOS DIREITOS DA CONTRATANTE</p>
-                <p>5.1 A CONTRATANTE responsabiliza-se, integralmente e com exclusividade, perante os seus clientes e/ou terceiros, quanto à utilização das informações,
-                dos serviços e da política de compra e venda disponibilizados neste contrato, respondendo por perdas e danos que possam, eventualmente, originar-se
-                dessa utilização.</p>
-                <p>5.2 A CONTRATANTE se obriga a dar ciência das obrigações ora contratada aos seus empregados e/ou quaisquer terceiros que venham a ter acesso
-                aos serviços objeto deste contrato, em especial no que se refere ao uso das informações e às responsabilidades da CONTRATANTE e da INTEC, bem
-                como a fiscalizar a sua observância.</p>
-                <p>5.3 A CONTRATANTE reconhece que lhe é vedado:</p>
-                <p>a) armazenar, divulgar e/ou fornecer a terceiros, em hipótese alguma e sob qualquer forma, as informações obtidas por meio deste contrato, inclusive
-                    após o término da relação contratual, exceto mediante prévia e expressa autorização da INTEC, a qual jamais será presumida;</p>
-                <p>b) reproduzir qualquer página ou tela com dados de propriedade da INTEC, inclusive as constantes em seu site, nos manuais ou em qualquer outro
-                    regulamento;</p>
-                <p>c) utilizar as informações obtidas para constranger ou coagir, de qualquer maneira que seja, o titular do documento consultado ou, ainda, como justificativa
-                para atos que violem ou ameacem interesses de terceiros;</p>
-                <p>d) vender, repassar ou estabelecer convênio de repasse de informações com outras empresas, especialmente aquelas que prestam serviços de
-                    informações ou assemelhados, salvo mediante prévia e expressa autorização da INTEC, a qual jamais será presumida.</p>
-                <p>VI) DO ACESSO AO BANCO DE DADOS DA INTEC</p>
-                <p>6.1 A INTEC se reserva no direito de monitorar e controlar os acessos realizados pelo CONTRATANTE dos serviços INTEC e identificada qualquer
-                irregularidade no uso das informações, os serviços serão automaticamente suspensos até que o processo interno de fiscalização seja concluido, sendo
-                a CONTRATANTE notificada a esclarecer as irregularidades.</p>
-                <p>Parágrafo Primeiro: Ocorrendo irregularidades, tais como:</p>
-                <p>a) Ceder Logins e senha à terceiros para que tenham acesso a plataforma;</p>
-                <p>b) Comercializar dados obtidos na plataforma da INTEC, a CONTRATANTE sofrerá uma pena pecuniária equivalente a (1) uma anuidade contratada,
-                    além de interrupção definitiva no acesso à plataforma.</p>
-                <p>6.2 A CONTRATANTE responsabiliza-se, por si, seus empregados e/ou prepostos, pelo resguardo de sua(s) senha(s), não as repassando a terceiros,
-                    inclusive à INTEC, sob qualquer hipótese.</p>
-                <p>6.3 Caso não sejam observadas as condições previstas nas alíneas desta cláusula, a CONTRATANTE assumirá exclusivamente todo e qualquer dano
-                    decorrente dessa inobservância.</p>
-                <p>VII) DAS PRÁTICAS DE COMPLIANCE ANTICORRUPÇÃO E CONCORRÊNCIA DESLEAL</p>
-                <p>7.1 As partes declaram, para todos os efeitos, que exercerão as suas atividades observando os preceitos ético-profissionais, em conformidade com a
-                    legislação vigente e que detêm as aprovações necessárias à celebração deste contrato e ao cumprimento das obrigações nele previstas.</p>
-                <p>7.2 As partes declaram, garantem e aceitam que, com relação a este contrato, não houve e não haverá nenhuma solicitação, exigência, cobrança ou
-                obtenção para si e para outrem de vantagem indevida ou promessa de vantagem indevida, a pretexto de influir em ato praticado por agente público e/ou
-                privado, restando expresso, ainda, que nenhum favorecimento, taxa, dinheiro ou qualquer outro objeto de valor foi ou será pago, oferecido, doado ou
-                prometido pelas partes ou por qualquer de seus agentes ou empregados, direta ou indiretamente, especialmente, mas não se limitando, a qualquer:</p>
-                <p>a) pessoa (natural ou jurídica) que exerça cargo, emprego ou função pública ou trabalhe em entidade paraestatal, fundações, empresas públicas,
-                sociedades de economia mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC
-                ou conveniada para a execução de atividade típica da administração pública;</p>
-                <p>b) partido político ou autoridade partidária ou qualquer candidato a cargo político;</p>
-                <p>c) representante que esteja atuando por ou em nome de qualquer entidade estatal ou paraestatal, fundações, empresas públicas, sociedades de economia
-                mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC ou conveniada para a
-                execução de atividade típica da administração pública;</p>
-                <p>d) pessoa (natural ou jurídica) que exerça cargo, emprego ou função em qualquer organização pública internacional (considerando-se cada um desses
-                    indivíduos descritos nos itens a, b, c, d como “Autoridade Pública”), com o intuito de:</p>
-                <p>a) exercer influência indevida sobre qualquer Autoridade Pública, em sua capacidade oficial, societária ou comercial;</p>
-                <p>b) induzir qualquer Autoridade Pública a realizar ou deixar de realizar qualquer ato, infringindo ou não as suas atribuições legais;</p>
-                <p>c) induzir indevidamente qualquer Autoridade Pública a usar de sua influência perante a Administração direta ou indireta para afetar ou influenciar
-                qualquer ato ou decisão de sua responsabilidade;</p>
-                <p>d) obter qualquer vantagem indevida ou que seja contrária ao interesse público.</p>
-                <p>7.3 As partes, seus agentes ou empregados devem combater toda e qualquer iniciativa que seja contra a livre concorrência, especialmente, mas não se
-                    limitando, a iniciativas indutoras à formação de cartel.</p>
-                <p>7.4 As partes se comprometem a estabelecer de forma clara e precisa os deveres e as obrigações de seus agentes e/ou empregados em questões
-                comerciais, para que estejam sempre em conformidade com as leis, as normas vigentes e as determinações deste contrato. 7.5 As partes ficarão sujeitas
-                a auditorias e visitas, realizadas a critério da outra parte, para a verificação do cumprimento das práticas estabelecidas neste título.</p>
-                <p>7.6 A CONTRATANTE está impedida de realizar qualquer tipo de proposta de trabalho ou, ainda, de realizar a contratação, de forma direta ou indireta
-                de qualquer dos colaboradores da INTEC, isso na constância do contrato de trabalho, estendendo-se pelo prazo de (90) noventa dias após o término da
-                relação de emprego com o colaborador, sob pena de incorrer em concorrência desleal, com a punibilidade de (100) cem vezes o valor do salário do
-                obreiro assediado.</p>
-                <p>7.7 A violação de qualquer das práticas estabelecidas neste título poderá ensejar a imediata rescisão deste contrato pela parte inocente.</p>
-                <p>VIII) SUPORTE TÉCNICO E ATENDIMENTO AO CLIENTE</p>
-                <p>8.1 O Suporte Técnico e o Atendimento ao Cliente são permanentes via e-mail, telefone, WhatsApp ou presencial na sede da INTEC. Horário de
-                    atendimento das: 09:00hs às 17:00hs de segunda á sexta-feira, exceto feriado – R: Alencar Araripe nº 985 2º andar Sacomã SP SãoPaulo. Telefone:
-                (11)4659-0013 WhatsApp (11)98832-7074 E-mails: posvendas@intecbrasil.com.br; beatriz@intecbrasil.com.br</p>
-                <p>IX) TREINAMENTOS</p>
-                <p>9.1 Os Treinamentos para usuários do sistema são realizados via Google meet, telefone ou presencial na sede da INTEC e devem ser agendados pelo
-                    CONTRATANTE dos serviços INTEC com o uso dos canais de comunicação acima descritos.</p>
-                <p>X) DO TÍTULO EXECUTIVO</p>
-                <p>10.1 Este instrumento de contrato possui força de título executivo extrajudicial nos termos do art. 784, III do Código de Processo Civil, sem prejuízo do
-                    envio dos títulos vencidos ao Cartório de Protesto da Capital do Estado de São Paulo ora considerada praça de pagamento.</p>
-                <p>XI) DAS DISPOSIÇÕES GERAIS</p>
-                <p>11.1 A INTEC assegura que os serviços online estarão disponíveis para atendimento às necessidades da CONTRATANTE, conforme ajustado neste
-                contrato, (24) vinte e quatro horas por dia, (7) sete dias por semana, em até (97%) noventa e sete por cento do período considerado para faturamento,
-                excluídas as paradas programadas, os casos fortuitos e de força maior, sem prejuízo do quanto disposto no preço ajustado.</p>
-                <p>11.2 A CONTRATANTE tem ciência de que é possível que alguns produtos não estejam disponíveis para consulta em determinada região. 11.3 Qualquer
-                    tolerância de uma das partes em relação à outra só importará modificação do presente instrumento se expressamente formalizada.</p>
-                <p>11.4 Os serviços contratados devem ser utilizados pela CONTRATANTE como insumo para a atividade profissional exercida, não podendo servir ao
-                    consumidor como destinatário final.</p>
-                <p>11.5 O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será
+
+        @elseif($order->company->associate->linked_company == "36.622.261/0001-90")
+            <div class="container minuta">
+                <div class="row">
+                    <p>INSTRUMENTO DE CONTRATO DE SERVIÇOS AO BANCO DE DADOS INTEC</p> 
+                    <p>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</p>
+                    <p>Por este instrumento, de um lado, a CONTRATANTE, devidamente qualificada no ato de adesão ao Contrato de Prestação de Serviços, e, de outro, a
+                    CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA, com sede na Rua Alencar Araripe, 985 - Sacomã - 04253000 - Sao Paulo, SP, inscrita
+                    no CNPJ/MF sob o nº 36.622.261/0001-90, doravante designada INTEC, resolvem firmar este Contrato de Prestação de Serviços, que se regerá mediante
+                    as seguintes cláusulas e condições:</p>
+                    <p>I) DO ACESSO ÀS BASES DE DADOS COMERCIAIS DA INTEC</p>
+                    <p>1.1 Este contrato não se destina ao consumidor final e tem por finalidade disponibilizar e servir de insumo a atividade profissional da CONTRATANTE
+                    para que possa ter acesso às bases de dados comerciais de produtos ou serviços na área da construção civil mantidos em plataforma virtual pela INTEC.
+                    Parágrafo Primeiro: A CONTRATANTE realizará a opção de acesso as informações de obras por seguimento e, por consequência, ao preço a que este
+                    se refere no momento do aceite eletrônico desta contratação.</p>
+                    <p>Parágrafo Segundo: O preço ajustado e as condições de pagamento ficará registrada no Pedido de Fornecimento de Informações. Parágrafo Terceiro: A
+                    CONTRATANTE terá acesso à 100% das informações contratadas dentro do plano descrito já em seu primeiro acesso, sem qualquer limitação de
+                    quantidade de consultas, buscas ou lote de obras que estejam dentro do plano.</p>
+                    <p>Parágrafo Quarto: Novos blocos de informações ou funcionalidades disponibilizados nos bancos de dados e nos serviços objeto desta contratação
+                        poderão ser utilizados pela CONTRATANTE sem implicar em qualquer custo adicional.</p>
+                    <p>Parágrafo Quinto: A partir do momento em que a CONTRATADA e CONTRATANTE realizarem a assinatura deste documento, ficará formalizada, para
+                        todo e qualquer efeito de direito, a sua adesão as condições contratuais.</p>
+                    <p>Parágrafo Sexto: No término do prazo previsto de contratação, a INTEC entrará em contato com a CONTRATANTE para verificar a hipótese de renovação,
+                        ajustando novo valor, pacote e condições de pagamento.</p>
+                    <p>Parágrafo Sétimo: A INTEC não realiza a exportação manual e ou envio de planilhas com as informações do banco de dados contratado, o próprio sistema
+                    possui a funcionalidade onde o CONTRATANTE pode realizar a exportação em excel de até 500 obras ou empresas por lote exportado.
+                    Parágrafo Oitavo: O CONTRATANTE dos serviços INTEC terá um limite pré-estabelecido de 01 (uma) licença de acesso e senha por contratação e para
+                    cada login excedente será acrescido o valor único de R$ 500,00 (Quinhentos reais).</p>
+                    <p>II) DO PREÇO</p>
+                    <p>2.1 A CONTRATANTE pagará, anualmente, à INTEC, o valor ao plano escolhido, para ter acesso por (12) doze meses ao sistema e banco de dados
+                        contratado, descrito no Pedido de Fornecimento de Informações.</p>
+                    <p>Parágrafo Primeiro: O pagamento da anuidade poderá ser parcelado em até (12) doze vezes, todavia, o acesso poderá ser interrompido, sem prévio
+                        aviso, caso ocorra a inadimplência de qualquer das parcelas descritas e ajustadas na condição de pagamento.</p>
+                    <p>Parágrafo Segundo: Quando da aquisição do pacote anual a INTEC encaminhará por e-mail a nota fiscal à CONTRATANTE, no valor correspondente a
+                        aquisição, conforme informado no Pedido de Fornecimento de Informações.</p>
+                    <p>Parágrafo Terceiro: As partes convencionam que, no caso de não pagamento até a data do vencimento, o valor da fatura sofrerá acréscimo de 2% (dois
+                    por cento), a título de multa por atraso, e juros de mora de (1%) um por cento ao mês, calculados pro rata temporis, desde a data do inadimplemento até
+                    a do efetivo pagamento.</p>
+                    <p>Parágrafo Quarto: Ocorrendo acumulo de (2) duas parcelas não pagas em seus respectivos vencimentos, as parcelas vincendas, tornam-se vencidas,
+                    podendo a CONTRATADA efetuar a sua cobrança administrativa ou judicial, arcando a CONTRATANTE com as custas e despesas, além de honorários
+                    advocatícios na proporção de (20%) vinte por cento sobre o saldo devido, sem prejuízo da multa, juros de mora de (1%) um por cento ao mês e correção
+                    monetária até efetiva liquidação.</p>
+                    <p>Parágrafo Quinto: A não utilização dos serviços contratados NÃO isenta a CONTRATANTE do pagamento da ANUIDADE, sendo livre o acesso pelo
+                        período de (12) doze meses da contratação, exceto em caso de inadimplência.</p>
+                    <p>III) DO DISTRATO</p>
+                    <p>3.1 Nos casos em que a CONTRATADA cedeu à CONTRATANTE a condição facilitada de pagamento em até 12 parcelas e a CONTRATANTE venha a
+                    solicitar o DISTRATO dentro do período minimo determinado na pagina 1 (um), a CONTRATADA em nome da boa prática e parceria comercial dará
+                    como quitado (50%) do saldo residual, e será realizado apenas a cobrança dos outros (50%) restante do saldo residual, cujo pagamento deverá ser
+                    realizado pelo CONTRATANTE em uma única parcela no prazo de (10) dez dias da solicitação do DISTRATO, sob pena de incorrer multa de (20%) vinte
+                    por cento sobre o saldo devido, acrescido de juros e correção monetária e honorários advocatícios. Visto que, conforme cláusula 1.1 Paragráfo terceiro,
+                    a CONTRATADA entregou e disponibilizou desde o início deste contrato 100% das informações do seu banco de dados dentro do plano contratado sem
+                    qualquer limitação ou restrição de uso.</p>
+                    <p>3.2 O DISTRATO poderá ser realizado a qualquer tempo, com prévio aviso de (30) trinta dias, devendo ser encaminhado um e-mail para
+                        posvendas@intecbrasil.com.br, com o assunto DISTRATO.</p>
+                    <p>IV) DAS RESPONSABILIDADES E DOS DIREITOS DA INTEC</p>
+                    <p>4.1 A INTEC responsabiliza-se por perdas e danos que se originem das informações prestadas, desde que tenha culpa exclusiva.</p>
+                    <p>4.2 A realização ou não realização de quaisquer negócios jurídicos entre a CONTRATANTE e os seus clientes ou eventual insucesso de campanhas
+                    levadas a termo com o uso das informações disponibilizadas na plataforma da INTEC, e eventuais perdas e danos que qualquer deles e/ou terceiros
+                    possam vir a pleitear, judicial e/ou extrajudicialmente, não são responsabilidade da INTEC.</p>
+                    <p>4.3 A INTEC responsabiliza-se pela integridade das informações existentes nas bases de dados e nos serviços contratados, tais como recebidas de suas
+                        fontes, bem como não se responsabiliza pelo desempenho do serviço, eventualmente pretendido pela CONTRATANTE.</p>
+                    <p>4.4 A INTEC declara que é legitima proprietária dos direitos de propriedade intelectual relativos ao sistema de pesquisa, bem como sobre os demais
+                    materiais e as informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, sendo vedada a sua cópia, reprodução ou
+                    utilização, senão nos termos ora contratados.</p>
+                    <p>Parágrafo Único: Todos os direitos de propriedade intelectual sobre a plataforma e a documentação a ele relacionada, bem como sobre os demais
+                        materiais e informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, permanecerão sob a titularidade da INTEC.</p>
+                    <p>V) DAS RESPONSABILIDADES E DOS DIREITOS DA CONTRATANTE</p>
+                    <p>5.1 A CONTRATANTE responsabiliza-se, integralmente e com exclusividade, perante os seus clientes e/ou terceiros, quanto à utilização das informações,
+                    dos serviços e da política de compra e venda disponibilizados neste contrato, respondendo por perdas e danos que possam, eventualmente, originar-se
+                    dessa utilização.</p>
+                    <p>5.2 A CONTRATANTE se obriga a dar ciência das obrigações ora contratada aos seus empregados e/ou quaisquer terceiros que venham a ter acesso
+                    aos serviços objeto deste contrato, em especial no que se refere ao uso das informações e às responsabilidades da CONTRATANTE e da INTEC, bem
+                    como a fiscalizar a sua observância.</p>
+                    <p>5.3 A CONTRATANTE reconhece que lhe é vedado:</p>
+                    <p>a) armazenar, divulgar e/ou fornecer a terceiros, em hipótese alguma e sob qualquer forma, as informações obtidas por meio deste contrato, inclusive
+                        após o término da relação contratual, exceto mediante prévia e expressa autorização da INTEC, a qual jamais será presumida;</p>
+                    <p>b) reproduzir qualquer página ou tela com dados de propriedade da INTEC, inclusive as constantes em seu site, nos manuais ou em qualquer outro
+                        regulamento;</p>
+                    <p>c) utilizar as informações obtidas para constranger ou coagir, de qualquer maneira que seja, o titular do documento consultado ou, ainda, como justificativa
+                    para atos que violem ou ameacem interesses de terceiros;</p>
+                    <p>d) vender, repassar ou estabelecer convênio de repasse de informações com outras empresas, especialmente aquelas que prestam serviços de
+                        informações ou assemelhados, salvo mediante prévia e expressa autorização da INTEC, a qual jamais será presumida.</p>
+                    <p>VI) DO ACESSO AO BANCO DE DADOS DA INTEC</p>
+                    <p>6.1 A INTEC se reserva no direito de monitorar e controlar os acessos realizados pelo CONTRATANTE dos serviços INTEC e identificada qualquer
+                    irregularidade no uso das informações, os serviços serão automaticamente suspensos até que o processo interno de fiscalização seja concluido, sendo
+                    a CONTRATANTE notificada a esclarecer as irregularidades.</p>
+                    <p>Parágrafo Primeiro: Ocorrendo irregularidades, tais como:</p>
+                    <p>a) Ceder Logins e senha à terceiros para que tenham acesso a plataforma;</p>
+                    <p>b) Comercializar dados obtidos na plataforma da INTEC, a CONTRATANTE sofrerá uma pena pecuniária equivalente a (1) uma anuidade contratada,
+                        além de interrupção definitiva no acesso à plataforma.</p>
+                    <p>6.2 A CONTRATANTE responsabiliza-se, por si, seus empregados e/ou prepostos, pelo resguardo de sua(s) senha(s), não as repassando a terceiros,
+                        inclusive à INTEC, sob qualquer hipótese.</p>
+                    <p>6.3 Caso não sejam observadas as condições previstas nas alíneas desta cláusula, a CONTRATANTE assumirá exclusivamente todo e qualquer dano
+                        decorrente dessa inobservância.</p>
+                    <p>VII) DAS PRÁTICAS DE COMPLIANCE ANTICORRUPÇÃO E CONCORRÊNCIA DESLEAL</p>
+                    <p>7.1 As partes declaram, para todos os efeitos, que exercerão as suas atividades observando os preceitos ético-profissionais, em conformidade com a
+                        legislação vigente e que detêm as aprovações necessárias à celebração deste contrato e ao cumprimento das obrigações nele previstas.</p>
+                    <p>7.2 As partes declaram, garantem e aceitam que, com relação a este contrato, não houve e não haverá nenhuma solicitação, exigência, cobrança ou
+                    obtenção para si e para outrem de vantagem indevida ou promessa de vantagem indevida, a pretexto de influir em ato praticado por agente público e/ou
+                    privado, restando expresso, ainda, que nenhum favorecimento, taxa, dinheiro ou qualquer outro objeto de valor foi ou será pago, oferecido, doado ou
+                    prometido pelas partes ou por qualquer de seus agentes ou empregados, direta ou indiretamente, especialmente, mas não se limitando, a qualquer:</p>
+                    <p>a) pessoa (natural ou jurídica) que exerça cargo, emprego ou função pública ou trabalhe em entidade paraestatal, fundações, empresas públicas,
+                    sociedades de economia mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC
+                    ou conveniada para a execução de atividade típica da administração pública;</p>
+                    <p>b) partido político ou autoridade partidária ou qualquer candidato a cargo político;</p>
+                    <p>c) representante que esteja atuando por ou em nome de qualquer entidade estatal ou paraestatal, fundações, empresas públicas, sociedades de economia
+                    mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC ou conveniada para a
+                    execução de atividade típica da administração pública;</p>
+                    <p>d) pessoa (natural ou jurídica) que exerça cargo, emprego ou função em qualquer organização pública internacional (considerando-se cada um desses
+                        indivíduos descritos nos itens a, b, c, d como “Autoridade Pública”), com o intuito de:</p>
+                    <p>a) exercer influência indevida sobre qualquer Autoridade Pública, em sua capacidade oficial, societária ou comercial;</p>
+                    <p>b) induzir qualquer Autoridade Pública a realizar ou deixar de realizar qualquer ato, infringindo ou não as suas atribuições legais;</p>
+                    <p>c) induzir indevidamente qualquer Autoridade Pública a usar de sua influência perante a Administração direta ou indireta para afetar ou influenciar
+                    qualquer ato ou decisão de sua responsabilidade;</p>
+                    <p>d) obter qualquer vantagem indevida ou que seja contrária ao interesse público.</p>
+                    <p>7.3 As partes, seus agentes ou empregados devem combater toda e qualquer iniciativa que seja contra a livre concorrência, especialmente, mas não se
+                        limitando, a iniciativas indutoras à formação de cartel.</p>
+                    <p>7.4 As partes se comprometem a estabelecer de forma clara e precisa os deveres e as obrigações de seus agentes e/ou empregados em questões
+                    comerciais, para que estejam sempre em conformidade com as leis, as normas vigentes e as determinações deste contrato. 7.5 As partes ficarão sujeitas
+                    a auditorias e visitas, realizadas a critério da outra parte, para a verificação do cumprimento das práticas estabelecidas neste título.</p>
+                    <p>7.6 A CONTRATANTE está impedida de realizar qualquer tipo de proposta de trabalho ou, ainda, de realizar a contratação, de forma direta ou indireta
+                    de qualquer dos colaboradores da INTEC, isso na constância do contrato de trabalho, estendendo-se pelo prazo de (90) noventa dias após o término da
+                    relação de emprego com o colaborador, sob pena de incorrer em concorrência desleal, com a punibilidade de (100) cem vezes o valor do salário do
+                    obreiro assediado.</p>
+                    <p>7.7 A violação de qualquer das práticas estabelecidas neste título poderá ensejar a imediata rescisão deste contrato pela parte inocente.</p>
+                    <p>VIII) SUPORTE TÉCNICO E ATENDIMENTO AO CLIENTE</p>
+                    <p>8.1 O Suporte Técnico e o Atendimento ao Cliente são permanentes via e-mail, telefone, WhatsApp ou presencial na sede da INTEC. Horário de
+                        atendimento das: 09:00hs às 17:00hs de segunda á sexta-feira, exceto feriado – R: Alencar Araripe nº 985 2º andar Sacomã SP SãoPaulo. Telefone:
+                    (11)4659-0013 WhatsApp (11)98832-7074 E-mails: posvendas@intecbrasil.com.br; beatriz@intecbrasil.com.br</p>
+                    <p>IX) TREINAMENTOS</p>
+                    <p>9.1 Os Treinamentos para usuários do sistema são realizados via Google meet, telefone ou presencial na sede da INTEC e devem ser agendados pelo
+                        CONTRATANTE dos serviços INTEC com o uso dos canais de comunicação acima descritos.</p>
+                    <p>X) DO TÍTULO EXECUTIVO</p>
+                    <p>10.1 Este instrumento de contrato possui força de título executivo extrajudicial nos termos do art. 784, III do Código de Processo Civil, sem prejuízo do
+                        envio dos títulos vencidos ao Cartório de Protesto da Capital do Estado de São Paulo ora considerada praça de pagamento.</p>
+                    <p>XI) DAS DISPOSIÇÕES GERAIS</p>
+                    <p>11.1 A INTEC assegura que os serviços online estarão disponíveis para atendimento às necessidades da CONTRATANTE, conforme ajustado neste
+                    contrato, (24) vinte e quatro horas por dia, (7) sete dias por semana, em até (97%) noventa e sete por cento do período considerado para faturamento,
+                    excluídas as paradas programadas, os casos fortuitos e de força maior, sem prejuízo do quanto disposto no preço ajustado.</p>
+                    <p>11.2 A CONTRATANTE tem ciência de que é possível que alguns produtos não estejam disponíveis para consulta em determinada região. 11.3 Qualquer
+                        tolerância de uma das partes em relação à outra só importará modificação do presente instrumento se expressamente formalizada.</p>
+                    <p>11.4 Os serviços contratados devem ser utilizados pela CONTRATANTE como insumo para a atividade profissional exercida, não podendo servir ao
+                        consumidor como destinatário final.</p>
+                    <p>11.5 O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será
+                        Sincronizado com o NTP.br e Observatório Nacional (ON).</p>
+                    <p>FORO</p>
+                    <p>As partes elegem o Foro da Comarca de São Paulo como o único competente para dirimir quaisquer dúvidas decorrentes deste Contrato, com renúncia
+                        expressa a qualquer outro, por mais privilegiado que seja.</p>
+                    <p>TERMO DE MONITORAMENTO DE DADOS PESSOAIS</p>
+                    <p>1. A CONTRATANTE deverá informar seu e-mail, para que seja possível gerar um relatório dentro da área logada, contendo todas as informações a
+                        respeito dos dados que, eventualmente, forem identificados na plataforma da INTEC, atreladas ao e-mail informado.</p>
+                    <p>2. As informações identificadas permanecerão disponíveis para que a CONTRATANTE possa visualizá-las na área logada a qualquer tempo.</p>
+                    <p>3. A CONTRATANTE autoriza a INTEC a utilizar os dados pessoais mencionados neste instrumento de contrato de prestação de serviços, exclusivamente
+                    para a finalidade de manutenção do contrato, nos termos deste instrumento, os quais não serão compartilhados com nenhum terceiro.</p>
+                    <p>4. A CONTRATANTE tem ciência de que a INTEC poderá processar os seus dados no Brasil e obriga-se a adotar todas as providências eventualmente
+                        exigidas pela legislação vigente para o referido processamento.</p>
+                    <p>5. É a partir do seu consentimento que tratamos os seus dados pessoais.</p>
+                    <p>6. O consentimento é a manifestação livre, informada e inequívoca pela qual você autoriza a CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO
+                    LTDA a tratar seus dados. Assim, em consonância com a Lei Geral de Proteção de Dados, seus dados só serão coletados, tratados e armazenados
+                    mediante prévio e expresso consentimento, com a finalidade específica para nossa relação comercial.</p>
+                    <p>7. O seu consentimento será obtido de forma específica para esta contratação de serviços, evidenciando o compromisso de transparência e boa-fé da
+                    CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA para com seus usuários/clientes, seguindo as regulações legislativas pertinentes.</p>
+                    <p>8. Ao utilizar os serviços da CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA e fornecer seus dados pessoais, você está ciente e
+                    consentindo com as disposições desta Política de Privacidade, além de conhecer seus direitos e como exercê-los.</p>
+                    <p>9. A qualquer tempo e sem nenhum custo, você poderá revogar seu consentimento e para isso basta comunicar o nosso Encarregado de Dados, Marcelo
+                    Passiani, pelo endereço passiani@dpogestaocadastral.com.br.</p>
+                    <p>10. A CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA disponibiliza os seguintes meios para que você possa entrar em contato conosco
+                        para exercer seus direitos de titular nosso Encarregado de Dados, Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br .</p>
+                    <p>11. Caso tenha dúvidas sobre esta Política de Privacidade ou sobre os dados pessoais que tratamos, você pode entrar em contato com o nosso Encarregado de Proteção
+                    de Dados Pessoais, sendo o advogado Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br.</p>
+                    <p>12. O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será
                     Sincronizado com o NTP.br e Observatório Nacional (ON).</p>
-                <p>FORO</p>
-                <p>As partes elegem o Foro da Comarca de São Paulo como o único competente para dirimir quaisquer dúvidas decorrentes deste Contrato, com renúncia
-                    expressa a qualquer outro, por mais privilegiado que seja.</p>
-                <p>TERMO DE MONITORAMENTO DE DADOS PESSOAIS</p>
-                <p>1. A CONTRATANTE deverá informar seu e-mail, para que seja possível gerar um relatório dentro da área logada, contendo todas as informações a
-                    respeito dos dados que, eventualmente, forem identificados na plataforma da INTEC, atreladas ao e-mail informado.</p>
-                <p>2. As informações identificadas permanecerão disponíveis para que a CONTRATANTE possa visualizá-las na área logada a qualquer tempo.</p>
-                <p>3. A CONTRATANTE autoriza a INTEC a utilizar os dados pessoais mencionados neste instrumento de contrato de prestação de serviços, exclusivamente
-                para a finalidade de manutenção do contrato, nos termos deste instrumento, os quais não serão compartilhados com nenhum terceiro.</p>
-                <p>4. A CONTRATANTE tem ciência de que a INTEC poderá processar os seus dados no Brasil e obriga-se a adotar todas as providências eventualmente
-                    exigidas pela legislação vigente para o referido processamento.</p>
-                <p>5. É a partir do seu consentimento que tratamos os seus dados pessoais.</p>
-                <p>6. O consentimento é a manifestação livre, informada e inequívoca pela qual você autoriza a CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO
-                LTDA a tratar seus dados. Assim, em consonância com a Lei Geral de Proteção de Dados, seus dados só serão coletados, tratados e armazenados
-                mediante prévio e expresso consentimento, com a finalidade específica para nossa relação comercial.</p>
-                <p>7. O seu consentimento será obtido de forma específica para esta contratação de serviços, evidenciando o compromisso de transparência e boa-fé da
-                CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA para com seus usuários/clientes, seguindo as regulações legislativas pertinentes.</p>
-                <p>8. Ao utilizar os serviços da CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA e fornecer seus dados pessoais, você está ciente e
-                consentindo com as disposições desta Política de Privacidade, além de conhecer seus direitos e como exercê-los.</p>
-                <p>9. A qualquer tempo e sem nenhum custo, você poderá revogar seu consentimento e para isso basta comunicar o nosso Encarregado de Dados, Marcelo
-                Passiani, pelo endereço passiani@dpogestaocadastral.com.br.</p>
-                <p>10. A CONSTRUINFORMA INFORMAÇÕES DA CONSTRUÇÃO LTDA disponibiliza os seguintes meios para que você possa entrar em contato conosco
-                    para exercer seus direitos de titular nosso Encarregado de Dados, Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br .</p>
-                <p>11. Caso tenha dúvidas sobre esta Política de Privacidade ou sobre os dados pessoais que tratamos, você pode entrar em contato com o nosso Encarregado de Proteção
-                de Dados Pessoais, sendo o advogado Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br.</p>
-                <p>12. O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será
-                Sincronizado com o NTP.br e Observatório Nacional (ON).</p>
+                </div>
             </div>
-        </div>
+
+        @elseif($order->company->associate->linked_company == "36.473.409/0001-72")
+            <div class="container minuta">
+                <div class="row">
+                    <p>INSTRUMENTO DE CONTRATO DE SERVIÇOS AO BANCO DE DADOS INTEC</p>
+
+                    <p>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</p>
+                    <p>Por este instrumento, de um lado, a CONTRATANTE, devidamente qualificada no ato de adesão ao Contrato de Prestação de Serviços, e, de outro, a PERFORMANCE INFORMATIVO DE OBRAS LTDA, com sede na Rua Alencar Araripe, 985 - Sacomã - 04253000 - Sao Paulo, SP, inscrita no CNPJ/MF sob o nº 36.473.409/0001-72, doravante designada INTEC, resolvem firmar este Contrato de Prestação de Serviços, que se regerá mediante as seguintes cláusulas e condições:</p>
+                        <p>I) DO ACESSO ÀS BASES DE DADOS COMERCIAIS DA INTEC</p> 
+                        <p>1.1 Este contrato não se destina ao consumidor final e tem por finalidade disponibilizar e servir de insumo a atividade profissional da CONTRATANTE para que possa ter acesso às bases de dados comerciais de produtos ou serviços na área da construção civil mantidos em plataforma virtual pela INTEC.</p>
+                        <p>Parágrafo Primeiro: A CONTRATANTE realizará a opção de acesso as informações de obras por seguimento e, por consequência, ao preço a que este se refere no momento do aceite eletrônico desta contratação.
+                        <p>Parágrafo Segundo: O preço ajustado e as condições de pagamento ficará registrada no Pedido de Fornecimento de Informações. Parágrafo Terceiro: A CONTRATANTE terá acesso à 100% das informações contratadas dentro do plano descrito já em seu primeiro acesso, sem qualquer limitação de quantidade de consultas, buscas ou lote de obras que estejam dentro do plano.</p>
+                        <p>Parágrafo Quarto: Novos blocos de informações ou funcionalidades disponibilizados nos bancos de dados e nos serviços objeto desta contratação poderão ser utilizados pela CONTRATANTE sem implicar em qualquer custo adicional.</p> 
+                        <p>Parágrafo Quinto: A partir do momento em que a CONTRATADA e CONTRATANTE realizarem a assinatura deste documento, ficará formalizada, para todo e qualquer efeito de direito, a sua adesão as condições contratuais.</p> 
+                        <p>Parágrafo Sexto: No término do prazo previsto de contratação, a INTEC entrará em contato com a CONTRATANTE para verificar a hipótese de renovação, ajustando novo valor, pacote e condições de pagamento.</p>
+                        <p>Parágrafo Sétimo: A INTEC não realiza a exportação manual e ou envio de planilhas com as informações do banco de dados contratado, o próprio sistema possui a funcionalidade onde o CONTRATANTE pode realizar a exportação em excel de até 500 obras ou empresas por lote exportado.</p> 
+                        <p>Parágrafo Oitavo: O CONTRATANTE dos serviços INTEC terá um limite pré-estabelecido de 01 (uma) licença de acesso e senha por contratação e para cada login excedente será acrescido o valor único de R$ 500,00 (Quinhentos reais).</p>
+                        <p>II) DO PREÇO </p>
+                        <p>2.1 A CONTRATANTE pagará, anualmente, à INTEC, o valor ao plano escolhido, para ter acesso por (12) doze meses ao sistema e banco de dados contratado, descrito no Pedido de Fornecimento de Informações. </p>
+                        <p>Parágrafo Primeiro: O pagamento da anuidade poderá ser parcelado em até (12) doze vezes, todavia, o acesso poderá ser interrompido, sem prévio aviso, caso ocorra a inadimplência de qualquer das parcelas descritas e ajustadas na condição de pagamento.</p> 
+                        <p>Parágrafo Segundo: Quando da aquisição do pacote anual a INTEC encaminhará por e-mail a nota fiscal à CONTRATANTE, no valor correspondente a aquisição, conforme informado no Pedido de Fornecimento de Informações. </p>
+                        <p>Parágrafo Terceiro: As partes convencionam que, no caso de não pagamento até a data do vencimento, o valor da fatura sofrerá acréscimo de 2% (dois por cento), a título de multa por atraso, e juros de mora de (1%) um por cento ao mês, calculados pro rata temporis, desde a data do inadimplemento até a do efetivo pagamento.</p>
+                        <p>Parágrafo Quarto: Ocorrendo acumulo de (2) duas parcelas não pagas em seus respectivos vencimentos, as parcelas vincendas, tornam-se vencidas, podendo a CONTRATADA efetuar a sua cobrança administrativa ou judicial, arcando a CONTRATANTE com as custas e despesas, além de honorários advocatícios na proporção de (20%) vinte por cento sobre o saldo devido, sem prejuízo da multa, juros de mora de (1%) um por cento ao mês e correção monetária até efetiva liquidação. </p>
+                        <p>Parágrafo Quinto: A não utilização dos serviços contratados NÃO isenta a CONTRATANTE do pagamento da ANUIDADE, sendo livre o acesso pelo período de (12) doze meses da contratação, exceto em caso de inadimplência.</p>
+                        <p>III) DO DISTRATO</p>
+                        <p>3.1 Nos casos em que a CONTRATADA cedeu à CONTRATANTE a condição facilitada de pagamento em até 12 parcelas e a CONTRATANTE venha a solicitar o DISTRATO dentro do período minimo determinado na pagina 1 (um), a CONTRATADA em nome da boa prática e parceria comercial dará como quitado (50%) do saldo residual, e será realizado apenas a cobrança dos outros (50%) restante do saldo residual, cujo pagamento deverá ser realizado pelo CONTRATANTE em uma única parcela no prazo de (10) dez dias da solicitação do DISTRATO, sob pena de incorrer multa de (20%) vinte por cento sobre o saldo devido, acrescido de juros e correção monetária e honorários advocatícios. Visto que, conforme cláusula 1.1 Paragráfo terceiro, a CONTRATADA entregou e disponibilizou desde o início deste contrato 100% das informações do seu banco de dados dentro do plano contratado sem qualquer limitação ou restrição de uso. </p>
+                        <p>3.2 O DISTRATO poderá ser realizado a qualquer tempo, com prévio aviso de (30) trinta dias, devendo ser encaminhado um e-mail para posvendas@intecbrasil.com.br, com o assunto DISTRATO.</p>
+                        <p>IV) DAS RESPONSABILIDADES E DOS DIREITOS DA INTEC </p>
+                        <p>4.1 A INTEC responsabiliza-se por perdas e danos que se originem das informações prestadas, desde que tenha culpa exclusiva. </p>
+                        <p>4.2 A realização ou não realização de quaisquer negócios jurídicos entre a CONTRATANTE e os seus clientes ou eventual insucesso de campanhas levadas a termo com o uso das informações disponibilizadas na plataforma da INTEC, e eventuais perdas e danos que qualquer deles e/ou terceiros possam vir a pleitear, judicial e/ou extrajudicialmente, não são responsabilidade da INTEC. </p>
+                        <p>4.3 A INTEC responsabiliza-se pela integridade das informações existentes nas bases de dados e nos serviços contratados, tais como recebidas de suas fontes, bem como não se responsabiliza pelo desempenho do serviço, eventualmente pretendido pela CONTRATANTE.</p> 
+                        <p>4.4 A INTEC declara que é legitima proprietária dos direitos de propriedade intelectual relativos ao sistema de pesquisa, bem como sobre os demais materiais e as informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, sendo vedada a sua cópia, reprodução ou utilização, senão nos termos ora contratados.</p> 
+                        <p>Parágrafo Único: Todos os direitos de propriedade intelectual sobre a plataforma e a documentação a ele relacionada, bem como sobre os demais materiais e informações eventualmente disponibilizados à CONTRATANTE em razão deste contrato, permanecerão sob a titularidade da INTEC.</p>
+                        <p>V) DAS RESPONSABILIDADES E DOS DIREITOS DA CONTRATANTE </p>
+                        <p>5.1 A CONTRATANTE responsabiliza-se, integralmente e com exclusividade, perante os seus clientes e/ou terceiros, quanto à utilização das informações, dos serviços e da política de compra e venda disponibilizados neste contrato, respondendo por perdas e danos que possam, eventualmente, originar-se dessa utilização.</p> 
+                        <p>5.2 A CONTRATANTE se obriga a dar ciência das obrigações ora contratada aos seus empregados e/ou quaisquer terceiros que venham a ter acesso aos serviços objeto deste contrato, em especial no que se refere ao uso das informações e às responsabilidades da CONTRATANTE e da INTEC, bem como a fiscalizar a sua observância.</p> 
+                        <p>5.3 A CONTRATANTE reconhece que lhe é vedado: </p>
+                        <p>a) armazenar, divulgar e/ou fornecer a terceiros, em hipótese alguma e sob qualquer forma, as informações obtidas por meio deste contrato, inclusive após o término da relação contratual, exceto mediante prévia e expressa autorização da INTEC, a qual jamais será presumida; </p>
+                        <p>b) reproduzir qualquer página ou tela com dados de propriedade da INTEC, inclusive as constantes em seu site, nos manuais ou em qualquer outro regulamento; </p>
+                        <p>c) utilizar as informações obtidas para constranger ou coagir, de qualquer maneira que seja, o titular do documento consultado ou, ainda, como justificativa para atos que violem ou ameacem interesses de terceiros; </p>
+                        <p>d) vender, repassar ou estabelecer convênio de repasse de informações com outras empresas, especialmente aquelas que prestam serviços de informações ou assemelhados, salvo mediante prévia e expressa autorização da INTEC, a qual jamais será presumida.</p>
+                        <p>VI) DO ACESSO AO BANCO DE DADOS DA INTEC </p>
+                        <p>6.1 A INTEC se reserva no direito de monitorar e controlar os acessos realizados pelo CONTRATANTE dos serviços INTEC e identificada qualquer irregularidade no uso das informações, os serviços serão automaticamente suspensos até que o processo interno de fiscalização seja concluido, sendo a CONTRATANTE notificada a esclarecer as irregularidades. </p>
+                        <p>Parágrafo Primeiro: Ocorrendo irregularidades, tais como: </p>
+                        <p>a) Ceder Logins e senha à terceiros para que tenham acesso a plataforma;</p>
+                        <p>b) Comercializar dados obtidos na plataforma da INTEC, a CONTRATANTE sofrerá uma pena pecuniária equivalente a (1) uma anuidade contratada, além de interrupção definitiva no acesso à plataforma. </p>
+                    
+                        <p>6.2 A CONTRATANTE responsabiliza-se, por si, seus empregados e/ou prepostos, pelo resguardo de sua(s) senha(s), não as repassando a terceiros, inclusive à INTEC, sob qualquer hipótese. </p>
+                        <p>6.3 Caso não sejam observadas as condições previstas nas alíneas desta cláusula, a CONTRATANTE assumirá exclusivamente todo e qualquer dano decorrente dessa inobservância.</p>
+                        <p>VII) DAS PRÁTICAS DE COMPLIANCE ANTICORRUPÇÃO E CONCORRÊNCIA DESLEAL </p>
+                        <p>7.1 As partes declaram, para todos os efeitos, que exercerão as suas atividades observando os preceitos ético-profissionais, em conformidade com a legislação vigente e que detêm as aprovações necessárias à celebração deste contrato e ao cumprimento das obrigações nele previstas. </p>
+                        <p>7.2 As partes declaram, garantem e aceitam que, com relação a este contrato, não houve e não haverá nenhuma solicitação, exigência, cobrança ou obtenção para si e para outrem de vantagem indevida ou promessa de vantagem indevida, a pretexto de influir em ato praticado por agente público e/ou privado, restando expresso, ainda, que nenhum favorecimento, taxa, dinheiro ou qualquer outro objeto de valor foi ou será pago, oferecido, doado ou prometido pelas partes ou por qualquer de seus agentes ou empregados, direta ou indiretamente, especialmente, mas não se limitando, a qualquer:</p>
+                        <p>a) pessoa (natural ou jurídica) que exerça cargo, emprego ou função pública ou trabalhe em entidade paraestatal, fundações, empresas públicas, sociedades de economia mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC ou conveniada para a execução de atividade típica da administração pública; </p>
+                        <p> b) partido político ou autoridade partidária ou qualquer candidato a cargo político;</p>
+                        <p>c) representante que esteja atuando por ou em nome de qualquer entidade estatal ou paraestatal, fundações, empresas públicas, sociedades de economia mista ou autarquia, ainda que transitoriamente ou sem remuneração; que trabalhe para empresa prestadora de serviço INTEC ou conveniada para a execução de atividade típica da administração pública; </p>
+                        <p>d) pessoa (natural ou jurídica) que exerça cargo, emprego ou função em qualquer organização pública internacional (considerando-se cada um desses indivíduos descritos nos itens a, b, c, d como “Autoridade Pública”), com o intuito de: </p>
+                        <p>a) exercer influência indevida sobre qualquer Autoridade Pública, em sua capacidade oficial, societária ou comercial; </p>
+                        <p>b) induzir qualquer Autoridade Pública a realizar ou deixar de realizar qualquer ato, infringindo ou não as suas atribuições legais; </p>
+                        <p>c) induzir indevidamente qualquer Autoridade Pública a usar de sua influência perante a Administração direta ou indireta para afetar ou influenciar qualquer ato ou decisão de sua responsabilidade; </p>
+                        <p>d) obter qualquer vantagem indevida ou que seja contrária ao interesse público.</p>
+                        <p>7.3 As partes, seus agentes ou empregados devem combater toda e qualquer iniciativa que seja contra a livre concorrência, especialmente, mas não se limitando, a iniciativas indutoras à formação de cartel. </p>
+                        <p>7.4 As partes se comprometem a estabelecer de forma clara e precisa os deveres e as obrigações de seus agentes e/ou empregados em questões comerciais, para que estejam sempre em conformidade com as leis, as normas vigentes e as determinações deste contrato. 7.5 As partes ficarão sujeitas a auditorias e visitas, realizadas a critério da outra parte, para a verificação do cumprimento das práticas estabelecidas neste título. </p>
+                        <p>7.6 A CONTRATANTE está impedida de realizar qualquer tipo de proposta de trabalho ou, ainda, de realizar a contratação, de forma direta ou indireta de qualquer dos colaboradores da INTEC, isso na constância do contrato de trabalho, estendendo-se pelo prazo de (90) noventa dias após o término da relação de emprego com o colaborador, sob pena de incorrer em concorrência desleal, com a punibilidade de (100) cem vezes o valor do salário do obreiro assediado. </p>
+                        <p>7.7 A violação de qualquer das práticas estabelecidas neste título poderá ensejar a imediata rescisão deste contrato pela parte inocente.</p>
+                        <p>VIII) SUPORTE TÉCNICO E ATENDIMENTO AO CLIENTE </p>
+                        <p>8.1 O Suporte Técnico e o Atendimento ao Cliente são permanentes via e-mail, telefone, WhatsApp ou presencial na sede da INTEC. Horário de atendimento das: 09:00hs às 17:00hs de segunda á sexta-feira, exceto feriado – R: Alencar Araripe nº 985 2º andar Sacomã SP SãoPaulo. Telefone: (11)4659-0013 WhatsApp (11)98832-7074 E-mails: posvendas@intecbrasil.com.br; beatriz@intecbrasil.com.br </p>
+                        <p>IX) TREINAMENTOS </p>
+                        <p>9.1 Os Treinamentos para usuários do sistema são realizados via Google meet, telefone ou presencial na sede da INTEC e devem ser agendados pelo CONTRATANTE dos serviços INTEC com o uso dos canais de comunicação acima descritos.</p>
+                        <p>X) DO TÍTULO EXECUTIVO </p>
+                        <p>10.1 Este instrumento de contrato possui força de título executivo extrajudicial nos termos do art. 784, III do Código de Processo Civil, sem prejuízo do envio dos títulos vencidos ao Cartório de Protesto da Capital do Estado de São Paulo ora considerada praça de pagamento. </p>
+                        <p>XI) DAS DISPOSIÇÕES GERAIS </p>
+                        <p>11.1 A INTEC assegura que os serviços online estarão disponíveis para atendimento às necessidades da CONTRATANTE, conforme ajustado neste contrato, (24) vinte e quatro horas por dia, (7) sete dias por semana, em até (97%) noventa e sete por cento do período considerado para faturamento, excluídas as paradas programadas, os casos fortuitos e de força maior, sem prejuízo do quanto disposto no preço ajustado. </p>
+                        <p>11.2 A CONTRATANTE tem ciência de que é possível que alguns produtos não estejam disponíveis para consulta em determinada região. 11.3 Qualquer tolerância de uma das partes em relação à outra só importará modificação do presente instrumento se expressamente formalizada. </p>
+                        <p>11.4 Os serviços contratados devem ser utilizados pela CONTRATANTE como insumo para a atividade profissional exercida, não podendo servir ao consumidor como destinatário final. </p>
+                        <p>11.5 O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será Sincronizado com o NTP.br e Observatório Nacional (ON).</p>
+                        <p>FORO</p>
+                        <p>As partes elegem o Foro da Comarca de São Paulo como o único competente para dirimir quaisquer dúvidas decorrentes deste Contrato, com renúncia expressa a qualquer outro, por mais privilegiado que seja. </p>
+                        <p>TERMO DE MONITORAMENTO DE DADOS PESSOAIS </p>
+                        <p>1. A CONTRATANTE deverá informar seu e-mail, para que seja possível gerar um relatório dentro da área logada, contendo todas as informações a respeito dos dados que, eventualmente, forem identificados na plataforma da INTEC, atreladas ao e-mail informado. </p>
+                        <p>2. As informações identificadas permanecerão disponíveis para que a CONTRATANTE possa visualizá-las na área logada a qualquer tempo. </p>
+                        <p>3. A CONTRATANTE autoriza a INTEC a utilizar os dados pessoais mencionados neste instrumento de contrato de prestação de serviços, exclusivamente para a finalidade de manutenção do contrato, nos termos deste instrumento, os quais não serão compartilhados com nenhum terceiro. </p>
+                        <p>4. A CONTRATANTE tem ciência de que a INTEC poderá processar os seus dados no Brasil e obriga-se a adotar todas as providências eventualmente exigidas pela legislação vigente para o referido processamento.</p>
+                        <p>5. É a partir do seu consentimento que tratamos os seus dados pessoais. </p>
+                        <p>6. O consentimento é a manifestação livre, informada e inequívoca pela qual você autoriza a PERFORMANCE INFORMATIVO DE OBRAS LTDA a tratar seus dados. Assim, em consonância com a Lei Geral de Proteção de Dados, seus dados só serão coletados, tratados e armazenados mediante prévio e expresso consentimento, com a finalidade específica para nossa relação comercial.</p> 
+                        <p>7. O seu consentimento será obtido de forma específica para esta contratação de serviços, evidenciando o compromisso de transparência e boa-fé da PERFORMANCE INFORMATIVO DE OBRAS LTDA para com seus usuários/clientes, seguindo as regulações legislativas pertinentes. </p>
+                        <p>8. Ao utilizar os serviços da PERFORMANCE INFORMATIVO DE OBRAS LTDA e fornecer seus dados pessoais, você está ciente e consentindo com as disposições desta Política de Privacidade, além de conhecer seus direitos e como exercê-los. </p>
+                        <p>9. A qualquer tempo e sem nenhum custo, você poderá revogar seu consentimento e para isso basta comunicar o nosso Encarregado de Dados, Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br </p>
+                        <p>10. A PERFORMANCE INFORMATIVO DE OBRAS LTDA disponibiliza os seguintes meios para que você possa entrar em contato conosco para exercer seus direitos de titular nosso Encarregado de Dados, Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br 11. Caso tenha dúvidas sobre esta Política de Privacidade ou sobre os dados pessoais que tratamos, você pode entrar em contato com o nosso Encarregado de Proteção de Dados Pessoais, sendo o advogado Marcelo Passiani, pelo endereço passiani@dpogestaocadastral.com.br </p>
+                        <p>12. O presente instrumento será assinado eletronicamente, conforme determina a MP 2.200-2/01,em seu art. 10º, §2, instrumento digital que será Sincronizado com o NTP.br e Observatório Nacional (ON)</p>
+
+                </div>
+            </div>
     @endif
 @endsection

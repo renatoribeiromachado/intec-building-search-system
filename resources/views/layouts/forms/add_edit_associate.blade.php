@@ -21,6 +21,7 @@
                 : 'Selecione o CNPJ' }}</option>
             <option value="30.252.400/0001-55">30.252.400/0001-55</option>
             <option value="36.622.261/0001-90">36.622.261/0001-90</option>
+            <option value="36.473.409/0001-72">36.473.409/0001-72</option>
         </select>
     </div>
     
