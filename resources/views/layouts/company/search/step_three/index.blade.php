@@ -281,7 +281,7 @@
                             </td>
                         </tr>
                         
-                        @foreach($company->contacts->sortBy('name') as $contact)
+                        @foreach ($company->contacts()->where('contacts.archived', false)->orderBy('name', 'asc')->get() as $contact)
                             <tr>
                                 <td class="pt-3">
                                     <strong>Contato:</strong> {{ $contact->name }}<br>
