@@ -31,9 +31,11 @@ use App\Http\Controllers\EmailWorkController;
 use App\Http\Controllers\EmailCompanyController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PopupController;
+use App\Http\Controllers\QuarterlyResultController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
+
         
 
 /*
@@ -380,6 +382,10 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Popup - 13/12/2023 - Renato Machado*/
     Route::get('popup', [PopupController::class, 'index'])->name('popup.index');
     Route::put('popup/{id}', [PopupController::class, 'update'])->name('popup.update');
+
+    /*Resultado trimestral - 23/01/2024 - Renato Machado*/
+    Route::get('quarterlyResult', [QuarterlyResultController::class, 'index'])->name('quarterlyResult.index');
+    Route::post('quarterlyResult/store', [QuarterlyResultController::class, 'store'])->name('quarterlyResult.store');
 
 
     Route::prefix('associates')->group(function() {
