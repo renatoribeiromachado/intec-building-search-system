@@ -317,7 +317,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p><i class="fa fa-calendar icon"></i><br>
-                            <strong class="cd">Compromissos do dia</strong><br>
+                            <strong class="cd">Compromissos do dia...</strong><br>
                             <span style="color: #ff6b1a;"><strong>Reuniões do Dia</span></strong>
                         </p>
                     </div>
