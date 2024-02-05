@@ -2,117 +2,373 @@
 
 @section('content')
 
-<style>
-            .no-border {
-                border: 1px solid white;
-                background: white;
-            }
-            .parallax {
-                background-image: url("../images/header-dashboard-three.png");
-                background-size: cover;
-                background-position: center;
-                height: 140px; /* Defina a altura desejada */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+<div class="row">
+    <!--div 2-->
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <p class="pt-4"><img src='../images/logomarca_intec_menu.png' class="img-fluid" alt="Logomarca"></p>
+            </div>
 
-        </style>
-        
-        <div class="container-fluid">
-            <div class="container">
-                <div class="row mt-5">
-                    <div class="col-md-12 text-center">
-                        <h2 style="color: #000d37;">Bem vindo a INTEC</h2>
-                        <h3 style="color: #f64004;">A principal ferramenta de prospecção de obras do País</h3>
+            <!-- Mobile Layout -->
+            <div class="col-12 d-md-none">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar navbar-dark">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="mobileMenu">
+                                <ul class="navbar-nav ms-auto px-1">
+
+                                    <li class="nav-item dropdown pt-5 item1">
+                                        <a class="nav-link text-white" href="{{ route('dashboard.index') }}"
+                                            aria-expanded="false">
+                                            <i class="fa fa-home icon"></i>
+                                        </a>
+                                    </li>
+
+                                    @can('ver-administrativo')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="administrative"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-check icon"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="administrative">
+                                            {{-- @can('ver-configuracoes') --}}
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('associate.index') }}">
+                                                    Associados
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('work.exportExcel') }}">
+                                                    Exportar Excel
+                                                </a>
+                                            </li>
+                                            {{-- @endcan --}}
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('company.index') }}">Empresas</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('activity_field.index') }}">
+                                                    Atividades de Empresas
+                                                </a>
+                                            </li>
+
+                                            @can('ver-usuario')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('user.index') }}">
+                                                    Usuários
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            @can('ver-funcao-administrativa')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('role.index') }}">
+                                                    Perfis de Usuários
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('researcher.index') }}">
+                                                    Pesquisadores
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('work.index') }}">
+                                                    Obras
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('segment.index') }}">
+                                                    Segmentos de Atuação
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('segment_sub_type.index') }}">
+                                                    Subtipos de Segmentos de Atuação
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('phase.index') }}">
+                                                    Fases
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('stage.index') }}">
+                                                    Estágios
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('position.index') }}">
+                                                    Cargos
+                                                </a>
+                                            </li>
+
+                                            @can('ver-funcao-administrativa')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('permission.index') }}">
+                                                    Permissões
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            @can('ver-popup')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('popup.index') }}">
+                                                    Pop-up
+                                                </a>
+                                            </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                    @endcan
+
+                                    @can('login-associado')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-users icon"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('monitoring.index') }}">
+                                                    Associado
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    @endcan
+
+                                    @can('login-de-associado-gestor')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-users icon"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('monitoring.gestor') }}">
+                                                    Acesso de usuário
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    @endcan
+
+                                    @can('plano-do-associado')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-check icon"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('associate.order.index') }}">
+                                                    Plano
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    @endcan
+
+
+                                    @can('ver-pesquisas')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-search icon"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            @can('ver-pesquisa-de-empresas')
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('company.search.step_one.index') }}">
+                                                    Empresas
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            @can('ver-pesquisa-de-obras')
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('work.search.step_one.index') }}">
+                                                    Obras
+                                                </a>
+                                            </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                    @endcan
+
+                                    @can('ver-relatorio')
+                                    {{-- <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-archive icon"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    Estamos em atualização
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    --}}
+                                    @endcan
+
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-calendar icon"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            @can('ver-sig')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('sig_works.index') }}">
+                                                    SIG / Obras
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            @can('ver-sig-empresa')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('sig_companies.index') }}">
+                                                    SIG / Empresa
+                                                </a>
+                                            </li>
+                                            @endcan
+
+                                            @can('ver-sig-associado')
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('sig_associate.index') }}">
+                                                    SIG / Associado
+                                                </a>
+                                            </li>
+                                            @endcan
+                                        </ul>
+                                    </li>
+
+                                    @can('alterar-senha')
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-lock icon"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('user-password.password') }}">
+                                                    Alterar
+                                                </a>
+                                            </li>
+
+                                        </ul>
+
+                                    </li>
+                                    @endcan
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown07XL"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-sign-out icon"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <form action="{{ route('logout') }}" method="post">
+                                                        @csrf
+                                                        @method('post')
+                                                        <button type="submit" class="btn btn-link dropdown-item">
+                                                            SAIR DO SISTEMA
+                                                        </button>
+                                                    </form>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-5 col-md-6 custom-div-2 mt-5 shadow">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p><i class="fa fa-calendar icon"></i><br>
+                            <strong class="cd">Compromissos do dia</strong><br>
+                            <span style="color: #ff6b1a;"><strong>Reuniões do Dia</span></strong>
+                        </p>
                     </div>
                 </div>
 
-                <div class="row mt-5">
-                    <div class="col-md-4 pt-5">
-                        <h3 class="text-center" style="color: #000d37;"><strong>Dominando a <br>Prospecção em Obras</strong></h3>
-                        <p class="text-center" style="font-size:18px;">Gerando leads de alta qualidade, nosso compromisso é elevar o seu sucesso com parceria e inovação. Para quem sabe o que quer, 
-                            a INTEC é a chave para uma prospecção inteligente no mercado da construção civil. </p>
-
-                        <p class="text-center" style="color: #f64004;"><strong>Enquanto alguns esperam, nós te colocamos à frente.</strong></p>
-
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="fa fa-calendar"></i> {{ date('d/m/Y') }}</p>
                     </div>
-                    <div class="col-md-8">
-                        <h3 class="text-center">Obras no Sistema</h3>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                    <div class="col-md-6">
+                        <p><i class="fa fa-clock-o"></i> {{ date('H:i:s') }}</p>
+                    </div>
+                </div>
 
-                                <thead class="text-center" style="border: 1px solid #000d37;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="fa fa-user"></i> <strong class="cd">{{ auth()->user()->name }}</strong></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="fa fa-map-marker"></i> <strong class="cd">São Paulo</strong></p>
+                    </div>
+                </div>
 
-                                    <tr class="text-white" style="background: #000d37;">
-                                        <th style="border: 1px solid white;background: white; border-right: 1px solid #001143;"></th>
-                                        <th>TOTAL DE OBRAS</th>
-                                        <th>RESIDENCIAL</th>
-                                        <th>COMERCIAL</th>
-                                        <th>INDUSTRIAL</th>
-                                    </tr>
-                                </thead>
+            </div>
 
-                                <tbody class="text-center" style="border: 1px solid #000d37;">
-                                    <tr>
-                                        <td class="no-border" style="border-bottom:1px solid #fff; border-right: 1px solid #001143;"></td>
-                                        <td>{{ $worksInBrazil }}</td>
-                                        <td>{{ $residentialWorks }}</td>
-                                        <td>{{ $businessWorks }}</td>
-                                        <td>{{ $industrialWorks }}</td>
-                                    </tr>
-                                </tbody>
+            <div class="col-5 col-md-6 custom-div-2 mt-5 shadow">
 
-                                <thead>
-                                    <tr class="text-white text-end" style="background: #f64004;border: 1px solid #000d37;">
-                                        <th class="no-border" style="border-right: 1px solid #000d37;background: white;"></th>
-                                        <th>Total</th>
-                                        <th>Residencial</th>
-                                        <th>Comercial</th>
-                                        <th>Industrial</th>
-                                    </tr>
-                                </thead>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p><i class="fa fa-calendar icon"></i><br>
+                            <strong class="cd">Próximo compromisso</strong><br>
+                            <span style="color: #ff6b1a;"><strong>Reuniões</span></strong>
+                        </p>
+                    </div>
+                </div>
 
-                                <tbody class="text-end" style="border: 1px solid #000d37;">
-                                    <tr>
-                                        <td style="background: #f64004;color:white;">Sudeste</td>
-                                        <td>{{ $southeastWorksCount }}</td>
-                                        <td>{{ $southeastResidentialWorks }}</td>
-                                        <td>{{ $southeastComercialWorks }}</td>
-                                        <td>{{ $southeastIndustrialWorks }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background: #f64004;color:white;">Sul</td>
-                                        <td>{{ $southWorksCount }}</td>
-                                        <td>{{ $southResidentialWorks }}</td>
-                                        <td>{{ $southComercialWorks }}</td>
-                                        <td>{{ $southIndustrialWorks }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background: #f64004;color:white;">Norte</td>
-                                        <td>{{ $northWorksCount }}</td>
-                                        <td>{{ $northResidentialWorks }}</td>
-                                        <td>{{ $northComercialWorks }}</td>
-                                        <td>{{ $northIndustrialWorks }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background: #f64004;color:white;">Nordeste</td>
-                                        <td>{{ $northeastWorksCount }}</td>
-                                        <td>{{ $northeastResidentialWorks }}</td>
-                                        <td>{{ $northeastComercialWorks }}</td>
-                                        <td>{{ $northeastIndustrialWorks }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background: #f64004;color:white;">Centro-Oeste</td>
-                                        <td>{{ $midwestWorksCount }}</td>
-                                        <td>{{ $midwestResidentialWorks }}</td>
-                                        <td>{{ $midwestComercialWorks }}</td>
-                                        <td>{{ $midwestIndustrialWorks }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="fa fa-calendar"></i> 11/01/2023</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="fa fa-clock-o"></i> 10:00</p>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><i class="fa fa-user"></i> <strong class="cd">{{ auth()->user()->name }}</strong></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="fa fa-map-marker"></i> <strong class="cd">São Paulo</strong></p>
                     </div>
                 </div>
 
@@ -120,4 +376,166 @@
 
         </div>
 
+
+        <div class="table-responsive top-report">
+
+            <div class="col-md-12">
+
+                <table class="table table-borderless">
+
+                    <thead class="text-white">
+                        <tr class="tr">
+                            <th>REGIÕES</th>
+                            <th class="d-none d-md-block">TOTAL DE OBRAS</th>
+                            <th class=" d-md-none">OBRAS</th>
+                            <th>RESIDENCIAL</th>
+                            <th>COMERCIAL</th>
+                            <th>INDUSTRIAL</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-white text-lg">
+                        <tr>
+                            <td>Sul</td>
+                            <td class="text-center">{{ $southWorksCount }}</td>
+                            <td class="text-center">{{ $southResidentialWorks }}</td>
+                            <td class="text-center">{{ $southComercialWorks }}</td>
+                            <td class="text-center">{{ $southIndustrialWorks }}</td>
+                        </tr>
+                        <tr class="custom-tr">
+                            <td>Sudeste</td>
+                            <td class="text-center">{{ $southeastWorksCount }}</td>
+                            <td class="text-center">{{ $southeastResidentialWorks }}</td>
+                            <td class="text-center">{{ $southeastComercialWorks }}</td>
+                            <td class="text-center">{{ $southeastIndustrialWorks }}</td>
+                        </tr>
+                        <tr>
+                            <td>Norte</td>
+                            <td class="text-center">{{ $northWorksCount }}</td>
+                            <td class="text-center">{{ $northResidentialWorks }}</td>
+                            <td class="text-center">{{ $northComercialWorks }}</td>
+                            <td class="text-center">{{ $northIndustrialWorks }}</td>
+                        </tr>
+                        <tr class="custom-tr">
+                            <td>Nordeste</td>
+                            <td class="text-center">{{ $northeastWorksCount }}</td>
+                            <td class="text-center">{{ $northeastResidentialWorks }}</td>
+                            <td class="text-center">{{ $northeastComercialWorks }}</td>
+                            <td class="text-center">{{ $northeastIndustrialWorks }}</td>
+                        </tr>
+                        <tr>
+                            <td>Centro-Oeste</td>
+                            <td class="text-center">{{ $midwestWorksCount }}</td>
+                            <td class="text-center">{{ $midwestResidentialWorks }}</td>
+                            <td class="text-center">{{ $midwestComercialWorks }}</td>
+                            <td class="text-center">{{ $midwestIndustrialWorks }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--div 3-->
+    <div class="col-md-3 div-3">
+        <div class="row pt-3">
+            <div class="col-md-12 text-white custom-div-bloco-3">
+                <h4 class="title">RESULTADO MENSAL</h4>
+
+                <p class="text-center pt-1 sub"><strong>2.344</strong> OBRAS NOVAS E ATUALIZADAS</p>
+                <p class="text-center subtiltle">Residencial: <strong>19.456</strong></p>
+                <p class="text-center subtiltle">Comercial: <strong>2598</strong></p>
+                <p class="text-center subtiltle">Industrial: <strong>1586</strong></p>
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-12 text-white custom-div-bloco-3">
+                <h4 class="title">RESULTADO TRIMESTRAL</h4>
+
+                <div class="row pt-3">
+
+                    <div class="col-6 col-md-6">
+                        <img src="../images/analise-trimestral.png" class="img-fluid"
+                            alt="Resusltado trimestral Intee Brasil">
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <img src="../images/analise-trimestral.png" class="img-fluid"
+                            alt="Resusltado trimestral Intee Brasil">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row pt-4">
+            <div class="col-md-12 text-white custom-div-bloco-3">
+                <h4 class="title">SAIBA MAIS</h4>
+
+                <div class="row pt-3">
+
+                    <div class="col-4 col-md-5">
+                        <img src="../images/agencia.png" class="img-fluid img-thumbnail"
+                            alt="Resusltado trimestral Intee Brasil">
+                    </div>
+
+                    <div class="col-8 col-md-7">
+                        <p class="h6 text-dark">AGÊNCIA DE MARKETING DIGITAL INTEC BRASIL</p>
+                    </div>
+
+                </div>
+
+                <div class="row pt-3">
+
+                    <div class="col-4 col-md-5">
+                        <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
+                            alt="Resusltado trimestral Intee Brasil">
+                    </div>
+
+                    <div class="col-8 col-md-7">
+                        <p class="h6 text-dark">FINALIZAMOS APURAÇÃO DAS 100 MAIORES CONSTRUTORAS DO BRASIL!</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--OBRAS GERAL -->
+<div class="row mt-5 pb-5 bg-white parallax2 total-work">
+
+
+    <div class="col-md-12 mt-5">
+        <h2 class="text-center title-work">MAIS DE 19 MIL GRANDES OBRAS CATALOGADAS</h2>
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col-md-4 pt-5 pb-5 border-right">
+            <h2 class="text-center h1">{{ $residentialWorks }}</h2>
+            <p class="text-center p-work">Obras Residenciais</p>
+        </div>
+
+        <div class="col-md-4 pt-5 pb-5 border-right">
+            <h2 class="text-center h1">{{ $businessWorks }}</h2>
+            <p class="text-center p-work">Obras comerciais</p>
+        </div>
+
+        <div class="col-md-4 pt-5 pb-5">
+            <h2 class="text-center h1">{{ $industrialWorks }}</h2>
+            <p class="text-center p-work">Obras Industriais</p>
+        </div>
+
+    </div>
+
+</div>
 @endsection

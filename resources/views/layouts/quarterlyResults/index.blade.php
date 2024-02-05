@@ -1,0 +1,66 @@
+@extends('layouts.app_customer')
+
+@section('content')
+
+<div class="container-flui bg-light p-5 rounded">
+    <div class='container'>
+        @include('layouts.alerts.success')
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='alert alert-info'>
+                    <h3> <i class='fa fa-exclamation'></i> Resultado Trimestral</h3>
+                    <p>
+                        <a href="#" class="btn btn-outline-primary me-1 edit-btn" data-bs-toggle="modal" data-bs-target="#create">
+                            Cadastrar
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        @foreach($quarterlyResults as $quarterlyResult)
+
+        @endforeach
+
+
+        <!--MODAL CREATE-->
+        <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="formCreated">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="formUpdate">Editar</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="createForm" action="{{ route('quarterlyResult.store') }}" method="POST" enctype="multipart/form-data"> 
+
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label"> Foto</label>
+                                    <input name="image" class="form-control" value="" type="file" required>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="control-label"> PDF</label>
+                                    <input name="pdf" class="form-control" value="" type="file">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                    <input type="submit" class="btn btn-primary" value="Cadastrar"
+                                        id="saveChangesBtn" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
