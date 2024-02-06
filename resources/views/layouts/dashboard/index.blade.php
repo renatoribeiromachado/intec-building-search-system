@@ -461,12 +461,12 @@
 
                     <div class="col-6 col-md-6">
                         <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intee Brasil">
+                            alt="Resusltado trimestral Intec Brasil">
                     </div>
 
                     <div class="col-6 col-md-6">
                         <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intee Brasil">
+                            alt="Resusltado trimestral Intec Brasil">
                     </div>
 
                 </div>
@@ -482,7 +482,7 @@
 
                     <div class="col-4 col-md-5">
                         <img src="../images/agencia.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intee Brasil">
+                            alt="Resusltado trimestral Intec Brasil">
                     </div>
 
                     <div class="col-8 col-md-7">
@@ -495,7 +495,7 @@
 
                     <div class="col-4 col-md-5">
                         <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intee Brasil">
+                            alt="Resusltado trimestral Intec Brasil">
                     </div>
 
                     <div class="col-8 col-md-7">

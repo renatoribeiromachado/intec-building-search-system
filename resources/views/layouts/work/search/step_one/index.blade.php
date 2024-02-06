@@ -783,7 +783,7 @@
                     </div>
 
                     <div class="row mt-2">
-                        <div class="col-md-12">
+                        <div class="col-md-12"> 
                             <x-intec-input
                                 label-input-id="autocomplete-input"
                                 label-text="Empresa participante"
@@ -1174,54 +1174,22 @@
 
         <div class="row pt-4">
             <div class="col-md-12 text-white custom-div-bloco-search">
-                <h4 class="title">RESULTADO TRIMESTRAL</h4>
-
-                <div class="row pt-3">
-
-                    <div class="col-6 col-md-6">
-                        <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intee Brasil">
-                    </div>
-
-                    <div class="col-6 col-md-6">
-                        <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intee Brasil">
-                    </div>
-
-                </div>
+                <h1 class="text-center">8599</h1>
+                <h5 class="text-center">Obras Residenciais</h5> 
             </div>
-
         </div>
 
         <div class="row pt-4">
             <div class="col-md-12 text-white custom-div-bloco-search">
-                <h4 class="title">SAIBA MAIS</h4>
+                <h1 class="text-center">7476</h1>
+                <h5 class="text-center">Obras Comerciais</h5> 
+            </div>
+        </div>
 
-                <div class="row pt-3">
-
-                    <div class="col-4 col-md-5">
-                        <img src="../images/agencia.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intee Brasil">
-                    </div>
-
-                    <div class="col-8 col-md-7">
-                        <p class="h6 text-dark">AGÊNCIA DE MARKETING DIGITAL INTEC BRASIL</p>
-                    </div>
-
-                </div>
-
-                <div class="row pt-3">
-
-                    <div class="col-4 col-md-5">
-                        <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intee Brasil">
-                    </div>
-
-                    <div class="col-8 col-md-7">
-                        <p class="h6 text-dark">FINALIZAMOS APURAÇÃO DAS 100 MAIORES CONSTRUTORAS DO BRASIL!</p>
-                    </div>
-
-                </div>
+        <div class="row pt-4">
+            <div class="col-md-12 text-white custom-div-bloco-search">
+                <h1 class="text-center">5231</h1>
+                <h5 class="text-center">Obras Industriais</h5> 
             </div>
         </div>
 </div>
