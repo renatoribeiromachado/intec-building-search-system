@@ -147,6 +147,476 @@
         #autocomplete-input {
             position: relative;
         }
+
+        /* Estilo para o menu principal */
+        .navbar-nav .nav-link {
+            background-color: #ff6b1a;
+            color: black;
+            /* Cor do texto normal */
+            transition: color 0.3s, background-color 0.3s;
+            /* Transição suave de cor para texto e fundo */
+        }
+
+        /* Estilo para o menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            width: max-content !important;
+            background-color: #000d37;
+            /* Cor de fundo do menu dropdown */
+            z-index: 999 !important;
+        }
+
+        /* Estilo para os itens do menu dropdown */
+        .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
+            color: white !important;
+            /* Cor do texto normal no menu dropdown */
+        }
+
+        /* Estilo quando o mouse passa por cima do item do menu dropdown */
+        .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+            background-color: #000d37;
+            color: red !important;
+            /* Cor que o texto vai ficar ao passar o mouse (vermelho) */
+        }
+
+        /* Estilo para a <li> do menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover {
+            background-color: #000d37;
+            /* Cor de fundo da <li> */
+        }
+
+        /* Estilo para a <li> do primeiro link*/
+        .item1:hover {
+            background-color: #ff6b1a !important;
+            /* Cor de fundo da <li> */
+            border-radius: 40px;
+        }
+
+        /* Estilo para o link dentro da <li> do menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover .nav-link {
+            color: black !important;
+            /* Cor do texto ao passar o mouse (vermelho) */
+            background-color: #ff6b1a !important;
+            /* Cor de fundo ao passar o mouse (verde) */
+        }
+
+        .h6 {
+            padding-top: 5px !important;
+            font-size: 13px !important;
+            font-weight: bold !important;
+        }
+
+        .parallax1 {
+            background-image: url("../images/parallax-1-1.png");
+            background-size: cover;
+            background-position: center;
+            height: auto;
+            /* Defina a altura desejada */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax2 {
+            background-image: url("../images/parallax-3.png");
+            background-size: cover;
+            background-position: center;
+            height: auto;
+            /* Defina a altura desejada */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-lg {
+            font-size: 1.5rem;
+        }
+
+        .col-md-2 {
+            flex: 0 0 8.33333%;
+            /* Define a largura da coluna para 8.33333%, ou seja, uma coluna em um total de 12 */
+            max-width: 10.2% !important;
+        }
+
+        .user-icon {
+            position: absolute;
+            top: 30%;
+            left: 18%;
+            font-size: 2rem;
+            /* Ajuste o tamanho do ícone conforme necessário */
+            color: #ffffff;
+        }
+
+        .custom-tr {
+            background: rgba(50, 50, 50, 0.9);
+            /* Cor de fundo com opacidade de 0.1 */
+        }
+
+        .top-report {
+            margin-top: 100px;
+        }
+
+        .social-icons {
+            font-size: 24px;
+            margin: 0 10px;
+            color: #000;
+            transition: color 0.3s;
+            /* Adiciona uma transição suave para a mudança de cor */
+        }
+
+        .social-icons:hover {
+            color: #ff6b1a;
+            /* Altera a cor para vermelho ao passar o mouse */
+        }
+
+        .icon {
+            font-size: 1.6rem;
+            /* Ajuste o tamanho do ícone conforme necessário */
+        }
+
+        .tr {
+            background: #ff6b1a;
+            border-radius: 50px !important;
+        }
+
+        .title {
+            background: #fff;
+            color: #ff6b1a;
+            border-radius: 20px;
+            padding-left: 20px;
+            padding-right: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .total-work {
+            min-height: 500px;
+            border-top-left-radius: 400px;
+        }
+
+        .title-work {
+            color: #ff6b1a;
+            font-size: 38px;
+        }
+
+        .p-work {
+            font-size: 20px;
+        }
+
+        .border-right {
+            border-right: 6px solid #ff6b1a;
+        }
+
+        .subtiltle {
+            font-size: 19px;
+        }
+
+        .custom-menu {
+            width: 118px !important;
+            height: 750px !important;
+            background-color: #ff6b1a;
+            border-radius: 40px;
+        }
+
+        .custom-div-2 {
+            border-radius: 20px;
+            padding: 10px !important;
+            max-width: 45.8%;
+            margin-right: 15px;
+            margin-left: 17px;
+            background: #fff;
+        }
+
+        .div-2 {
+            padding: 10px !important;
+            margin-left: 20px;
+        }
+
+        .div-3 {
+            border-radius: 20px;
+            padding: 10px !important;
+            max-width: 45.8%;
+            margin-left: 65px;
+            background: #ff6b1a;
+        }
+
+                
+        /*Auto-complete Obras/empresas*/
+        .autocomplete-list {
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: auto;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .autocomplete-list li {
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .autocomplete-list li:hover {
+            background-color: #f5f5f5;
+        }
+
+        #autocomplete-input {
+            position: relative;
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .whatsapp-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .label-font-bold {
+            font-weight: bold;
+        }
+
+        footer {
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Media query para notebooks com largura máxima de 1200px */
+        @media screen and (min-width: 1201px) {
+            .custom-menu {
+                width: 80px;
+                /* Reduz a largura do menu para notebooks */
+            }
+
+            .custom-div-2 {
+                border-radius: 20px;
+                padding: 10px;
+                max-width: 40.8%;
+                margin-right: 15px;
+                margin-left: 17px;
+                background: #fff;
+            }
+
+            .div-2 {
+                padding: 10px;
+                margin-left: 20px;
+            }
+
+            .div-3 {
+                border-radius: 20px;
+                padding: 10px;
+                max-width: 40.8%;
+                margin-left: 65px;
+                background: #ff6b1a;
+            }
+
+            
+            .div-search{
+                border-radius: 20px;
+                padding: 10px !important;
+                max-width: 20%;
+                margin-top: 30px;
+                margin-left: 0;
+                background: #e8edef;
+                
+            }
+            
+            .custom-works {
+                border-radius: 20px;
+                padding: 23px;
+                max-width: 80%;
+                margin-right: 45px;
+                margin-left: 45px;
+                background: #000;
+            }
+
+            .title {
+                background: #fff;
+                color: #ff6b1a;
+                border-radius: 20px;
+                padding-left: 20px;
+                padding-right: 10px;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .cd {
+                font-size: 12px;
+            }
+
+            .sub {
+                font-size: 14px !important;
+            }
+
+            .subtiltle {
+                font-size: 17px;
+            }
+        }
+
+        /*Celular*/
+        @media (max-width: 767px) {
+
+            /* Estilos específicos para dispositivos móveis */
+            .user-icon {
+                font-size: 2rem;
+                /* Tamanho menor para telas menores */
+                top: 40%;
+                /* Ajuste a posição vertical conforme necessário para dispositivos móveis */
+                left: 18%;
+                /* Ajuste a posição horizontal conforme necessário para dispositivos móveis */
+            }
+
+            .text-lg {
+                font-size: 1.0rem;
+            }
+
+            .tr {
+                background: #ff6b1a;
+                border-radius: 50px !important;
+            }
+
+            .top-report {
+                margin-top: 30px;
+            }
+
+            .title-work {
+                color: #ff6b1a;
+                font-size: 24px;
+            }
+
+            .title {
+                background: #fff;
+                color: #ff6b1a;
+                border-radius: 20px;
+                padding-left: 20px;
+                padding-right: 10px;
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .total-work {
+                min-height: 300px !important;
+                border-top-left-radius: 120px;
+            }
+
+            .div-2 {
+                padding: 10px !important;
+                margin-left: 0px;
+            }
+
+            .div-3 {
+                border-radius: 20px;
+                padding: 10px !important;
+                max-width: 100%;
+                margin-top: 30px;
+                margin-left: 0;
+                background: #ff6b1a;
+            }
+
+            .mt-5 {
+                margin-top: 30px !important;
+            }
+
+            .pt-4 {
+                padding-top: 15px !important;
+            }
+
+            .pt-5 {
+                padding-top: 20px !important;
+            }
+
+            .pb-5 {
+                padding-bottom: 20px !important;
+            }
+
+            .cd {
+                font-size: 14px;
+            }
+
+            .pl-10 {
+                padding-left: 10px !important;
+            }
+
+            .social-icons {
+                font-size: 24px;
+                margin: 0 10px;
+                color: #fff;
+            }
+
+            footer {
+                color: black;
+                text-align: center;
+                padding: 20px;
+            }
+
+            footer p {
+                margin: 10px 0;
+            }
+
+            .p-mobile-footer {
+                font-size: 13px !important;
+            }
+
+        }
+
+        /* Estilo para o datepicker */
+        .flatpickr-calendar {
+            background-color: #000 !important; /* Altere para a cor desejada */
+            color: #fff !important; /* Altere para a cor desejada */
+            border: ipx solid #000 !important; /* Altera a cor da borda para preto */
+        }
+
+        /* Estilo para a borda do datepicker */
+        .flatpickr-calendar .flatpickr-innerContainer {
+            border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+        }
+
+        /* Estilo para os números do dia dentro do datepicker */
+        .flatpickr-day {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para o título do mês dentro do datepicker */
+        .flatpickr-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para a seta esquerda (anterior) */
+        .flatpickr-prev-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+
+        /* Estilo para a seta direita (próximo) */
+        .flatpickr-next-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para o dia atual */
+        .today {
+            background-color: #ff6600 !important; /* Altere para a cor desejada */
+            color: #fff !important; /* Altere para a cor desejada */
+        }
     </style>
 
     @stack('styles')
@@ -154,14 +624,12 @@
 
 <body class="bg-white parallax1">
 
-
     <div class="container-fluid">
-
 
         <div class="row pt-5">
             <!-- Desktop Layout -->
             <!--div 1-->
-            <div class="col-md-2 d-none d-md-block">
+            <div class="col-md-1 d-none d-md-block">
 
                 <div class="custom-menu">
 
@@ -451,473 +919,61 @@
                 </div>
             </div>
 
-
-            <style>
-                /* Estilo para o menu principal */
-                .navbar-nav .nav-link {
-                    background-color: #ff6b1a;
-                    color: black;
-                    /* Cor do texto normal */
-                    transition: color 0.3s, background-color 0.3s;
-                    /* Transição suave de cor para texto e fundo */
-                }
-
-                /* Estilo para o menu dropdown */
-                .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-                    display: block;
-                    width: max-content !important;
-                    background-color: #000d37;
-                    /* Cor de fundo do menu dropdown */
-                    z-index: 999 !important;
-                }
-
-                /* Estilo para os itens do menu dropdown */
-                .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
-                    color: white !important;
-                    /* Cor do texto normal no menu dropdown */
-                }
-
-                /* Estilo quando o mouse passa por cima do item do menu dropdown */
-                .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
-                    background-color: #000d37;
-                    color: red !important;
-                    /* Cor que o texto vai ficar ao passar o mouse (vermelho) */
-                }
-
-                /* Estilo para a <li> do menu dropdown */
-                .navbar-nav .nav-item.dropdown:hover {
-                    background-color: #000d37;
-                    /* Cor de fundo da <li> */
-                }
-
-                /* Estilo para a <li> do primeiro link*/
-                .item1:hover {
-                    background-color: #ff6b1a !important;
-                    /* Cor de fundo da <li> */
-                    border-radius: 40px;
-                }
-
-                /* Estilo para o link dentro da <li> do menu dropdown */
-                .navbar-nav .nav-item.dropdown:hover .nav-link {
-                    color: black !important;
-                    /* Cor do texto ao passar o mouse (vermelho) */
-                    background-color: #ff6b1a !important;
-                    /* Cor de fundo ao passar o mouse (verde) */
-                }
-
-                .h6 {
-                    padding-top: 5px !important;
-                    font-size: 13px !important;
-                    font-weight: bold !important;
-                }
-
-                .parallax1 {
-                    background-image: url("../images/parallax-1-1.png");
-                    background-size: cover;
-                    background-position: center;
-                    height: auto;
-                    /* Defina a altura desejada */
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .parallax2 {
-                    background-image: url("../images/parallax-3.png");
-                    background-size: cover;
-                    background-position: center;
-                    height: auto;
-                    /* Defina a altura desejada */
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .text-lg {
-                    font-size: 1.5rem;
-                }
-
-                .col-md-2 {
-                    flex: 0 0 8.33333%;
-                    /* Define a largura da coluna para 8.33333%, ou seja, uma coluna em um total de 12 */
-                    max-width: 10.2% !important;
-                }
-
-                .user-icon {
-                    position: absolute;
-                    top: 30%;
-                    left: 18%;
-                    font-size: 2rem;
-                    /* Ajuste o tamanho do ícone conforme necessário */
-                    color: #ffffff;
-                }
-
-                .custom-tr {
-                    background: rgba(50, 50, 50, 0.9);
-                    /* Cor de fundo com opacidade de 0.1 */
-                }
-
-                .top-report {
-                    margin-top: 100px;
-                }
-
-                .social-icons {
-                    font-size: 24px;
-                    margin: 0 10px;
-                    color: #000;
-                    transition: color 0.3s;
-                    /* Adiciona uma transição suave para a mudança de cor */
-                }
-
-                .social-icons:hover {
-                    color: #ff6b1a;
-                    /* Altera a cor para vermelho ao passar o mouse */
-                }
-
-                .icon {
-                    font-size: 1.6rem;
-                    /* Ajuste o tamanho do ícone conforme necessário */
-                }
-
-                .tr {
-                    background: #ff6b1a;
-                    border-radius: 50px !important;
-                }
-
-                .title {
-                    background: #fff;
-                    color: #ff6b1a;
-                    border-radius: 20px;
-                    padding-left: 20px;
-                    padding-right: 10px;
-                    font-size: 20px;
-                    text-align: center;
-                }
-
-                .total-work {
-                    min-height: 500px;
-                    border-top-left-radius: 400px;
-                }
-
-                .title-work {
-                    color: #ff6b1a;
-                    font-size: 38px;
-                }
-
-                .p-work {
-                    font-size: 20px;
-                }
-
-                .border-right {
-                    border-right: 6px solid #ff6b1a;
-                }
-
-                .subtiltle {
-                    font-size: 19px;
-                }
-
-                .custom-menu {
-                    width: 118px;
-                    height: 750px;
-                    background-color: #ff6b1a;
-                    border-radius: 40px;
-                }
-
-                .custom-div-2 {
-                    border-radius: 20px;
-                    padding: 10px !important;
-                    max-width: 45.8%;
-                    margin-right: 15px;
-                    margin-left: 17px;
-                    background: #fff;
-                }
-
-                .div-2 {
-                    padding: 10px !important;
-                    margin-left: 20px;
-                }
-
-                .div-3 {
-                    border-radius: 20px;
-                    padding: 10px !important;
-                    max-width: 45.8%;
-                    margin-left: 65px;
-                    background: #ff6b1a;
-                }
-
-                .custon-div-bloco-3 {
-                    border-radius: 20px;
-                    padding: 10px !important;
-                    max-width: 90%;
-                    margin-right: 15px;
-                    margin-left: 15px;
-                    background: #e96300;
-                }
-
-                /*Auto-complete Obras/empresas*/
-                .autocomplete-list {
-                    position: absolute;
-                    z-index: 1000;
-                    background-color: #fff;
-                    border: 1px solid #ccc;
-                    width: auto;
-                    max-height: 200px;
-                    overflow-y: auto;
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                }
-
-                .autocomplete-list li {
-                    padding: 8px;
-                    cursor: pointer;
-                    transition: background-color 0.2s;
-                }
-
-                .autocomplete-list li:hover {
-                    background-color: #f5f5f5;
-                }
-
-                #autocomplete-input {
-                    position: relative;
-                }
-
-                .whatsapp-button {
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    background-color: green;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 50px;
-                    font-size: 18px;
-                    cursor: pointer;
-                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-                    display: flex;
-                    align-items: center;
-                    text-decoration: none;
-                }
-
-                .whatsapp-icon {
-                    font-size: 24px;
-                    margin-right: 10px;
-                }
-
-                .label-font-bold {
-                    font-weight: bold;
-                }
-
-                footer {
-                    color: black;
-                    text-align: center;
-                    padding: 20px;
-                }
-
-                footer p {
-                    margin: 10px 0;
-                }
-
-                /* Media query para notebooks com largura máxima de 1200px */
-                @media screen and (min-width: 1201px) {
-                    .custom-menu {
-                        width: 80px;
-                        /* Reduz a largura do menu para notebooks */
-                    }
-
-                    .custom-div-2 {
-                        border-radius: 20px;
-                        padding: 10px;
-                        max-width: 40.8%;
-                        margin-right: 15px;
-                        margin-left: 17px;
-                        background: #fff;
-                    }
-
-                    .div-2 {
-                        padding: 10px;
-                        margin-left: 20px;
-                    }
-
-                    .div-3 {
-                        border-radius: 20px;
-                        padding: 10px;
-                        max-width: 40.8%;
-                        margin-left: 65px;
-                        background: #ff6b1a;
-                    }
-
-                    .custom-div-bloco-3 {
-                        border-radius: 20px;
-                        padding: 10px;
-                        max-width: 90%;
-                        margin-right: 15px;
-                        margin-left: 15px;
-                        background: #e96300;
-                    }
-
-                    .div-search{
-                        border-radius: 20px;
-                        padding: 10px !important;
-                        max-width: 100%;
-                        margin-top: 30px;
-                        margin-left: 0;
-                        background: #e8edef;
-                       
-                    }
-
-                    .custom-div-bloco-search {
-                        border-radius: 20px;
-                        padding: 23px;
-                        max-width: 80%;
-                        margin-right: 40px;
-                        margin-left: 40px;
-                        background: #000;
-                    }
-
-                    .title {
-                        background: #fff;
-                        color: #ff6b1a;
-                        border-radius: 20px;
-                        padding-left: 20px;
-                        padding-right: 10px;
-                        font-size: 16px;
-                        text-align: center;
-                    }
-
-                    .cd {
-                        font-size: 12px;
-                    }
-
-                    .sub {
-                        font-size: 14px !important;
-                    }
-
-                    .subtiltle {
-                        font-size: 17px;
-                    }
-                }
-
-                /*Celular*/
-                @media (max-width: 767px) {
-
-                    /* Estilos específicos para dispositivos móveis */
-                    .user-icon {
-                        font-size: 2rem;
-                        /* Tamanho menor para telas menores */
-                        top: 40%;
-                        /* Ajuste a posição vertical conforme necessário para dispositivos móveis */
-                        left: 18%;
-                        /* Ajuste a posição horizontal conforme necessário para dispositivos móveis */
-                    }
-
-                    .text-lg {
-                        font-size: 1.0rem;
-                    }
-
-                    .tr {
-                        background: #ff6b1a;
-                        border-radius: 50px !important;
-                    }
-
-                    .top-report {
-                        margin-top: 30px;
-                    }
-
-                    .title-work {
-                        color: #ff6b1a;
-                        font-size: 24px;
-                    }
-
-                    .title {
-                        background: #fff;
-                        color: #ff6b1a;
-                        border-radius: 20px;
-                        padding-left: 20px;
-                        padding-right: 10px;
-                        font-size: 18px;
-                        text-align: center;
-                    }
-
-                    .total-work {
-                        min-height: 300px !important;
-                        border-top-left-radius: 120px;
-                    }
-
-                    .div-2 {
-                        padding: 10px !important;
-                        margin-left: 0px;
-                    }
-
-                    .div-3 {
-                        border-radius: 20px;
-                        padding: 10px !important;
-                        max-width: 100%;
-                        margin-top: 30px;
-                        margin-left: 0;
-                        background: #ff6b1a;
-                    }
-
-                    .div-search{
-                        border-radius: 20px;
-                        padding: 10px !important;
-                        max-width: 100%;
-                        margin-top: 30px;
-                        margin-left: 0;
-                        background: #e8edef;
-                    }
-
-
-                    .mt-5 {
-                        margin-top: 30px !important;
-                    }
-
-                    .pt-4 {
-                        padding-top: 15px !important;
-                    }
-
-                    .pt-5 {
-                        padding-top: 20px !important;
-                    }
-
-                    .pb-5 {
-                        padding-bottom: 20px !important;
-                    }
-
-                    .cd {
-                        font-size: 14px;
-                    }
-
-                    .pl-10 {
-                        padding-left: 10px !important;
-                    }
-
-                    .social-icons {
-                        font-size: 24px;
-                        margin: 0 10px;
-                        color: #fff;
-                    }
-
-                    footer {
-                        color: black;
-                        text-align: center;
-                        padding: 20px;
-                    }
-
-                    footer p {
-                        margin: 10px 0;
-                    }
-
-                    .p-mobile-footer {
-                        font-size: 13px !important;
-                    }
-
-                }
-            </style>
-
-            <main class="col-md-11">
+            <main class="col-md-8">
                 @yield('content')
             </main>
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            
+            <!--div 3-->
+            <div class="col-md-3" style="background: #e8edef;border-radius: 20px;max-width:23%;margin-left:25px;">
+                <div class="row pt-3">
+                    <div class="custom-works" style="padding:22px;">
+                        <span id="datepicker-container"></span>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Configurar o datepicker usando Flatpickr
+                        flatpickr("#datepicker-container", {
+                            inline: true, // Exibe o datepicker diretamente no contêiner
+                            dateFormat: "d/m/Y", // Formato da data (opcional, ajuste conforme necessário)
+                            onOpen: function () {
+                                // O que fazer quando o datepicker é aberto
+                                console.log("Datepicker aberto!");
+                            },
+                            onClose: function () {
+                                // O que fazer quando o datepicker é fechado
+                                console.log("Datepicker fechado!");
+                            },
+                            style: "border: none !important;"
+                        });
+                    });
+                </script>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">8599</h1>
+                        <h5 class="text-center">Obras Residenciais</h5> 
+                    </div>
+                </div>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">7476</h1>
+                        <h5 class="text-center">Obras Comerciais</h5> 
+                    </div>
+                </div>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">5231</h1>
+                        <h5 class="text-center">Obras Industriais</h5> 
+                    </div>
+                </div>
+            </div>
 
 
             <footer class="footer mt-5">

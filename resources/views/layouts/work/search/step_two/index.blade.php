@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customerSearch')
 
 @section('content')
 
-<div class="container bg-light p-5 rounded">
+<div class="row bg-light rounded">
     <div class="alert alert-primary">
         <h4>PESQUISA DE OBRAS</h4>
     </div>
@@ -250,7 +250,7 @@
                 <span class="fs-3">{{ $works->total() }}</span>
             </div>
 
-            <div class="col-md-2 mt-2 mb-3 clearfix">
+            <div class="col-md-3 mt-2 mb-3 clearfix">
                 <button
                     type="submit"
                     class="btn btn-success submit float-end"
@@ -277,7 +277,7 @@
                 </button>
             </div>
 
-            <div class="col-md-2 mt-2 mb-3 clearfix">
+            <div class="col-md-3 mt-2 mb-3 clearfix">
                 <button
                     id="btn-export-spreadsheet"
                     type="button"
@@ -289,13 +289,11 @@
         </div>
 
         <div class="row">
-            <div class="table table-responsive">
-                {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
-            </div>
+            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
         
-        <div class="table table-responsive">  
-            <table class="table">
+        <div class="col-md-12">  
+            <table class="table table-responsive">
                 <thead>
                     <tr class="bg-primary text-white">
                         <th scope="col">Código</th>
@@ -519,9 +517,7 @@
     @endcan
     
     <div class="row">
-        <div class="table table-responsive">
-            {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
-        </div>
+        {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
 </div>
 @endsection

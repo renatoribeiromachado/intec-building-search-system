@@ -386,11 +386,11 @@
                     <thead class="text-white">
                         <tr class="tr">
                             <th>REGIÕES</th>
-                            <th class="d-none d-md-block">TOTAL DE OBRAS</th>
+                            <th class="d-none d-md-block text-center">TOTAL DE OBRAS</th>
                             <th class=" d-md-none">OBRAS</th>
-                            <th>RESIDENCIAL</th>
-                            <th>COMERCIAL</th>
-                            <th>INDUSTRIAL</th>
+                            <th class="text-center">RESIDENCIAL</th>
+                            <th class="text-center">COMERCIAL</th>
+                            <th class="text-center">INDUSTRIAL</th>
                         </tr>
                     </thead>
 
