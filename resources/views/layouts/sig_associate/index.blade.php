@@ -56,33 +56,33 @@
     </div>
     
     @can('ver-sig-geral-de-associados')
-        <form id="form2" action="{{ route('sig_associate.search') }}" class="form-inline" method="post">
+        <form id="form2" action="{{ route('sig_associate.search') }}" class="form-inline" method="get">
             @csrf
-             <div class="row mt-5">
-                 <div class="col-md-2">
-                     <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
-                 </div>
-                 
-                 <div class="col-md-2"> 
-                     <input type="text" name="appointment_date" class="form-control datepicker" value="" placeholder="Data de agendamento...">
-                 </div>
+            <div class="row mt-5">
+                <div class="col-md-2">
+                    <a href="{{ route('sig_associate.sigGeral') }}" class="btn btn-secondary text-white"><i class='fa fa-check'></i> Ver Sig geral</a>
+                </div>
 
-                 <div class="col-md-2"> 
-                     <input type="text" name="code_associate" class="form-control" value="" placeholder="Digite o código...">
-                 </div>
+                <div class="col-md-2"> 
+                    <input type="text" name="appointment_date" class="form-control datepicker" value="{{ request()->get('appointment_date') }}" placeholder="Data de agendamento...">
+                </div>
 
-                 <div class="col-md-3">
-                     <select name="reporter" class="form-select">
-                         <option value="">--Selecione o Relator--</option>
-                         @foreach ($rapporteurs as $reporter)
-                         <option value="{{ $reporter->user->id }}">{{ $reporter->user->name }}</option>
-                         @endforeach
-                     </select>
-                 </div>
-                 
-                 <div class="col-md-2"> 
-                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
-                 </div>
+                <div class="col-md-2"> 
+                    <input type="text" name="code_associate" class="form-control" value="{{ request()->get('code_associate') }}" placeholder="Digite o código...">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="reporter" class="form-select">
+                        <option value="">--Selecione o Relator--</option>
+                        @foreach ($rapporteurs as $reporter)
+                        <option value="{{ $reporter->user->id }}" {{ (request()->get('reporter') == $reporter->user->id) ? 'selected' : '' }}>{{ $reporter->user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-2"> 
+                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                </div>
             </div>
         </form>
     @endcan
@@ -141,7 +141,9 @@
         
         <div class="card-header">
             {!! $sig_associates->appends([
-                'reporter' => request()->get('reporter','')
+                'reporter' => request()->get('reporter', ''),
+                'appointment_date' => request()->get('appointment_date', ''),
+                'code_associate' => request()->get('code_associate', '')
             ])->links() !!}
         </div>
    
