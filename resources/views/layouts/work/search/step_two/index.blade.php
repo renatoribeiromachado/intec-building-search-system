@@ -2,11 +2,16 @@
 
 @section('content')
 
-<div class="row bg-light rounded">
-    <div class="alert alert-primary">
-        <h4>PESQUISA DE OBRAS</h4>
-    </div>
+<div class="row">
+    @include('layouts.includes.menu_mobile') 
+</div>
 
+<div class="row">
+    @include('layouts.includes.sig') 
+</div>
+
+<div class="row bg-light rounded">
+    
     @include('layouts.alerts.success')
     @include('layouts.alerts.all-errors')
 
@@ -295,7 +300,7 @@
         <div class="col-md-12">  
             <table class="table table-responsive">
                 <thead>
-                    <tr class="bg-primary text-white">
+                    <tr class="bg-dark text-white">
                         <th scope="col">Código</th>
                         <th scope="col">Obra</th>
                         <th scope="col">Endereço</th>

@@ -2,9 +2,8 @@
 
 @section('content')
 
-<div class="row">
     <!--div 2-->
-    <div class="col-md-8">
+    
         <div class="row">
             <div class="col-12 col-md-12">
                 <p class="pt-4"><img src='../images/logomarca_intec_menu.png' class="img-fluid" alt="Logomarca"></p>
@@ -317,7 +316,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p><i class="fa fa-calendar icon"></i><br>
-                            <strong class="cd">Compromissos do dia...</strong><br>
+                            <strong class="cd">Compromissos do dia</strong><br>
                             <span style="color: #ff6b1a;"><strong>Reuniões do Dia</span></strong>
                         </p>
                     </div>
@@ -437,105 +436,4 @@
             </div>
 
         </div>
-
-    </div>
-
-    <!--div 3-->
-    <div class="col-md-3 div-3">
-        <div class="row pt-3">
-            <div class="col-md-12 text-white custom-div-bloco-3">
-                <h4 class="title">RESULTADO MENSAL</h4>
-
-                <p class="text-center pt-1 sub"><strong>2.344</strong> OBRAS NOVAS E ATUALIZADAS</p>
-                <p class="text-center subtiltle">Residencial: <strong>19.456</strong></p>
-                <p class="text-center subtiltle">Comercial: <strong>2598</strong></p>
-                <p class="text-center subtiltle">Industrial: <strong>1586</strong></p>
-            </div>
-        </div>
-
-        <div class="row pt-4">
-            <div class="col-md-12 text-white custom-div-bloco-3">
-                <h4 class="title">RESULTADO TRIMESTRAL</h4>
-
-                <div class="row pt-3">
-
-                    <div class="col-6 col-md-6">
-                        <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intec Brasil">
-                    </div>
-
-                    <div class="col-6 col-md-6">
-                        <img src="../images/analise-trimestral.png" class="img-fluid"
-                            alt="Resusltado trimestral Intec Brasil">
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row pt-4">
-            <div class="col-md-12 text-white custom-div-bloco-3">
-                <h4 class="title">SAIBA MAIS</h4>
-
-                <div class="row pt-3">
-
-                    <div class="col-4 col-md-5">
-                        <img src="../images/agencia.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intec Brasil">
-                    </div>
-
-                    <div class="col-8 col-md-7">
-                        <p class="h6 text-dark">AGÊNCIA DE MARKETING DIGITAL INTEC BRASIL</p>
-                    </div>
-
-                </div>
-
-                <div class="row pt-3">
-
-                    <div class="col-4 col-md-5">
-                        <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
-                            alt="Resusltado trimestral Intec Brasil">
-                    </div>
-
-                    <div class="col-8 col-md-7">
-                        <p class="h6 text-dark">FINALIZAMOS APURAÇÃO DAS 100 MAIORES CONSTRUTORAS DO BRASIL!</p>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-<!--OBRAS GERAL -->
-<div class="row mt-5 pb-5 bg-white parallax2 total-work">
-
-
-    <div class="col-md-12 mt-5">
-        <h2 class="text-center title-work">MAIS DE 19 MIL GRANDES OBRAS CATALOGADAS</h2>
-    </div>
-
-    <div class="row mt-2">
-
-        <div class="col-md-4 pt-5 pb-5 border-right">
-            <h2 class="text-center h1">{{ $residentialWorks }}</h2>
-            <p class="text-center p-work">Obras Residenciais</p>
-        </div>
-
-        <div class="col-md-4 pt-5 pb-5 border-right">
-            <h2 class="text-center h1">{{ $businessWorks }}</h2>
-            <p class="text-center p-work">Obras comerciais</p>
-        </div>
-
-        <div class="col-md-4 pt-5 pb-5">
-            <h2 class="text-center h1">{{ $industrialWorks }}</h2>
-            <p class="text-center p-work">Obras Industriais</p>
-        </div>
-
-    </div>
-
-</div>
 @endsection
