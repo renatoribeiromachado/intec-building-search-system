@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <title>SISTEMA INTEC | ACESSO RESTRITO</title>
+    <title>PINTEC BRASIL - PROSPECTE EM GRANDES OBRAS E CONSTRUTORAS</title>
 
     <style>
-       
+     
         .parallax {
             background-image: url("{{ asset('images/header-dashboard-three.png') }}");
             background-size: cover;
@@ -27,6 +27,45 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .label-font-bold {
+            font-weight: bold;
+        }
+
+        /*Auto-complete Obras/empresas*/
+        .autocomplete-list {
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: auto;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .autocomplete-list li {
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .autocomplete-list li:hover {
+            background-color: #f5f5f5;
+        }
+
+        #autocomplete-input {
+            position: relative;
+        }
+
+
+        .h6 {
+            padding-top: 5px !important;
+            font-size: 13px !important;
+            font-weight: bold !important;
         }
 
         .parallax1 {
@@ -49,16 +88,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-       
-        .label-font-bold {
-            font-weight: bold;
-        }
-
-        .h6 {
-            padding-top: 5px !important;
-            font-size: 13px !important;
-            font-weight: bold !important;
         }
 
         .text-lg {
@@ -88,7 +117,8 @@
         .top-report {
             margin-top: 100px;
         }
-        
+
+
         .icon {
             font-size: 1.6rem;
             /* Ajuste o tamanho do ícone conforme necessário */
@@ -153,23 +183,47 @@
             background: #ff6b1a;
         }
 
-        .custon-div-bloco-3 {
-            border-radius: 20px;
-            padding: 10px !important;
-            max-width: 90%;
-            margin-right: 15px;
-            margin-left: 15px;
-            background: #e96300;
+                
+        /*Auto-complete Obras/empresas*/
+        .autocomplete-list {
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: auto;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .autocomplete-list li {
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .autocomplete-list li:hover {
+            background-color: #f5f5f5;
+        }
+
+        #autocomplete-input {
+            position: relative;
         }
 
         .label-font-bold {
             font-weight: bold;
         }
 
-        
+
         /* Media query para notebooks com largura máxima de 1200px */
         @media screen and (min-width: 1201px) {
-    
+            .custom-menu {
+                width: 80px;
+                /* Reduz a largura do menu para notebooks */
+            }
+
             .custom-div-2 {
                 border-radius: 20px;
                 padding: 10px;
@@ -192,31 +246,23 @@
                 background: #ff6b1a;
             }
 
-            .custom-div-bloco-3 {
-                border-radius: 20px;
-                padding: 10px;
-                max-width: 90%;
-                margin-right: 15px;
-                margin-left: 15px;
-                background: #e96300;
-            }
-
+            
             .div-search{
                 border-radius: 20px;
                 padding: 10px !important;
-                max-width: 100%;
+                max-width: 20%;
                 margin-top: 30px;
                 margin-left: 0;
                 background: #e8edef;
                 
             }
-
-            .custom-div-bloco-search {
+            
+            .custom-works {
                 border-radius: 20px;
-                padding: 10px;
-                max-width: 90%;
-                margin-right: 15px;
-                margin-left: 15px;
+                padding: 23px;
+                max-width: 80%;
+                margin-right: 45px;
+                margin-left: 45px;
                 background: #000;
             }
 
@@ -303,16 +349,6 @@
                 background: #ff6b1a;
             }
 
-            .div-search{
-                border-radius: 20px;
-                padding: 10px !important;
-                max-width: 100%;
-                margin-top: 30px;
-                margin-left: 0;
-                background: #e8edef;
-            }
-
-
             .mt-5 {
                 margin-top: 30px !important;
             }
@@ -336,125 +372,120 @@
             .pl-10 {
                 padding-left: 10px !important;
             }
+        }
 
+        /* Estilo para o datepicker */
+        .flatpickr-calendar {
+            background-color: #000 !important; /* Altere para a cor desejada */
+            color: #fff !important; /* Altere para a cor desejada */
+            border: ipx solid #000 !important; /* Altera a cor da borda para preto */
+        }
+
+        /* Estilo para a borda do datepicker */
+        .flatpickr-calendar .flatpickr-innerContainer {
+            border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+        }
+
+        /* Estilo para os números do dia dentro do datepicker */
+        .flatpickr-day {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para o título do mês dentro do datepicker */
+        .flatpickr-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para a seta esquerda (anterior) */
+        .flatpickr-prev-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+
+        /* Estilo para a seta direita (próximo) */
+        .flatpickr-next-month {
+            color: #fff !important; /* Altere para a cor desejada */
+        }
+        /* Estilo para o dia atual */
+        .today {
+            background-color: #ff6600 !important; /* Altere para a cor desejada */
+            color: #fff !important; /* Altere para a cor desejada */
         }
     </style>
 
     @stack('styles')
 </head>
 
-<body class="bg-dark parallax1">
-  
+<body class="bg-white">
+
     <div class="container-fluid">
 
         <div class="row pt-5">
-            <!-- Desktop menu Layout -->
-            <!--div 1-->
+            <!-- div 1 - Desktop Menu Layout -->
             <div class="col-md-2 d-none d-md-block">
-                @include('layouts.includes.menu')  
+                @include('layouts.includes.menu') 
             </div>
 
+            <!--Main-->
             <main class="col-md-8">
+
+                <div class="row">
+                    @include('layouts.includes.menu_mobile') 
+                    @include('layouts.includes.sig') 
+                </div>
+
                 @yield('content')
             </main>
 
-            <!--div 3-->
-            <div class="col-md-3" style="background: #fd753d;border-radius: 20px;max-width:23%;margin-left:25px;">
-                <div class="row pt-3">
-                    <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">RESULTADO MENSAL</h4>
-
-                        <p class="text-center pt-1 sub"><strong>2.344</strong> OBRAS NOVAS E ATUALIZADAS</p>
-                        <p class="text-center subtiltle">Residencial: <strong>19.456</strong></p>
-                        <p class="text-center subtiltle">Comercial: <strong>2598</strong></p>
-                        <p class="text-center subtiltle">Industrial: <strong>1586</strong></p>
-                    </div>
-                </div>
-
-                <div class="row pt-4">
-                    <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">ANALISE TRIMESTRAL</h4>
-
-                        <div class="row pt-3">
-
-                            <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                            <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row pt-4">
-                    <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">SAIBA MAIS</h4>
-
-                        <div class="row pt-3">
-
-                            <div class="col-4 col-md-5">
-                                <img src="../images/agencia.png" class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                            <div class="col-8 col-md-7">
-                                <p class="h6 text-dark">AGÊNCIA DE MARKETING DIGITAL INTEC BRASIL</p>
-                            </div>
-
-                        </div>
-
-                        <div class="row pt-3">
-
-                            <div class="col-4 col-md-5">
-                                <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                            <div class="col-8 col-md-7">
-                                <p class="h6 text-dark">FINALIZAMOS APURAÇÃO DAS 100 MAIORES CONSTRUTORAS DO BRASIL!</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!--OBRAS GERAL -->
-            <div class="row mt-5 pb-5 bg-white parallax2 total-work">
-
-                <div class="col-md-12 mt-5">
-                    <h2 class="text-center title-work">MAIS DE 19 MIL GRANDES OBRAS CATALOGADAS</h2>
-                </div>
-
-                <div class="row mt-2">
-
-                    <div class="col-md-4 pt-5 pb-5 border-right">
-                        <h2 class="text-center h1">{{ $residentialWorks }}</h2>
-                        <p class="text-center p-work">Obras Residenciais</p>
-                    </div>
-
-                    <div class="col-md-4 pt-5 pb-5 border-right">
-                        <h2 class="text-center h1">{{ $businessWorks }}</h2>
-                        <p class="text-center p-work">Obras comerciais</p>
-                    </div>
-
-                    <div class="col-md-4 pt-5 pb-5">
-                        <h2 class="text-center h1">{{ $industrialWorks }}</h2>
-                        <p class="text-center p-work">Obras Industriais</p>
-                    </div>
-
-                </div>
-
-            </div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
             
-            <!--Footer-->
+            <!--div 3-->
+            <div class="col-md-3" style="background: #e8edef;border-radius: 20px;max-width:23%;margin-left:25px;">
+                <div class="row pt-3">
+                    <div class="custom-works" style="padding:22px;">
+                        <span id="datepicker-container"></span>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Configurar o datepicker usando Flatpickr
+                        flatpickr("#datepicker-container", {
+                            inline: true, // Exibe o datepicker diretamente no contêiner
+                            dateFormat: "d/m/Y", // Formato da data (opcional, ajuste conforme necessário)
+                            onOpen: function () {
+                                // O que fazer quando o datepicker é aberto
+                                console.log("Datepicker aberto!");
+                            },
+                            onClose: function () {
+                                // O que fazer quando o datepicker é fechado
+                                console.log("Datepicker fechado!");
+                            },
+                            style: "border: none !important;"
+                        });
+                    });
+                </script>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">8599</h1>
+                        <h5 class="text-center">Obras Residenciais</h5> 
+                    </div>
+                </div>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">7476</h1>
+                        <h5 class="text-center">Obras Comerciais</h5> 
+                    </div>
+                </div>
+
+                <div class="row pt-4">
+                    <div class="text-white custom-works">
+                        <h1 class="text-center">5231</h1>
+                        <h5 class="text-center">Obras Industriais</h5> 
+                    </div>
+                </div>
+            </div>
+
             @include('layouts.includes.footer')
 
             <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -463,13 +494,185 @@
                 crossorigin="anonymous"></script>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-         
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
             <!-- Inserido por Acessohost - 04/05/2023 - Renato Machado - para os Modais -->
+
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            
+            <script>
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $(document).ready(function () {
+                    $(".datepicker").datepicker({
+                        // dateFormat: 'yy-mm-dd' // Define o formato da data
+                        dateFormat: 'dd/mm/yy' // Define o formato da data
+                    });
+
+                    // jquery mask
+                    $('.cep').mask('00000-000');
+                    $('.cnpj').mask('00.000.000/0000-00', { reverse: false });
+                    $('.date').mask('00/00/0000');
+                    $('.money').mask('000.000.000.000.000,00', { reverse: true });
+
+                    var SPMaskBehavior = function (val) {
+                        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    },
+                        spOptions = {
+                            onKeyPress: function (val, e, field, options) {
+                                field.mask(SPMaskBehavior.apply({}, arguments), options);
+                            }
+                        };
+
+                    $('.phone').mask(SPMaskBehavior, spOptions);
+
+                    // Manipular o evento keyup do CEP usando jQuery
+                    $('#zip_code').keyup(function () {
+                        const zipCode = $(this).val();
+                        const url = `https://viacep.com.br/ws/${zipCode}/json/`;
+
+                        fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Erro na solicitação');
+                                }
+                                return response.json();
+                            })
+                            .then(resposta => {
+                                $('#address').val(resposta.logradouro);
+                                $('#district').val(resposta.bairro);
+                                $('#city').val(resposta.localidade);
+                                $('#state option[value="' + resposta.uf + '"]').prop('selected', true);
+                                $('#number').focus();
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                // Lide com erros aqui
+                            });
+                    });
+
+                    // alerts
+                    $('.alert-success').on('click', function () {
+                        $(this).hide('slow');
+                    });
+
+                    setInterval(() => {
+                        $('.alert-success').trigger('click');
+                    }, 3000);
+                    // end alerts
+                });
+
+                base_url = function () {
+                    if (document.location.hostname === "localhost") {
+                        var url = "{!! config('app.url') !!}/";
+                    } else {
+                        var url = "{!! config('app.url') !!}";
+                    }
+                    return url;
+                };
+
+                /*Auto-complete Obras/Empresas - Renato Machado 31/08/2023*/
+                const autocompleteInput = document.getElementById('autocomplete-input');
+                const autocompleteList = document.getElementById('autocomplete-list');
+
+                autocompleteInput.addEventListener('input', async (event) => {
+                    const query = event.target.value;
+                    if (query.length >= 1) {
+                        const companies = await fetchCompanies(query);
+                        updateAutocomplete(companies);
+                    } else {
+                        clearAutocompleteList();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!autocompleteInput.contains(event.target)) {
+                        clearAutocompleteList();
+                    }
+                });
+
+                async function fetchCompanies(query) {
+                    const response = await fetch(`/works/works/getCompany?search=${query}`);
+                    const data = await response.json();
+                    return data;
+                }
+
+                function updateAutocomplete(results) {
+                    clearAutocompleteList();
+
+                    results.forEach(company => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = company.trading_name;
+                        listItem.addEventListener('click', () => {
+                            autocompleteInput.value = company.trading_name;
+                            clearAutocompleteList();
+                        });
+                        autocompleteList.appendChild(listItem);
+                    });
+
+                    autocompleteList.style.display = 'block';
+                }
+
+                function clearAutocompleteList() {
+                    autocompleteList.innerHTML = '';
+                    autocompleteList.style.display = 'none';
+                }
+
+                /*Auto-complete Empresas (Razão social) - Renato Machado 31/08/2023*/
+                const autocompleteInputRz = document.getElementById('autocomplete-input-rz');
+                const autocompleteListRz = document.getElementById('autocomplete-list-rz');
+
+                autocompleteInputRz.addEventListener('input', async (event) => {
+                    const query = event.target.value;
+                    if (query.length >= 1) {
+                        const companies = await fetchCompaniesRz(query);
+                        updateAutocompleteRz(companies);
+                    } else {
+                        clearAutocompleteListRz();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!autocompleteInputRz.contains(event.target)) {
+                        clearAutocompleteListRz();
+                    }
+                });
+
+                async function fetchCompaniesRz(query) {
+                    const response = await fetch(`/works/works/getCompanyName?searchCompany=${query}`);
+                    const data = await response.json();
+                    return data;
+                }
+
+                function updateAutocompleteRz(results) {
+                    clearAutocompleteListRz();
+
+                    results.forEach(company => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = company.company_name;
+                        listItem.addEventListener('click', () => {
+                            autocompleteInputRz.value = company.company_name;
+                            clearAutocompleteListRz();
+                        });
+                        autocompleteListRz.appendChild(listItem);
+                    });
+
+                    autocompleteListRz.style.display = 'block';
+                }
+
+                function clearAutocompleteListRz() {
+                    autocompleteListRz.innerHTML = '';
+                    autocompleteListRz.style.display = 'none';
+                }
+
+            </script>
+
             @stack('scripts')
         </div>
-
+        
         <!--botão whatsapp-->
         @include('layouts.includes.whatsapp')
 

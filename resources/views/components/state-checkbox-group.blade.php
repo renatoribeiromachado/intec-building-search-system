@@ -1,5 +1,11 @@
 <div>
-    <div class="row mt-2 bg-light border">
+    <style>
+        .description{
+            font-size:15px !important;
+        }
+    </style>
+    
+    <div class="row mt-2 bg-light border description">
         <div class="col-md-12 pt-3">
             <p>
                 <input

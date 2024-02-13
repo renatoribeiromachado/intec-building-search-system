@@ -1,14 +1,6 @@
-@extends('layouts.app_customerSearch')
+@extends('layouts.app_customer')
 
 @section('content')
-
-    <div class="row">
-        @include('layouts.includes.menu_mobile') 
-    </div>
-
-    <div class="row">
-        @include('layouts.includes.sig') 
-    </div>
 
     <div class="row mt-5" style="background:#ff7a00; border-top-left-radius: 20px; border-top-right-radius: 20px;">
         <div class="col-md-12 pt-2">

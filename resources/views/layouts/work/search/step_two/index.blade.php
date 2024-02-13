@@ -1,14 +1,6 @@
-@extends('layouts.app_customerSearch')
+@extends('layouts.app_customer')
 
 @section('content')
-
-<div class="row">
-    @include('layouts.includes.menu_mobile') 
-</div>
-
-<div class="row">
-    @include('layouts.includes.sig') 
-</div>
 
 <div class="row bg-light rounded">
     
