@@ -1,11 +1,8 @@
 @extends('layouts.app_customer')
 
 @section('content')
-    <div class="container bg-light p-5 rounded">
-        <div class="alert alert-primary">
-            <h4>PESQUISA DE EMPRESAS</h4>
-        </div>
-        
+    <div class="container bg-light mt-5 rounded">
+       
         @include('layouts.alerts.success')
         @include('layouts.alerts.all-errors')
         
@@ -180,12 +177,12 @@
             @endforeach
 
             <div class="row">
-                <div class="col mt-3 mb-3">
+                <div class="col-md-6 mt-3 mb-3">
                     Resultados encontrados: &nbsp;
                     <span class="fs-3">{{ $companies->total() }}</span>
                 </div>
 
-                <div class="col mt-3 mb-3 clearfix">
+                <div class="col-md-3 mt-3 mb-3 clearfix">
                     <button
                         type="submit"
                         class="btn btn-success submit float-end"
@@ -196,22 +193,8 @@
                     </button>
                 </div>
 
-            </div>
-
-            <div class="row">
-                <div class="col mt-3 mb-3">
-                    <button
-                        type="button"
-                        id="toggleButton"
-                        class="btn btn-primary mb-4"
-                        onclick="toggleCheckboxes()"
-                        >
-                        Selecionar Todos
-                    </button>
-                </div>
-
                 <!--Excel-->
-                <div class="col-md-2 mt-2 mb-3 clearfix">
+                <div class="col-md-3 mt-3 mb-3 clearfix">
                     <button
                         id="btn-export-spreadsheet"
                         type="button"
@@ -220,12 +203,24 @@
                         Exportar para Excel
                     </button>
                 </div>
+
             </div>
 
             <div class="row">
-                <div class="table table-responsive">
-                    {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
+                <div class="col-md-12 mt-3 mb-3">
+                    <button
+                        type="button"
+                        id="toggleButton"
+                        class="btn mb-4 orange-btn"
+                        onclick="toggleCheckboxes()"
+                        >
+                        Selecionar Todos
+                    </button>
                 </div>
+            </div>
+
+            <div class="row">
+                {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
             </div>
             
             <div class="table table-responsive"> 
@@ -281,7 +276,7 @@
                                         data-company-id="{{ $company->id }}"
                                         data-name="{{ $company->trading_name }}"
                                         >
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-check orange-icon"></i>
                                     </a>
                                 </td>
                             @endcan
@@ -424,9 +419,7 @@
     @endcan
 
         <div class="row">
-            <div class="table table-responsive">
-                {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
-            </div>
+            {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @endsection

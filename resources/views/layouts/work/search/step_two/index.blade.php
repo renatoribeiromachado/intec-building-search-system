@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row bg-light rounded">
+<div class="row bg-light rounded mt-5">
     
     @include('layouts.alerts.success')
     @include('layouts.alerts.all-errors')
@@ -242,12 +242,12 @@
         @endforeach
 
         <div class="row">
-            <div class="col mt-3 mb-3">
+            <div class="col-md-6 mt-3 mb-3">
                 Resultados encontrados: &nbsp;
                 <span class="fs-3">{{ $works->total() }}</span>
             </div>
 
-            <div class="col-md-3 mt-2 mb-3 clearfix">
+            <div class="col-md-3 mt-3 mb-3 clearfix">
                 <button
                     type="submit"
                     class="btn btn-success submit float-end"
@@ -258,6 +258,16 @@
                     <i class="fa fa-search"></i> Pesquisar
                 </button>
             </div>
+
+            <div class="col-md-3 mt-3 mb-3 clearfix">
+                <button
+                    id="btn-export-spreadsheet"
+                    type="button"
+                    class="btn btn-success"
+                    >
+                    Exportar para Excel
+                </button>
+            </div>
         </div>
 
         <div class="row">
@@ -266,21 +276,11 @@
                 <button
                     type="button"
                     id="toggleButton"
-                    class="btn btn-primary mb-4"
+                    class="btn mb-4 orange-btn"
                     onclick="toggleCheckboxes()"
                     data-toggle-state="select"
                     >
                     Selecionar Todos
-                </button>
-            </div>
-
-            <div class="col-md-3 mt-2 mb-3 clearfix">
-                <button
-                    id="btn-export-spreadsheet"
-                    type="button"
-                    class="btn btn-success"
-                    >
-                    Exportar para Excel
                 </button>
             </div>
         </div>
@@ -363,7 +363,7 @@
                                             data-work-id="{{ $work->id }}"
                                             data-code="{{ $work->old_code }}"
                                             >
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-check orange-icon"></i>
                                         </a>
                                     </td>
                                 @endcan

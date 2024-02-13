@@ -2,7 +2,7 @@
     .social-icons {
         font-size: 24px;
         margin: 0 10px;
-        color: #000;
+        color: #ff6b1a;
         transition: color 0.3s;
         /* Adiciona uma transição suave para a mudança de cor */
     }
@@ -44,7 +44,7 @@
     }
 
     footer {
-        color: black;
+        color: #ff6b1a;
         text-align: center;
         padding: 20px;
     }
@@ -69,11 +69,11 @@
         .social-icons {
             font-size: 24px;
             margin: 0 10px;
-            color: #fff;
+            color: #ff6b1a;
         }
 
         footer {
-            color: black;
+            color: #ff6b1a;
             text-align: center;
             padding: 20px;
         }
@@ -95,10 +95,10 @@
             <div class="col-md-6">
                 <p>Redes sociais:<br>
                     <a href="https://www.facebook.com/" target="_blank" class="social-icons">
-                        <i class="fa fa-facebook"></i>
+                        <i class="fa fa-facebook orange-icon"></i>
                     </a>
                     <a href="https://www.instagram.com/" target="_blank" class="social-icons">
-                        <i class="fa fa-instagram"></i>
+                        <i class="fa fa-instagram orange-icon"></i>
                     </a>
                 </p>
             </div>

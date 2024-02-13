@@ -17,6 +17,10 @@
     <title>INTEC BRASIL - PROSPECTE EM GRANDES OBRAS E CONSTRUTORAS</title>
 
     <style>
+        
+        .orange-icon {
+            color: #ff6b1a; /* Cor laranja */
+        }
        
         .parallax {
             background-image: url("{{ asset('images/header-dashboard-three.png') }}");

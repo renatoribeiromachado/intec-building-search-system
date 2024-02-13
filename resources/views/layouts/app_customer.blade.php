@@ -14,9 +14,30 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <title>PINTEC BRASIL - PROSPECTE EM GRANDES OBRAS E CONSTRUTORAS</title>
+    <title>INTEC BRASIL - PROSPECTE EM GRANDES OBRAS E CONSTRUTORAS</title>
 
     <style>
+
+        /* CSS para mudar a cor do link da paginação para laranja */
+        .pagination .page-link {
+            color: #ff6b1a; /* Cor laranja */
+        }
+
+        /* CSS para mudar a cor do link ativo da paginação para laranja */
+        .pagination .page-item.active .page-link {
+            background-color: #ff6b1a; /* Cor de fundo laranja */
+            border-color: #ff6b1a; /* Cor da borda laranja */
+        }
+
+        .orange-btn {
+            background-color: #ff6b1a; /* Cor de fundo laranja */
+            border-color: #ff6b1a; /* Cor da borda laranja */
+            color: #fff; /* Cor do texto branco */
+        }
+
+        .orange-icon {
+            color: #ff6b1a; /* Cor laranja */
+        }
      
         .parallax {
             background-image: url("{{ asset('images/header-dashboard-three.png') }}");
