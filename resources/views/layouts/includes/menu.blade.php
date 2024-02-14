@@ -58,6 +58,9 @@
         background-color: #ff6b1a !important;
         /* Cor de fundo ao passar o mouse (verde) */
     }
+    .icon{
+        padding-left:20px !important;
+    }
 </style>
 <div class="custom-menu">
 

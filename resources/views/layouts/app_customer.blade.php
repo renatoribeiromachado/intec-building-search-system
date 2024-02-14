@@ -404,7 +404,7 @@
             }
 
             .datepicker-container{
-                padding-left:14% !important;
+                padding-left:12% !important;
             }
 
             .div-2 {
