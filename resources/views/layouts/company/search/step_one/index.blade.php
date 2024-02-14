@@ -48,7 +48,7 @@
                             <i class="fa fa-check-square-o"></i>
                             Regiões do Brasil
                         </strong>
-                        <input type="checkbox" class="regiaoGeral" />
+                        <input type="checkbox" class="regiaoGeral orange-checkbox" />
                         <code>* Selecione Todas as Regiões</code>
                     </label>
                 </div>
@@ -60,10 +60,10 @@
             <x-state-checkbox-group
                 id="zone-all-1"
                 input-one-name="zones[0]"
-                class-one="norte checkRegiaoGeral"
+                class-one="norte checkRegiaoGeral orange-checkbox"
                 label-text="Norte"
                 :data-list="$statesOne"
-                class-two="checkNorte checkRegiaoGeral"
+                class-two="checkNorte checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-one-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -75,10 +75,10 @@
             <x-state-checkbox-group
                 id="zone-all-2"
                 input-one-name="zones[0]"
-                class-one="nordeste checkRegiaoGeral"
+                class-one="nordeste checkRegiaoGeral orange-checkbox"
                 label-text="Nordeste"
                 :data-list="$statesTwo"
-                class-two="checkNordeste checkRegiaoGeral"
+                class-two="checkNordeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-two-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -90,10 +90,10 @@
             <x-state-checkbox-group
                 id="zone-all-3"
                 input-one-name="zones[0]"
-                class-one="centro-oeste checkRegiaoGeral"
+                class-one="centro-oeste checkRegiaoGeral orange-checkbox"
                 label-text="Centro-Oeste"
                 :data-list="$statesThree"
-                class-two="checkCentroOeste checkRegiaoGeral"
+                class-two="checkCentroOeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-three-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -105,10 +105,10 @@
             <x-state-checkbox-group
                 id="zone-all-4"
                 input-one-name="zones[0]"
-                class-one="sudeste checkRegiaoGeral"
+                class-one="sudeste checkRegiaoGeral orange-checkbox"
                 label-text="Sudeste"
                 :data-list="$statesFour"
-                class-two="checkSudeste checkRegiaoGeral"
+                class-two="checkSudeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-four-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -120,10 +120,10 @@
             <x-state-checkbox-group
                 id="zone-all-5"
                 input-one-name="zones[0]"
-                class-one="sul checkRegiaoGeral"
+                class-one="sul checkRegiaoGeral orange-checkbox"
                 label-text="Sul"
                 :data-list="$statesFive"
-                class-two="checkSul checkRegiaoGeral"
+                class-two="checkSul checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-five-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -148,7 +148,7 @@
                                 type="checkbox"
                                 id="activity-field-{{ $activityField->id }}"
                                 name="activity_fields[]"
-                                class="activity_fields"
+                                class="activity_fields orange-checkbox"
                                 value="{{ $activityField->id }}"
                             >
                             <label for="activity-field-{{ $activityField->id }}">

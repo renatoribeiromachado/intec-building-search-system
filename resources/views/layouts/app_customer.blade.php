@@ -38,6 +38,44 @@
         .orange-icon {
             color: #ff6b1a; /* Cor laranja */
         }
+
+        /* Estilos para o checkbox laranja */
+        .orange-checkbox {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #ff6b1a; /* Cor da borda laranja */
+            border-radius: 3px;
+            outline: none;
+            transition: background-color 0.3s;
+            position: relative;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Estilos para o preenchimento do checkbox quando marcado */
+        .orange-checkbox:checked {
+            background-color: #ff6b1a; /* Cor de fundo laranja */
+        }
+
+        /* Estilos para o ícone de check */
+        .orange-checkbox::after {
+            content: '\f00c'; /* Código do ícone de check do Font Awesome */
+            font-family: 'FontAwesome';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff; /* Cor do ícone branco */
+            font-size: 12px; /* Tamanho do ícone */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Estilos para o ícone de check quando o checkbox está marcado */
+        .orange-checkbox:checked::after {
+            opacity: 1;
+        }
      
         .parallax {
             background-image: url("{{ asset('images/header-dashboard-three.png') }}");
@@ -81,7 +119,6 @@
         #autocomplete-input {
             position: relative;
         }
-
 
         .h6 {
             padding-top: 5px !important;
@@ -267,7 +304,6 @@
                 background: #ff6b1a;
             }
 
-            
             .div-search{
                 border-radius: 20px;
                 padding: 10px !important;

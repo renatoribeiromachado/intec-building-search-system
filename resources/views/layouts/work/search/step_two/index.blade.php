@@ -315,7 +315,7 @@
                                     <div style="cursor: pointer;">
                                         <div class="form-check">
                                             <input
-                                                class="form-check-input work-checkbox"
+                                                class="form-check-input work-checkbox orange-checkbox"
                                                 type="checkbox"
                                                 name="works_selected[]"
                                                 value="{{ $work->id }}"

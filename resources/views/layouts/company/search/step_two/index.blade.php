@@ -244,7 +244,7 @@
                                 <div style="cursor: pointer;">
                                     <div class="form-check">
                                         <input
-                                            class="form-check-input company-checkbox"
+                                            class="form-check-input company-checkbox orange-checkbox"
                                             type="checkbox"
                                             name="companies_selected[]"
                                             value="{{ $company->id }}"

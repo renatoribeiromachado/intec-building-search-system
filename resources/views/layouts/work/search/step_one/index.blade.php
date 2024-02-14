@@ -75,7 +75,7 @@
                         type="checkbox"
                         name="phases[0]"
                         id="stage-all-1" 
-                        class="phase1"
+                        class="phase1 orange-checkbox"
                         value="1"
                         >
                     <label for="stage-all-1"><b>Fase 1</b> <code>* Selecione Todos</code></label>
@@ -90,7 +90,7 @@
                             type="checkbox"
                             id="stage-{{ $stageOne ->id }}"
                             name="stages[]"
-                            class="F1"
+                            class="F1 orange-checkbox"
                             value="{{ $stageOne->id }}"
                             />
                         <label for="stage-{{ $stageOne->id }}">
@@ -109,7 +109,7 @@
                         type="checkbox"
                         name="phases[0]"
                         id="stage-all-2"
-                        class="phase2"
+                        class="phase2 orange-checkbox"
                         value="2"
                         >
                     <label for="stage-all-2"><b>Fase 2</b> <code>* Selecione Todos</code></label>
@@ -124,7 +124,7 @@
                             type="checkbox"
                             id="stage-two-{{ $stageTwo ->id }}"
                             name="stages[]"
-                            class="F2"
+                            class="F2 orange-checkbox"
                             value="{{ $stageTwo->id }}"
                             />
                         <label for="stage-two-{{ $stageTwo->id }}">
@@ -143,7 +143,7 @@
                         type="checkbox"
                         name="phases[0]"
                         id="stage-all-3"
-                        class="phase3"
+                        class="phase3 orange-checkbox"
                         value="3"
                         >
                     <label for="stage-all-3"><b>Fase 3</b> <code>* Selecione Todos</code></label>
@@ -158,7 +158,7 @@
                             type="checkbox"
                             id="stage-three-{{ $stageThree ->id }}"
                             name="stages[]"
-                            class="F3"
+                            class="F3 orange-checkbox"
                             value="{{ $stageThree->id }}"
                             />
                         <label for="stage-three-{{ $stageThree->id }}">
@@ -188,10 +188,10 @@
                 <x-state-checkbox-group
                     id="segment-sub-type-all-1"
                     input-one-name="segment-sub-types[0]"
-                    class-one="industrial"
+                    class-one="industrial orange-checkbox"
                     label-text="Industrial"
                     :data-list="$segmentSubTypeOne"
-                    class-two="Ind"
+                    class-two="Ind orange-checkbox"
                     list-input-id-for="segment-sub-type-one-"
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
@@ -203,10 +203,10 @@
                 <x-state-checkbox-group
                     id="segment-sub-type-all-2"
                     input-one-name="segment-sub-types[0]"
-                    class-one="comercial"
+                    class-one="comercial orange-checkbox"
                     label-text="Comercial"
                     :data-list="$segmentSubTypeTwo"
-                    class-two="Com"
+                    class-two="Com orange-checkbox"
                     list-input-id-for="segment-sub-type-two-"
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
@@ -218,10 +218,10 @@
                 <x-state-checkbox-group
                     id="segment-sub-type-all-3"
                     input-one-name="segment-sub-types[0]"
-                    class-one="residential"
+                    class-one="residential orange-checkbox"
                     label-text="Residencial"
                     :data-list="$segmentSubTypeThree"
-                    class-two="Res"
+                    class-two="Res orange-checkbox"
                     list-input-id-for="segment-sub-type-three-"
                     list-input-name="segment_sub_types[]"
                     collection-relation=""
@@ -239,7 +239,7 @@
                             <i class="fa fa-check-square-o"></i>
                             Regiões do Brasil
                         </strong>
-                        <input type="checkbox" class="regiaoGeral" />
+                        <input type="checkbox" class="regiaoGeral orange-checkbox" />
                         <code>* Selecione Todas as Regiões</code>
                     </label>
                 </div>
@@ -251,10 +251,10 @@
             <x-state-checkbox-group
                 id="zone-all-1"
                 input-one-name="zones[0]"
-                class-one="norte checkRegiaoGeral"
+                class-one="norte checkRegiaoGeral orange-checkbox"
                 label-text="Norte"
                 :data-list="$statesOne"
-                class-two="checkNorte checkRegiaoGeral"
+                class-two="checkNorte checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-one-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -266,10 +266,10 @@
             <x-state-checkbox-group
                 id="zone-all-2"
                 input-one-name="zones[0]"
-                class-one="nordeste checkRegiaoGeral"
+                class-one="nordeste checkRegiaoGeral orange-checkbox"
                 label-text="Nordeste"
                 :data-list="$statesTwo"
-                class-two="checkNordeste checkRegiaoGeral"
+                class-two="checkNordeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-two-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -281,10 +281,10 @@
             <x-state-checkbox-group
                 id="zone-all-3"
                 input-one-name="zones[0]"
-                class-one="centro-oeste checkRegiaoGeral"
+                class-one="centro-oeste checkRegiaoGeral orange-checkbox"
                 label-text="Centro-Oeste"
                 :data-list="$statesThree"
-                class-two="checkCentroOeste checkRegiaoGeral"
+                class-two="checkCentroOeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-three-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -296,10 +296,10 @@
             <x-state-checkbox-group
                 id="zone-all-4"
                 input-one-name="zones[0]"
-                class-one="sudeste checkRegiaoGeral"
+                class-one="sudeste checkRegiaoGeral orange-checkbox"
                 label-text="Sudeste"
                 :data-list="$statesFour"
-                class-two="checkSudeste checkRegiaoGeral"
+                class-two="checkSudeste checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-four-"
                 list-input-name="states[]"
                 collection-relation=""
@@ -311,10 +311,10 @@
             <x-state-checkbox-group
                 id="zone-all-5"
                 input-one-name="zones[0]"
-                class-one="sul checkRegiaoGeral"
+                class-one="sul checkRegiaoGeral orange-checkbox"
                 label-text="Sul"
                 :data-list="$statesFive"
-                class-two="checkSul checkRegiaoGeral"
+                class-two="checkSul checkRegiaoGeral orange-checkbox"
                 list-input-id-for="state-five-"
                 list-input-name="states[]"
                 collection-relation=""
