@@ -241,7 +241,10 @@
             background: #ff6b1a;
         }
 
-                
+        .datepicker-container{
+            padding:22px;
+        }
+      
         /*Auto-complete Obras/empresas*/
         .autocomplete-list {
             position: absolute;
@@ -327,6 +330,10 @@
                 background: #000;
             }
 
+            .datepicker-container{
+                padding:22px;
+            }
+
             .title {
                 background: #fff;
                 color: #ff6b1a;
@@ -394,6 +401,10 @@
             .total-work {
                 min-height: 300px !important;
                 border-top-left-radius: 120px;
+            }
+
+            .datepicker-container{
+                padding-left:20% !important;
             }
 
             .div-2 {
@@ -510,11 +521,13 @@
 
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <!-- Carregue o arquivo JavaScript do idioma Português do Flatpickr -->
+            <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
             
             <!--div 3-->
             <div class="col-md-3 block3">
                 <div class="row pt-3">
-                    <div class="custom-works" style="padding:22px;">
+                    <div class="custom-works datepicker-container">
                         <span id="datepicker-container"></span>
                     </div>
                 </div>
@@ -525,6 +538,7 @@
                         flatpickr("#datepicker-container", {
                             inline: true, // Exibe o datepicker diretamente no contêiner
                             dateFormat: "d/m/Y", // Formato da data (opcional, ajuste conforme necessário)
+                            locale: "pt", // Definindo o idioma para Português
                             onOpen: function () {
                                 // O que fazer quando o datepicker é aberto
                                 console.log("Datepicker aberto!");
@@ -540,21 +554,21 @@
 
                 <div class="row pt-4">
                     <div class="text-white custom-works">
-                        <h1 class="text-center">8599</h1>
+                        <h1 class="text-center">{{ $residentialWorks }}</h1>
                         <h5 class="text-center">Obras Residenciais</h5> 
                     </div>
                 </div>
 
                 <div class="row pt-4">
                     <div class="text-white custom-works">
-                        <h1 class="text-center">7476</h1>
+                        <h1 class="text-center">{{ $businessWorks }}</h1>
                         <h5 class="text-center">Obras Comerciais</h5> 
                     </div>
                 </div>
 
                 <div class="row pt-4">
                     <div class="text-white custom-works">
-                        <h1 class="text-center">5231</h1>
+                        <h1 class="text-center">{{ $industrialWorks }}</h1>
                         <h5 class="text-center">Obras Industriais</h5> 
                     </div>
                 </div>

@@ -83,7 +83,7 @@
         }
 
         .p-mobile-footer {
-            font-size: 13px !important;
+            font-size: 12px !important;
         }
 
     }

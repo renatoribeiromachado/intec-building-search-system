@@ -2,21 +2,31 @@
     <p class="pt-4"><img src='../../images/logomarca_intec_menu_search.png' class="img-fluid" alt="Logomarca"></p>
 </div>
 
+<style>
+    .nav-orange {
+        background:  #ff6b1a !important; /* Cor laranja */
+        color:#fff !important;
+    }
+    .icon{
+        padding-left:20px !important;
+    }
+</style>
+
 <!-- Mobile Layout -->
 <div class="col-12 d-md-none">
     <div class="row">
         <div class="col-12">
-            <nav class="navbar navbar-dark">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            <nav class="navbar">
+                <button class="navbar-toggler nav-orange" type="button" data-bs-toggle="collapse"
                     data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false"
                     aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="fa fa-bars"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="mobileMenu">
                     <ul class="navbar-nav ms-auto px-1">
 
-                        <li class="nav-item dropdown pt-5 item1">
+                        <li class="nav-item dropdown pt-5 item1" >
                             <a class="nav-link text-white" href="{{ route('dashboard.index') }}"
                                 aria-expanded="false">
                                 <i class="fa fa-home icon"></i>

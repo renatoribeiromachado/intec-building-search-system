@@ -16,6 +16,7 @@ use App\Models\Work;
 use App\Models\WorkFeature;
 use App\Models\Researcher;
 use App\Models\WorkSearchSaved;
+use App\Models\Segment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,6 +37,7 @@ class WorkSearchController extends Controller
     protected $workFeature;
     protected $researcher;
     protected $sig;
+    protected $segment;
     protected $worksSessionName = 'works_checkboxes';
     protected $stagesSessionName = 'stages_checkboxes';
     protected $segmentSubTypesSessionName = 'segment_sub_types_checkboxes';
@@ -51,7 +53,8 @@ class WorkSearchController extends Controller
         WorkFeature $workFeature,
         Researcher $researcher,
         Sig $sig,
-        WorkSearchSaved $workSaved  
+        WorkSearchSaved $workSaved,
+        Segment $segment 
     ) {
         $this->activityField = $activityField;
         $this->stage = $stage;
@@ -63,6 +66,7 @@ class WorkSearchController extends Controller
         $this->researcher = $researcher;
         $this->sig = $sig;
         $this->workSaved = $workSaved;
+        $this->segment = $segment;
     }
 
     public function showWorkSearchStepOne()
@@ -78,6 +82,36 @@ class WorkSearchController extends Controller
         $stagesThree = $this->stage->where('phase_id', 3)->get();
         $researchers = $this->researcher->get();//Renato machado 04/09/2023
         $workSaveds = $this->workSaved->where('user_id', $authUser->id)->get();//Renato machado 04/09/2023
+
+        $residentialWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
+
+        $industrialWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::INDUSTRY_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
+
+        $businessWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::BUSINESS_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
 
         if (authUserIsAnAssociate()) {
 
@@ -158,7 +192,10 @@ class WorkSearchController extends Controller
             'states',
             'researchers',
             'activityFields',
-            'workSaveds'
+            'workSaveds',
+            'residentialWorks',
+            'industrialWorks',
+            'businessWorks',
         ));
     }
 
@@ -182,6 +219,36 @@ class WorkSearchController extends Controller
         $priorities = Sig::PRIORITIES;
         $loggedUser = Auth::user();
 
+        $residentialWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
+
+        $industrialWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::INDUSTRY_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
+
+        $businessWorks = number_format(
+            $this->segment
+                ->where('description', '=', Work::BUSINESS_SEGMENT)
+                ->first()
+                ->works()
+                ->whereIn('phase_id', [1, 2])
+                ->whereNull('deleted_at')
+                ->count(),0,'','.'
+        );
+        
         $clickedInPage = $btnExistsInSession && session('btnSelectAll')['btn_clicked'] == 1
             ? session('btnSelectAll')['clicked_in_page']
             : $currentPage;
@@ -246,7 +313,10 @@ class WorkSearchController extends Controller
             'priorities',
             'reports',
             'searchParams',
-            'worksTotal'
+            'worksTotal',
+            'residentialWorks',
+            'industrialWorks',
+            'businessWorks',
         ));
     }
 
