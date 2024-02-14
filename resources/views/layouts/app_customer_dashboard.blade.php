@@ -157,6 +157,10 @@
             background: #ff6b1a;
         }
 
+        .block3{
+            background: #fd753d;border-radius: 20px;max-width:23%;margin-left:25px;
+        }
+
         .custon-div-bloco-3 {
             border-radius: 20px;
             padding: 10px !important;
@@ -222,6 +226,9 @@
                 margin-right: 15px;
                 margin-left: 15px;
                 background: #000;
+            }
+            .block3{
+                background: #fd753d;border-radius: 20px;max-width:100%;margin-left:0px;
             }
 
             .title {
@@ -307,6 +314,10 @@
                 background: #ff6b1a;
             }
 
+            .block3{
+                background: #fd753d;border-radius: 20px;max-width:100%;margin-left:0px;padding:20px;
+            }
+
             .div-search{
                 border-radius: 20px;
                 padding: 10px !important;
@@ -363,7 +374,7 @@
             </main>
 
             <!--div 3-->
-            <div class="col-md-3" style="background: #fd753d;border-radius: 20px;max-width:23%;margin-left:25px;">
+            <div class="col-md-3 block3">
                 <div class="row pt-3">
                     <div class="col-md-12 text-white custom-div-bloco-3">
                         <h4 class="title p-2">RESULTADO MENSAL</h4>

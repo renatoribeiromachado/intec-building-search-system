@@ -313,6 +313,10 @@
                 background: #e8edef;
                 
             }
+
+            .block3{
+                background:#e8edef;border-radius: 20px;max-width:23%;margin-left:25px;
+            }
             
             .custom-works {
                 border-radius: 20px;
@@ -406,6 +410,19 @@
                 background: #ff6b1a;
             }
 
+            .block3{
+                background:#e8edef;border-radius: 20px;max-width:100%;margin-left:0px;
+            }
+
+            .custom-works {
+                border-radius: 20px;
+                padding: 23px;
+                max-width: 100%;
+                margin-right: 0px;
+                margin-left: 0px;
+                background: #000;
+            }
+
             .mt-5 {
                 margin-top: 30px !important;
             }
@@ -495,7 +512,7 @@
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
             
             <!--div 3-->
-            <div class="col-md-3" style="background: #e8edef;border-radius: 20px;max-width:23%;margin-left:25px;">
+            <div class="col-md-3 block3">
                 <div class="row pt-3">
                     <div class="custom-works" style="padding:22px;">
                         <span id="datepicker-container"></span>
