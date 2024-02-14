@@ -404,7 +404,7 @@
             }
 
             .datepicker-container{
-                padding-left:20% !important;
+                padding-left:14% !important;
             }
 
             .div-2 {
@@ -422,7 +422,7 @@
             }
 
             .block3{
-                background:#e8edef;border-radius: 20px;max-width:100%;margin-left:0px;
+                background:#e8edef;border-radius: 20px;max-width:96%;margin:10px;
             }
 
             .custom-works {
