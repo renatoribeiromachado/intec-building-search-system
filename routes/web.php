@@ -65,6 +65,7 @@ Route::get('cronAssociate', [CronAssociateController::class, 'cron'])->name('cro
 Route::middleware(['auth', 'single.device.session'])->group(function () {
     //Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard.index');
+
     
     /*Monitoramento - Renato Machado 08/09/2023*/
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
@@ -365,8 +366,8 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
         Route::post('search/saved',[WorkSearchController::class, 'showWorkSearchSaved'])->name('work.search.saved');
         Route::get('search/works',[WorkSearchController::class, 'showWorkSearchSavedWorks'])->name('work.search.works');
         Route::delete('search/delete', [WorkSearchController::class, 'destroy'])->name('work.search.destroy');
-
         Route::get('export-works', [WorkSearchController::class, 'export'])->name('work.search.export');
+        
         /*auto-complete Obras/empresa (Fantasia) - Renato machado 30/08/2023*/
         Route::get('/works/getCompany', [WorkSearchController::class, 'getCompany'])->name('works.getCompany');
         

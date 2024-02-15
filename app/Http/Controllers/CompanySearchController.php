@@ -12,8 +12,6 @@ use App\Models\State;
 use App\Models\Sig;
 use App\Models\SigCompany;
 use App\Models\Researcher;
-use App\Models\Segment;
-use App\Models\Work;
 use App\Traits\SelectCheckboxes;
 use Illuminate\Http\Request;
 use App\Models\CompanySearchSaved;
@@ -31,8 +29,6 @@ class CompanySearchController extends Controller
 
     protected $activityField;
     protected $company;
-    protected $segment;
-    protected $work;
     protected $companiesSessionName = 'companies_checkboxes';
     protected $statesSessionName = 'states_checkboxes';
     protected $activityFieldsSessionName = 'activity_fields_checkboxes';
@@ -50,9 +46,7 @@ class CompanySearchController extends Controller
         Researcher $researcher,
         SegmentSubType $segmentSubType,
         SigCompany $sigCompany,
-        CompanySearchSaved $companySaved,
-        Work $work,
-        Segment $segment 
+        CompanySearchSaved $companySaved
     ) {
         $this->activityField = $activityField;
         $this->company = $company;
@@ -62,8 +56,6 @@ class CompanySearchController extends Controller
         $this->segmentSubType = $segmentSubType;
         $this->sigCompany = $sigCompany;
         $this->companySaved = $companySaved;
-        $this->segment = $segment;
-        $this->work = $work;
     }
 
     public function showCompanySearchStepOne()
@@ -126,36 +118,6 @@ class CompanySearchController extends Controller
                 ->get()->pluck('description', 'state_acronym');
         }
 
-        $residentialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $industrialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::INDUSTRY_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $businessWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::BUSINESS_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
         if ($authUser->role->slug != Associate::ASSOCIATE_MANAGER &&
             $authUser->role->slug != Associate::ASSOCIATE_USER) {
             $statesOne = $this->state->where('zone_id', 1)->get();
@@ -185,10 +147,7 @@ class CompanySearchController extends Controller
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
             'states',
-            'companySaveds',
-            'residentialWorks',
-            'industrialWorks',
-            'businessWorks',
+            'companySaveds'
         ));
     }
 
@@ -246,36 +205,6 @@ class CompanySearchController extends Controller
         
         $searchParams = $request->query();
 
-        $residentialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $industrialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::INDUSTRY_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $businessWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::BUSINESS_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
         /*Para pegar o ultimo satatus do Sig - 01/09/2023 - Renato Machado*/
         $company = null;
 //        foreach ($companies as $company) {
@@ -314,9 +243,6 @@ class CompanySearchController extends Controller
             'priorities',
             'reports',
             'searchParams',
-            'residentialWorks',
-            'industrialWorks',
-            'businessWorks',
         ));
     }
 

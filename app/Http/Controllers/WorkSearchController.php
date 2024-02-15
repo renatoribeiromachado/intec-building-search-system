@@ -69,6 +69,7 @@ class WorkSearchController extends Controller
         $this->segment = $segment;
     }
 
+
     public function showWorkSearchStepOne()
     {
         $this->authorize('ver-pesquisa-de-obras');
@@ -82,36 +83,6 @@ class WorkSearchController extends Controller
         $stagesThree = $this->stage->where('phase_id', 3)->get();
         $researchers = $this->researcher->get();//Renato machado 04/09/2023
         $workSaveds = $this->workSaved->where('user_id', $authUser->id)->get();//Renato machado 04/09/2023
-
-        $residentialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::RESIDENTIAL_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $industrialWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::INDUSTRY_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
-
-        $businessWorks = number_format(
-            $this->segment
-                ->where('description', '=', Work::BUSINESS_SEGMENT)
-                ->first()
-                ->works()
-                ->whereIn('phase_id', [1, 2])
-                ->whereNull('deleted_at')
-                ->count(),0,'','.'
-        );
 
         if (authUserIsAnAssociate()) {
 
@@ -192,10 +163,7 @@ class WorkSearchController extends Controller
             'states',
             'researchers',
             'activityFields',
-            'workSaveds',
-            'residentialWorks',
-            'industrialWorks',
-            'businessWorks',
+            'workSaveds'
         ));
     }
 
