@@ -372,10 +372,10 @@
             
             .custom-works {
                 border-radius: 20px;
-                padding: 23px;
+                padding: 20px;
                 max-width: 80%;
-                margin-right: 35px;
-                margin-left: 35px;
+                margin-right: 30px;
+                margin-left: 30px;
                 background: #000;
             }
 
@@ -410,7 +410,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 160px !important;
+                max-width: 180px !important;
             }
 
             /* Estilo para a borda do datepicker */
