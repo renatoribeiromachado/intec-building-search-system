@@ -355,6 +355,42 @@
             .subtiltle {
                 font-size: 17px;
             }
+
+            /* Estilo para o datepicker */
+            .flatpickr-calendar {
+                background-color: #000 !important; /* Altere para a cor desejada */
+                color: #fff !important; /* Altere para a cor desejada */
+                border: ipx solid #000 !important; /* Altera a cor da borda para preto */
+                max-width: 275px;
+            }
+
+            /* Estilo para a borda do datepicker */
+            .flatpickr-calendar .flatpickr-innerContainer {
+                border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+            }
+
+            /* Estilo para os números do dia dentro do datepicker */
+            .flatpickr-day {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para o título do mês dentro do datepicker */
+            .flatpickr-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para a seta esquerda (anterior) */
+            .flatpickr-prev-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+
+            /* Estilo para a seta direita (próximo) */
+            .flatpickr-next-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para o dia atual */
+            .today {
+                background-color: #ff6600 !important; /* Altere para a cor desejada */
+                color: #fff !important; /* Altere para a cor desejada */
+            }
         }
 
         /*Celular*/
