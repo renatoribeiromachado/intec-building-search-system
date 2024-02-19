@@ -228,7 +228,7 @@
                 background: #000;
             }
             .block3{
-                background: #fd753d;border-radius: 20px;max-width:22%;margin-left:25px;
+                background: #fd753d;border-radius: 20px;max-width:21%;margin-left:25px;
             }
 
             .title {
