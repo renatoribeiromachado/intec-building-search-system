@@ -1,10 +1,10 @@
 @extends('layouts.app_customer')
 
 @section('content')
-    <div class="container">
+
         @include('layouts.alerts.success')
         @include('layouts.alerts.all-errors')
-        <div class="row">
+        <div class="row pt-5">
             <div class="table-responsive">
                 <table class="table table-condensed">
                     <thead class="table-dark">
@@ -179,5 +179,4 @@
     }
 </script>
 
-    </div>
 @endsection

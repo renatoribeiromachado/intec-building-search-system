@@ -2,20 +2,19 @@
 
 @section('content')
 
-<div class="container bg-light p-5 rounded">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-primary"><h4>SIG - Obras</h4></div>
+    <div class="row mt-5" style="background:#ff7a00; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <div class="col-md-12 pt-2">
+            <p class="text-center"><strong>SIG - OBRAS</strong></p>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row bg-light">
         <div class="col-md-12">
             <form action="{{ route('sig_works.report') }}" id="formulario" method="get">
                 @csrf
                 @method('GET')
 
-                <div class="row">
+                <div class="row pt-2">
                     <div class="col-md-12">
                         <label class="form-label"><strong>Código da obra</strong></label>
                         <input type="text" class="form-control" name="code" value="">
@@ -150,6 +149,4 @@
             });
         });
     </script>
-
-</div>
 @endsection
