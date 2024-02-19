@@ -374,8 +374,8 @@
                 border-radius: 20px;
                 padding: 23px;
                 max-width: 80%;
-                margin-right: 45px;
-                margin-left: 45px;
+                margin-right: 35px;
+                margin-left: 35px;
                 background: #000;
             }
 
@@ -410,7 +410,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 145px !important;
+                max-width: 160px !important;
             }
 
             /* Estilo para a borda do datepicker */
