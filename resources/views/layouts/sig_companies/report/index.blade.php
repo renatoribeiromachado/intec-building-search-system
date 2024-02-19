@@ -1,10 +1,9 @@
 @extends('layouts.app_customer')
 
 @section('content')
-    <div class="container">
         @include('layouts.alerts.success')
         @include('layouts.alerts.all-errors')
-        <div class="row">
+        <div class="row mt-5">
             <div class="table-responsive">
                 <table class="table table-condensed">
                     <thead class="table-dark">
@@ -68,7 +67,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="text-center py-4">
-                                    Nenhum SIG de obras encontrado.
+                                    Nenhum SIG de empresa encontrado.
                                 </td>
                             </tr>
                         @endforelse
@@ -175,5 +174,4 @@
     }
 </script>
 
-    </div>
 @endsection

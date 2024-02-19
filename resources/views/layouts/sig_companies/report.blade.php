@@ -1,8 +1,7 @@
 @extends('layouts.app_customer')
 
 @section('content')
-<div class="container">
-    <div class="row">
+    <div class="row mt-5" style="background:#ff7a00; border-top-left-radius: 20px; border-top-right-radius: 20px;">
         <div class="table">
             <table class="table table-condensed">
                 <thead class="table-dark">
@@ -34,7 +33,4 @@
         </div>
 
     </div>
-
-</div>
-
 @endsection

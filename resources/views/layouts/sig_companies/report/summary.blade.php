@@ -5,8 +5,8 @@
     
     <div class="row mt-5">
         <div class="table">
-            <table class="table table-condensed">
-                <thead class="table-warning">
+            <table class="table table-condensed" >
+                <thead style="background:#ff7a00; border-top-left-radius: 20px; border-top-right-radius: 20px;">
                     <tr>
                         <th>Relator</th>
                         <th>Agendado</th>

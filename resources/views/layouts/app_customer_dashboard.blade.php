@@ -195,7 +195,7 @@
             .div-3 {
                 border-radius: 20px;
                 padding: 10px;
-                max-width: 40.8%;
+                max-width: 40.0%;
                 margin-left: 65px;
                 background: #ff6b1a;
             }
@@ -228,7 +228,7 @@
                 background: #000;
             }
             .block3{
-                background: #fd753d;border-radius: 20px;max-width:100%;margin-left:0px;
+                background: #fd753d;border-radius: 20px;max-width:23%;margin-left:25px;
             }
 
             .title {
