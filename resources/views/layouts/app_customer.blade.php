@@ -397,7 +397,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 175px;
+                max-width: 145px;
             }
 
             /* Estilo para a borda do datepicker */
