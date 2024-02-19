@@ -18,6 +18,121 @@
 
     <style>
 
+        /* Media query para notebooks com largura máxima de 1200px */
+        @media screen and (min-width: 1201px) {
+            .custom-menu {
+                width: 80px;
+                /* Reduz a largura do menu para notebooks */
+            }
+
+            .custom-div-2 {
+                border-radius: 20px;
+                padding: 10px;
+                max-width: 40.8%;
+                margin-right: 15px;
+                margin-left: 17px;
+                background: #fff;
+            }
+
+            .div-2 {
+                padding: 10px;
+                margin-left: 20px;
+            }
+
+            .div-3 {
+                border-radius: 20px;
+                padding: 10px;
+                max-width: 40.8%;
+                margin-left: 65px;
+                background: #ff6b1a;
+            }
+
+            .div-search{
+                border-radius: 20px;
+                padding: 10px !important;
+                max-width: 20%;
+                margin-top: 30px;
+                margin-left: 0;
+                background: #e8edef;
+                
+            }
+
+            .block3{
+                background:#e8edef;border-radius: 20px;max-width:21%;margin-left:25px;
+            }
+            
+            .custom-works {
+                border-radius: 20px;
+                padding: 23px;
+                max-width: 80%;
+                margin-right: 45px;
+                margin-left: 45px;
+                background: #000;
+            }
+
+            .datepicker-container{
+                padding:22px;
+            }
+
+            .title {
+                background: #fff;
+                color: #ff6b1a;
+                border-radius: 20px;
+                padding-left: 20px;
+                padding-right: 10px;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .cd {
+                font-size: 12px;
+            }
+
+            .sub {
+                font-size: 14px !important;
+            }
+
+            .subtiltle {
+                font-size: 17px;
+            }
+
+            /* Estilo para o datepicker */
+            .flatpickr-calendar {
+                background-color: #000 !important; /* Altere para a cor desejada */
+                color: #fff !important; /* Altere para a cor desejada */
+                border: ipx solid #000 !important; /* Altera a cor da borda para preto */
+                max-width: 145px;
+            }
+
+            /* Estilo para a borda do datepicker */
+            .flatpickr-calendar .flatpickr-innerContainer {
+                border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+            }
+
+            /* Estilo para os números do dia dentro do datepicker */
+            .flatpickr-day {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para o título do mês dentro do datepicker */
+            .flatpickr-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para a seta esquerda (anterior) */
+            .flatpickr-prev-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+
+            /* Estilo para a seta direita (próximo) */
+            .flatpickr-next-month {
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+            /* Estilo para o dia atual */
+            .today {
+                background-color: #ff6600 !important; /* Altere para a cor desejada */
+                color: #fff !important; /* Altere para a cor desejada */
+            }
+        }
+
         /* CSS para mudar a cor do link da paginação para laranja */
         .pagination .page-link {
             color: #ff6b1a; /* Cor laranja */
@@ -311,122 +426,6 @@
         .today {
             background-color: #ff6600 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
-        }
-
-
-        /* Media query para notebooks com largura máxima de 1200px */
-        @media screen and (min-width: 1201px) {
-            .custom-menu {
-                width: 80px;
-                /* Reduz a largura do menu para notebooks */
-            }
-
-            .custom-div-2 {
-                border-radius: 20px;
-                padding: 10px;
-                max-width: 40.8%;
-                margin-right: 15px;
-                margin-left: 17px;
-                background: #fff;
-            }
-
-            .div-2 {
-                padding: 10px;
-                margin-left: 20px;
-            }
-
-            .div-3 {
-                border-radius: 20px;
-                padding: 10px;
-                max-width: 40.8%;
-                margin-left: 65px;
-                background: #ff6b1a;
-            }
-
-            .div-search{
-                border-radius: 20px;
-                padding: 10px !important;
-                max-width: 20%;
-                margin-top: 30px;
-                margin-left: 0;
-                background: #e8edef;
-                
-            }
-
-            .block3{
-                background:#e8edef;border-radius: 20px;max-width:21%;margin-left:25px;
-            }
-            
-            .custom-works {
-                border-radius: 20px;
-                padding: 23px;
-                max-width: 80%;
-                margin-right: 45px;
-                margin-left: 45px;
-                background: #000;
-            }
-
-            .datepicker-container{
-                padding:22px;
-            }
-
-            .title {
-                background: #fff;
-                color: #ff6b1a;
-                border-radius: 20px;
-                padding-left: 20px;
-                padding-right: 10px;
-                font-size: 16px;
-                text-align: center;
-            }
-
-            .cd {
-                font-size: 12px;
-            }
-
-            .sub {
-                font-size: 14px !important;
-            }
-
-            .subtiltle {
-                font-size: 17px;
-            }
-
-            /* Estilo para o datepicker */
-            .flatpickr-calendar {
-                background-color: #000 !important; /* Altere para a cor desejada */
-                color: #fff !important; /* Altere para a cor desejada */
-                border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 145px;
-            }
-
-            /* Estilo para a borda do datepicker */
-            .flatpickr-calendar .flatpickr-innerContainer {
-                border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-            }
-
-            /* Estilo para os números do dia dentro do datepicker */
-            .flatpickr-day {
-                color: #fff !important; /* Altere para a cor desejada */
-            }
-            /* Estilo para o título do mês dentro do datepicker */
-            .flatpickr-month {
-                color: #fff !important; /* Altere para a cor desejada */
-            }
-            /* Estilo para a seta esquerda (anterior) */
-            .flatpickr-prev-month {
-                color: #fff !important; /* Altere para a cor desejada */
-            }
-
-            /* Estilo para a seta direita (próximo) */
-            .flatpickr-next-month {
-                color: #fff !important; /* Altere para a cor desejada */
-            }
-            /* Estilo para o dia atual */
-            .today {
-                background-color: #ff6600 !important; /* Altere para a cor desejada */
-                color: #fff !important; /* Altere para a cor desejada */
-            }
         }
 
         /*Celular*/
