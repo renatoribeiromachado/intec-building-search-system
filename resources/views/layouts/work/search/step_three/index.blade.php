@@ -462,7 +462,7 @@
                         @endforeach
 
                         @if ($contactBelongsToWork)
-                            <div class="col-4 col-md-3">
+                            <div class="col-4 col-md-4">
                                 <!-- Adicione a classe contact-card aos elementos de contato individuais -->
                                 <div class="card p-2 contact-card">
                                     <div class="card-header bg-secondary text-white emp">
