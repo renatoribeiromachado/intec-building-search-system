@@ -234,21 +234,21 @@
 
                                                                 @if ($workCompanyContact->email)
                                                                     <!-- Contact E-mail 1 -->
-                                                                    <a href="mailto:{{ $workCompanyContact->email }}">
+                                                                    <a href="mailto:{{ $workCompanyContact->email }}" style="font-size:14px !important;">
                                                                         {{ $workCompanyContact->email }}
                                                                     </a> <br>
                                                                 @endif
 
                                                                 @if ($workCompanyContact->secondary_email)
                                                                     <!-- Contact E-mail 2 -->
-                                                                    <a href="mailto:{{ $workCompanyContact->secondary_email }}">
+                                                                    <a href="mailto:{{ $workCompanyContact->secondary_email }}" style="font-size:14px !important;">
                                                                         {{ $workCompanyContact->secondary_email }}
                                                                     </a> <br>
                                                                 @endif
 
                                                                 @if ($workCompanyContact->tertiary_email)
                                                                     <!-- Contact E-mail 3 -->
-                                                                    <a href="mailto:{{ $workCompanyContact->tertiary_email }}">
+                                                                    <a href="mailto:{{ $workCompanyContact->tertiary_email }}" style="font-size:14px !important;">
                                                                         {{ $workCompanyContact->tertiary_email }}
                                                                     </a> <br>
                                                                 @endif
