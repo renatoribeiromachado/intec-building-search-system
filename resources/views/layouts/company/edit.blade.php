@@ -43,8 +43,8 @@
                 <div class="row">
                     <a class="invisible" name="contacts-section"></a>
                     @foreach ($company->contacts()->where('contacts.archived', false)->orderBy('name', 'asc')->get() as $contact)
-                        <div class="col-3 mb-3">
-                            <div class="card rounded-3" style="width: 18rem;">
+                        <div class="col-4 mb-3">
+                            <div class="card rounded-3" style="width: 22rem;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $contact->name }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
@@ -58,7 +58,7 @@
                                     
                                     @if ($contact->email)
                                     <a href="mailto:{{ $contact->email }}"
-                                        class="card-link d-block mb-2 ms-0"
+                                        class="card-link d-block mb-2 ms-0" style="font-size:13px !important;"
                                         >
                                         {{ $contact->email }}
                                     </a>
@@ -66,7 +66,7 @@
                                     
                                     @if ($contact->secondary_email)
                                     <a href="mailto:{{ $contact->secondary_email }}"
-                                        class="card-link d-block mb-2 ms-0"
+                                        class="card-link d-block mb-2 ms-0" style="font-size:13px !important;"
                                         >
                                         {{ $contact->secondary_email }}
                                     </a>
@@ -74,7 +74,7 @@
                                     
                                     @if ($contact->tertiary_email)
                                     <a href="mailto:{{ $contact->tertiary_email }}"
-                                        class="card-link d-block mb-2 ms-0"
+                                        class="card-link d-block mb-2 ms-0" style="font-size:13px !important;"
                                         >
                                         {{ $contact->tertiary_email }}
                                     </a>
