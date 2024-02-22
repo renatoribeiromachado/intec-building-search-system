@@ -61,6 +61,73 @@
     .icon{
         padding-left:20px !important;
     }
+
+    /* Media query para notebooks com largura máxima de 1200px */
+    @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
+
+        .custom-menu {
+            width: 110px !important;
+            height: 750px !important;
+            background-color: #ff6b1a;
+            border-radius: 40px;
+        }
+
+        /* Estilo para o menu principal */
+        .navbar-nav .nav-link {
+            background-color: #ff6b1a;
+            color: black;
+            /* Cor do texto normal */
+            transition: color 0.3s, background-color 0.3s;
+            /* Transição suave de cor para texto e fundo */
+        }
+
+        /* Estilo para o menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            width: max-content !important;
+            background-color: #000d37;
+            /* Cor de fundo do menu dropdown */
+            z-index: 999 !important;
+        }
+
+        /* Estilo para os itens do menu dropdown */
+        .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
+            color: white !important;
+            /* Cor do texto normal no menu dropdown */
+        }
+
+        /* Estilo quando o mouse passa por cima do item do menu dropdown */
+        .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+            background-color: #000d37;
+            color: red !important;
+            /* Cor que o texto vai ficar ao passar o mouse (vermelho) */
+        }
+
+        /* Estilo para a <li> do menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover {
+            background-color: #000d37;
+            /* Cor de fundo da <li> */
+        }
+
+        /* Estilo para a <li> do primeiro link*/
+        .item1:hover {
+            background-color: #ff6b1a !important;
+            /* Cor de fundo da <li> */
+            border-radius: 40px;
+        }
+
+        /* Estilo para o link dentro da <li> do menu dropdown */
+        .navbar-nav .nav-item.dropdown:hover .nav-link {
+            color: black !important;
+            /* Cor do texto ao passar o mouse (vermelho) */
+            background-color: #ff6b1a !important;
+            /* Cor de fundo ao passar o mouse (verde) */
+        }
+        .icon{
+            padding-left:20px !important;
+        }
+        
+    }
 </style>
 <div class="custom-menu">
 

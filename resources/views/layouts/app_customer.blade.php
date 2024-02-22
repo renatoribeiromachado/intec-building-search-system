@@ -17,9 +17,6 @@
     <title>INTEC BRASIL - PROSPECTE EM GRANDES OBRAS E CONSTRUTORAS</title>
 
     <style>
-
-        
-
         /* CSS para mudar a cor do link da paginação para laranja */
         .pagination .page-link {
             color: #ff6b1a; /* Cor laranja */
@@ -243,7 +240,7 @@
             background: #ff6b1a;
         }
         .block3{
-            background:#e8edef;border-radius: 20px;max-width:25%;margin-left:25px;
+            background:#e8edef;border-radius: 20px;max-width:23%;margin-left:25px;
         }
         
         .custom-works {
@@ -256,7 +253,7 @@
         }
 
         .datepicker-container{
-            padding:22px;
+            padding:40px;
         }
       
         /*Auto-complete Obras/empresas*/
@@ -367,7 +364,7 @@
             }
 
             .block3{
-                background:#e8edef;border-radius: 20px;max-width:21%;margin-left:25px;
+                background:#e8edef;border-radius: 20px;max-width:21%;margin-left:20px;
             }
             
             .custom-works {
