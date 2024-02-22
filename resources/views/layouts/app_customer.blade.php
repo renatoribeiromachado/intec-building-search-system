@@ -326,6 +326,9 @@
 
         /* Media query para notebooks com largura máxima de 1200px */
         @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
+            p{
+                font-size:12px !important;
+            }
             .custom-menu {
                 width: 80px;
                 /* Reduz a largura do menu para notebooks */
