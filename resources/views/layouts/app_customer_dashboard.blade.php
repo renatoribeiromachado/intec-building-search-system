@@ -176,7 +176,7 @@
 
         
         /* Media query para notebooks com largura máxima de 1200px */
-        @media screen and (min-width: 1201px) {
+        @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
     
             .custom-div-2 {
                 border-radius: 20px;
@@ -228,7 +228,7 @@
                 background: #000;
             }
             .block3{
-                background: #fd753d;border-radius: 20px;max-width:21%;margin-left:25px;
+                background: #fd753d;border-radius: 20px;max-width:21%;margin-left:20px;
             }
 
             .title {
@@ -393,12 +393,12 @@
                         <div class="row pt-3">
 
                             <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid"
+                                <img src="../images/analise-trimestral.png" class="img-fluid img-thumbnail"
                                     alt="Resusltado trimestral Intec Brasil">
                             </div>
 
                             <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid"
+                                <img src="../images/analise-trimestral.png" class="img-fluid img-thumbnail"
                                     alt="Resusltado trimestral Intec Brasil">
                             </div>
 
