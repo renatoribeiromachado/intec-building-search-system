@@ -66,7 +66,7 @@
     @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
 
         .custom-menu {
-            width: 110px !important;
+            width: 100px !important;
             height: 750px !important;
             background-color: #ff6b1a;
             border-radius: 40px;
