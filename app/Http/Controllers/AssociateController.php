@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AssociatesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\HtmlString;
 
 class AssociateController extends Controller
 {
@@ -217,6 +218,9 @@ class AssociateController extends Controller
     public function edit(Request $request, Associate $associate)
     {
         $company = $associate->company;
+        $company->company_name = new HtmlString(html_entity_decode($company->company_name));
+        $company->trading_name = new HtmlString(html_entity_decode($company->trading_name));
+        
         $contacts = $company->contacts()
             ->whereDoesntHave('user')
             ->orderBy('contacts.name', 'asc')
