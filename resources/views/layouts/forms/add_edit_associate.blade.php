@@ -48,6 +48,8 @@
             @endif
             <option value="Ex-cliente">Ex-cliente</option>
             <option value="Suspenso">Suspenso</option>
+            <option value="Cancelamento">Cancelamento</option>
+            <option value="Prospecção">Prospecção</option>
         </select>
     </div>
     
