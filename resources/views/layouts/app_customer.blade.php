@@ -373,7 +373,7 @@
             .custom-works {
                 border-radius: 20px;
                 padding: 10px;
-                max-width: 90%;
+                max-width: 95%;
                 margin-right: 10px;
                 margin-left: 10px;
                 background: #000;
@@ -402,7 +402,7 @@
             }
 
             .subtiltle {
-                font-size: 17px;
+                font-size: 17px; 
             }
 
             /* Estilo para o datepicker */
@@ -410,7 +410,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 220px !important;
+                max-width: 230px !important;
             }
 
             /* Estilo para a borda do datepicker */
