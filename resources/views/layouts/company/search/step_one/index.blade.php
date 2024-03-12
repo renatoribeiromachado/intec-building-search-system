@@ -6,6 +6,14 @@
         .description{
             font-size:15px !important;
         }
+
+        @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
+
+            .description{
+                font-size:13px !important;
+            }
+            
+        }
     </style>
  
     <div class="row mt-5" style="background:#ff7a00; border-top-left-radius: 20px; border-top-right-radius: 20px;">
