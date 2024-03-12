@@ -151,7 +151,7 @@
             @foreach($activityFields as $activityField)
                 @if($activityField->id !== 24)
                     <div class="col-md-4 pt-3">
-                        <p class="text-right description">
+                        <p class="text-right description_segment">
                             <input
                                 type="checkbox"
                                 id="activity-field-{{ $activityField->id }}"
@@ -466,7 +466,7 @@
                 </div>
             @endcan
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="control-label"> <strong>Ação</strong></label>
                 <br>
                 @can('salvar-pesquisa-empresa')
