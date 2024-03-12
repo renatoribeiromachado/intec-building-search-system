@@ -152,7 +152,7 @@
                                 value="{{ $activityField->id }}"
                             >
                             <label for="activity-field-{{ $activityField->id }}">
-                                <strong>{{ $activityField->description }}</strong>
+                                <strong class="description">{{ $activityField->description }}</strong>
                             </label>
                         </p>
                     </div>
