@@ -9,7 +9,7 @@
 
         @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
 
-            .description{
+            .description_segment{
                 font-size:13px !important;
             }
             
@@ -160,7 +160,7 @@
                                 value="{{ $activityField->id }}"
                             >
                             <label for="activity-field-{{ $activityField->id }}">
-                                <strong class="description">{{ $activityField->description }}</strong>
+                                <strong class="description_segment">{{ $activityField->description }}</strong>
                             </label>
                         </p>
                     </div>
