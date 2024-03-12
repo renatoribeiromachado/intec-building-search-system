@@ -401,6 +401,10 @@
                 font-size: 17px; 
             }
 
+            .description{
+                font-size:13px !important;
+            }
+
             .datepicker-container{
                 padding:10px;
             }
