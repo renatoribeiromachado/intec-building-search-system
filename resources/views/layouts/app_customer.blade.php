@@ -373,14 +373,10 @@
             .custom-works {
                 border-radius: 20px;
                 padding: 10px;
-                max-width: 95%;
+                max-width: 94%;
                 margin-right: 10px;
                 margin-left: 10px;
                 background: #000;
-            }
-
-            .datepicker-container{
-                padding:22px;
             }
 
             .title {
@@ -405,12 +401,16 @@
                 font-size: 17px; 
             }
 
+            .datepicker-container{
+                padding:10px;
+            }
+
             /* Estilo para o datepicker */
             .flatpickr-calendar {
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 230px !important;
+                max-width: 250px !important;
             }
 
             /* Estilo para a borda do datepicker */
