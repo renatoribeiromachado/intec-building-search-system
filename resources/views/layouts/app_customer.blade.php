@@ -373,7 +373,7 @@
             .custom-works {
                 border-radius: 20px;
                 padding: 20px;
-                max-width: 80%;
+                max-width: 85%;
                 margin-right: 30px;
                 margin-left: 30px;
                 background: #000;
@@ -409,8 +409,8 @@
             .flatpickr-calendar {
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
-                border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 180px !important;
+                border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+                max-width: 200px !important;
             }
 
             /* Estilo para a borda do datepicker */
