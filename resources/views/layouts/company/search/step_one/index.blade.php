@@ -10,7 +10,7 @@
         @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
 
             .description_segment{
-                font-size:12px !important;
+                font-size:11px !important;
             }
             
         }
