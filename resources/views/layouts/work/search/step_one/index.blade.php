@@ -467,7 +467,7 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="control-label"> Código da Obra <code>*para selecionar mais de uma Obra, separe por virgula</code></label>
+                        <label class="control-label"> Código da Obra <code>*Separe por virgula as obras</code></label>
                         <input type="text" name="old_code" class="form-control" value="" placeholder="Mais de uma obra, ex: RE00145,CO04785" />
                     </div>
                 </div>
@@ -492,7 +492,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <label class="control-label">Cidades Selecionadas - <a class="clear" onclick="limparSelecionadas()">Limpar selecionada(s)</a> *</label>
-                        <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
+                        <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidades" readonly>
                         <input type="hidden" name="cities_ids" id="citiesIdsInput" value="">
                     </div>
                 </div>

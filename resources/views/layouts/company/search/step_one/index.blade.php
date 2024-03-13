@@ -298,7 +298,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <label class="control-label">Cidades Selecionadas - <a class="clear" onclick="limparSelecionadas()">Limpar selecionada(s)</a> *</label>
-                        <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
+                        <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" style="color: blue;" placeholder="Selecione por Estado, mais será consultado até 4 Cidades" readonly>
                         <input type="hidden" name="cities_ids" id="citiesIdsInput" value="">
                     </div>
                 </div>
