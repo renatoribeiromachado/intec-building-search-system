@@ -293,7 +293,7 @@
             background-color: #000 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
             border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-            min-width: 22px !important;
+            min-width: 290px !important;
         }
 
         /* Estilo para a borda do datepicker */
@@ -414,7 +414,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 260px !important;
+                min-width: 260px !important;
             }
 
             /* Estilo para a borda do datepicker */
