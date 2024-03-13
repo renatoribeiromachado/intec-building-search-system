@@ -251,10 +251,6 @@
             margin-left: 45px;
             background: #000;
         }
-
-        .datepicker-container{
-            padding:40px;
-        }
       
         /*Auto-complete Obras/empresas*/
         .autocomplete-list {
@@ -288,12 +284,16 @@
             font-weight: bold;
         }
 
+        .datepicker-container{
+            padding:6% !important;
+        }
+
         /* Estilo para o datepicker */
         .flatpickr-calendar {
             background-color: #000 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
             border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-            max-width: 275px !important;
+            min-width: 22px !important;
         }
 
         /* Estilo para a borda do datepicker */
@@ -406,7 +406,7 @@
             }
 
             .datepicker-container{
-                padding:10px;
+                padding:6% !important;
             }
 
             /* Estilo para o datepicker */
@@ -544,10 +544,7 @@
             }
         }
 
-        .datepicker-container{
-            padding-left:10% !important;
-        }
-
+       
         /* Estilo para o datepicker */
         .flatpickr-calendar {
             background-color: #000 !important; /* Altere para a cor desejada */
