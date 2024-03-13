@@ -3,14 +3,14 @@
 @section('content')
 
     <style>
-        .description{
-            font-size:13px !important;
+       .description_segment{
+            font-size:14px !important;
         }
 
         @media only screen and (min-width: 1201px) and (max-device-width: 1600px) {
 
             .description_segment{
-                font-size:10px !important;
+                font-size:12px !important;
             }
             
         }
