@@ -548,12 +548,16 @@
             }
         }
 
+        .datepicker-container{
+            padding:10px;
+        }
+
         /* Estilo para o datepicker */
         .flatpickr-calendar {
             background-color: #000 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
             border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-            max-width: 275px;
+            max-width: 295px;
         }
 
         /* Estilo para a borda do datepicker */
