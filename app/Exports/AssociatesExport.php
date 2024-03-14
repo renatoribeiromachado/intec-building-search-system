@@ -142,7 +142,7 @@ class AssociatesExport implements FromCollection, WithHeadings, ShouldAutoSize, 
                             $contactData["contact_ddd_three_{$i}"] = $contactColumns["contact_{$i}_ddd_three"] ?? null;
                             $contactData["contact_phone_three_{$i}"] = $contactColumns["contact_{$i}_phone_three"] ?? null;
                             $contactData["contact_ddd_four_{$i}"] = $contactColumns["contact_{$i}_ddd_four"] ?? null;
-                            $contactData["contact_phone_four_{$i}"] = $contactColumns["contact_{$i}_phone_fou"] ?? null;
+                            $contactData["contact_phone_four_{$i}"] = $contactColumns["contact_{$i}_phone_four"] ?? null;
                             $contactData["contact_position_{$i}"] = $contactColumns["contact_{$i}_position"] ?? null;
                         }
 
@@ -164,7 +164,7 @@ class AssociatesExport implements FromCollection, WithHeadings, ShouldAutoSize, 
                             $associate->company->address . ', ' .
                             $associate->company->number . ' - ' .
                             $associate->company->district . ' - ' .
-                            $associate->company->city . ' - ' .
+                            $associate->company->city,
                             $associate->company->state,
                             $associate->company->zip_code,
                             $associate->company->phone_one,
@@ -292,6 +292,7 @@ class AssociatesExport implements FromCollection, WithHeadings, ShouldAutoSize, 
             'Razão Social',
             'Fantasia',
             'Endereço',
+            'UF',
             'CEP',
             'Telefone',
             'E-mail 1',
