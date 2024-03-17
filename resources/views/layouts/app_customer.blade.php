@@ -285,15 +285,15 @@
         }
 
         .datepicker-container{
-            padding:6% !important;
+            padding:5% !important;
         }
 
         /* Estilo para o datepicker */
         .flatpickr-calendar {
             background-color: #000 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
-            border: ipx solid #000 !important; /* Altera a cor da borda para preto */
-            min-width: 290px !important;
+            border: 1px solid #000 !important; /* Altera a cor da borda para preto */
+            max-width: 310px;
         }
 
         /* Estilo para a borda do datepicker */
@@ -406,7 +406,7 @@
             }
 
             .datepicker-container{
-                padding:6% !important;
+                padding:4%;
             }
 
             /* Estilo para o datepicker */
@@ -414,7 +414,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-                min-width: 50px !important;
+                max-width: 50px !important;
             }
 
             /* Estilo para a borda do datepicker */
@@ -550,7 +550,7 @@
             background-color: #000 !important; /* Altere para a cor desejada */
             color: #fff !important; /* Altere para a cor desejada */
             border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-            min-width: 150px !important;
+            max-width: 150px !important;
         }
 
         /* Estilo para a borda do datepicker */
