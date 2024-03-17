@@ -406,7 +406,7 @@
             }
 
             .datepicker-container{
-                padding:4%;
+                padding:2%;
             }
 
             /* Estilo para o datepicker */
@@ -415,6 +415,7 @@
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
                 max-width: 260px;
+                font-size: 10px; /* Tamanho da fonte desejado */
             }
 
             /* Estilo para a borda do datepicker */
