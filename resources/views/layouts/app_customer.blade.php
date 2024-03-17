@@ -409,7 +409,7 @@
             }
 
             .datepicker-container{
-                padding:1% !important;
+                padding:2% !important;
             }
 
             /* Estilo para o datepicker */
