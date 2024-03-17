@@ -291,9 +291,9 @@
         /* Estilo para o datepicker */
         .flatpickr-calendar {
             background-color: #000 !important; /* Altere para a cor desejada */
-            color: #fff !important; /* Altere para a cor desejada */
             border: 1px solid #000 !important; /* Altera a cor da borda para preto */
             max-width: 310px;
+            font-size: 12px !important; /* Tamanho da fonte desejado */
         }
 
         /* Estilo para a borda do datepicker */
@@ -304,7 +304,10 @@
         /* Estilo para os números do dia dentro do datepicker */
         .flatpickr-day {
             color: #fff !important; /* Altere para a cor desejada */
+            padding: 0px !important;
+            margin: 0px !important;
         }
+
         /* Estilo para o título do mês dentro do datepicker */
         .flatpickr-month {
             color: #fff !important; /* Altere para a cor desejada */
@@ -406,7 +409,7 @@
             }
 
             .datepicker-container{
-                padding:1% !important;
+                padding:2% !important;
             }
 
             /* Estilo para o datepicker */
@@ -414,7 +417,7 @@
                 background-color: #000 !important; /* Altere para a cor desejada */
                 color: #fff !important; /* Altere para a cor desejada */
                 border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-                max-width: 260px !important;
+                max-width: 255px !important;
                 font-size: 10px !important; /* Tamanho da fonte desejado */
             }
 
@@ -426,6 +429,7 @@
             /* Estilo para os números do dia dentro do datepicker */
             .flatpickr-day {
                 color: #fff !important; /* Altere para a cor desejada */
+                padding: 2px !important; /* Espaçamento desejado entre as datas */
             }
             /* Estilo para o título do mês dentro do datepicker */
             .flatpickr-month {
@@ -549,33 +553,7 @@
         /* Estilo para o datepicker */
         
 
-        /* Estilo para a borda do datepicker */
-        .flatpickr-calendar .flatpickr-innerContainer {
-            border: 1px solid #000 !important; /* Altera a cor da borda para preto */
-        }
-
-        /* Estilo para os números do dia dentro do datepicker */
-        .flatpickr-day {
-            color: #fff !important; /* Altere para a cor desejada */
-        }
-        /* Estilo para o título do mês dentro do datepicker */
-        .flatpickr-month {
-            color: #fff !important; /* Altere para a cor desejada */
-        }
-        /* Estilo para a seta esquerda (anterior) */
-        .flatpickr-prev-month {
-            color: #fff !important; /* Altere para a cor desejada */
-        }
-
-        /* Estilo para a seta direita (próximo) */
-        .flatpickr-next-month {
-            color: #fff !important; /* Altere para a cor desejada */
-        }
-        /* Estilo para o dia atual */
-        .today {
-            background-color: #ff6600 !important; /* Altere para a cor desejada */
-            color: #fff !important; /* Altere para a cor desejada */
-        }
+       
     </style>
 
     @stack('styles')
