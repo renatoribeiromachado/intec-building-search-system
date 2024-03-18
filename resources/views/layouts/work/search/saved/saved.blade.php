@@ -655,7 +655,7 @@
 
                             <input type="text" name="selected_cities" class="form-control" id="selectedCitiesInput" 
                                     value="{{ $formattedCitiesNames }}" style="color: blue;" 
-                                    placeholder="Selecione por Estado, mais será consultado até 4 Cidade(s) ..." readonly>
+                                    placeholder="Selecione por Estado, mais será consultado até 4 Cidades" readonly>
                             <input type="hidden" name="cities_ids" id="citiesIdsInput" value="{{ implode(',', json_decode($workSaved->cities_ids, true)) }}">
                         </div>
                     </div>
