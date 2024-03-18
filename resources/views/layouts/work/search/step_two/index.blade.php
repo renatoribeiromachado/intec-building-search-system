@@ -2,12 +2,10 @@
 
 @section('content')
 
-<div class="row bg-light rounded mt-5">
-    
     @include('layouts.alerts.success')
     @include('layouts.alerts.all-errors')
 
-    <div class="col-md-2 mt-2 mb-3 clearfix">
+    <div class="col-md-2 mt-5 mb-3 clearfix">
         <form name="export_form" action="{{ route('work.search.export') }}" method="get">
             @csrf
 
@@ -516,7 +514,7 @@
     <div class="row">
         {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
-</div>
+
 @endsection
 
 @push('scripts')
