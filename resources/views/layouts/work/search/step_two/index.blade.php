@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-md-9 bg-light rounded mt-5">
+<div class="bg-light rounded mt-5">
     
     @include('layouts.alerts.success')
     @include('layouts.alerts.all-errors')
@@ -289,7 +289,7 @@
             {{ $works->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
         
-        <div class="col-md-12">  
+        <div class="table-responsive">  
             <table class="table">
                 <thead>
                     <tr class="bg-dark text-white">
