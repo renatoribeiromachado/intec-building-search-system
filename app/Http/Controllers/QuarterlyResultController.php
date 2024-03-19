@@ -50,26 +50,40 @@ class QuarterlyResultController extends Controller
          ]);
      
          // Upload da imagem
-         if ($request->hasFile('image')) {
-             $imagePath = $request->file('image')->store("quarterlyResult", 'public');
-             $data['image'] = $imagePath;
+         try {
+             if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                 $imagePath = $request->file('image')->store("quarterlyResult/images", 'public');
+             } else {
+                 throw new \Exception('Imagem inválida.');
+             }
+         } catch (\Exception $e) {
+             Log::error('Erro ao fazer upload da imagem: ' . $e->getMessage());
+             return redirect()->back()->with('error', 'Erro ao fazer upload da imagem. Por favor, tente novamente.');
          }
      
          // Upload do PDF
-         if ($request->hasFile('pdf')) {
-             $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
-             $data['pdf'] = $pdfPath;
+         try {
+             if ($request->hasFile('pdf') && $request->file('pdf')->isValid()) {
+                 $pdfPath = $request->file('pdf')->store("quarterlyResult/pdfs", 'public');
+             } else {
+                 throw new \Exception('PDF inválido.');
+             }
+         } catch (\Exception $e) {
+             Log::error('Erro ao fazer upload do PDF: ' . $e->getMessage());
+             return redirect()->back()->with('error', 'Erro ao fazer upload do PDF. Por favor, tente novamente.');
          }
      
          // Salvar os dados no banco de dados
          try {
-             $result = QuarterlyResult::create($data);
-             Log::info('Dados salvos com sucesso: ' . print_r($result->toArray(), true)); // Verifica se os dados foram salvos
+             $result = QuarterlyResult::create([
+                 'image' => $imagePath,
+                 'pdf' => $pdfPath,
+             ]);
+             Log::info('Dados salvos com sucesso: ' . print_r($result->toArray(), true));
              return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
          } catch (\Exception $e) {
-             Log::error('Erro ao salvar dados: ' . $e->getMessage()); // Log de erros para depuração
+             Log::error('Erro ao salvar dados no banco de dados: ' . $e->getMessage());
              return redirect()->back()->with('error', 'Erro ao cadastrar. Por favor, tente novamente.');
          }
      }
-
 }
