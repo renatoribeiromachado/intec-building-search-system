@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\QuarterlyResult;
+use Illuminate\Support\Facades\Storage;
 
 
 class QuarterlyResultController extends Controller
@@ -37,10 +38,10 @@ class QuarterlyResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
-        $data = $request->all();
-        
         // Validação dos campos
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -48,18 +49,21 @@ class QuarterlyResultController extends Controller
         ]);
 
         // Upload da imagem
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $data['image'] = $request->image->store("/quarterlyResult");
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store("quarterlyResult", 'public');
+            $data['image'] = $imagePath;
         }
 
         // Upload do PDF
-        if ($request->hasFile('pdf') && $request->file('pdf')->isValid()) {
-            $data['pdf'] = $request->pdf->store("/quarterlyResult");
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
+            $data['pdf'] = $pdfPath;
         }
 
         // Salvar os dados no banco de dados
-        $this->quarterlyResult->create($data);
+        QuarterlyResult::create($data);
 
         return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
     }
+
 }

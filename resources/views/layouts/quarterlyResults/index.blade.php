@@ -32,30 +32,25 @@
                     </div>
                     <div class="modal-body">
 
-                        <form id="createForm" action="{{ route('quarterlyResult.store') }}" method="POST" enctype="multipart/form-data"> 
-
-                            @csrf
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label class="control-label"> Foto</label>
-                                    <input name="image" class="form-control" value="" type="file" required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label class="control-label"> PDF</label>
-                                    <input name="pdf" class="form-control" value="" type="file">
-                                </div>
+                    <form id="createForm" action="{{ route('quarterlyResult.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label"> Foto</label>
+                                <input name="image" class="form-control" type="file" required>
                             </div>
-
-                            <div class="modal-footer">
-                                <div class="col-sm-12">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                                    <input type="submit" class="btn btn-primary" value="Cadastrar"
-                                        id="saveChangesBtn" />
-                                </div>
+                            <div class="col-sm-6">
+                                <label class="control-label"> PDF</label>
+                                <input name="pdf" class="form-control" type="file">
                             </div>
-                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-primary" value="Cadastrar" id="saveChangesBtn" />
+                            </div>
+                        </div>
+                    </form>
 
                     </div>
                 </div>
