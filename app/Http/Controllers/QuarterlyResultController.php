@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\QuarterlyResult;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
 class QuarterlyResultController extends Controller
@@ -40,30 +41,35 @@ class QuarterlyResultController extends Controller
      */
 
 
-    public function store(Request $request)
-    {
-        // Validação dos campos
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pdf' => 'required|mimes:pdf|max:2048',
-        ]);
-
-        // Upload da imagem
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store("quarterlyResult", 'public');
-            $data['image'] = $imagePath;
-        }
-
-        // Upload do PDF
-        if ($request->hasFile('pdf')) {
-            $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
-            $data['pdf'] = $pdfPath;
-        }
-
-        // Salvar os dados no banco de dados
-        QuarterlyResult::create($data);
-
-        return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
-    }
+     public function store(Request $request)
+     {
+         // Validação dos campos
+         $request->validate([
+             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+             'pdf' => 'required|mimes:pdf|max:2048',
+         ]);
+     
+         // Upload da imagem
+         if ($request->hasFile('image')) {
+             $imagePath = $request->file('image')->store("quarterlyResult", 'public');
+             $data['image'] = $imagePath;
+         }
+     
+         // Upload do PDF
+         if ($request->hasFile('pdf')) {
+             $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
+             $data['pdf'] = $pdfPath;
+         }
+     
+         // Salvar os dados no banco de dados
+         try {
+             $result = QuarterlyResult::create($data);
+             Log::info('Dados salvos com sucesso: ' . print_r($result->toArray(), true)); // Verifica se os dados foram salvos
+             return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
+         } catch (\Exception $e) {
+             Log::error('Erro ao salvar dados: ' . $e->getMessage()); // Log de erros para depuração
+             return redirect()->back()->with('error', 'Erro ao cadastrar. Por favor, tente novamente.');
+         }
+     }
 
 }
