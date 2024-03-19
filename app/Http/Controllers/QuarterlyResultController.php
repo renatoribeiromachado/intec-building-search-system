@@ -42,48 +42,62 @@ class QuarterlyResultController extends Controller
 
 
      public function store(Request $request)
-     {
-         // Validação dos campos
-         $request->validate([
-             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-             'pdf' => 'required|mimes:pdf|max:2048',
-         ]);
-     
-         // Upload da imagem
-         try {
-             if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                 $imagePath = $request->file('image')->store("quarterlyResult/images", 'public');
-             } else {
-                 throw new \Exception('Imagem inválida.');
-             }
-         } catch (\Exception $e) {
-             Log::error('Erro ao fazer upload da imagem: ' . $e->getMessage());
-             return redirect()->back()->with('error', 'Erro ao fazer upload da imagem. Por favor, tente novamente.');
-         }
-     
-         // Upload do PDF
-         try {
-             if ($request->hasFile('pdf') && $request->file('pdf')->isValid()) {
-                 $pdfPath = $request->file('pdf')->store("quarterlyResult/pdfs", 'public');
-             } else {
-                 throw new \Exception('PDF inválido.');
-             }
-         } catch (\Exception $e) {
-             Log::error('Erro ao fazer upload do PDF: ' . $e->getMessage());
-             return redirect()->back()->with('error', 'Erro ao fazer upload do PDF. Por favor, tente novamente.');
-         }
-     
-         // Salvar os dados no banco de dados
-         try {
-             $result = QuarterlyResult::create([
-                 'image' => $imagePath,
-                 'pdf' => $pdfPath,
-             ]);
-             Log::info('Dados salvos com sucesso: ' . print_r($result->toArray(), true));
-             return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
-         } catch (\Exception $e) {
-             Log::error('Erro ao salvar dados no banco de dados: ' . $e->getMessage());
-             return redirect()->back()->with('error', 'Erro ao cadastrar. Por favor, tente novamente.');
-         }
-     }
+    {
+        // Validação dos campos
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pdf' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        // Cria um novo objeto QuarterlyResult
+        $quarterlyResult = new QuarterlyResult();
+
+        // Aplica o upload da imagem
+        $this->applyImageUpload($request, $quarterlyResult);
+
+        // Upload do PDF
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
+            $quarterlyResult->pdf = $pdfPath;
+        }
+
+        // Salvar os dados no banco de dados
+        try {
+            $quarterlyResult->save();
+            return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao cadastrar. Por favor, tente novamente.');
+        }
+    }
+
+
+
+    private function applyImageUpload(Request $request, QuarterlyResult $quarterlyResult): void
+    {
+        // Verifica se o arquivo de imagem está presente no request
+        if ($request->hasFile('image')) {
+            
+            // Obtém o arquivo de imagem do request
+            $file = $request->file('image');
+            
+            // Gera um nome aleatório para o arquivo
+            $fileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+            
+            // Define o diretório de armazenamento
+            $directory = 'quarterlyResult/images';
+            
+            // Armazena a imagem no diretório especificado
+            $uploadedImage = $file->storeAs($directory, $fileName, 'public');
+            
+            // Verifica se o upload foi bem-sucedido
+            if ($uploadedImage) {
+                // Atualiza os campos do modelo com os caminhos de armazenamento
+                $quarterlyResult->storage_image_link = $directory . '/' . $fileName;
+                $quarterlyResult->public_image_link = Storage::url($directory . '/' . $fileName);
+                // Salva as alterações no banco de dados
+                $quarterlyResult->save();
+            }
+        }
+    }
+
 }
