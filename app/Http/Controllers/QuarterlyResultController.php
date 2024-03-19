@@ -39,6 +39,8 @@ class QuarterlyResultController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        
         // Validação dos campos
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
