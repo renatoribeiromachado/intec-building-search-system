@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Segment;
 use App\Models\Work;
+use App\Models\QuarterlyResult;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     protected $work;
     protected $segment;
+    protected $quarterly;
 
     public function __construct(
         Work $work,
         Segment $segment,
+        QuarterlyResult $quarterly
     ) {
         $this->work = $work;
         $this->segment = $segment;
+        $this->quarterly = $quarterly;
     }
 
     public function __invoke()
@@ -236,7 +240,9 @@ class DashboardController extends Controller
                 ->count(),0,'', '.'
         );
 
-        
+        /*Analise mensal/trimestral */
+        $quarterlyResults = $this->quarterly->get();
+
         return view('layouts.dashboard.index', compact(
             'worksInBrazil',
             'residentialWorks',
@@ -262,6 +268,7 @@ class DashboardController extends Controller
             'midwestResidentialWorks',
             'midwestComercialWorks',
             'midwestIndustrialWorks',
+            'quarterlyResults'
         ));
     }
 }

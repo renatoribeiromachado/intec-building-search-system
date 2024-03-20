@@ -391,20 +391,14 @@
                         <h4 class="title p-2">ANALISE TRIMESTRAL</h4>
 
                         <div class="row pt-3">
-
-                            <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                            <div class="col-6 col-md-6">
-                                <img src="../images/analise-trimestral.png" class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
+                            @foreach($quarterlyResults AS $quarterly)
+                                <div class="col-6 col-md-6">
+                                    <img src="{{ url("storage/{$quarterly->image}") }}" class="img-fluid img-thumbnail"
+                                        alt="Resusltado trimestral Intec Brasil">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row pt-4">
@@ -414,7 +408,7 @@
                         <div class="row pt-3">
 
                             <div class="col-4 col-md-5">
-                                <img src="../images/agencia.png" class="img-fluid img-thumbnail"
+                                <img src=""  class="img-fluid img-thumbnail"
                                     alt="Resusltado trimestral Intec Brasil">
                             </div>
 
