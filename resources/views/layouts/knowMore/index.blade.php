@@ -41,13 +41,13 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="control-label"> Titulo</label>
-                                    <input name="tilte" class="form-control" type="text" required>
+                                    <input name="title" class="form-control" type="text" required>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row pt-2">
                                 <div class="col-sm-12">
                                     <label class="control-label"> Descrição</label>
-                                    <textarea name="descripotion" rows="4" class="form-control"></textarea>
+                                    <textarea name="description" rows="4" class="form-control"></textarea>
                                         
                                 </div>
                             </div>

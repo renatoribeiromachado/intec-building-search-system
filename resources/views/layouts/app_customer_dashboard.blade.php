@@ -407,31 +407,20 @@
                     <div class="col-md-12 text-white custom-div-bloco-3">
                         <h4 class="title p-2">SAIBA MAIS</h4>
 
-                        <div class="row pt-3">
+                        @foreach($knows AS $know)
+                            <div class="row pt-3">
 
-                            <div class="col-4 col-md-5">
-                                <img src=""  class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
+                                <div class="col-4 col-md-5">
+                                    <img src="{{ url("storage/{$know->image}") }}" class="img-fluid img-thumbnail"
+                                        alt="{{ $know->title }}">
+                                </div>
+
+                                <div class="col-8 col-md-7">
+                                    <p class="h6 text-dark">{{ $know->title }}</p>
+                                </div>
+
                             </div>
-
-                            <div class="col-8 col-md-7">
-                                <p class="h6 text-dark">AGÊNCIA DE MARKETING DIGITAL INTEC BRASIL</p>
-                            </div>
-
-                        </div>
-
-                        <div class="row pt-3">
-
-                            <div class="col-4 col-md-5">
-                                <img src="../images/agencia2.png" class="img-fluid img-thumbnail"
-                                    alt="Resusltado trimestral Intec Brasil">
-                            </div>
-
-                            <div class="col-8 col-md-7">
-                                <p class="h6 text-dark">FINALIZAMOS APURAÇÃO DAS 100 MAIORES CONSTRUTORAS DO BRASIL!</p>
-                            </div>
-
-                        </div>
+                        @endforeach
                     </div>
 
                 </div>
