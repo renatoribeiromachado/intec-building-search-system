@@ -393,7 +393,7 @@
                         <div class="row pt-3">
                             @foreach($quarterlyResults AS $quarterly)
                                 <div class="col-6 col-md-6">
-                                    <a href="{{ $quarterly->pdf }}" title="Resultado Trimestral" target="_blank">
+                                    <a href="{{ url("storage/{$quarterly->pdf}") }}" title="Resultado Trimestral" target="_blank">
                                         <img src="{{ url("storage/{$quarterly->image}") }}" class="img-fluid img-thumbnail"
                                         alt="Resusltado trimestral Intec Brasil">
                                     </a>
