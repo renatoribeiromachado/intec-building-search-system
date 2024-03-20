@@ -388,13 +388,15 @@
 
                 <div class="row pt-4">
                     <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">ANALISE TRIMESTRAL</h4>
+                        <h4 class="title p-2">RESULTADO TRIMESTRAL</h4>
 
                         <div class="row pt-3">
                             @foreach($quarterlyResults AS $quarterly)
                                 <div class="col-6 col-md-6">
-                                    <img src="{{ url("storage/{$quarterly->image}") }}" class="img-fluid img-thumbnail"
+                                    <a href="{{ $quarterly->pdf }}" title="Resultado Trimestral" target="_blank">
+                                        <img src="{{ url("storage/{$quarterly->image}") }}" class="img-fluid img-thumbnail"
                                         alt="Resusltado trimestral Intec Brasil">
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
