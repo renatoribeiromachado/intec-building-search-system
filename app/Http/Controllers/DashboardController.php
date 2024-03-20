@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Segment;
 use App\Models\Work;
 use App\Models\QuarterlyResult;
+use App\Models\KnowMore;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,15 +13,18 @@ class DashboardController extends Controller
     protected $work;
     protected $segment;
     protected $quarterly;
+    protected $know;
 
     public function __construct(
         Work $work,
         Segment $segment,
-        QuarterlyResult $quarterly
+        QuarterlyResult $quarterly,
+        KnowMore $know
     ) {
         $this->work = $work;
         $this->segment = $segment;
         $this->quarterly = $quarterly;
+        $this->know = $know;
     }
 
     public function __invoke()
@@ -240,8 +244,11 @@ class DashboardController extends Controller
                 ->count(),0,'', '.'
         );
 
-        /*Analise mensal/trimestral */
+        /*Analise mensal/trimestral*/
         $quarterlyResults = $this->quarterly->get();
+
+        /*Saiba mais*/
+        $knows = $this->know->get();
 
         return view('layouts.dashboard.index', compact(
             'worksInBrazil',
@@ -268,7 +275,8 @@ class DashboardController extends Controller
             'midwestResidentialWorks',
             'midwestComercialWorks',
             'midwestIndustrialWorks',
-            'quarterlyResults'
+            'quarterlyResults',
+            'knows'
         ));
     }
 }

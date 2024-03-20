@@ -32,6 +32,7 @@ use App\Http\Controllers\EmailCompanyController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PopupController;
 use App\Http\Controllers\QuarterlyResultController;
+use App\Http\Controllers\KnowMoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -387,6 +388,10 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Resultado trimestral - 23/01/2024 - Renato Machado*/
     Route::get('quarterlyResult', [QuarterlyResultController::class, 'index'])->name('quarterlyResult.index');
     Route::post('quarterlyResult/store', [QuarterlyResultController::class, 'store'])->name('quarterlyResult.store');
+
+    /*Saiba mai - 20/03/2024 - Renato Machado*/
+    Route::get('knowMore', [KnowMoreController::class, 'index'])->name('knowMore.index');
+    Route::post('knowMore/store', [KnowMoreController::class, 'store'])->name('knowMore.store');
 
 
     Route::prefix('associates')->group(function() {

@@ -241,6 +241,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('saiba-mais')
+                <li>
+                    <a class="dropdown-item" href="{{ route('knowMore.index') }}">
+                        Saiba Mais
+                    </a>
+                </li>
+                @endcan
             </ul>
         </li>
         @endcan
