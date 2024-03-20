@@ -408,7 +408,7 @@
                         <h4 class="title p-2">SAIBA MAIS</h4>
 
                         @foreach($knows AS $know)
-                            <div class="row pt-3">
+                            <div class="row pt-3 pb-3">
 
                                 <div class="col-4 col-md-5">
                                     <img src="{{ url("storage/{$know->image}") }}" class="img-fluid img-thumbnail"
