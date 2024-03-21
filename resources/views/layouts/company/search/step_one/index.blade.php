@@ -366,6 +366,21 @@
                                     :input-readonly="false"
                                 />
                             </div>
+
+                            <div class="row mt-2">
+                                <label class="control-label"> Número de Revisão</label>
+                                <div class="col-md-6">
+                                    <select name="qr" class="form-select">
+                                        <option value="0">-- Selecione --</option>
+                                        <option value=">">Maior que</option>
+                                        <option value="<">Menor que</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="revision" class="form-control" value=""/>
+                                </div>
+                            </div>
+                        
                         </div>
                     </div>
                 </div>

@@ -288,6 +288,8 @@ class CompanySearchController extends Controller
         $cityId = $request->cities_ids;//Renato Machado 09/09/2023
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
+        $qr = $request->qr;
+        $revision = $request->revision;
         $homePage = $request->home_page;
         $researcher = $request->researcher_id;//Renato Machado 10/10/2023
 
@@ -379,6 +381,17 @@ class CompanySearchController extends Controller
 
         if ($primaryEmail) {
             $companies = $companies->where('companies.primary_email', 'LIKE', '%'.$primaryEmail.'%');
+        }
+
+        /* Revision */
+        if ($qr && $revision !== null) {
+            $companies = $companies->where(function($query) use ($qr, $revision) {
+                if ($qr === '<') { // Verifica se $qr é igual a "<"
+                    $query->where('companies.revision', '<=', $revision); // Usei "<=" para "Menor ou igual a"
+                } elseif ($qr === '>') { // Verifica se $qr é igual a ">"
+                    $query->where('companies.revision', '>', $revision); // Usei ">=" para "Maior ou igual a"
+                }
+            });
         }
 
         if ($homePage) {

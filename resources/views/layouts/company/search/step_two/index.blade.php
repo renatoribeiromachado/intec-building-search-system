@@ -167,6 +167,18 @@
                 id="primary_email"
                 name="primary_email"
                 value="{{ request()->primary_email }}">
+
+            <input
+                type="hidden"
+                id="qr"
+                name="qr"
+                value="{{ request()->qr }}">
+            <input
+                type="hidden"
+                id="revision"
+                name="revision"
+                value="{{ request()->revision }}">
+
             <input
                 type="hidden" 
                 id="home_page"
