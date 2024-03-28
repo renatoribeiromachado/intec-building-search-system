@@ -86,7 +86,8 @@ class CompanySearchesExport implements FromCollection, WithHeadings, ShouldAutoS
                     FROM companies c
                     JOIN contacts ct ON ct.company_id = c.id
                     JOIN positions p ON p.id = ct.position_id
-                    WHERE c.id = $data";
+                    WHERE c.id = $data
+                    AND ct.archived = 0";
         $results = \DB::select($sql);
         
         return $results;
