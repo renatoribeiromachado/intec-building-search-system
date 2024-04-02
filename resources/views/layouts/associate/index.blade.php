@@ -1,7 +1,6 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
-<div class="container">
 
     <div class="bg-light p-5 rounded">
         <h3>FILTRO DE ASSOCIADOS</h3>
@@ -11,7 +10,7 @@
                 @csrf
 
                 <div class="row mt-2">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <x-intec-input
                             label-input-id="search_old_code"
                             label-text="Cód"
@@ -25,7 +24,7 @@
                         />
                     </div>
                     
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <x-intec-input
                             label-input-id="search_order"
                             label-text="Nº Pedido"
@@ -39,7 +38,7 @@
                         />
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <x-intec-input
                             label-input-id="search_cnpj"
                             label-text="CNPJ"
@@ -203,6 +202,5 @@
         @endif
 
     </div>
-</div>
 @endsection
 
