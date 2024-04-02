@@ -1,8 +1,7 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-<div class="container">
     <div class="bg-light p-5 rounded">
         <h3>FILTRO DE EMPRESAS</h3>
 
@@ -201,5 +200,5 @@
             {{ $companies->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
-</div>
+
 @endsection

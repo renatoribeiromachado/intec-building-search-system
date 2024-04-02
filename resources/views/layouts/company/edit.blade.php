@@ -1,7 +1,7 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
-<div class="container">
+
     <div class="bg-light p-5 rounded mb-5">
         <h3>EDIÇÃO DE EMPRESA</h3>
 
@@ -146,5 +146,4 @@
         </div>
 
     </div>
-</div>
 @endsection
