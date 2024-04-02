@@ -1,12 +1,12 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
-    <div class="container pb-4 bg-light border">
-        <div class="row mt-4">
-            <div class="col-md-12">
+    <div class="row pb-4 bg-light border">
+    
+            <div class="col-md-12 pt-5">
                 <h4><i class="fa fa-check"></i> CADASTRO DE ASSOCIADO</h4>
             </div>
-        </div>
+       
 
         {{-- @include('layouts.alerts.all-errors') --}}
         @include('layouts.alerts.success')

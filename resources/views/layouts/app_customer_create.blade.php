@@ -565,12 +565,12 @@
 
         <div class="row pt-5">
             <!-- div 1 - Desktop Menu Layout -->
-            <div class="col-md-2 d-none d-md-block">
+            <div class="col-md-1 d-none d-md-block">
                 @include('layouts.includes.menu') 
             </div>
 
             <!--Main-->
-            <main class="col-md-10">
+            <main class="col-md-11">
 
                 <div class="row">
                     @include('layouts.includes.menu_mobile') 

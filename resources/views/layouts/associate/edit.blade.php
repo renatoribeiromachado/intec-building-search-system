@@ -1,7 +1,7 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
-    <div class="container pb-4 mb-5 bg-light border">
+    <div class="row pb-4 mb-5 bg-light border">
         <div class="row mt-4">
             <div class="col-md-12">
                 <h4><i class="fa fa-check"></i> Adicionar contatos / Pedido / Assinatura / Acesso</h4>
