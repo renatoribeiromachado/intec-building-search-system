@@ -88,7 +88,7 @@
                     href="{{ route('company.create') }}"
                     >
                     Novo Cadastro
-                </a
+                </a>
             </div>
         </div>
 

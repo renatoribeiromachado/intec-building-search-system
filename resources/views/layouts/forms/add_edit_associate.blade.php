@@ -68,7 +68,7 @@
         toggleReasonInput();
     </script>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <x-intec-input
             label-input-id="phone_one"
             label-text="Telefone:"
@@ -96,7 +96,7 @@
 </div>
 
 <div class="row mt-2">
-    <div class="col-md-5">
+    <div class="col-md-4">
         <x-intec-input
             label-input-id="company_name"
             label-text="Razão Social:"
@@ -109,7 +109,7 @@
         />
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-4">
         <x-intec-input
             label-input-id="trading_name"
             label-text="Fantasia:"
@@ -125,7 +125,7 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="data_filter_starts_at"
-            label-text="Início:"
+            label-text="Início de Visualização::"
             input-type="text"
             input-name="data_filter_starts_at"
             class-one="datepicker"
@@ -138,7 +138,7 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="data_filter_ends_at"
-            label-text="Término:"
+            label-text="Término de Visualização:"
             input-type="text"
             input-name="data_filter_ends_at"
             class-one="datepicker"
@@ -338,7 +338,7 @@
     <div class="col-md-2">
         <label><strong>Estado:</strong></label>
         <select name="state" class="form-select" id="state">
-            <option value="">--Sel--</option>
+            <option value="">--Selecione--</option>
             @foreach($states as $state)
                 <option value='{{ $state }}' @if($state == $company->state) selected @endif>{{ $state }}</option>
             @endforeach
@@ -359,7 +359,7 @@
             <span class="text-danger"><i class="fa fa-thumbs-o-down"></i></span>
         @endif
         <select name="classification" class="form-select">
-            <option value="" style="color: gray;">--Sel--</option>
+            <option value="" style="color: gray;">--Selecione--</option>
             <option value="Neutro" style="color: blue;" @if($company->classification == 'Neutro') selected @endif>Neutro</option>
             <option value="Satisfeito" style="color: green;" @if($company->classification == 'Satisfeito') selected @endif>Satisfeito</option>
             <option value="Insatisfeito" style="color: red;" @if($company->classification == 'Insatisfeito') selected @endif>Insatisfeito</option>
