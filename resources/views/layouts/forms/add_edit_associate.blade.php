@@ -125,7 +125,7 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="data_filter_starts_at"
-            label-text="Início de Visualização::"
+            label-text="Início:"
             input-type="text"
             input-name="data_filter_starts_at"
             class-one="datepicker"
@@ -138,7 +138,7 @@
     <div class="col-md-2">
         <x-intec-input
             label-input-id="data_filter_ends_at"
-            label-text="Término de Visualização:"
+            label-text="Término:"
             input-type="text"
             input-name="data_filter_ends_at"
             class-one="datepicker"
