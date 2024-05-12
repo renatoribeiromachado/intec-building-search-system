@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h1>CADASTRO DE USUÁRIO</h1>
 
         <form

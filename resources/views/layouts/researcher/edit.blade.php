@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h1>EDIÇÃO DE PESQUISADOR</h1>
 
         <form action="{{ route('researcher.update', $researcher->id) }}" method="POST" role="form">

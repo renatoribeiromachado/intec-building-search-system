@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h3>FILTRO DE EMPRESAS</h3>
 
         <div class="mt-4 p-5 text-black rounded" style="background: #e0e0e0;">

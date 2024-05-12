@@ -1,7 +1,7 @@
 @extends('layouts.app_customer_create')
 
 @section('content')
-    <div class="row bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h3>CADASTRO DE EMPRESA</h3>
 
         <form action="{{ route('company.store') }}" method="POST" role="form" class="needs-validation">

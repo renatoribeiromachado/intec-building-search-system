@@ -15,7 +15,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-4 mb-2">
+                <div class="form-group col-md-5 mb-2">
                     <label for="inputEmail4">Nome Fantasia</label>
                     <input type="text" id="trading_name" name="trading_name" class="form-control @error('trading_name') is-invalid @enderror" value="{{ old('trading_name', $company->trading_name) }}" placeholder="">
                     @error('trading_name')
@@ -25,7 +25,7 @@
                     @enderror
                 </div>
                 
-                <div class="form-group col-md-3 mb-2">
+                <div class="form-group col-md-2 mb-2">
                     <label for="inputEmail4">Revisão</label>
                     @if(auth()->guard('web')->user()->role_id ==3)
                         <input type="text" id="revision" name="revision" class="form-control @error('revision') is-invalid @enderror" value="{{ old('revision', $company->revision) }}">
@@ -104,7 +104,7 @@
             </div>
 
             <div class="row mt-2">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="inputZip">CEP</label>
                     <input type="text" id="zip_code" name="zip_code" class="form-control cep @error('zip_code') is-invalid @enderror" value="{{ old('zip_code', $company->zip_code) }}" placeholder="">
                     @error('zip_code')
@@ -288,7 +288,7 @@
                     @enderror
                 </div>
                 
-                <div class="form-group col-md-3 mb-2">
+                <div class="form-group col-md-4 mb-2">
                     <label for="secondary_email">E-mail Secundário</label>
                     <input type="email" id="secondary_email" name="secondary_email" class="form-control @error('secondary_email') is-invalid @enderror" value="{{ old('secondary_email', $company->secondary_email) }}" placeholder="">
                     @error('secondary_email')
@@ -298,7 +298,7 @@
                     @enderror
                 </div>
                 
-                <div class="form-group col-md-3 mb-2">
+                <div class="form-group col-md-2 mb-2">
                     <label for="last_review">Atualização</label>
                     <input
                         type="text" id="last_review" name="last_review" class="form-control datepicker date @error('last_review') is-invalid @enderror"
