@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h1>CADASTRO DE SUBTIPO DE SEGMENTO DE ATUAÇÃO</h1>
 
         <form action="{{ route('segment_sub_type.store') }}" method="POST" role="form">

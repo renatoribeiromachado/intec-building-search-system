@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
+    <div class="container bg-light p-5 rounded">
         <h1>EDIÇÃO DE CARGO</h1>
 
         <form action="{{ route('position.update', $position->id) }}" method="POST" role="form">

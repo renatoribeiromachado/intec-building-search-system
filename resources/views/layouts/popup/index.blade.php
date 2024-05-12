@@ -1,8 +1,8 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-<div class="container-flui bg-light p-5 rounded">
+<div class="container bg-light p-5 rounded">
     <div class='container'>
         @include('layouts.alerts.success')
         <div class='row'>
