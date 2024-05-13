@@ -114,6 +114,13 @@
                                         </a>
                                     </li>
                                     @endcan
+                                    @can('resultado-mensal')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('mensalResult.index') }}">
+                                                Resultado Mensal
+                                            </a>
+                                        </li>
+                                    @endcan
                                     @can('resultado-trimestral')
                                     <li>
                                         <a class="dropdown-item" href="{{ route('quarterlyResult.index') }}">

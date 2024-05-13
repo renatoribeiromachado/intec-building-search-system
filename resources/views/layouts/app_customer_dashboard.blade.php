@@ -385,11 +385,16 @@
                 <div class="row pt-3">
                     <div class="col-md-12 text-white custom-div-bloco-3">
                         <h4 class="title p-2">RESULTADO MENSAL</h4>
-
-                        <p class="text-center pt-1 sub"><strong>2.344</strong> OBRAS NOVAS E ATUALIZADAS</p>
-                        <p class="text-center subtiltle">Residencial: <strong>19.456</strong></p>
-                        <p class="text-center subtiltle">Comercial: <strong>2598</strong></p>
-                        <p class="text-center subtiltle">Industrial: <strong>1586</strong></p>
+                        @php
+                            use App\Models\MensalResult;
+                            $mensalReuslts = MensalResult::get();
+                        @endphp
+                        @foreach($mensalReuslts AS $mensalReuslt)
+                            <p class="text-center pt-1 sub"><strong>{{ $mensalReuslt->new_works }}</strong> OBRAS NOVAS E ATUALIZADAS</p>
+                            <p class="text-center subtiltle">Residencial: <strong>{{ $mensalReuslt->residencial }}</strong></p>
+                            <p class="text-center subtiltle">Comercial: <strong>{{ $mensalReuslt->comercial }}</strong></p>
+                            <p class="text-center subtiltle">Industrial: <strong>{{ $mensalReuslt->industrial }}</strong></p>
+                        @endforeach
                     </div>
                 </div>
 

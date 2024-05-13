@@ -32,6 +32,7 @@ use App\Http\Controllers\EmailCompanyController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PopupController;
 use App\Http\Controllers\QuarterlyResultController;
+use App\Http\Controllers\MensalResultController;
 use App\Http\Controllers\KnowMoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -385,9 +386,15 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     Route::get('popup', [PopupController::class, 'index'])->name('popup.index');
     Route::put('popup/{id}', [PopupController::class, 'update'])->name('popup.update');
 
+    /*Resultado mensal - 13/05/2024 - Renato Machado*/
+    Route::get('mensalResult', [MensalResultController::class, 'index'])->name('mensalResult.index');
+    Route::post('mensalResult/store', [MensalResultController::class, 'store'])->name('mensalResult.store');
+    Route::put('mensalResult/update', [MensalResultController::class, 'update'])->name('mensalResult.update');
+
     /*Resultado trimestral - 23/01/2024 - Renato Machado*/
     Route::get('quarterlyResult', [QuarterlyResultController::class, 'index'])->name('quarterlyResult.index');
     Route::post('quarterlyResult/store', [QuarterlyResultController::class, 'store'])->name('quarterlyResult.store');
+    
 
     /*Saiba mai - 20/03/2024 - Renato Machado*/
     Route::get('knowMore', [KnowMoreController::class, 'index'])->name('knowMore.index');

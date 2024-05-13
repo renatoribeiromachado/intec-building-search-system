@@ -234,19 +234,26 @@
                     </a>
                 </li>
                 @endcan
+                @can('resultado-mensal')
+                    <li>
+                        <a class="dropdown-item" href="{{ route('mensalResult.index') }}">
+                            Resultado Mensal
+                        </a>
+                    </li>
+                @endcan
                 @can('resultado-trimestral')
-                <li>
-                    <a class="dropdown-item" href="{{ route('quarterlyResult.index') }}">
-                        Resultado Trimestral
-                    </a>
-                </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('quarterlyResult.index') }}">
+                            Resultado Trimestral
+                        </a>
+                    </li>
                 @endcan
                 @can('saiba-mais')
-                <li>
-                    <a class="dropdown-item" href="{{ route('knowMore.index') }}">
-                        Saiba Mais
-                    </a>
-                </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('knowMore.index') }}">
+                            Saiba Mais
+                        </a>
+                    </li>
                 @endcan
             </ul>
         </li>
