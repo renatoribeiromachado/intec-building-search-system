@@ -10,9 +10,11 @@
                 <div class='alert alert-info'>
                     <h3> <i class='fa fa-exclamation'></i> Saiba mais</h3>
                     <p>
-                        <a href="#" class="btn btn-outline-primary me-1 edit-btn" data-bs-toggle="modal" data-bs-target="#create">
-                            Cadastrar
-                        </a>
+                        @can('cadastrar-saiba-mais')
+                            <a href="#" class="btn btn-outline-primary me-1 edit-btn" data-bs-toggle="modal" data-bs-target="#create">
+                                Cadastrar
+                            </a>
+                        @endcan
                     </p>
                 </div>
             </div>
