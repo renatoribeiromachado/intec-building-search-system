@@ -1,9 +1,9 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
-        <h1>EDIÇÃO DE DADOS DE ACESSO</h1>
+    <div class="container bg-light p-5 rounded">
+        <h3>EDIÇÃO DE DADOS DE ACESSO</h3>
 
         <form
             action="{{ route('associate.user.update', [$company->id, $contact->id]) }}"

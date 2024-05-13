@@ -1,9 +1,9 @@
-@extends('layouts.app_customer')
+@extends('layouts.app_customer_create')
 
 @section('content')
 
-    <div class="bg-light p-5 rounded">
-        <h1>CADASTRO DE DADOS DE ACESSO</h1>
+    <div class="container bg-light p-5 rounded">
+        <h3>CADASTRO DE DADOS DE ACESSO</h3>
 
         @include('layouts.alerts.all-errors')
 
