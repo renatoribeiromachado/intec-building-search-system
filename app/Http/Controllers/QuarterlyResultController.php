@@ -66,4 +66,49 @@ class QuarterlyResultController extends Controller
         return redirect()->back()->with('success', 'Cadastrado com sucesso!!');
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdatePhaseRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+
+        if (!$quarterlyResult = $this->quarterlyResult->find($request->id)) {
+            return redirect()->back();
+        }
+
+        // Verifica se uma nova imagem foi enviada
+        if ($request->hasFile('image')) {
+            // Se sim, exclui a imagem existente, se houver
+            if ($quarterlyResult->image) {
+                // Certifique-se de excluir o arquivo real do armazenamento, por exemplo, usando o método Storage::delete()
+                Storage::delete($quarterlyResult->image);
+            }
+
+            // Salva a nova imagem e atualiza o caminho no banco de dados
+            $imagePath = $request->file('image')->store("quarterlyResult", 'public');
+            $quarterlyResult->image = $imagePath; // Atualiza o caminho da imagem no modelo
+        }
+
+        // Upload do PDF
+        if ($request->hasFile('pdf')) {
+
+            if ($quarterlyResult->pdf) {
+                // Certifique-se de excluir o arquivo real do armazenamento, por exemplo, usando o método Storage::delete()
+                Storage::delete($quarterlyResult->pdf);
+            }
+
+            $pdfPath = $request->file('pdf')->store("quarterlyResult", 'public');
+            $quarterlyResult->pdf = $pdfPath;
+        }
+
+
+        // Atualiza os outros dados
+        $quarterlyResult->save();
+
+        return redirect()->back()->with('success', 'Atualizado com sucesso!!');
+    }
+
 }

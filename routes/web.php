@@ -394,9 +394,9 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
     /*Resultado trimestral - 23/01/2024 - Renato Machado*/
     Route::get('quarterlyResult', [QuarterlyResultController::class, 'index'])->name('quarterlyResult.index');
     Route::post('quarterlyResult/store', [QuarterlyResultController::class, 'store'])->name('quarterlyResult.store');
+    Route::put('quarterlyResult/update', [QuarterlyResultController::class, 'update'])->name('quarterlyResult.update');
     
-
-    /*Saiba mai - 20/03/2024 - Renato Machado*/
+    /*Saiba mais - 20/03/2024 - Renato Machado*/
     Route::get('knowMore', [KnowMoreController::class, 'index'])->name('knowMore.index');
     Route::get('knowMore/show/{id}', [KnowMoreController::class, 'show'])->name('knowMore.show');
     Route::post('knowMore/store', [KnowMoreController::class, 'store'])->name('knowMore.store');
