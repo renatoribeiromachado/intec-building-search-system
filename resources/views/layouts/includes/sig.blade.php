@@ -14,9 +14,6 @@
     <div class="col-md-6">
         <p><i class="fa fa-calendar"></i> {{ date('d/m/Y') }}</p>
     </div>
-    <div class="col-md-6">
-        <p><i class="fa fa-clock-o"></i> {{ date('H:i:s') }}</p>
-    </div>
 </div>
 
 <div class="row">
@@ -110,7 +107,7 @@
     <div class="col-md-12">
         <p><i class="fa fa-calendar icon"></i><br>
             <a href="#" class="btn btn-outline-link me-1 edit-btn" data-bs-toggle="modal" 
-                data-bs-target="#proximoCompromisso"><strong class="cd">Próximo compromisso</strong></a><br>
+                data-bs-target="#proximoCompromisso"><strong class="cd">Próximos compromissos</strong></a><br>
                 <span style="color: #ff6b1a;"><strong>Reuniões</span></strong>
         </p>
     </div>
@@ -119,9 +116,6 @@
 <div class="row">
     <div class="col-md-6">
         <p><i class="fa fa-calendar"></i> {{ date('d/m/Y') }}</p>
-    </div>
-    <div class="col-md-6">
-        <p><i class="fa fa-clock-o"></i> {{ date('H:i:s') }}</p>
     </div>
 </div>
 
@@ -158,7 +152,7 @@
                         @php
                             $user = Auth::user();
                             $sigsNext = Sig::where('user_id', $user->id)
-                                            ->whereDate('appointment_date', '!=', now()->toDateString())
+                                            ->whereDate('appointment_date', '>', now()->toDateString())
                                             ->get();
                         @endphp
 
@@ -179,7 +173,7 @@
 
                         @php
                             $sigsCompanyNext = SigCompany::where('user_id', $user->id)
-                                    ->whereDate('appointment_date', '!=', now()->toDateString())
+                                    ->whereDate('appointment_date', '>', now()->toDateString())
                                     ->get();
                         @endphp
 
