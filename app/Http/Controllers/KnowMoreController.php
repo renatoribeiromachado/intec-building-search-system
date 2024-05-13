@@ -16,6 +16,7 @@ class KnowMoreController extends Controller
         $this->know = $know;
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +28,20 @@ class KnowMoreController extends Controller
 
         return view('layouts.knowMore.index', compact(
             'knows'
+        ));
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $know = $this->know->find($id);
+
+        return view('layouts.knowMore.show', compact(
+            'know'
         ));
     }
 

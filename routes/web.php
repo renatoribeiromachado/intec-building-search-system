@@ -391,6 +391,7 @@ Route::middleware(['auth', 'single.device.session'])->group(function () {
 
     /*Saiba mai - 20/03/2024 - Renato Machado*/
     Route::get('knowMore', [KnowMoreController::class, 'index'])->name('knowMore.index');
+    Route::get('knowMore/show/{id}', [KnowMoreController::class, 'show'])->name('knowMore.show');
     Route::post('knowMore/store', [KnowMoreController::class, 'store'])->name('knowMore.store');
     Route::put('knowMore/update', [KnowMoreController::class, 'update'])->name('knowMore.update');
     Route::delete('knowMore/{id}', [KnowMoreController::class, 'destroy'])->name('knowMore.destroy');

@@ -411,12 +411,12 @@
                             <div class="row pt-3 pb-3">
 
                                 <div class="col-4 col-md-5">
-                                    <img src="{{ url("storage/{$know->image}") }}" class="img-fluid img-thumbnail"
+                                    <img src="{{ url("storage/{$know->image}") }}" class="img-fluid img-thumbnail" style="width:180px;"
                                         alt="{{ $know->title }}">
                                 </div>
 
                                 <div class="col-8 col-md-7">
-                                    <p class="h6 text-dark">{{ $know->title }}</p>
+                                    <p class="h6 text-dark"><a href="{{ route('knowMore.show', $know->id) }}">{{ $know->title }}</a></p>
                                 </div>
 
                             </div>
@@ -425,6 +425,12 @@
 
                 </div>
             </div>
+            <style>
+                p.h6.text-dark a {
+    color: white; /* Define a cor do texto como branco */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+            </style>
 
             <!--OBRAS GERAL -->
             <div class="row mt-5 pb-5 bg-white parallax2 total-work">

@@ -248,7 +248,7 @@ class DashboardController extends Controller
         $quarterlyResults = $this->quarterly->get();
 
         /*Saiba mais*/
-        $knows = $this->know->get();
+        $knows = $this->know->take(2)->get();
 
         return view('layouts.dashboard.index', compact(
             'worksInBrazil',
