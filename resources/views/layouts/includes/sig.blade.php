@@ -64,7 +64,13 @@
                                 <td>{{ $sigToday->user->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($sigToday->appointment_date)) }}</td>
                                 <td>{{ $sigToday->status }}</td>
-                                <td>{{ $sigToday->work->old_code }}</td>
+                                <td>
+                                    <?php if(isset($sigToday->work->old_code)): ?>
+                                        {{ $sigToday->work->old_code }}
+                                    <?php else: ?>
+                                        Obra excluída do sistema
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         @endforeach
 
@@ -80,7 +86,13 @@
                                 <td>{{ $sigCompanyToday->user->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($sigCompanyToday->appointment_date)) }}</td>
                                 <td>{{ $sigCompanyToday->status }}</td>
-                                <td>{{ $sigCompanyToday->company->trading_name }}</td>
+                                <td>
+                                    <?php if(isset($sigCompanyToday->company->trading_name)): ?>
+                                        {{ $sigCompanyToday->company->trading_name }}
+                                    <?php else: ?>
+                                        Empresa excluída do sistema
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         @endforeach
 
@@ -155,7 +167,13 @@
                                 <td>{{ $sigNext->user->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($sigNext->appointment_date)) }}</td>
                                 <td>{{ $sigNext->status }}</td>
-                                <td>{{ $sigNext->work->old_code }}</td>
+                                <td> 
+                                    <?php if(isset($sigNext->work->old_code)): ?>
+                                        {{ $sigNext->work->old_code }}
+                                    <?php else: ?>
+                                        Obra excluída do sistema
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         @endforeach
 
@@ -170,7 +188,13 @@
                                 <td>{{ $sigCompanyNext->user->name }}</td>
                                 <td>{{ date('d/m/Y', strtotime($sigCompanyNext->appointment_date)) }}</td>
                                 <td>{{ $sigCompanyNext->status }}</td>
-                                <td>{{ $sigCompanyNext->company->trading_name }}</td>
+                                <td>
+                                    <?php if(isset($sigCompanyNext->company->trading_name)): ?>
+                                        {{ $sigCompanyNext->company->trading_name }}
+                                    <?php else: ?>
+                                        Empresa excluída do sistema
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         @endforeach
 
