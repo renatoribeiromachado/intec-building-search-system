@@ -549,11 +549,6 @@
             }
         }
 
-       
-        /* Estilo para o datepicker */
-        
-
-       
     </style>
 
     @stack('styles')

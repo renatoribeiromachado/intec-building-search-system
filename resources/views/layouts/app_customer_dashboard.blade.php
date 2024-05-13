@@ -363,13 +363,20 @@
     <div class="container-fluid">
 
         <div class="row pt-5">
-            <!-- Desktop menu Layout -->
-            <!--div 1-->
+             <!-- div 1 - Desktop Menu Layout -->
             <div class="col-md-2 d-none d-md-block">
-                @include('layouts.includes.menu')  
+                @include('layouts.includes.menu') 
             </div>
 
+            <!--Main-->
             <main class="col-md-8">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <p class="pt-4"><img src='../images/logomarca_intec_menu.png' class="img-fluid" alt="Logomarca"></p>
+                    </div>
+                    @include('layouts.includes.sig') 
+                </div>
+                
                 @yield('content')
             </main>
 

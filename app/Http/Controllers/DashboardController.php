@@ -6,6 +6,8 @@ use App\Models\Segment;
 use App\Models\Work;
 use App\Models\QuarterlyResult;
 use App\Models\KnowMore;
+use App\Models\Sig;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,16 +17,20 @@ class DashboardController extends Controller
     protected $quarterly;
     protected $know;
 
+    protected $sig;
+
     public function __construct(
         Work $work,
         Segment $segment,
         QuarterlyResult $quarterly,
-        KnowMore $know
+        KnowMore $know,
+        Sig $sig
     ) {
         $this->work = $work;
         $this->segment = $segment;
         $this->quarterly = $quarterly;
         $this->know = $know;
+        $this->sig = $sig;
     }
 
     public function __invoke()
