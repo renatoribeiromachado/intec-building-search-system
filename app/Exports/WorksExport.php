@@ -95,10 +95,7 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 LEFT JOIN contacts c ON c.id = cw.contact_id
                 JOIN positions p ON p.id = c.position_id
                 JOIN companies cp ON cp.id = c.company_id
-                JOIN company_work cpw ON cpw.company_id = c.company_id AND cpw.work_id = w.id
-                WHERE w.id = $data
-                GROUP BY w.id, c.id
-                ORDER BY w.last_review DESC, w.name ASC";
+                WHERE w.id = $data";
         
         $results = \DB::select($sql);
 
