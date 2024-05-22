@@ -72,41 +72,33 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
     public function returnContacts($data) {
 
         $sql = "SELECT 
-                    w.id, 
-                    w.name as work, 
-                    c.name, 
-                    c.email,
-                    c.secondary_email,
-                    c.tertiary_email,
-                    c.ddd,
-                    c.main_phone,
-                    c.ddd_two,
-                    c.phone_two,
-                    c.ddd_three,
-                    c.phone_three,
-                    c.ddd_four,
-                    c.phone_four,
-                    p.description as position,
-                    cp.trading_name AS fantasy,
-                    cp.cnpj
-                FROM 
-                    works w 
-                JOIN 
-                    contact_work cw ON cw.work_id = w.id
-                LEFT JOIN 
-                    contacts c ON c.id = cw.contact_id
-                JOIN 
-                    positions p ON p.id = c.position_id
-                JOIN 
-                    companies cp ON cp.id = c.company_id
-                JOIN 
-                    company_work cpw ON cpw.company_id = c.company_id AND cpw.work_id = w.id
-                WHERE 
-                    w.id = $data
-                GROUP BY 
-                    w.id, 
-                    c.id;
-                ";
+                w.id, 
+                w.name 
+                as work, 
+                c.name, 
+                c.email,
+                c.secondary_email,
+                c.tertiary_email,
+                c.ddd,
+                c.main_phone,
+                c.ddd_two,
+                c.phone_two,
+                c.ddd_three,
+                c.phone_three,
+                c.ddd_four,
+                c.phone_four,
+                p.description as position,
+                cp.trading_name AS fantasy,
+                cp.cnpj
+                FROM works w 
+                JOIN contact_work cw ON cw.work_id = w.id
+                LEFT JOIN contacts c ON c.id = cw.contact_id
+                JOIN positions p ON p.id = c.position_id
+                JOIN companies cp ON cp.id = c.company_id
+                JOIN company_work cpw ON cpw.company_id = c.company_id AND cpw.work_id = w.id
+                WHERE w.id = $data
+                GROUP BY w.id, c.id
+                ORDER BY w.last_review DESC, w.name ASC";
         
         $results = \DB::select($sql);
 
