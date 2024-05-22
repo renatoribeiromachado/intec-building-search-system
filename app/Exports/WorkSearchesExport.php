@@ -85,7 +85,6 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                             c.phone_four,
                             c.position_id,
                             c.company_id, 
-                            p.description,
                             cp.trading_name,
                             cp.cnpj
                         FROM 
@@ -101,7 +100,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                         WHERE 
                             cw.work_id = $data
                         GROUP BY 
-                            cw.work_id,
+                            cw.work_id, 
                             c.id
                     ) c ON w.id = c.work_id
                 LEFT JOIN 
@@ -111,8 +110,8 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                 ORDER BY 
                     w.last_review DESC, 
                     w.name ASC
-             ";
-                    
+            ";
+        
         $results = \DB::select($sql);
 
         return $results;
