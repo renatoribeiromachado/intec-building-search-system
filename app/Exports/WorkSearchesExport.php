@@ -71,7 +71,24 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
             JOIN companies cp ON cp.id = c.company_id
             JOIN company_work cpw ON cpw.company_id = c.company_id AND cpw.work_id = w.id
             WHERE w.id = $data
-            GROUP BY  w.id, c.id
+            GROUP BY 
+                    w.id, 
+                    w.name,
+                    c.name, 
+                    c.email,
+                    c.secondary_email,
+                    c.tertiary_email,
+                    c.ddd,
+                    c.main_phone,
+                    c.ddd_two,
+                    c.phone_two,
+                    c.ddd_three,
+                    c.phone_three,
+                    c.ddd_four,
+                    c.phone_four,
+                    p.description,
+                    cp.trading_name ,
+                    cp.cnpj 
             ORDER BY w.last_review DESC, w.name ASC
             ";
         
