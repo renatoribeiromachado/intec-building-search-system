@@ -100,7 +100,7 @@ class WorkSearchesExport implements FromCollection, WithHeadings, ShouldAutoSize
                         WHERE 
                             cw.work_id = $data
                         GROUP BY 
-                            cw.work_id,
+                            cw.work_id, 
                             c.id
                     ) c ON w.id = c.work_id
                 LEFT JOIN 
