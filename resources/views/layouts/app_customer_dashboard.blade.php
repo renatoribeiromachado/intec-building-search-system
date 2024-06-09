@@ -384,13 +384,13 @@
             <div class="col-md-3 block3">
                 <div class="row pt-3">
                     <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">RESULTADO MENSAL 123</h4>
+                        <h4 class="title p-2">RESULTADO MENSAL</h4>
                         @php
                             use App\Models\MensalResult;
                             $mensalReuslts = MensalResult::get();
                         @endphp
                         @foreach($mensalReuslts AS $mensalReuslt)
-                            <p class="text-center pt-1 sub"><strong>{{ $mensalReuslt->new_works }}</strong> OBRAS NOVAS E ATUALIZADAS 123</p>
+                            <p class="text-center pt-1 sub"><strong>{{ $mensalReuslt->new_works }}</strong> OBRAS NOVAS E ATUALIZADAS</p>
                             <p class="text-center subtiltle">Residencial: <strong>{{ $mensalReuslt->residencial }}</strong></p>
                             <p class="text-center subtiltle">Comercial: <strong>{{ $mensalReuslt->comercial }}</strong></p>
                             <p class="text-center subtiltle">Industrial: <strong>{{ $mensalReuslt->industrial }}</strong></p>
@@ -400,7 +400,7 @@
 
                 <div class="row pt-4">
                     <div class="col-md-12 text-white custom-div-bloco-3">
-                        <h4 class="title p-2">RESULTADO TRIMESTRAL 123</h4>
+                        <h4 class="title p-2">RESULTADO TRIMESTRAL</h4>
 
                         <div class="row pt-3">
                             @foreach($quarterlyResults AS $quarterly)
