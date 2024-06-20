@@ -255,6 +255,15 @@ class WorkSearchController extends Controller
         $this->authorize('ver-pesquisa-de-obras');
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
+
+        $authUser = Auth::user();
+
+        /*Se for o Gestor vai ver todos os sigs dos usuarios de sua empresa no Modal*/
+        if ($authUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+            $reports = $this->sig->where('associate_id', $authUser->contact->company->associate->id)->get();
+        }else{
+            $reports = $this->sig->where('user_id',$authUser->id)->get();
+        }
         
         $works = $this->getFilteredWorks($request);
         $workFeatures = $this->workFeature
@@ -265,7 +274,8 @@ class WorkSearchController extends Controller
             'works',
             'workFeatures',
             'statuses',
-            'priorities'
+            'priorities',
+            'reports'
         ));
     }
 

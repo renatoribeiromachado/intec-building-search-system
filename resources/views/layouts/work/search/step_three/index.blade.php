@@ -764,7 +764,7 @@
     @can('ver-sig')
     <!-- The Modal -->
     <div class="modal" id="sig">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header bg-secondary text-white">
@@ -823,12 +823,103 @@
                             <button type="submit" class="btn btn-primary" id="submit-button">Cadastrar</button>
                         </div>
                     </form>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label"><strong>Sig(s) cadastrados</strong></label>
+                            <div class="table-responsive" style="overflow: auto; height: 200px;">
+                                <table class="table table-condensed">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Criado</th>
+                                            <th>Agendado</th>
+                                            <th>Codigo</th>
+                                            <th>Relator</th>
+                                            <th>Prioridade</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                        
+                                    <tbody>
+                                        @forelse($reports as $report)
+                                            
+                                            <tr class="report-row" data-work-id="{{ $report->work_id }}">
+                                                <td>
+                                                    {{ $report->created_at->format('d/m/Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ optional($report->appointment_date)->format('d/m/Y') }}
+                                                </td>
+                                                <td class="text-primary">
+                                                    
+                                                        @if ($report->work)
+                                                            {{ $report->work->old_code }}
+                                                        @else
+                                                        <p>{{ $report->work_id }} - Essa obra foi deletada da plataforma</p>
+                                                        @endif
+                                                    
+                                                </td>
+                                                <td>{{ $report->user->name }}</td>
+                                                <td>{{ $report->priority }}</td>
+                                                <td class="text-primary"><strong>{{ $report->status }}</strong></td>
+                                            </tr>
+
+                                            @if ($report->notes)
+                                            <tr class="report-row" data-work-id="{{ $report->work_id }}">
+                                                <td colspan="6"><strong>Descrição:</strong> *{{ $report->notes }}</td>
+                                            </tr>
+                                            
+                                            
+                                            @endif
+
+                                            @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4">
+                                                    Nenhum SIG de obras encontrado.
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                            
+                    </div>
                 </div> <!-- /.modal-body -->
             </div> <!-- /.modal-content -->
         </div>
     </div>
     
     <script>
+
+         /*Botão Sig*/
+         document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalCode = document.getElementById('modal-code');
+            const modalWorkIdInput = document.getElementById('modal-work-id-input');
+
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const workId = this.getAttribute('data-work-id');
+                    const workOldCode = this.getAttribute('data-code');
+                    modalCode.textContent = workOldCode;
+                    modalWorkIdInput.value = workId;
+
+                    // Filtra as linhas da tabela
+                    const reportRows = document.querySelectorAll('.report-row');
+                    reportRows.forEach(row => {
+                        const reportWorkId = row.getAttribute('data-work-id');
+                        if (reportWorkId === workId) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
             const modalCode = document.getElementById('modal-code');
