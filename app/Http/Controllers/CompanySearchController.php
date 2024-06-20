@@ -252,11 +252,20 @@ class CompanySearchController extends Controller
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $companies = $this->getFilteredCompanies($request);
+        $loggedUser = Auth::user();
+
+         /*Se for o Gestor vai ver todos os sigs dos usuarios de sua empresa no Modal*/
+         if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+            $reports = $this->sigCompany->where('associate_id', $loggedUser->contact->company->associate->id)->get();
+        }else{
+            $reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
+        }
         
         return view('layouts.company.search.step_three.index', compact(
             'companies',
             'statuses',
             'priorities',
+            'reports'
         ));
     }
 
@@ -288,6 +297,8 @@ class CompanySearchController extends Controller
         $cityId = $request->cities_ids;//Renato Machado 09/09/2023
         $cnpj = $request->cnpj;
         $primaryEmail = $request->primary_email;
+        $qr = $request->qr;
+        $revision = $request->revision;
         $homePage = $request->home_page;
         $researcher = $request->researcher_id;//Renato Machado 10/10/2023
 
@@ -379,6 +390,17 @@ class CompanySearchController extends Controller
 
         if ($primaryEmail) {
             $companies = $companies->where('companies.primary_email', 'LIKE', '%'.$primaryEmail.'%');
+        }
+
+        /* Revision */
+        if ($qr && $revision !== null) {
+            $companies = $companies->where(function($query) use ($qr, $revision) {
+                if ($qr === '<') { // Verifica se $qr é igual a "<"
+                    $query->where('companies.revision', '<=', $revision); // Usei "<=" para "Menor ou igual a"
+                } elseif ($qr === '>') { // Verifica se $qr é igual a ">"
+                    $query->where('companies.revision', '>', $revision); // Usei ">=" para "Maior ou igual a"
+                }
+            });
         }
 
         if ($homePage) {

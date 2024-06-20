@@ -350,34 +350,49 @@
                     }
                 </script>
 
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <x-intec-input
-                            label-input-id="cnpj"
-                            label-text="CNPJ"
-                            input-type="text"
-                            input-name="cnpj"
-                            class-one="cnpj"
-                            label-class=""
-                            input-value=""
-                            :input-readonly="false"
-                        />
-                    </div>
-                    <div class="col-md-8">
-                        <x-intec-input
-                            label-input-id="primary_email"
-                            label-text="E-mail Principal"
-                            input-type="email"
-                            input-name="primary_email"
-                            class-one=""
-                            label-class=""
-                            input-value=""
-                            :input-readonly="false"
-                        />
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <x-intec-input
+                                    label-input-id="cnpj"
+                                    label-text="CNPJ"
+                                    input-type="text"
+                                    input-name="cnpj"
+                                    class-one="cnpj"
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
+                            </div>
+                            <div class="col-md-8">
+                                <x-intec-input
+                                    label-input-id="primary_email"
+                                    label-text="E-mail Principal"
+                                    input-type="email"
+                                    input-name="primary_email"
+                                    class-one=""
+                                    label-class=""
+                                    input-value=""
+                                    :input-readonly="false"
+                                />
+                            </div>
+
+                            <div class="row mt-2">
+                                <label class="control-label"> Número de Revisão</label>
+                                <div class="col-md-6">
+                                    <select name="qr" class="form-select">
+                                        <option value="0">-- Selecione --</option>
+                                        <option value=">">Maior que</option>
+                                        <option value="<">Menor que</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="revision" class="form-control" value=""/>
+                                </div>
+                            </div>
+                        
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
         <div class="row mt-4 pb-4">
             
