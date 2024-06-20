@@ -252,11 +252,20 @@ class CompanySearchController extends Controller
         $statuses = Sig::STATUSES;
         $priorities = Sig::PRIORITIES;
         $companies = $this->getFilteredCompanies($request);
+        $loggedUser = Auth::user();
+
+         /*Se for o Gestor vai ver todos os sigs dos usuarios de sua empresa no Modal*/
+         if ($loggedUser->role->slug == Associate::ASSOCIATE_MANAGER) {
+            $reports = $this->sigCompany->where('associate_id', $loggedUser->contact->company->associate->id)->get();
+        }else{
+            $reports = $this->sigCompany->where('user_id',$loggedUser->id)->get();
+        }
         
         return view('layouts.company.search.step_three.index', compact(
             'companies',
             'statuses',
             'priorities',
+            'reports'
         ));
     }
 

@@ -378,6 +378,60 @@
                             <button type="submit" class="btn btn-primary" id="submit-button">Cadastrar</button>
                         </div>
                     </form>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label"><strong>Sig(s) cadastrados</strong></label>
+                            <div class="table-responsive" style="overflow: auto; height: 200px;">
+                                <table class="table table-condensed">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Criado</th>
+                                            <th>Agendado</th>
+                                            <th>Empresa</th>
+                                            <th>Relator</th>
+                                            <th>Prioridade</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                        
+                                    <tbody>
+                                        @forelse($reports as $report)
+                                            
+                                            <tr class="report-row" data-company-id="{{ $report->company_id }}">
+                                                <td>
+                                                    {{ $report->created_at->format('d/m/Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ optional($report->appointment_date)->format('d/m/Y') }}
+                                                </td>
+                                                <td class="text-primary"><strong></strong></td>
+                                                <td>{{ $report->user->name }}</td>
+                                                <td>{{ $report->priority }}</td>
+                                                <td class="text-primary"><strong>{{ $report->status }}</strong></td>
+                                            </tr>
+
+                                            @if ($report->notes)
+                                            <tr class="report-row" data-company-id="{{ $report->company_id }}">
+                                                <td colspan="6"><strong>Descrição:</strong> *{{ $report->notes }}</td>
+                                            </tr>
+                                            
+                                            
+                                            @endif
+
+                                            @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4">
+                                                    Nenhum SIG de empresa encontrado.
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                            
+                    </div>
                 </div> <!-- /.modal-body -->
             </div> <!-- /.modal-content -->
         </div>
@@ -455,6 +509,34 @@
                         }
                     });
 
+            });
+        });
+
+         /*Botão Sig*/
+         document.addEventListener('DOMContentLoaded', function () {
+            const sigLinks = document.querySelectorAll('a[data-bs-target="#sig"]');
+            const modalName = document.getElementById('modal-name');
+            const modalCompanyIdInput = document.getElementById('modal-company-id-input');
+
+            sigLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const companyId = this.getAttribute('data-company-id');
+                    const comapnyName = this.getAttribute('data-name');
+                    modalName.textContent = comapnyName;
+                    modalCompanyIdInput.value = companyId;
+
+                    // Filtra as linhas da tabela
+                    const reportRows = document.querySelectorAll('.report-row');
+                    reportRows.forEach(row => {
+                        const reportCompanyId = row.getAttribute('data-company-id');
+                        if (reportCompanyId === companyId) {
+                            row.style.display = 'table-row';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
             });
         });
     </script>
