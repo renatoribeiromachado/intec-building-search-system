@@ -291,6 +291,7 @@ class AssociateController extends Controller
         $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
         $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
         $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+        $segmentSubTypeFour = $this->segmentSubType->where('segment_id', 4)->get();
 
         return view('layouts.associate.edit', compact(
             'associate',
@@ -327,6 +328,7 @@ class AssociateController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'segmentSubTypeFour',
         ));
     }
 

@@ -31,7 +31,7 @@
                             checked
                         @endif
                         >
-                    <label
+                    <label style="font-size:13px;"
                         for="{{ "{$listInputIdFor}{$item->id}" }}"
                         class="text-uppercase"
                         >

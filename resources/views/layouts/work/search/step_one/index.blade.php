@@ -94,7 +94,7 @@
                                     class="F1"
                                     value="{{ $stageOne->id }}"
                                     />
-                                <label for="stage-{{ $stageOne->id }}">
+                                <label for="stage-{{ $stageOne->id }}" style="font-size:13px;">
                                     <strong>{{ $stageOne->description }}</strong>
                                 </label>
                             </p>
@@ -128,7 +128,7 @@
                                     class="F2"
                                     value="{{ $stageTwo->id }}"
                                     />
-                                <label for="stage-two-{{ $stageTwo->id }}">
+                                <label for="stage-two-{{ $stageTwo->id }}" style="font-size:13px;">
                                     <strong>{{ $stageTwo->description }}</strong>
                                 </label>
                             </p>
@@ -162,7 +162,7 @@
                                     class="F3"
                                     value="{{ $stageThree->id }}"
                                     />
-                                <label for="stage-three-{{ $stageThree->id }}">
+                                <label for="stage-three-{{ $stageThree->id }}" style="font-size:13px;">
                                     <strong>{{ $stageThree->description }}</strong>
                                 </label>
                             </p>
@@ -224,6 +224,21 @@
                             :data-list="$segmentSubTypeThree"
                             class-two="Res"
                             list-input-id-for="segment-sub-type-three-"
+                            list-input-name="segment_sub_types[]"
+                            collection-relation=""
+                        />
+                    @endif
+
+                    @if (($segmentSubTypeFour->count() > 0))
+                        <!--INFRA-->
+                        <x-state-checkbox-group
+                            id="segment-sub-type-all-4"
+                            input-one-name="segment-sub-types[0]"
+                            class-one="infra"
+                            label-text="Infra-Estrutura"
+                            :data-list="$segmentSubTypeFour"
+                            class-two="Inf"
+                            list-input-id-for="segment-sub-type-four-"
                             list-input-name="segment_sub_types[]"
                             collection-relation=""
                         />
@@ -853,6 +868,18 @@
         residentialCheckbox.addEventListener('click', function() {
             const isChecked = residentialCheckbox.checked;
             checkboxesRes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+        @endif
+
+        @if (($segmentSubTypeFour->count() > 0))
+        /*INFRA-ESTRUTRA*/
+        const infraCheckbox = document.querySelector('.infra');
+        const checkboxesInf = document.querySelectorAll('.Inf');
+        infraCheckbox.addEventListener('click', function() {
+            const isChecked = infraCheckbox.checked;
+            checkboxesInf.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });

@@ -128,6 +128,20 @@
     :collection-relation="$associate->segmentSubTypes"
 />
 
+<!--INFRA-->
+<x-state-checkbox-group
+    id="segment-sub-type-all-4"
+    input-one-name="segment-sub-types[0]"
+    class-one="infra"
+    label-text="Infra"
+    :data-list="$segmentSubTypeFour"
+    class-two="Inf"
+    list-input-id-for="segment-sub-type-four-"
+    list-input-name="segment_sub_types[]"
+    :collection-relation="$associate->segmentSubTypes"
+/>
+
+
 
 @push('scripts')
 
@@ -158,6 +172,16 @@
         residentialCheckbox.addEventListener('click', function() {
             const isChecked = residentialCheckbox.checked;
             checkboxesRes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        /*INFRA*/
+        const infraCheckbox = document.querySelector('.infra');
+        const checkboxesInf = document.querySelectorAll('.Inf');
+        infraCheckbox.addEventListener('click', function() {
+            const isChecked = infraCheckbox.checked;
+            checkboxesInf.forEach(checkbox => {
                 checkbox.checked = isChecked;
             });
         });

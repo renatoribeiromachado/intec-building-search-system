@@ -118,6 +118,11 @@ class WorkSearchController extends Controller
                 ->whereIn('id', $segmentSubTypesVisible)
                 ->get();
 
+            $segmentSubTypeFour = $this->segmentSubType
+                ->where('segment_id', 4)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+
             $states = $this->state
                 ->select('state_acronym', 'description')
                 ->whereIn('id', $statesVisible)
@@ -135,6 +140,7 @@ class WorkSearchController extends Controller
             $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
             $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+            $segmentSubTypeFour = $this->segmentSubType->where('segment_id', 4)->get();
 
             $states = $this->state
                 ->select('state_acronym', 'description')
@@ -155,6 +161,7 @@ class WorkSearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'segmentSubTypeFour',
             'states',
             'researchers',
             'activityFields',
@@ -892,6 +899,11 @@ class WorkSearchController extends Controller
                 ->whereIn('id', $segmentSubTypesVisible)
                 ->get();
 
+            $segmentSubTypeFour = $this->segmentSubType
+                ->where('segment_id', 4)
+                ->whereIn('id', $segmentSubTypesVisible)
+                ->get();
+
             $states = $this->state
                 ->select('state_acronym', 'description')
                 ->whereIn('id', $statesVisible)
@@ -909,6 +921,7 @@ class WorkSearchController extends Controller
             $segmentSubTypeOne = $this->segmentSubType->where('segment_id', 1)->get();
             $segmentSubTypeTwo = $this->segmentSubType->where('segment_id', 2)->get();
             $segmentSubTypeThree = $this->segmentSubType->where('segment_id', 3)->get();
+            $segmentSubTypeFour = $this->segmentSubType->where('segment_id', 4)->get();
 
             $states = $this->state
                 ->select('state_acronym', 'description')
@@ -929,6 +942,7 @@ class WorkSearchController extends Controller
             'segmentSubTypeOne',
             'segmentSubTypeTwo',
             'segmentSubTypeThree',
+            'segmentSubTypeFour',
             'states',
             'researchers',
             'activityFields',
