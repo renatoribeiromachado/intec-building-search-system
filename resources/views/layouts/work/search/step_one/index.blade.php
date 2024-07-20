@@ -235,7 +235,7 @@
                             id="segment-sub-type-all-4"
                             input-one-name="segment-sub-types[0]"
                             class-one="infra"
-                            label-text="Infra-Estrutura"
+                            label-text="InfraEstrutura"
                             :data-list="$segmentSubTypeFour"
                             class-two="Inf"
                             list-input-id-for="segment-sub-type-four-"
