@@ -117,6 +117,8 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             ORDER BY w.last_review DESC, w.name ASC
             ";
 
+        $results = \DB::select($sql);
+        
         return $results;
     } 
     
