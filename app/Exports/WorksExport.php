@@ -59,7 +59,7 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 JOIN works w ON w.id = cw.work_id
                 JOIN activity_field_work afw ON afw.company_id = cp.id
                 JOIN activity_fields af ON af.id = afw.activity_field_id
-                WHERE afw.work_id = $data";
+                WHERE afw.work_id = $data ORDER BY w.last_review DESC";
 
         $results = \DB::select($sql);
 
@@ -73,8 +73,7 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
 
         $sql = "SELECT 
                 w.id, 
-                w.name 
-                as work, 
+                w.name as work, 
                 c.name, 
                 c.email,
                 c.secondary_email,
@@ -90,14 +89,33 @@ class WorksExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 p.description as position,
                 cp.trading_name AS fantasy,
                 cp.cnpj
-                FROM works w 
-                JOIN contact_work cw ON cw.work_id = w.id
-                LEFT JOIN contacts c ON c.id = cw.contact_id
-                JOIN positions p ON p.id = c.position_id
-                JOIN companies cp ON cp.id = c.company_id
-                WHERE w.id = $data";
-        
-        $results = \DB::select($sql);
+            FROM works w 
+            JOIN contact_work cw ON cw.work_id = w.id
+            LEFT JOIN contacts c ON c.id = cw.contact_id
+            JOIN positions p ON p.id = c.position_id
+            JOIN companies cp ON cp.id = c.company_id
+            JOIN company_work cpw ON cpw.company_id = c.company_id AND cpw.work_id = w.id
+            WHERE w.id = $data
+            GROUP BY 
+                    w.id, 
+                    w.name,
+                    c.name, 
+                    c.email,
+                    c.secondary_email,
+                    c.tertiary_email,
+                    c.ddd,
+                    c.main_phone,
+                    c.ddd_two,
+                    c.phone_two,
+                    c.ddd_three,
+                    c.phone_three,
+                    c.ddd_four,
+                    c.phone_four,
+                    p.description,
+                    cp.trading_name ,
+                    cp.cnpj 
+            ORDER BY w.last_review DESC, w.name ASC
+            ";
 
         return $results;
     } 
